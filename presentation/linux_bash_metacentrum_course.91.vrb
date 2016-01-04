@@ -1,0 +1,10 @@
+\frametitle{Regular expressions}
+\begin{bashcode}
+    vim
+    diff # Porovnání dvou souborů a zobrazení rozdílů.
+    sed # Proudové zpracování a transformace textu. ps aux | sed 's/honza/anicka/g'
+    sort # Třídí položky.
+    tr # Změna znaků na jiné či jejich smazání.
+    uniq # Odstraní ze souboru duplicitní řádky.
+    wc # Vypíše počet řádků, slov a znaků v souboru.
+  \end{bashcode}

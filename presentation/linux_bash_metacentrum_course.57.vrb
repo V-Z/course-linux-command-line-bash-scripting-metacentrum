@@ -1,0 +1,23 @@
+\frametitle{Links}
+\begin{itemize}
+  \item Soft links --- like links on the web --- short-cut to another place: \texttt{ln -s source target}
+  \begin{itemize}
+    \item When we delete link, nothing happens, when target, non-working link remains
+  \end{itemize}
+\end{itemize}
+  \begin{bashcode}
+    ls -l bin/cinema5
+    lrwxrwxrwx 1 vojta users 42 5. dub 2014 cinema5 -> # "l" marks link
+      /home/vojta/bin/cinema5-0.2.1-beta/cinema5* # "->" points to target
+  \end{bashcode}
+\begin{itemize}
+  \item Hard links --- only second name for file already presented on the disk (available only for files): \texttt{ln source target}
+\end{itemize}
+  \begin{bashcode}
+    ln .bashrc .bashrcX
+    ls -l .bash* # Numbers in first column show links pointing to it
+                 # For directories - number of items, for files = 1
+    -rw------- 1 vojta users 27298 21. led 16.43 .bash_history # One link
+    -rw-r--r-- 2 vojta users  2707 29. lis 16.21 .bashrc # Same data as below
+    -rw-r--r-- 2 vojta users  2707 29. lis 16.21 .bashrcX # Two links
+  \end{bashcode}

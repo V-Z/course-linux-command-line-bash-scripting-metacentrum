@@ -1,0 +1,13 @@
+\frametitle{Redirects and pipes}
+\begin{bashcode}
+    # Add error output to the end of standard output file
+    command >> outputfile 2>&1
+    # Add error output to the error log text file
+    command >> outputfile 2>error.log
+  \end{bashcode}
+\begin{itemize}
+  \item /dev/null --- ``black hole'' --- discards everything (don't care about errors?): \texttt{command 2\textgreater~/dev/null}
+  \item /dev/stdin --- standard input (in case application reads files, not from standard input): \texttt{echo "Žluťoučký kůň" | iconv -f utf-8 -t cp1250 /dev/stdin}
+  \item /dev/stdout --- standard output (we wish to see errors which would be discarded otherwise): \texttt{command 2\textgreater~/dev/stdout}
+  \item /dev/stderr --- standard error output (right place to send errors to): \texttt{echo "error" > /dev/stderr}
+\end{itemize}

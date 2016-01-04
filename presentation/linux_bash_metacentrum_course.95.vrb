@@ -1,0 +1,6 @@
+\frametitle{Regular expressions}
+\begin{bashcode}
+    vim
+    diff # Porovnání dvou souborů a zobrazení rozdílů.
+    wc # Vypíše počet řádků, slov a znaků v souboru.
+  \end{bashcode}
