@@ -1,4 +1,0 @@
-\frametitle{Regular expressions}
-\begin{bashcode}
-    wc # Vypíše počet řádků, slov a znaků v souboru.
-  \end{bashcode}
