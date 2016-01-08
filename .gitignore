@@ -1,0 +1,43 @@
+## XeLaTeX
+presentation/*.aux
+presentation/*.lof
+presentation/*.log
+presentation/*.lot
+presentation/*.fls
+presentation/*.out
+presentation/*.toc
+presentation/*~
+presentation/*.bak
+presentation/*.backup
+presentation/*.kilepr
+presentation/*.pdf
+# beamer
+presentation/*.nav
+presentation/*.snm
+presentation/*.vrb
+# hyperref
+presentation/*.brf
+# knitr
+presentation/*-concordance.tex
+presentation/*.tikz
+presentation/*-tikzDictionary
+# listings
+presentation/*.lol
+# makeidx
+presentation/*.idx
+presentation/*.ilg
+presentation/*.ind
+presentation/*.ist
+# minitoc
+presentation/*.maf
+presentation/*.mtc
+presentation/*.mtc0
+# minted
+presentation/_minted*
+presentation/*.pyg
+# nomencl
+presentation/*.nlo
+## Other
+*~
+*.bak
+*.backup
