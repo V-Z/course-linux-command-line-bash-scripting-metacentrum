@@ -1,5 +1,25 @@
-\documentclass[hyperref={bookmarks=true, unicode=true, colorlinks=true, pdftitle={Linux, command line and MetaCentrum}, plainpages=false, pdfauthor={Vojtech Zeisek}, pdfsubject={Course about use of Linux command line, writing shell scripts and using MetaCentrum of CESNET}, pdfcreator={XeLaTeX, http://www.xelatex.org/}, pdfkeywords={Linux, GNU, BASH, shell, command line, MetaCentrum}, linkcolor=Sienna, anchorcolor=black, citecolor=green, filecolor=magenta, menucolor=Sienna, urlcolor=cyan, pdftex}, compress, ucs, xelatex, xcolor=svgnames, 11pt]{beamer}
-% Nastavení vzhledu
+\documentclass[compress, ucs, xelatex, 11pt, xcolor=svgnames,
+  hyperref={
+    bookmarks=true,
+    unicode=true,
+    colorlinks=true,
+    pdftitle={Linux, command line and MetaCentrum},
+    plainpages=false,
+    pdfauthor={Vojtech Zeisek},
+    pdfsubject={Course about use of Linux command line, writing shell scripts and using MetaCentrum of CESNET},
+    pdfcreator={XeLaTeX, http://www.xelatex.org/},
+    pdfkeywords={Linux, GNU, BASH, shell, command line, MetaCentrum},
+    linkcolor=Sienna,
+    anchorcolor=black,
+    citecolor=green,
+    filecolor=magenta,
+    menucolor=Sienna,
+    urlcolor=cyan,
+    pdftex},
+  url={hyphens, lowtilde} % Allow line breaks within URLs
+  ]{beamer}
+
+% Theme settings
 \usetheme[secheader]{Boadilla}
 \usecolortheme{whale}
 \setbeamertemplate{headline} {
@@ -11,25 +31,53 @@
   \end{beamercolorbox}
   }
 \useinnertheme{circles}
-% Další balíčky
-\usepackage{xltxtra}
+
+% Basic packages
+\usepackage{xltxtra} % Loads following 4 packages for processing with XeLaTeX
+\usepackage{fixltx2e}
+\usepackage{metalogo}
 \usepackage{xunicode}
-\usepackage{polyglossia}
+\usepackage{fontspec}
+
+% Othe packages
 \usepackage{multicol}
 \usepackage{tabularx}
-% Barevné zvýraznění syntaxe
+
+% In-line higlighting
+\usepackage{soul}
+
+% Add background for \texttt{} (using pacakge soul)
+\sethlcolor{Beige}
+\renewcommand{\texttt}[1]{\hl{\ttfamily #1}}
+
+% Syntax higlight
 \usepackage{minted}
-\usemintedstyle{vim} % styly se zjistí pygmentize -L styles; jazyky vypíše pygmentize -L lexers
-\newminted{bash}{linenos, fontsize=\footnotesize, gobble=4, bgcolor=Azure, numbersep=6pt}
-\newmint{bash}{fontsize=\footnotesize, bgcolor=Azure}
-% Věci na titulku apod.
+\usemintedstyle{vim} % Styles are listed by pygmentize -L styles; languages are listed by pygmentize -L lexers
+\newminted{bash}{linenos, fontsize=\footnotesize, bgcolor=Beige, fontfamily=tt, gobble=4, numbersep=-3pt}
+% Change line number style
+\renewcommand{\theFancyVerbLine}{
+  \sffamily
+  \textcolor{BlueViolet}{
+    \tiny
+    \oldstylenums{
+      \arabic{FancyVerbLine}
+      }
+    }
+  }
+% Inline source code
+\newmint{bash}{fontsize=\footnotesize, bgcolor=Beige}
+
+% Default language
+\usepackage{polyglossia}
 \setdefaultlanguage{english}
+
+% Title page
 \author{Vojtěch Zeisek}
-\institute[\href{http://trapa.cz/}{http://trapa.cz/}]{Department of Botany, Faculty of Science, Charles University in Prague\\Institute of Botany, Czech Academy of Sciences, Průhonice\\\href{http://trapa.cz/}{http://trapa.cz/}, \href{zeisek@natur.cuni.cz}{zeisek@natur.cuni.cz}}
+\institute[\url{https://trapa.cz/}]{Department of Botany, Faculty of Science, Charles University in Prague\\Institute of Botany, Czech Academy of Sciences, Průhonice\\\url{https://trapa.cz/}, \href{mailto:zeisek@natur.cuni.cz}{zeisek@natur.cuni.cz}}
 \title{Linux, command line \& MetaCentrum}
 \subtitle{Use of Linux command line not only for MetaCentrum of CESNET}
-\date{January 26 and 27, 2015}
 \titlegraphic{\includegraphics[width=2cm]{tux.png}}
+\date{January 28 and 29, 2016}
 
 \begin{document}
 
@@ -113,7 +161,7 @@
   \item LGPL --- Lesser GPL --- more permissive
   \item BSD license --- permissive --- allow derived code to became closed-source (commonly used by Apple Mac OS X, Safari browser, \ldots)
   \item Apache licence, Mozilla licence,~\ldots --- many variants\ldots~for specific use in particular software
-  \item Creative Commons (CC) --- software licences above not suitable for multimedia, text, etc. --- CC has many options (including denial of reuse of the product), see \href{https://creativecommons.org/}{https://creativecommons.org/}
+  \item Creative Commons (CC) --- software licences above not suitable for multimedia, text, etc. --- CC has many options (including denial of reuse of the product), see \url{https://creativecommons.org/}
   \item And many more\ldots
   \item Orientation might be tricky, but practical output for users is more or less same --- the software can be independently checked for bugs, backdoors, malware, can be improved and under some circumstances, new software can be derived, and usually, it is available for free
   \item Aim is to ``liberate'' software to keep open sharing of ideas, mutual improve and security control --- although the point is clear, there are debates how to reach it\ldots
@@ -129,7 +177,7 @@
     \item (F)OSS is available for free --- user can use it as it is or buy a support --- help
     \item No vendor lock-in --- user has the code, so he can modify the software himself, change solution, \ldots
     \item Cheap for user as well as company --- company specialized for one task, let's say server database, doesn't have to take care about the rest of the system --- someone else does; user pays only what he needs
-    \item Our faculty is using \href{http://plone.org/}{Plone} system for web pages --- anyone can use it for free, someone (like we) found company to help, and if we'd decided, we  could keep Plone and maintain it ourselves or find another company to help us with it
+    \item Our faculty is using \href{https://plone.org/}{Plone} system for web pages --- anyone can use it for free, someone (like we) found company to help, and if we'd decided, we  could keep Plone and maintain it ourselves or find another company to help us with it
   \end{itemize}
 \end{itemize}
 \end{frame}
@@ -161,7 +209,7 @@
 
 \begin{frame}{Extremely simplified adaptive radiation of Linux distributions}
 \includegraphics[width=\textwidth]{linux_fylogen_2.png}\\
-See also \href{https://en.wikipedia.org/wiki/List_of_Linux_distributions}{https://en.wikipedia.org/wiki/List\_of\_Linux\_distributions} and \href{http://distrowatch.com/http://distrowatch.com/}{http://distrowatch.com/} (currently lists 260 distributions)
+\url{https://en.wikipedia.org/wiki/List_of_Linux_distributions} and \url{https://distrowatch.com/} (currently lists 260 distributions)
 \end{frame}
 
 \subsection{Choose one}
@@ -171,13 +219,13 @@ See also \href{https://en.wikipedia.org/wiki/List_of_Linux_distributions}{https:
   \item Debian based
   \begin{itemize}
     \item \href{https://www.debian.org/}{Debian} --- one of oldest and most common, especially on servers
-    \item \href{http://www.ubuntu.com/}{Ubuntu} (nowadays probably the most popular on PCs and notebooks) and derivatives --- \href{http://www.kubuntu.org/}{Kubuntu}, \href{http://xubuntu.org/}{Xubuntu}, \href{http://lubuntu.net/}{Lubuntu}, \ldots~(according to GUI used)
+    \item \href{http://www.ubuntu.com/}{Ubuntu} (nowadays probably the most popular on PCs and notebooks) and derivatives --- \href{https://www.kubuntu.org/}{Kubuntu}, \href{https://xubuntu.org/}{Xubuntu}, \href{http://lubuntu.net/}{Lubuntu}, \ldots~(according to GUI used)
     \item \href{http://linuxmint.com/}{Mint} --- Based on Ubuntu as well as Debian, very user-friendly
     \item Kali, KNOPPIX, \ldots
   \end{itemize}
   \item Red Hat based
   \begin{itemize}
-    \item \href{http://www.redhat.com/}{Red Hat} --- probably the most common commercial
+    \item \href{https://www.redhat.com/}{Red Hat} --- probably the most common commercial
     \item \href{https://getfedora.org/}{Fedora} --- ``playground'' for Red Hat --- very experimental
     \item \href{https://www.centos.org/}{Centos} --- Clone of Red Hat
     \item \href{https://www.opensuse.org/}{openSUSE} --- SUSE is second largest Linux company, openSUSE is community distribution (free)
@@ -193,7 +241,7 @@ See also \href{https://en.wikipedia.org/wiki/List_of_Linux_distributions}{https:
   \item Most of GUIs are available for most of common distributions --- one is picked as default and ``only'' colour style is different
   \item \href{https://unity.ubuntu.com/}{Unity} --- developed by Ubuntu, relatively specific (not common outside Ubuntu), ``Mac-style''
   \item \href{https://www.kde.org/}{KDE} --- one of the most common, feature extremely rich, basically ``Windows-like'' (can be changed)
-  \item \href{http://www.gnome.org/}{GNOME} --- one of the most common, relatively simplistic interface, but still feature rich, ``Mac-like''
+  \item \href{https://www.gnome.org/}{GNOME} --- one of the most common, relatively simplistic interface, but still feature rich, ``Mac-like''
   \item \href{http://xfce.org/}{XFCE} --- lightweight version of older GNOME --- for older computers or users not willing to be disturbed by graphical effects, basically ``Mac-like'' looking, but panels can be moved to ``Windows style''
   \item \href{http://cinnamon.linuxmint.com/}{Cinnamon} --- remake of GNOME to look more like Windows\ldots
   \item And much more\ldots
@@ -240,7 +288,7 @@ See also \href{https://en.wikipedia.org/wiki/List_of_Linux_distributions}{https:
   \end{itemize}
   \item Live CD/USB
   \begin{itemize}
-    \item The most easy --- burn ISO image of CD from web of almost any Linux distribution or use for example \href{http://unetbootin.sourceforge.net/}{UNetbootin} to prepare bootable flash
+    \item The most easy --- burn ISO image of CD from web of almost any Linux distribution or use for example \href{https://unetbootin.github.io/}{UNetbootin} to prepare bootable flash
     \item You only have to need how to boot from CD/USB (usually press ESC, DEL, F2, F10, F12, \ldots~when starting computer --- varies according to manufacturer)
   \end{itemize}
   \item Virtualisation
@@ -262,7 +310,7 @@ See also \href{https://en.wikipedia.org/wiki/List_of_Linux_distributions}{https:
   \item You can change GUI without change of distribution
   \item Applications are still same --- no difference in Firefox across distributions --- keep your settings when changing distribution
   \item Everyone using Android is using Linux ;-)
-  \item Special use --- \href{http://www.freenas.org/}{FreeNAS} for home as well as bussiness file server, \href{http://partedmagic.com/}{Parted Magic} and/or \href{http://www.sysresccd.org/}{SystemRescueCD} to repair broken system (disk failure) and save data, \ldots
+  \item Special use --- \href{http://www.freenas.org/}{FreeNAS} for home as well as bussiness file server, \href{https://partedmagic.com/}{Parted Magic} and/or \href{https://www.system-rescue-cd.org/SystemRescueCd_Homepage}{SystemRescueCD} to repair broken system (disk failure) and save data, \ldots
 \end{itemize}
 \end{frame}
 
@@ -1329,7 +1377,7 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
 
 \begin{frame}[fragile]{Compilation of RAxML}
 \begin{footnotesize}
-  Available from \href{https://github.com/stamatak/standard-RAxML}{https://github.com/stamatak/standard-RAxML} (cite \href{http://bioinformatics.oxfordjournals.org/content/30/9/1312.abstract}{Stamakis 2014}).
+  Available from \url{https://github.com/stamatak/standard-RAxML} (cite \href{https://bioinformatics.oxfordjournals.org/content/30/9/1312.abstract}{Stamakis 2014}).
 \end{footnotesize}
   \begin{bashcode}
     # Create working directory
@@ -1355,7 +1403,7 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
 \begin{frame}[fragile]{Launching Java applications}
 \begin{itemize}
   \item \href{https://www.java.com/}{Java} is probably the most portable language working on any operating system --- the only condition is to install Java virtual machine
-  \item Let's download \href{http://tree.bio.ed.ac.uk/software/figtree/}{FigTree} from \href{http://tree.bio.ed.ac.uk/download.php?id=90&num=3}{http://tree.bio.ed.ac.uk/download.php?id=90\&num=3}
+  \item Let's download \href{http://tree.bio.ed.ac.uk/software/figtree/}{FigTree} from \url{http://tree.bio.ed.ac.uk/download.php?id=90&num=3}
 \end{itemize}
   \begin{bashcode}
     # Go to directory where you downloaded it
@@ -1672,7 +1720,7 @@ For regular expressions, see slide \ref{regexp}.
       # and last number shows line(s) in the second file, <> show direction
     diff -e textfile1 textfile2 # More simple output
     diff -c textfile1 textfile2 # Show context (lines around change)
-    diff -u textfile1 textfile2 # Better version of previous, the most common
+    diff -u textfile1 textfile2 # Better version, the most common
     colordiff # Same usage and parameters as previous, coloured output
     diff -u textfile1 textfile2 | view - # Launches vim (exit by :q! Enter)
     vimdiff # Can show more colours, launches vim (exit by :q! Enter)
@@ -1706,8 +1754,8 @@ For regular expressions, see slide \ref{regexp}.
    \item Insert --- in bottom left corner ``-{-} INSERT {-}-'' is displayed --- the most familiar mode --- normal typing etc., exit to normal mode by \texttt{Esc} key
    \item Command --- in bottom left corner ``\texttt{:}'' is displayed --- awaits commands, e.g. \texttt{w} to write file, \texttt{q} to quit, \texttt{q!} to quit and discard changes, \%s/... to search and replace as in \texttt{sed}, \texttt{syntax on/off} to turn syntax highlight on/off, \texttt{/} to search, \ldots Exit to command mode by \texttt{Backspace} key (delete ``\texttt{:}'').
   \end{enumerate}
-  \item For more information see \href{http://www.vim.org/}{http://www.vim.org/} and \href{http://vim.wikia.com/wiki/Vim_Tips_Wiki}{http://vim.wikia.com/wiki/Vim\_Tips\_Wiki}
-  \item In Czech \href{http://www.nti.tul.cz/~satrapa/docs/vim/}{http://www.nti.tul.cz/$\sim$satrapa/docs/vim/}
+  \item For more information see \url{http://www.vim.org/} and \url{http://vim.wikia.com/wiki/Vim_Tips_Wiki}
+  \item In Czech \url{http://www.nti.tul.cz/~satrapa/docs/vim/}
 \end{itemize}
 \end{frame}
 
@@ -1749,7 +1797,7 @@ For regular expressions, see slide \ref{regexp}.
   \item \alert{\&} --- content of pattern that was matched
   \item Implementation in \texttt{vim}, \texttt{sed}, \texttt{grep}, \texttt{awk} and \texttt{perl} and among various UNIX systems is almost same, but not identical\ldots
   \item \textbf{grep}, \textbf{sed} and \textbf{vim} require escaping of \alert{+}, \alert{?}, \alert{\{}, \alert{\}}, \alert{(} and \alert{)} --- \textbf{egrep} (extended version, launched as \texttt{grep -E \ldots} or \texttt{egrep \ldots}) and \textbf{perl} not
-  \item Read \href{http://www.regular-expressions.info/}{http://www.regular-expressions.info/}, in Czech \href{http://www.nti.tul.cz/~satrapa/docs/regvyr/}{http://www.nti.tul.cz/$\sim$satrapa/docs/regvyr/}, \href{http://www.root.cz/serialy/regularni-vyrazy/}{http://www.root.cz/serialy/regularni-vyrazy/} and \href{http://www.regularnivyrazy.info/}{http://www.regularnivyrazy.info/}, and manuals for Grep, Vim, Sed, Awk, Perl, \ldots
+  \item Read \url{http://www.regular-expressions.info/}, in Czech \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{http://www.root.cz/serialy/regularni-vyrazy/} and \url{http://www.regularnivyrazy.info/}, and manuals for Grep, Vim, Sed, Awk, Perl, \ldots
 \end{itemize}
 \end{frame}
 
@@ -1797,7 +1845,7 @@ When done, do:
 There is no checking of input values, nothing advanced, \ldots
 \end{frame}
 
-\begin{frame}[fragile]{Variables will be interactively by user}
+\begin{frame}[fragile]{Variables will be interactively provided by the user}
   \begin{bashcode}
     #!/bin/bash
     # Arguments are read from user input (script asks for them)
@@ -1988,38 +2036,38 @@ Remaining part from previous slide\ldots
 \begin{frame}[allowframebreaks]{CESNET and MetaCentrum}
 \begin{itemize}
   \item CESNET is organisation of Czech universities, Academy of Science and other organisations taking care about Czech backbone Internet, one of world leading institutions of this type
-  \item CESNET provides various \href{http://www.cesnet.cz/services/?lang=en}{services}
+  \item CESNET provides various \href{https://www.cesnet.cz/services/?lang=en}{services}
   \begin{itemize}
-    \item Massive computations --- \href{http://www.cesnet.cz/services/massive-computations-metacentrum/?lang=en}{MetaCentrum}
-    \item Practically unlimited \href{http://www.cesnet.cz/services/data-storage/?lang=en}{data storage}
-    \item \href{http://www.cesnet.cz/services/filesender/?lang=en}{FileSender} to be able to send up to 500~GB file
-    \item \href{http://www.cesnet.cz/services/owncloud/?lang=en}{ownCloud} to backup and/or sync data across devices (capacity is 100 GB)
-    \item And \href{http://www.cesnet.cz/services/?lang=en}{more\ldots}
+    \item Massive computations --- \href{https://www.cesnet.cz/services/massive-computations-metacentrum/?lang=en}{MetaCentrum}
+    \item Practically unlimited \href{https://www.cesnet.cz/services/data-storage/?lang=en}{data storage}
+    \item \href{https://www.cesnet.cz/services/filesender/?lang=en}{FileSender} to be able to send up to 500~GB file
+    \item \href{https://www.cesnet.cz/services/owncloud/?lang=en}{ownCloud} to backup and/or sync data across devices (capacity is 100~GB)
+    \item And \href{https://www.cesnet.cz/services/?lang=en}{more\ldots}
   \end{itemize}
   \item Without registration
   \begin{itemize}
-    \item ownClou \href{https://owncloud.cesnet.cz/}{https://owncloud.cesnet.cz/}
-    \item FileSender \href{https://filesender.cesnet.cz/}{https://filesender.cesnet.cz/}
+    \item ownCloud \url{https://owncloud.cesnet.cz/}
+    \item FileSender \url{https://filesender.cesnet.cz/}
     \item Go to web and log in with your institutional password (currently this is not available for Institute of Botany)
   \end{itemize}
   \item Requiring registration (and approval)
   \begin{itemize}
-    \item To use MetaCentrum fill registration form \href{http://metavo.metacentrum.cz/en/application/form}{http://metavo.metacentrum.cz/en/application/form}
-    \item To use data storage fill registration form \href{https://einfra.cesnet.cz/perun-registrar-fed/?vo=storage&locale=en}{https://einfra.cesnet.cz/perun-registrar-fed/?vo=storage\&locale=en}
-    \item Users from Institute of Botany (not having access to \href{https://www.eduid.cz/en/index}{EduID}) have to register first at HostelID \href{http://hostel.eduid.cz/en/index.html}{http://hostel.eduid.cz/en/index.html}
+    \item To use MetaCentrum fill registration form \url{https://metavo.metacentrum.cz/en/application/form}
+    \item To use data storage fill registration form \url{https://einfra.cesnet.cz/perun-registrar-fed/?vo=storage&locale=en}
+    \item Users from Institute of Botany (not having access to \href{https://www.eduid.cz/en/index}{EduID}) have to register first at HostelID \url{https://hostel.eduid.cz/en/index.html}
   \end{itemize}
-  \item Information about data storage \href{https://du.cesnet.cz/en/start}{https://du.cesnet.cz/en/start} (contains detailed instructions about usage)
-  \item Information about MetaCentrum \href{http://www.metacentrum.cz/en/}{http://www.metacentrum.cz/en/} (most of practical information for users are at wiki \href{https://wiki.metacentrum.cz/w/index.php?title=Main_Page&setlang=en}{https://wiki.metacentrum.cz/w/index.php?\&setlang=en})
+  \item Information about data storage \url{https://du.cesnet.cz/en/start} (contains detailed instructions about usage)
+  \item Information about MetaCentrum \url{https://www.metacentrum.cz/en/} (most of practical information for users are at wiki \url{https://wiki.metacentrum.cz/w/index.php?&setlang=en})
 \end{itemize}
 \end{frame}
 
 \begin{frame}{MetaCentrum}
 \begin{itemize}
-  \item Also available is Galaxy \href{https://galaxy.metacentrum.cz/galaxy/}{https://galaxy.metacentrum.cz/galaxy/} --- web based bioinformatic framework (more information at \href{https://wiki.metacentrum.cz/wiki/Galaxy_application}{wiki})
-  \item Current state and usage as available at \href{http://metavo.metacentrum.cz/en/}{http://metavo.metacentrum.cz/en/}
-  \item Manage your user account at \href{http://metavo.metacentrum.cz/en/myaccount/index.html}{http://metavo.metacentrum.cz/en/myaccount/index.html}
-  \item Personal view on actual resources and running tasks is at \href{http://metavo.metacentrum.cz/pbsmon2/person}{http://metavo.metacentrum.cz/pbsmon2/person}
-  \item List of available applications \href{https://wiki.metacentrum.cz/wiki/Kategorie:Applications}{https://wiki.metacentrum.cz/wiki/Kategorie:Applications}
+  \item Also available is Galaxy \url{https://galaxy.metacentrum.cz/galaxy/} --- web based bioinformatic framework (more information at \href{https://wiki.metacentrum.cz/wiki/Galaxy_application}{wiki})
+  \item Current state and usage as available at \url{https://metavo.metacentrum.cz/en/}
+  \item Manage your user account at \url{http://metavo.metacentrum.cz/en/myaccount/index.html}
+  \item Personal view on actual resources and running tasks is at \url{https://metavo.metacentrum.cz/pbsmon2/person}
+  \item List of available applications \url{https://wiki.metacentrum.cz/wiki/Kategorie:Applications}
   \item It has 7 frontends where users log and thousands of computers doing the calculations --- they are not accessed directly, most of computers are running \href{https://www.debian.org/}{Debian GNU/Linux}
 \end{itemize}
 \end{frame}
@@ -2084,8 +2132,8 @@ Don't forget to make \texttt{metacentrum.sh} executable and modify it according 
 
 \begin{frame}[fragile]{Launching of tasks}
 \begin{itemize}
-  \item See \href{https://wiki.metacentrum.cz/wiki/Running_jobs_in_scheduler}{https://wiki.metacentrum.cz/wiki/Running\_jobs\_in\_scheduler}
-  \item Personal view \href{http://metavo.metacentrum.cz/pbsmon2/person}{http://metavo.metacentrum.cz/pbsmon2/person} has nice overview of available resources and tasks and allows comfortable construction of submission command
+  \item \url{https://wiki.metacentrum.cz/wiki/Running_jobs_in_scheduler}
+  \item Personal view \url{https://metavo.metacentrum.cz/pbsmon2/person} has nice overview of available resources and tasks and allows comfortable construction of submission command
 \end{itemize}
   \begin{bashcode}
     # We will tun up to 5 days, require 4 GB of RAM, 5 GB of disk space, one
@@ -2106,7 +2154,7 @@ Don't forget to make \texttt{metacentrum.sh} executable and modify it according 
 
 \begin{frame}[fragile]{Graphical interactive task}
 \begin{itemize}
-  \item See information at \href{https://wiki.metacentrum.cz/wiki/Remote_desktop}{https://wiki.metacentrum.cz/wiki/Remote\_desktop}
+  \item See information at \url{https://wiki.metacentrum.cz/wiki/Remote_desktop}
 \end{itemize}
   \begin{bashcode}
     # Again launch qsub according to actual needs
@@ -2164,56 +2212,24 @@ Don't forget to make \texttt{metacentrum.sh} executable and modify it according 
 \end{center}
 \begin{flushright}
   \begin{tiny}
-   \href{http://www.xelatex.org/}{Typesetting} using \XeLaTeX~on \href{http://www.opensuse.org/}{openSUSE} \href{https://en.wikipedia.org/wiki/GNU}{GNU}/\href{https://en.wikipedia.org/wiki/Linux}{Linux}
+   \href{https://en.wikipedia.org/wiki/XeTeX}{Typesetting} using \XeLaTeX~on \href{https://www.opensuse.org/}{openSUSE} \href{https://en.wikipedia.org/wiki/GNU}{GNU}/\href{https://en.wikipedia.org/wiki/Linux}{Linux} \today
   \end{tiny}
 \end{flushright}
 \end{frame}
 
-% \begin{frame}[allowframebreaks]{Topics from the web}
-% \begin{itemize}
-%   \item What it is UNIX, Linux, GNU, what are relationships among them, architecture of the system, kernel \alert{OK}
-%   \item What does it mean “open-source”, which licenses are in use, what is phylosophy, trade model \alert{OK}
-%   \item What are differences among various Linux distributions, how to find order in them, how to choose \alert{OK}
-%   \item Trying using live CD/USB or virtualisation \alert{OK}
-%   \item Special uses – rescue CD, BusyBox in embedded devices (NAS and another network devices, Android, …) \alert{OK}
-%   \item Diversity of graphical interfaces vs. similarity in command line \alert{OK}
-%   \item Installation, disk partitions, creating and control \alert{OK}
-%   \item File systems, directory structure in Linux, file names and their conventions, where are configuration files and data \alert{OK}
-%   \item File permissions, executability, ACL, another atributes \alert{OK}
-%   \item Root and normal users, sudo \alert{OK}
-%   \item Why it is important good text editor, what are possibilities, character encoding, differences among operating systems \alert{OK}
-%   \item Command line: Shell – Bash and the others \alert{OK}
-%   \item Variables, path to executable files, aliases, configuration of command line behaviour \alert{OK}
-%   \item Terminals and their emulators, multiple login, access to remote server \alert{OK}
-%   \item Software management from command line (zypper, rpm, apt, aptitude), launching of the script, compilation \alert{OK}
-%   \item Launching of Java applications \alert{OK}
-%   \item Basic information about the system, free space, detection of the type of the file, hardware \alert{OK}
-%   \item Users, change of password, services management (SystemD and others) \alert{OK}
-%   \item Move within directory structure, searching \alert{OK}
-%   \item Automated launching of tasks \alert{OK}
-%   \item Viewing of processes and their killing \alert{OK}
-%   \item Magic TAB key, history of commands, chaining of commands \alert{OK}
-%   \item Standard input and output, redirects, pipes \alert{OK}
-%   \item Work with text – reading, edition, selection of particular lines or columns, merging of files, writing into new files \alert{OK}
-%   \item Common text editors in command line: Nano, MC, Vim, Emacs \alert{OK}
-%   \item Comparison of text files, viewing changes \alert{OK}
-%   \item Wildcards and special characters, escaping, regular expressions \alert{OK}
-%   \item How to keep task running after login off – screen \alert{OK}
-%   \item Work with documentation and searching for solutions \alert{OK}
-%   \item Mounting of file systems, creations and control \alert{OK}
-%   \item Writing of easy scripts – variables, conditions, forks, cycles, input parameters, exit values \alert{OK}
-%   \item Parallelization of tasks – use of multicore CPUs \alert{OK}
-%   \item Access to MetaCentrum (link is external) of CESNET \alert{OK}
-%   \item Launching of the tasks in MetaCentrum, basic script \alert{OK}
-%   \item Launching of interactive and graphical tasks in MetaCentrum \alert{OK}
-%   \item List of another offers of CESNET \alert{OK}
-%   \item Basic monitoring of network \alert{OK}
-%     \item Launching of Windows and DOS applications in Linux
-%     \item Where to look for help, another sources of information
-%     \item Brief list of applications to help to switch to Linux
-%     \item How to break system :-)
-%   \item https://trapa.cz/en/course-linux-command-line-2015 https://trapa.cz/cs/kurz-prikazove-radky-linuxu-2015 \alert{OK}
-% \end{itemize}
-% \end{frame}
+\begin{frame}[allowframebreaks]{Topics from the web}
+\begin{itemize}
+    \item Launching of Windows and DOS applications in Linux
+    \item Where to look for help, another sources of information
+    \item Brief list of applications to help to switch to Linux
+    \item How to break system :-)
+    \item Security, antiviruses
+    \item How to connect to remote FS
+    \item More for average users (less servers, administrative)
+    \item More examples about software on MetaCentrum, scripts (on MetaCentrum)
+    \item More about regular expressions
+    \item recommend software, how it is with installation
+\end{itemize}
+\end{frame}
 
 \end{document}
