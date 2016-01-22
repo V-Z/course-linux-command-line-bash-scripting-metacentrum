@@ -495,7 +495,7 @@ Btrfs & 255 & Any & ? & 16 EiB & 16 EiB & UN*X\\
 
 \begin{frame}{Types of files}
 \begin{itemize}
-  \item \bash/ls -la # See files and its types (below)/
+  \item \bash/ls -la/
   \item Regular file -- ordinary file, marked by \texttt{-}
   \item Directory -- in UNIX special type of file, marked by \texttt{d}
   \item Symbolic link (symlink, ``soft link'') -- points to another place, marked by \texttt{l}, slide \ref{links}
@@ -742,7 +742,7 @@ Gain root rights:
     \item Show syntax highlight
     \item Show line numbers
     \item Show space between brackets
-    \item Open any encoding and EOL type
+    \item Open any encoding and EOL
     \item Fold source code
     \item Show line breaks
     \item Mark lines
@@ -771,6 +771,15 @@ Gain root rights:
     \item And \href{http://texteditors.org/cgi-bin/wiki.pl?PickingATextEditor}{more}\ldots
   \end{itemize}
 \end{multicols}
+\end{frame}
+
+\begin{frame}{It \textbf{is} important to select \textbf{good} text editor\ldots}
+  \begin{center}
+    \includegraphics[width=\textwidth-1cm]{real_programmers.png}
+  \end{center}
+  \begin{flushright}
+    \url{https://xkcd.com/378/}
+  \end{flushright}
 \end{frame}
 
 \subsection{FISH}
@@ -876,12 +885,21 @@ Gain root rights:
 \end{frame}
 
 \begin{frame}[fragile]{The PATH variable}
-  \begin{bashcode}
-    #
-  \end{bashcode}
   \begin{itemize}
-    \item 
+    \item Lists directories (separated by colon \texttt{:}) where the current shell searches for commands
+    \item If some software is installed outside standard locations, the user must specify the full path (or update the \texttt{\$PATH})
+    \item In case there are two commands with the same name (e.g. \texttt{/bin/somecommand} and \texttt{/usr/bin/somecommand}), the order of directories in \texttt{\$PATH} matters -- the first occurrence is used, any possible later ignored
   \end{itemize}
+  \begin{bashcode}
+    # See the $PATH variable
+    echo $PATH # Sample output is on the next line:
+    /home/$USER/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin:/sbin:/usr/sbin
+    # Adding new directory to $PATH
+    export PATH=$PATH:/some/new/directory # Ensure to add original $PATH
+    # Do not do it in the following way - it would overwrite $PATH, and
+    #   there would be only the new directory (not the original content)!
+    export PATH=/some/new/directory # Wrong! Old $PATH is missing!
+  \end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Reading variables from command line}
@@ -1004,7 +1022,7 @@ Alias is short cut -- instead of very long command write short alias
     ls -l .bash* # Numbers in first column show links pointing to it
                  # For directories - number of items, for files = 1
     -rw------- 1 vojta users 27298 21. led 16.43 .bash_history # One link
-    -rw-r--r-- 2 vojta users  2707 29. lis 16.21 .bashrc # Same data as below
+    -rw-r--r-- 2 vojta users  2707 29. lis 16.21 .bashrc # Same file as below
     -rw-r--r-- 2 vojta users  2707 29. lis 16.21 .bashrcX # Two links
   \end{bashcode}
 \end{frame}
@@ -1016,7 +1034,7 @@ Alias is short cut -- instead of very long command write short alias
   \item When you log off or network connection is broken, running tasks for particular terminal usually crash
   \item Sometimes number of connections is limited
   \item \texttt{screen} is solution -- virtual terminals
-  \item Launch \texttt{screen} to start new screen terminal, read some info, confirm by Space key or Enter
+  \item Launch \texttt{screen} to start new screen terminal, read some info, confirm by \textbf{Space key} or \textbf{Enter}
   \item To detach from the screen press \texttt{Ctrl+A, D} -- screen is still running in background -- you can even log off
   \item To return back to running screen use \texttt{screen -r} -- if only one screen is running, you get back to it
   \item If more screens are running, use \texttt{screen -r 1234} (the number is seen from \texttt{screen -r})
@@ -1041,7 +1059,7 @@ Alias is short cut -- instead of very long command write short alias
   \begin{bashcode}
     systemctl status/start/stop cron.service # Check/start/stop if cron runs
     crontab -l # List cron tasks
-    crontab -e # Edit cron tasks (launches editor according to the variable):
+    crontab -e # Edit cron tasks:
     # Minute, Hour, Day in month, Month, Day in week, Command (absolute path)
     # 0-59    0-23  1-31          1-12   0-6 starting with Sunday (WTF?)
       *       *     *             *      *            /usr/bin/command
@@ -1055,13 +1073,13 @@ Alias is short cut -- instead of very long command write short alias
 
 \begin{frame}{Chaining commands}
 \begin{itemize}
-  \item \alert{\&} -- command will be launched in background, terminal is available for next typing: \texttt{firefox \&}
-  \item \alert{\&\&} -- second command is launched only when first command exits without error (exits with 0 status): \texttt{mkdir NewDir \&\& cd NewDir}
-  \item \alert{;} -- second command is launched regardless exit status of the first one: \texttt{kshfskcbd; hostname}
-  \item \alert{\textbraceleft\ldots\textbraceright} -- commands within curl brackets are launched as one block
-  \item \alert{||} -- second command is launched when first command fails (has non zero exit status):\\\texttt{cd newdir || \textbraceleft~mkdir newdir \&\& cd newdir; \textbraceright}
+  \item \alert{\texttt{\&}} -- command will be launched in background, terminal is available for next typing: \texttt{firefox \&} (when launching graphical application, hit \textbf{Enter} afterward if there is no active command line prompt)
+  \item \alert{\texttt{\&\&}} -- second command is launched only when first command exits without error (exits with status \texttt{0}): \texttt{mkdir NewDir \&\& cd NewDir}
+  \item \alert{\texttt{;}} -- second command is launched regardless exit status of the first one: \texttt{kshfskcbd; hostname}
+  \item \alert{\texttt{\textbraceleft\ldots\textbraceright}} -- commands within curl brackets are launched as one block
+  \item \alert{\texttt{||}} -- second command is launched when first command fails (has non zero exit status):\\\texttt{cd newdir || \textbraceleft~mkdir newdir \&\& cd newdir; \textbraceright}
   \item Behavior in shells other than bash might be little bit different
-  \item \alert{|} -- pipe -- redirects standard output of one command into standard input of second command: \texttt{ps aux | sort}
+  \item \alert{\texttt{|}} -- pipe -- redirects standard output of one command into standard input of second command: \texttt{ps aux | sort}
 \end{itemize}
 \end{frame}
 
@@ -1069,7 +1087,7 @@ Alias is short cut -- instead of very long command write short alias
 \begin{itemize}
   \item Standard input (\texttt{stdin}) is standard place where software takes input (keyboard and terminal) and writes results to standard output (\texttt{stdout}) -- typically monitor
   \item Standard error output (\texttt{stderr}) is target of error messages -- typically also monitor (but can be log file or so)
-  \item \alert{\textgreater} -- redirects output into new place (file, device, another command)
+  \item \alert{\texttt{\textgreater}} redirects output into new place (file, device, another command,~\ldots)
 \end{itemize}
   \begin{bashcode}
     cat /etc/group # Print whole file /etc/group
@@ -1078,7 +1096,7 @@ Alias is short cut -- instead of very long command write short alias
     cat users # See result
   \end{bashcode}
 \begin{itemize}
-  \item \alert{\textgreater\textgreater} -- adds output to the end of the file (``\textgreater'' rewrites target file)
+  \item \alert{\texttt{\textgreater\textgreater}} adds output to the end of the file (\texttt{\textgreater} rewrites target file)
 \end{itemize}
   \begin{bashcode}
     grep root /etc/group >> users # Add new information into existing file
@@ -1105,10 +1123,10 @@ Alias is short cut -- instead of very long command write short alias
     command >> outputfile 2>error.log
   \end{bashcode}
 \begin{itemize}
-  \item /dev/null -- ``black hole'' -- discards everything (don't care about errors?): \texttt{command 2\textgreater~/dev/null}
-  \item /dev/stdin -- standard input (in case application reads files, not from standard input): \texttt{echo "Žluťoučký kůň" | iconv -f utf-8 -t cp1250 /dev/stdin}
-  \item /dev/stdout -- standard output (we wish to see errors which would be discarded otherwise): \texttt{command 2\textgreater~/dev/stdout}
-  \item /dev/stderr -- standard error output (right place to send errors to): \texttt{echo "error" > /dev/stderr}
+  \item \texttt{/dev/null} -- ``black hole'' -- discards everything (don't care about errors?): \texttt{command 2\textgreater~/dev/null}
+  \item \texttt{/dev/stdin} -- standard input (in case application reads files, not from standard input): \texttt{echo "Žluťoučký kůň" | iconv -f utf-8 -t cp1250 /dev/stdin}
+  \item \texttt{/dev/stdout} -- standard output (we wish to see errors which would be discarded otherwise): \texttt{command 2\textgreater~/dev/stdout}
+  \item \texttt{/dev/stderr} -- standard error output (right place to send errors to): \texttt{echo "error" > /dev/stderr}
 \end{itemize}
 \end{frame}
 
@@ -1118,6 +1136,7 @@ Alias is short cut -- instead of very long command write short alias
   \begin{bashcode}
     uname -a # Information about Linux kernel (version, ...)
     lsb_release -a # Information about Linux distribution release
+    cat /etc/os-release # Similar to above command
     lscpu # Information about CPU
     cat /proc/cpuinfo # Raw list of information about CPU
     lsusb # List of devices on USB
@@ -1132,6 +1151,7 @@ Alias is short cut -- instead of very long command write short alias
     uptime # How long is the system running, number of users, average load
     date # Date and time - plenty of options for formatting
     mount # Information about mounted file systems
+    findmnt # Display mounted devices in tree structure
   \end{bashcode}
 \end{frame}
 
@@ -1155,24 +1175,6 @@ Alias is short cut -- instead of very long command write short alias
     nice -n 7 hard_task.sh # set priority 7 for newly launched task
     renice 15 16302 # Change priority of PID 16302 to 15
     sudo renice 15 16302 -u USER # Change priority of USER's process
-  \end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Managing system services}
-\begin{itemize}
-  \item Different among distributions -- several main methods
-  \item Most common is SystemD, less common older init scripts and RC scripts
-  \item Used to manage services like web server, database, \ldots
-  \item \alert{Read documentation for your distribution!}
-  \item All actions require root authentication
-\end{itemize}
-  \begin{bashcode}
-    # SystemD - huge amount of possibilities
-    systemctl enable/disable/status/start/stop servicename # TAB helps
-    # RC scripts
-    rcservicename status/start/stop # TAB helps to select service
-    # Init scripts
-    /etc/init.d/servicename status/start/stop # TAB helps to select service
   \end{bashcode}
 \end{frame}
 
@@ -1206,18 +1208,18 @@ Alias is short cut -- instead of very long command write short alias
     cd # Change directory (just "cd" or "cd ~" goes to home directory)
     cd .. # One directory up; cd ../..; cd ../../another/directory/
     cd relative/path/from/current/position # Go to selected directory
-    cd /absolute/path/from/root # Absolute path stars by "/"
+    cd /absolute/path/from/root # Absolute path starts by "/"
     tree # Tree like hierarchy of files and directories
     tree -d # List only directories; see tree --help
     tree -L 2 # Only up to second level; combine: tree -d -L 3
     du -sh # Disk usage by current directory, -s for sum, -h for nice units
-    mkdir # Make directory
-    rmdir # Remove empty directory
+    mkdir NewDirectory # Make directory
+    rmdir DirectoryToRemove # Remove empty directory
     ls # List directory content
        # Try parameters -l, -a, -1, -F, -h (with -l or -s), --help
     rm -r # Recursive delete - remove also non-empty directories
     mv from to # Move files/directories (also for renaming)
-    cp from to # Copy, -r (recursive, including subdirectories)        
+    cp from to # Copy, -r (recursive, including subdirectories)
                # -a (keeps all attributes), -v (verbose)
     file somefile # Information about questioned file (what it is, ...)
     xdg-open somefile # Open file by graphical application as in GUI
@@ -1230,9 +1232,9 @@ Alias is short cut -- instead of very long command write short alias
   \item \texttt{mc} to launch MC
   \item Move, copy, delete, files/directories, connect to SSH/(S)FTP, \ldots
   \item Can be used with mouse
-  \item Edit text files (F4)
-  \item F2 for quick menu
-  \item F9 for top menu with many possibilities
+  \item Edit text files (\texttt{F4})
+  \item \texttt{F2} for quick menu
+  \item \texttt{F9} for top menu with many functions
   \item And much more\ldots
   \item Not possible to live without it :-)
 \end{itemize}
@@ -1260,26 +1262,28 @@ Alias is short cut -- instead of very long command write short alias
 \begin{itemize}
   \item \texttt{gzip}, \texttt{bzip2} and \texttt{lzma} are able to pack only one file -- use them together with \texttt{tar} to pack multiple files
   \item \texttt{gzip}, \texttt{bzip2} and \texttt{lzma} when used \textbf{without} \texttt{tar} \alert{move} file into archive
-  \item \texttt{lzma} has excellent compression, but sometimes it is very slow
+  \item \texttt{lzma} has excellent compression, but sometimes is very slow
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Compressing and decompressing archives}
-\begin{center}
-\begin{tabular}{llll}
-\textbf{Archive} & \textbf{Decompressing command}\\
-*.tar & tar xvf archive.tar\\
-*.tar.gz\alert{/}*.tgz & tar xzvf archive.tar.gz\alert{/}.tgz\\
-*.tar.bz\alert{/}*.tbz\alert{/}*.tar.bz2 & tar xjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2\\
-*.tar.xz & lzcat archive.tar.xz | tar xvf -\\
-*.gz & gunzip archive.gz\\
-*.bz2 & bunzip2 archive.bz2\\
-*.xz & unlzma archive.xz\\
-*.zip & unzip archive.zip\\
-*.rar & unrar x archive.rar\\
-\end{tabular}
-\includegraphics[height=2cm]{tar.png}
-\end{center}
+  \begin{center}
+    \begin{tabular}{llll}
+      \textbf{Archive} & \textbf{Decompressing command}\\
+      *.tar & tar xvf archive.tar\\
+      *.tar.gz\alert{/}*.tgz & tar xzvf archive.tar.gz\alert{/}.tgz\\
+      *.tar.bz\alert{/}*.tbz\alert{/}*.tar.bz2 & tar xjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2\\
+      *.tar.xz & lzcat archive.tar.xz | tar xvf -\\
+      *.gz & gunzip archive.gz\\
+      *.bz2 & bunzip2 archive.bz2\\
+      *.xz & unlzma archive.xz\\
+      *.zip & unzip archive.zip\\
+      *.rar & unrar x archive.rar\\
+    \end{tabular}
+  \end{center}
+  \includegraphics[height=2cm]{tar.png}
+  \hfill
+  \url{https://xkcd.com/1168/}
 \end{frame}
 
 \subsection{Searching}
@@ -1311,7 +1315,7 @@ Alias is short cut -- instead of very long command write short alias
     find photos/ -name *.jpg -exec mogrify -resize 1000x1000 '{}' \;
   \end{bashcode}
   \begin{itemize}
-    \item First \texttt{find}'s parameter is location, to search -- absolute or relative, ``\texttt{.}'' means current directory (the only compulsory parameter)
+    \item First \texttt{find}'s parameter is location to search -- absolute or relative, ``\texttt{.}'' means current directory (the only compulsory parameter)
     \item \texttt{-type} for only directories or only files (without this parameter, files as well as directories are looked for)
     \item \texttt{-name} supports wildcarts (\texttt{*}, \texttt{?} and \texttt{[\ldots]})
     \item \texttt{-print} is default action -- prints list of results
