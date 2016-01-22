@@ -91,6 +91,42 @@
 
 \section{Introduction}
 
+\begin{frame}{The course information}
+  \begin{itemize}
+    \item The course page: \url{https://trapa.cz/en/course-linux-command-line-2016}
+    \begin{itemize}
+      \item Česky: \url{https://trapa.cz/cs/kurz-prikazove-radky-linuxu-2016}
+    \end{itemize}
+    \item Subject in SIS: \url{https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=MB120C17}
+    \begin{itemize}
+      \item Česky: \url{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=MB120C17}
+      \item For students having subscribed the subject, active participation and presence whole course is required
+    \end{itemize}
+    \item Working version is available at \url{https://github.com/V-Z/course-r-mol-data} -- feel free to contribute, request new parts or report bugs
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Materials to help you\ldots}
+\begin{itemize}
+ \item Download the presentation \url{https://trapa.cz/sites/default/linuxcourse/linux_bash_metacentrum_course.pdf}
+ \item Download the scripts and toy data \url{https://trapa.cz/sites/default/linuxcourse/scripts.zip}
+ \begin{itemize}
+  \item \alert{Note:} Open the scripts in some \alert{good} \href{http://texteditors.org/cgi-bin/wiki.pl?PickingATextEditor}{text editor} -- showing syntax highlight, line numbers, etc. (\alert{NO} Windows notepad); the file is in UTF-8 encoding and with UNIX end of lines (so that too silly programs like Windows notepad won't be able to open it correctly)
+ \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Virtual machine for learning}
+  \begin{multicols}{2}
+    \begin{itemize}
+      \item If you do not have Linux installed, download VirtualBox from \url{https://www.virtualbox.org/}
+      \item Download openSUSE Leap 42.1 Linux distribution for this course from \url{ftp://botany.natur.cuni.cz/openSUSE_Linux_course.ova} (1.9~GB)
+      \item Launch VirtualBox and go to menu \textbf{File | Import appliance\ldots} to import it. When do, launch it (\textbf{Start})
+    \end{itemize}
+    \includegraphics[height=6cm]{virtualbox.png}
+  \end{multicols}
+\end{frame}
+
 \begin{frame}[allowframebreaks]{What it is UNIX, Linux and GNU\ldots}
 \begin{itemize}
   \item UNIX
@@ -101,10 +137,10 @@
     \item unix-line (UN*X) -- systems compatible with UNIX (Linux, BSD and its variants, Mac OS X, \ldots)
     \begin{itemize}
       \item Mainly open-source (UNIX is commonly commercial -- source code is not available, but specification is)
-      \item Nowadays prevailing over ``old'' UNIX systems, used in many devices from tiny embedded toys to huge data centres
+      \item Nowadays prevailing over ``old'' UNIX systems, used in many devices from tiny embedded toys to huge data centers
       \item Try to provide same service as paid systems, but (mostly) for free
     \end{itemize}
-    \item Many courts about copyrights, parts of code, patents, ... -- USA allow software patents, EU not -- GNU, Linux, BSD, \ldots~try to ensure to have only code not ocvered by any licence -- to avoid possible courts
+    \item Many courts about copyrights, parts of code, patents, ... -- USA allow software patents, EU not -- GNU, Linux, BSD, \ldots~try to ensure to have only code not covered by any patents to avoid possible courts
   \end{itemize}
   \item \href{https://www.gnu.org/}{GNU}
   \begin{itemize}
@@ -112,14 +148,14 @@
     \item Since 1984 Richard Stallman (founder of \href{https://www.fsf.org/}{Free Software Foundation}) tried to make new kernel (Hurd -- not finished yet\ldots)
     \item Generally set of basic system tools -- working with many kernels (Linux BSD*, Mac's Darwin, \ldots), also present in many commercial paid UNIX systems
     \item Source code is free -- anyone can study it (Security!), report bugs, contribute, modify, share it, \ldots
-    \item GNU General Public License (GPL) -- free spirit of open-source -- licence, idea, how to share software
+    \item GNU General Public License (GPL) -- free spirit of open-source -- license, idea, how to share software
   \end{itemize}
   \item Linux
   \begin{itemize}
     \item First version of kernel written by Linus Torvalds in Helsinki in 1991
     \item Kernel was in principle inspired by various UNIX systems and using GNU tools for work
     \item Quickly became popular -- anyone can take it and use for any needs
-    \item Used in small embedded (commonly network) devices, mobile devices (book readers, Android, \ldots), personal computers, servers (from home level to biggest data centres), \ldots
+    \item Used in small embedded (commonly network) devices, mobile devices (book readers, Android, \ldots), personal computers, servers (from home level to biggest data centers), \ldots
     \item Nowadays powering most of the Internet
     \item Anyone can contribute -- not only code, also documentation, design, translations, \ldots
   \end{itemize}
@@ -132,7 +168,7 @@
 \end{center}
 \end{frame}
 
-\subsection{Licences and money}
+\subsection{Licenses and money}
 
 \begin{frame}{Cathedral vs. market place}{What is principal difference between free open-source and commercial software}
 \begin{itemize}
@@ -156,11 +192,11 @@
 \begin{itemize}
   \item Free like freedom of speech, \alert{not} like free beer!
   \item Not every OSS (generally less strict conditions) has to be \textbf{F}OSS (you can do with it (almost) whatever you like)-- source code might be available under some circumstance (only to look), but modification and/or reuse of the code prohibited (and then it is not \textbf{free})
-  \item Open-source -- source code can be seen by the holder of the licence -- many variants what he can do with the code then
+  \item Open-source -- source code can be seen by the holder of the license -- many variants what he can do with the code then
   \item GNU GPL (``\href{https://www.gnu.org/copyleft/}{copyleft}'') -- probably most common OSS license, strict, viral -- derived code has to keep the license -- surprisingly not fully ``free'' as it doesn't allow changes of license
   \item LGPL -- Lesser GPL -- more permissive
   \item BSD license -- permissive -- allow derived code to became closed-source (commonly used by Apple Mac OS X, Safari browser, \ldots)
-  \item Apache licence, Mozilla license,~\ldots -- many variants\ldots~for specific use in particular software
+  \item Apache license, Mozilla license,~\ldots -- many variants\ldots~for specific use in particular software
   \item Creative Commons (CC) -- software licenses above not suitable for multimedia, text, etc. -- CC has many options (including denial of reuse of the product), see \url{https://creativecommons.org/}
   \item And many more\ldots
   \item Orientation might be tricky, but practical output for users is more or less same -- the software can be independently checked for bugs, backdoors, malware, can be improved and under some circumstances, new software can be derived, and usually, it is available for free
@@ -170,8 +206,8 @@
 
 \begin{frame}{How to make money with free open-source software?}
 \begin{itemize}
-  \item Traditional model -- user rents right (``buys a licence'') to use the software (and sometimes for support -- usually for extra money)
-  \item Common mistake -- software is not ``bought'' -- only licence is rented
+  \item Traditional model -- user rents right (``buys a license'') to use the software (and sometimes for support -- usually for extra money)
+  \item Common mistake -- software is not ``bought'' -- only license is rented
   \item Software as service
   \begin{itemize}
     \item (F)OSS is available for free -- user can use it as it is or buy a support -- help
@@ -207,29 +243,34 @@
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Linux kernel and other part around it}
+  \includegraphics[width=\textwidth]{linux_kernel_ubiquity.png}\\
+  \url{https://en.wikipedia.org/wiki/Linux_distribution}
+\end{frame}
+
 \begin{frame}{Extremely simplified adaptive radiation of Linux distributions}
-\includegraphics[width=\textwidth]{linux_fylogen_2.png}\\
-\url{https://en.wikipedia.org/wiki/List_of_Linux_distributions} and \url{https://distrowatch.com/} (currently lists 260 distributions)
+  \includegraphics[width=\textwidth]{linux_fylogen_2.png}\\
+  \url{https://en.wikipedia.org/wiki/List_of_Linux_distributions} and \url{https://distrowatch.com/} (currently $\sim$760 distributions)
 \end{frame}
 
 \subsection{Choose one}
 
 \begin{frame}{Most common Linux distributions}
 \begin{itemize}
-  \item Debian based
+  \item \href{http://distrowatch.com/search.php?package=DEB}{Debian (DEB) based}
   \begin{itemize}
     \item \href{https://www.debian.org/}{Debian} -- one of oldest and most common, especially on servers
     \item \href{http://www.ubuntu.com/}{Ubuntu} (nowadays probably the most popular on PCs and notebooks) and derivatives -- \href{https://www.kubuntu.org/}{Kubuntu}, \href{https://xubuntu.org/}{Xubuntu}, \href{http://lubuntu.net/}{Lubuntu}, \ldots~(according to GUI used)
     \item \href{http://linuxmint.com/}{Mint} -- Based on Ubuntu as well as Debian, very user-friendly
     \item Kali, KNOPPIX, \ldots
   \end{itemize}
-  \item Red Hat based
+  \item \href{http://distrowatch.com/search.php?package=RPM}{Red Hat (RPM) based}
   \begin{itemize}
     \item \href{https://www.redhat.com/}{Red Hat} -- probably the most common commercial
     \item \href{https://getfedora.org/}{Fedora} -- ``playground'' for Red Hat -- very experimental
     \item \href{https://www.centos.org/}{Centos} -- Clone of Red Hat
     \item \href{https://www.opensuse.org/}{openSUSE} -- SUSE is second largest Linux company, openSUSE is community distribution (free)
-    \item Mageia, PCLinuxOS, \ldots
+    \item Scientific Linux, Mageia, PCLinuxOS, \ldots
   \end{itemize}
   \item Android
   \item For experienced users: Arch, Slackware, Gentoo, \ldots
@@ -238,14 +279,14 @@
 
 \begin{frame}{Graphical User Interfaces}{More like ``Mac-style'', ``Windows-style'' or something else? Feature rich or minimalistic?}
 \begin{itemize}
-  \item Most of GUIs are available for most of common distributions -- one is picked as default and ``only'' colour style is different
+  \item Most of GUIs are available for most of common distributions -- one is picked as default and ``only'' color style is different
   \item \href{https://unity.ubuntu.com/}{Unity} -- developed by Ubuntu, relatively specific (not common outside Ubuntu), ``Mac-style''
   \item \href{https://www.kde.org/}{KDE} -- one of the most common, feature extremely rich, basically ``Windows-like'' (can be changed)
   \item \href{https://www.gnome.org/}{GNOME} -- one of the most common, relatively simplistic interface, but still feature rich, ``Mac-like''
   \item \href{http://xfce.org/}{XFCE} -- lightweight version of older GNOME -- for older computers or users not willing to be disturbed by graphical effects, basically ``Mac-like'' looking, but panels can be moved to ``Windows style''
   \item \href{http://cinnamon.linuxmint.com/}{Cinnamon} -- remake of GNOME to look more like Windows\ldots
   \item And much more\ldots
-  \item Choose that you like -- doesn't matter much which one\ldots
+  \item Choose what you like -- doesn't matter much which one\ldots
 \end{itemize}
 \end{frame}
 
@@ -289,12 +330,12 @@
   \item Live CD/USB
   \begin{itemize}
     \item The most easy -- burn ISO image of CD from web of almost any Linux distribution or use for example \href{https://unetbootin.github.io/}{UNetbootin} to prepare bootable flash
-    \item You only have to need how to boot from CD/USB (usually press ESC, DEL, F2, F10, F12, \ldots~when starting computer -- varies according to manufacturer)
+    \item You only have to know how to boot from CD/USB (usually press \texttt{ESC}, \texttt{DEL}, \texttt{F2}, \texttt{F10}, \texttt{F12}, \ldots~when starting computer -- varies according to manufacturer)
   \end{itemize}
-  \item Virtualisation
+  \item Visualization
   \begin{itemize}
-    \item Requires powerful computer (preferable Intel i5 or i7 and over 4 GB of RAM)
-    \item Install virtual machine (probably the most easy is \href{https://www.virtualbox.org/}{VirtualBox}) -- allows install and run another operating system inside host as an ordinary application
+    \item Requires relatively powerful computer (preferable Intel i5 or i7 and over 4~GB of RAM)
+    \item Install virtual machine (probably the most easy is \href{https://www.virtualbox.org/}{VirtualBox}) -- allows install and run another operating system inside host as an ordinary application -- very easy and comfortable
   \end{itemize}
 \end{itemize}
 \end{frame}
@@ -304,52 +345,37 @@
 \begin{frame}{The Linux diversity\ldots}
 \begin{itemize}
   \item Try several distributions and just choose one you like\ldots
-  \item Unless selection among the most common, it doesn't matter much which one you pick up
+  \item Unless selecting among the most common, it doesn't matter much which one you pick up
   \item Which design do you like?
   \item Which distribution is your friend or colleague using?
   \item You can change GUI without change of distribution
   \item Applications are still same -- no difference in Firefox across distributions -- keep your settings when changing distribution
   \item Everyone using Android is using Linux ;-)
-  \item Special use -- \href{http://www.freenas.org/}{FreeNAS} for home as well as bussiness file server, \href{https://partedmagic.com/}{Parted Magic} and/or \href{https://www.system-rescue-cd.org/SystemRescueCd_Homepage}{SystemRescueCD} to repair broken system (disk failure) and save data, \ldots
+  \item Special use -- \href{http://www.freenas.org/}{FreeNAS} for home as well as business file server, \href{https://partedmagic.com/}{Parted Magic} and/or \href{https://www.system-rescue-cd.org/SystemRescueCd_Homepage}{SystemRescueCD} to repair broken system (disk failure) and save data, \ldots
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Differences among (common) Linux distributions}
 \begin{itemize}
-  \item Design and colours ;-)
+  \item Design and colors ;-)
   \item Default GUI
   \item Applications available right after installation
   \item Default settings (not much)
   \item Package management -- especially in command line
-  \item Management of system services (how to start/stop certain server service like database or web)
-  \item Sometimes in location of some configuration files (for system services)
+  \item Management of system services (how to start/stop certain server service like database or web) -- not important for daily usage for most of users
+  \item Sometimes in location of some configuration files (for system services) -- also not important in daily usage of most of users
   \item Kernel is almost same, applications are used in same way
-  \item Command line is almost same across Linux, and almost same as in other UNIX
+  \item Command line is almost same across Linux, and almost same as in other UNIX systems
 \end{itemize}
 \end{frame}
 
 \section{UN*X}
 
-\begin{frame}{Lets go through the theory of UNIX operating systems and how to use them\ldots}
-\begin{enumerate}
-  \item We start with some theory and broader context
-  \item We will see differences among operating systems commonly making issues
-  \item We will learn basic commands to use in almost any UNIX command line
-  \begin{itemize}
-    \item We will work on Linux, but other systems are very similar, regarding command line
-    \item We won't distinguish among various types of UNIX/UN*X
-  \end{itemize}
-  \item We will learn some basic manipulation with text
-  \item We will write some easy scripts
-  \item And more\ldots
-\end{enumerate}
-\end{frame}
-
 \subsection{Basic theory of operating system}
 
 \begin{frame}{Short overview of hard disk layout}
 \begin{itemize}
-  \item Physical disk (piece of hardware) has at least 1 partition -- division seen in Windows as ``disks'' (C, D, \ldots) and mounted directory in UNIX
+  \item Physical disk (piece of hardware) has at least 1 partition -- division seen in Windows as ``disks'' (\texttt{C}, \texttt{D}, \ldots) and mounted directory in UNIX
   \item MBR -- older description of disk division, up to 4 primary partitions (OS typically requires at leas one to run), one can be extended and contain more partitions, disks up to 2 TB
   \item GPT -- newer, no relevant limits, requires UEFI (replacement of BIOS, newer computers)
   \item If unsure what to do, high probability to break it\ldots
@@ -361,12 +387,12 @@
 
 \begin{frame}{Put together more disks}
 \begin{itemize}
-  \item RAID -- Redundant Array of Inexpensive/Independent Disks
+  \item \href{https://en.wikipedia.org/wiki/RAID}{RAID} -- Redundant Array of Inexpensive/Independent Disks
   \item RAID~0 -- stripping, no redundancy, no security, speed up (two or more disks joined into one, files divided among disks)
   \item RAID~1 -- mirroring -- even number of disks of same size -- resulting capacity is half, very fast, secure
   \item RAID~5 -- at least three disks, one is used for parity control, little bit slower
   \item Combinations (RAID~10, \ldots)
-  \item LVM -- Logical Volume Management -- built over several partitions/disks -- seen by OS as one continuous space, can be dynamically managed
+  \item \href{https://en.wikipedia.org/wiki/Logical_volume_management}{LVM} -- Logical Volume Management -- built over several partitions/disks -- seen by OS as one continuous space, can be dynamically managed
   \item Functionality of RAID and LVM (and more) is more or less covered by XFS and Btrfs (next slide)
 \end{itemize}
 \end{frame}
@@ -375,53 +401,41 @@
 \begin{center}
 \begin{footnotesize}\begin{tabular}{ccccccc}
 \textbf{FS name} & \begin{tabular}[x]{@{}c@{}}\textbf{Name}\\\textbf{length}\end{tabular} & \begin{tabular}[x]{@{}c@{}}\textbf{Characters}\\\textbf{in file name}\end{tabular} & \begin{tabular}[x]{@{}c@{}}\textbf{Path}\\\textbf{length}\end{tabular} & \textbf{File size} & \begin{tabular}[x]{@{}c@{}}\textbf{Partition}\\\textbf{size}\end{tabular} & \textbf{Systems}\\
-FAT32 & 255 & Unicode & No limit & 4 GB & 2 TB & Any\\
-NTFS & 255 & Variable & Variable & 16 TB & 16 EB & \begin{tabular}[x]{@{}c@{}}Windows,\\read-write\\in UN*X\end{tabular}\\
-HFS+ & 255 & Unicode & ? & 8 EB & 8 EB & Mac OS\\
-ext4 & 255 & Any, not / & No limit & 16 TB & 1 EB & UN*X\\
-XFS & 255 & Any & No limit & 9 EB & 9 EB & UN*X\\
-Btrfs & 255 & Any & ? & 16 EB & 16 EB & UN*X\\
+FAT32 & 255 & Unicode & No limit & 4 GiB & 2 TiB & Any\\
+exFAT & 255 & ? & No limit & 16 EiB & 64 ZiB & Any\\
+NTFS & 255 & Variable & Variable & 16 TiB & 16 EiB & \begin{tabular}[x]{@{}c@{}}Windows,\\read-write\\in UN*X\end{tabular}\\
+HFS+ & 255 & Unicode & ? & 8 EiB & 8 EiB & Mac OS\\
+ext4 & 255 & Any, not / & No limit & 16 TiB & 1 EiB & UN*X\\
+XFS & 255 & Any & No limit & 9 EiB & 9 EiB & UN*X\\
+Btrfs & 255 & Any & ? & 16 EiB & 16 EiB & UN*X\\
 \end{tabular}
 \end{footnotesize}
 \end{center}
 \begin{itemize}
   \item FAT32 (including extensions) is old-fashioned and not reliable FS
-  \item NTFS doesn't support UNIX permissions, so it can't be used as system partition in Linux
+  \item NTFS, FAT do not support UNIX permissions, so they can't be used as system partition in Linux
   \item ext4, XFS and Btrfs are not accessible in Windows
   \item XFS and Btrfs are the most advanced FS in common use
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Creation and control of FS}
-\begin{itemize}
-  \item To manage disk partitioning use \texttt{fdisk /dev/sdX} (doesn't support GPT very well yet) or \texttt{gdisk /dev/sdX}
-  \item When hard drive is partitioned, partitions must be formatted
-  \item Commands \texttt{mkfs.*} create various FS, common syntax is \texttt{mkfs.XXX -parameters /dev/sdXY}, where sdXY is particular disk partition
-  \item Parameters can set label and various settings of behaviour of the disk partition, check \texttt{man mkfs.XXX}
-  \item To check FS for errors use \texttt{fsck.XXX /dev/sdXY} (according to respective FS)
-  \item \texttt{tune2fs -parameters /dev/sdXY} can set various parameters to influence behaviour of disk partition
-  \item \texttt{hdparm -parameters /dev/sdX} can set advanced hardware parameters of hard drive
-  \item The most convenient is using graphical tools available in all distributions\ldots
-\end{itemize}
-\end{frame}
-
 \begin{frame}[fragile]{File names}
 \begin{itemize}
-  \item Linux allow \alert{any} character in file name, except \alert{slash} (\alert{/}), so including anything on keyboard as well as line break (!). Be conservative\ldots
+  \item Linux allow \alert{any} character in file name, except \alert{slash} (\texttt{/}), so including anything on keyboard as well as line break (!). Be conservative\ldots
 \end{itemize}
   \begin{bashcode}
     mkdir My New Directory # Produces THREE directories (mkdir creates
                            # directories; spaces separate parameters)
                            # Solutions:
     mkdir "My New Directory" # (you can use simple quotes '...' as well) or
-    mkdir My\ New\ Directory # \ escapes following character
+    mkdir My\ New\ Directory # "\" escapes following character
     rmdir My\ New\ Directory # Same problem and solution when removing it
     touch \* # Creates new empty file named just *
     rm * # What would be removed? :-)
     rm \* # This works...
   \end{bashcode}
 \begin{itemize}
-  \item File names starting by \alert{dot} (\alert{.}) are hidden by default (typically user settings and application data in user home)
+  \item Files and directories starting by \alert{dot} (\texttt{.}) are hidden by default (typically user settings and application data in user home)
 \end{itemize}
   \begin{bashcode}
     touch .hiddenfile # Let's make empty text file hidden by default
@@ -435,26 +449,26 @@ Btrfs & 255 & Any & ? & 16 EB & 16 EB & UN*X\\
   \item Similar in another UN*X systems
   \item Top directory ``\texttt{/}'' -- ``root''
   \item Everything else (including disks and network shares) are mounted in subdirectories (/\ldots)
-  \item /bin -- very basic command line utilities
-  \item /boot -- bootloader responsible for start of system
-  \item /dev -- devices -- disks, CD, RAM, USB devices, \ldots
-  \item \alert{/etc} -- system configuration in plain text files -- edit them to change settings (read documentation and comments there)
-  \item \alert{/home} -- users' homes
-  \item /lib, /lib64 -- basic system libraries
-  \item /lost+found -- feature of FS, after crash and recovery of FS, restored files are there
-  \item \alert{/media} -- attached disks (USB flash, \ldots) usually appear there (might be in /var/run/media) -- subdirectories are automatically created when device is plugged and disappears when unplugged
-  \item /mnt -- usually manually mounted file systems (but can it can be mounted elsewhere)
-  \item /opt -- optional, usually locally compiled software
-  \item /proc -- dynamic information about system processes
-  \item /root -- root's (admin's) home
-  \item /sbin -- basic system utilities
-  \item /selinux -- SELinux is security framework
-  \item /srv -- FTP and www server data (can be in /var/srv)
-  \item /sys -- basic system
-  \item /tmp -- temporary files -- users have private dynamically created spaces there
-  \item /usr -- binaries (executable applications) and libraries of installed applications
-  \item \alert{/var} -- data of most of applications and services, including e.g. database data, system logs, \ldots
-  \item \alert{/windows} -- if on dualboot, Windows disks are commonly mounted here
+  \item \texttt{/bin} -- very basic command line utilities
+  \item \texttt{/boot} -- bootloader responsible for start of system
+  \item \texttt{/dev} -- devices -- disks, CD, RAM, USB devices, \ldots
+  \item \alert{\texttt{/etc}} -- system configuration in plain text files -- edit them to change settings (read documentation and comments there)
+  \item \alert{\texttt{/home}} -- users' homes
+  \item \texttt{/lib}, \texttt{/lib64} -- basic system libraries
+  \item \texttt{/lost+found} -- feature of FS, after crash and recovery of FS, restored files are there
+  \item \alert{\texttt{/media}} -- attached disks (USB flash, \ldots) usually appear there (might be in \texttt{/var/run/media}) -- subdirectories are automatically created when device is plugged and disappears when unplugged
+  \item \texttt{/mnt} -- usually manually mounted file systems (but can it can be mounted elsewhere)
+  \item \texttt{/opt} -- optional, usually locally compiled software
+  \item \texttt{/proc} -- dynamic information about system processes
+  \item \texttt{/root} -- root's (admin's) home
+  \item \texttt{/sbin} -- basic system utilities
+  \item \texttt{/selinux} -- SELinux is security framework
+  \item \texttt{/srv} -- FTP and WWW server data (can be in \texttt{/var/srv})
+  \item \texttt{/sys} -- basic system
+  \item \texttt{/tmp} -- temporary files -- users have private dynamically created spaces there
+  \item \texttt{/usr} -- binaries (executable applications) and libraries of installed applications
+  \item \alert{\texttt{/var}} -- data of most of applications and services, including e.g. database data, system logs, \ldots
+  \item \alert{\texttt{/windows}} -- if on dual boot, Windows disks are commonly mounted here
   \item Can be altered, modified
   \item Usually, work only in your home, anywhere else modify files only if you are absolutely sure what you are doing
   \item Normal user doesn't have permission to modify files outside his directory (with exception of plugged removable media)
@@ -464,7 +478,7 @@ Btrfs & 255 & Any & ? & 16 EB & 16 EB & UN*X\\
 
 \begin{frame}{Configuration in /etc (examples)}
 \begin{itemize}
-  \item Configuration of system services (servers, \ldots) and behaviour
+  \item Configuration of system services (servers, \ldots) and behavior
   \begin{itemize}
     \item Apache web server, database, FTP server, networking, basic system settings, \ldots
   \end{itemize}
@@ -481,6 +495,7 @@ Btrfs & 255 & Any & ? & 16 EB & 16 EB & UN*X\\
 
 \begin{frame}{Types of files}
 \begin{itemize}
+  \item \bash/ls -la # See files and its types (below)/
   \item Regular file -- ordinary file, marked by \texttt{-}
   \item Directory -- in UNIX special type of file, marked by \texttt{d}
   \item Symbolic link (symlink, ``soft link'') -- points to another place, marked by \texttt{l}, slide \ref{links}
@@ -503,7 +518,7 @@ Btrfs & 255 & Any & ? & 16 EB & 16 EB & UN*X\\
     # (nothing is shown when typing)
     # Confirm by Enter
   \end{bashcode}
-  Our toy server: user names from \texttt{u01} to \texttt{u25}, password \texttt{user}
+  Our toy server: user names from \texttt{u01} to \texttt{u30}, password: \texttt{Cuser1}
   \bash/ssh uXY@vyuka.natur.cuni.cz/
   If fingerprint key changes, ssh complains a lot -- possible \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{man in the middle attack}
   \columnbreak
@@ -528,8 +543,8 @@ x & 1 & Enter it & Launch application \\
 \end{tabular}
 \end{center}
 \begin{itemize}
-  \item rwxr-wr{-}- -- 3 characters for permissions for owner of the file/directory, group he is belonging to, and other users (``d'' on beginning marks directories, ``l'' links, ``+'' ACL, slide \ref{acl})
-  \item 764 -- same as above --- numbers for each role are summed -- first one is for owner, second for group and last for others
+  \item \texttt{rwxr-wr{-}-} -- 3*3 characters for permissions for owner of the file/directory, group it is belonging to, and other users (\texttt{d} on beginning marks directories, \texttt{l} links, \texttt{+} ACL, slide \ref{acl})
+  \item \texttt{764} -- same as above --- numbers for each role are summed -- first one is for owner, second for group and last for others
 \end{itemize}
 \end{frame}
 
@@ -574,10 +589,10 @@ Permission to ``write'' also means permission to \textbf{delete} it.
     chmod +x script.sh # Make script.sh executable for everyone
     chmod o-r mydir # Remove read permission from others on mydir
     chmod 600 FILE1 FILE2 # Make both files readable and
-                          # writeable only by their owner
+                          # writable only by their owner
     chmod 000 FILE # No one can do anything - owner or root must add
                    # some permissions before any manipulation...
-    chmod 777 * # All permissions for everyone for all files
+    chmod 777 * # All permissions for everyone on everything
   \end{bashcode}
 \end{frame}
 
@@ -586,21 +601,24 @@ Permission to ``write'' also means permission to \textbf{delete} it.
   \item By default, it is not possible to give specific permission to the user who is not owner, nor member of group owing the file
   \item In ext4 FS it has to be turned on manually (usually it is by default), it is part of XFS and Btrfs
   \item Command \texttt{getfacl} lists those extra permissions
-  \item When in use, ``basic'' tools listing permissions (e.g. \texttt{ls -l}, ACL in use is marked by ``\texttt{+}'' on the beginning of the line) sometimes do not show correct result
+  \item When in use, ``basic'' tools listing permissions (e.g. \texttt{ls -l}, ACL in use is marked by \texttt{+} on the beginning of the line) sometimes do not show correct result
   \item Command \texttt{setfacl} sets it
 \end{itemize}
   \begin{bashcode}
     getfacl FILE # get ACL for FILE
     setfacl -m u/g:USER/GROUP:r/w/x FILE # Add for USER/GROUP r/w/x right
-    setfacl -R # Recursive
-    setfacl -b # Remove all ACL
+    setfacl -R ... # Recursive (including subdirectories)
+    setfacl -b FILE # Remove all ACL from FILE
   \end{bashcode}
 \end{frame}
 
 \begin{frame}{Set default permissions for new files}
 \begin{itemize}
   \item \texttt{umask} sets implicit permissions for newly created files for user
-  \item syntax is similar to \texttt{chmod}, but reverse (i.e. 027 keeps all rights for owner, for group only reading and nothing for others)
+  \item syntax is similar to \texttt{chmod}, but reverse (e.g. 027 keeps all rights for owner, for group only reading and nothing for others)
+  \begin{itemize}
+    \item \texttt{umask} number \textbf{removes} certain permissions
+  \end{itemize}
   \item \texttt{umask 027} (or other number) is typically set in \texttt{$\sim$/.bashrc}
   \item Typically used in network environment
   \item Set with care -- new permissions will have plenty of consequences (different are typically needed for web pages, private files, shared files etc.)
@@ -682,9 +700,9 @@ Gain root rights:
 \begin{itemize}
   \item Windows and UNIX have different internal symbol for end of line (new line) -- EOL
   \begin{itemize}
-    \item UNIX: LF ("\textbackslash n")
-    \item Windows/DOS: CR+LF ("\textbackslash r\textbackslash n")
-    \item Older Mac: CR ("\textbackslash r") (Mac up to 9 wasn't UN*X, since OS X is)
+    \item UNIX: LF (\texttt{\textbackslash n})
+    \item Windows/DOS: CR+LF (\texttt{\textbackslash r\textbackslash n})
+    \item Older Mac: CR (\texttt{\textbackslash r}) (Mac up to 9 wasn't UN*X, since OS X is)
   \end{itemize}
   \item Good text editor can open correctly any EOL, but for example execution of script written in Windows will probably fail on Linux
   \item Different systems use different encoding
@@ -694,7 +712,7 @@ Gain root rights:
     \item Older UNIX: ISO-8859-X (variants according to region)
     \item Other much less common types
   \end{itemize}
-  \item Text editors can usually open any encoding, but autodetection commonly fails -- set it manually
+  \item Text editors can usually open any encoding, but auto detection commonly fails -- set it manually
 \end{itemize}
 \end{frame}
 
@@ -739,18 +757,18 @@ Gain root rights:
 \end{multicols}
 \begin{multicols}{4}
   \begin{itemize}
-    \item Kate
-    \item KWrite
-    \item Vim
-    \item GNU Emacs
-    \item Geany
-    \item Bluefish
-    \item Gedit
-    \item SciTE
-    \item Ste
-    \item Tea
-    \item Nano
-    \item And more\ldots
+    \item \href{http://kate-editor.org/}{Kate}
+    \item \href{https://www.kde.org/applications/utilities/kwrite/}{KWrite}
+    \item \href{http://www.vim.org/}{Vim}
+    \item \href{https://en.wikipedia.org/wiki/Emacs}{GNU Emacs}
+    \item \href{http://www.geany.org/}{Geany}
+    \item \href{http://bluefish.openoffice.nl/index.html}{Bluefish}
+    \item \href{https://wiki.gnome.org/Apps/Gedit}{Gedit}
+    \item \href{https://notepad-plus-plus.org/}{Notepad++}
+    \item \href{https://www.sublimetext.com/}{Sublime}
+    \item \href{https://atom.io/}{Atom}
+    \item \href{http://www.nano-editor.org/}{Nano}
+    \item And \href{http://texteditors.org/cgi-bin/wiki.pl?PickingATextEditor}{more}\ldots
   \end{itemize}
 \end{multicols}
 \end{frame}
@@ -761,14 +779,14 @@ Gain root rights:
 \begin{itemize}
   \item Many names, many ways how to get it, still the same thing
   \item Fish -- the command line interface
-  \item Terminal
+  \item Terminal (console)
   \begin{itemize}
     \item Originally machine used for connection to remote server
     \item System uses old fashioned terminal for inner purposes
     \begin{itemize}
-      \item From GUI available using Ctrl+Alt+F1 to F12
-      \item Changing terminals using Alt+F1 to F12
-      \item Return back to GUI using Alt+F7
+      \item From GUI available using \texttt{Ctrl+Alt+F1} to \texttt{F12}
+      \item Changing terminals using \texttt{Alt+F1} to \texttt{F12}
+      \item Return back to GUI using \texttt{Alt+F7}
       \item Some are used for log outputs etc.
     \end{itemize}
     \item Nowadays used ``indirectly'' with special applications (``emulators'')
@@ -776,8 +794,8 @@ Gain root rights:
   \item Terminal emulator
   \begin{itemize}
     \item Application used to get the ``terminal'' and work in command line
-    \item Every GUI has some -- Konsole, Yakuake, XTerm, Gnome Terminal, Guake, \ldots
-    \item Commonly allow appearance customisation -- font, colours, background, style of notifications, \ldots
+    \item Every GUI has some -- Konsole, Yakuake, XTerm, Gnome Terminal, Guake, LxTerminal, \ldots
+    \item Commonly allow appearance customization -- font, colors, background, style of notifications, \ldots
     \item Launch as many copies as you need (some allow tabs for easier work)
   \end{itemize}
 \end{itemize}
@@ -787,33 +805,33 @@ Gain root rights:
 \begin{itemize}
   \item Shell (sh) -- feature rich scripting programming language -- general specification, several variants
   \item So called POSIX shell -- Portable Operating System Interface -- transferable among hardware platforms (and UNIX variants)
-  \item Interpreter of our commands inserted into command line
-  \item BASH -- Bourne again shell
+  \item \textbf{Interpreter of our commands inserted into command line}
+  \item \textbf{BASH} -- Bourne again shell
   \begin{itemize}
     \item Probably the most common shell, based on original sh, respecting original specification, adding new features
     \item We will use it
   \end{itemize}
-  \item Other variants: csh (syntax influenced by C), ksh (younger, backward compatible with bash), zsh (extended bash), ash (mainly in BSD)
+  \item Other variants: \textbf{csh} (syntax influenced by C), \textbf{ksh} (younger, backward compatible with bash), \textbf{zsh} (extended bash), \textbf{ash} (mainly in BSD)
   \item There are subtle differences in syntax and features
   \item Language suitable for easy scripting and system tasks, not for ``big'' programming, neither for graphical applications
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Nice BASH features for easier work}
+\begin{frame}{Nice BASH features for easier work (selection)}
 \begin{itemize}
   \item Arrows up and down list in the history of commands
   \item List whole history by command \texttt{history}
-  \item Ctrl+R -- reverse search in history -- type to search last command containing typed characters
-  \item TAB -- list command and files starting by typed characters
-  \item Home/End -- go to beginning/end of the line
-  \item Ctrl+L -- clears screen (like \texttt{clear} command)
-  \item Ctrl+Shift+C/V -- copy/paste the text
-  \item Ctrl+C -- cancel running task
-  \item Ctrl+D -- log out (like commands \texttt{exit} or \texttt{logout})
-  \item Ctrl+U -- move text before cursor into clipboard
-  \item Ctrl+K -- move text after cursor into clipboard
-  \item Ctrl+left/right arrow -- skip words
-  \item And more\ldots
+  \item \texttt{Ctrl+R} -- reverse search in history -- type to search last command containing typed characters
+  \item \texttt{TAB} -- list command and files starting by typed characters
+  \item \texttt{Home}/\texttt{End} -- go to beginning/end of the line
+  \item \texttt{Ctrl+L} -- clears screen (like \texttt{clear} command)
+  \item \texttt{Ctrl+Shift+C}/\texttt{V} -- copy/paste the text
+  \item \texttt{Ctrl+C} -- cancel running task
+  \item \texttt{Ctrl+D} -- log out (like commands \texttt{exit} or \texttt{logout})
+  \item \texttt{Ctrl+U} -- move text before cursor into clipboard
+  \item \texttt{Ctrl+K} -- move text after cursor into clipboard
+  \item \texttt{Ctrl+left/right arrow} -- skip words
+  \item \texttt{Ctrl+T} -- flips current and left character
 \end{itemize}
 \end{frame}
 
@@ -824,12 +842,12 @@ Gain root rights:
   \item Commonly written in CAPITALS (just a costume)
   \item Popular and useful variables
   \begin{itemize}
-    \item HOME -- location of user's home directory
-    \item HOSTNAME -- network name of the computer
-    \item LANG -- language settings, encoding, similarly variables LC\_*
-    \item PATH -- paths where to look for applications -- all applications have to be in PATH or called directly
-    \item SHELL -- shell in use (bash or something else)
-    \item USER -- user name
+    \item \texttt{HOME} -- location of user's home directory
+    \item \texttt{HOSTNAME} -- network name of the computer
+    \item \texttt{LANG} -- language settings, encoding, similarly variables\texttt{ LC\_*}
+    \item \texttt{PATH} -- paths where to look for applications -- all applications have to be in \texttt{PATH} or called directly
+    \item \texttt{SHELL} -- shell in use (bash or something else)
+    \item \texttt{USER} -- user name
     \item And many more, commonly specific for particular server
   \end{itemize}
 \end{itemize}
@@ -841,8 +859,8 @@ Gain root rights:
     export -p # Get all exported variables and their values
     echo $VARIABLENAME # Get value of particular variable
     echo $PATH # Get path where to look for applications
-    export VARIABLE=variablevalue # Set new variable and its value
-                                  # Or replace existing variable by new value
+    VARIABLE='variablevalue' # Set new variable and its value
+                             # Or replace existing variable by new value
     export EDITOR=/usr/bin/vim # Set new default text editor
     export PATH=$PATH:~/bin # Extend PATH -- add /home/$USER/bin
                             # Take existing PATH and add new values
@@ -855,6 +873,15 @@ Gain root rights:
   \item To make variables permanent, add \texttt{export} commands into \texttt{$\sim$/.profile} or \texttt{$\sim$/.bash\_profile}, or \texttt{$\sim$/.bashrc} (according to shell and its settings)
   \item ``\texttt{$\sim$}'' means home directory
 \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{The PATH variable}
+  \begin{bashcode}
+    #
+  \end{bashcode}
+  \begin{itemize}
+    \item 
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Reading variables from command line}
@@ -884,7 +911,7 @@ Gain root rights:
     x=`expr 1 '+' 6` # Result will be in $x
     echo $x
     x=1 # Set x to 1
-    y=$x+1 # Will this add 1? Why not?
+    y=$x+1 # Will this add 1? Why?
     echo $y # See result
     y=`expr $x + 1` # This will work - note ` and space around +
     echo $y # Result
@@ -909,11 +936,11 @@ Alias is short cut -- instead of very long command write short alias
     source ~/.bashrc # to reload BASH settings
     # or "source" the file you modified
     # Popular aliases
-    alias ls="ls --color=auto" # Make output of ls coloured
+    alias ls="ls --color=auto" # Make output of ls colored
     alias l="ls -la" # Long list (add details) with hidden files
     # Popular settings in ~/.bashrc (influencing bash, not other shells)
     test -s ~/.alias && . ~/.alias || true # Check for extra alias file
-    eval "`dircolors -b`" # More colours for outputs
+    eval "`dircolors -b`" # More colors for outputs
     HISTCONTROL='ignoreboth' # Ignore repeated entries in bash history
     HISTFILESIZE='100000' # Length of bash history
   \end{bashcode}
@@ -928,7 +955,7 @@ Alias is short cut -- instead of very long command write short alias
   \end{bashcode}
 \begin{itemize}
   \item Text in single quotes (\texttt{'\ldots'}) preserves the literal value of each character within the quotes
-  \item Textin double quotes (\texttt{"\ldots"}) preserves the literal value of all characters within the quotes, with the exception of dollar (\texttt{\textdollar}), back tick (\texttt{\textasciigrave}) and back slash (\texttt{\textbackslash})
+  \item Tex tin double quotes (\texttt{"\ldots"}) preserves the literal value of all characters within the quotes, with the exception of dollar (\texttt{\textdollar}), back tick (\texttt{\textasciigrave}) and back slash (\texttt{\textbackslash})
   \item A double quote may be quoted within double quotes by preceding it with a backslash
   \item Text between back ticks (\texttt{\textasciigrave\ldots\textasciigrave}) will be evaluated and then used as command or argument
 \end{itemize}
@@ -944,16 +971,16 @@ Alias is short cut -- instead of very long command write short alias
     echo "$a" # Double quotes preserve literal value, except $, `, \
     abcdef
     echo `$a` # Text between back ticks is evaluated and launched
-    abcdef: command not found
+    abcdef: command not found # There is no command "abcdef"...
     workdir=`pwd` && echo $workdir # Common use of `...` and $
     echo "Hi, dear $USER" # Compare this and following command...
     echo 'Hi, dear $USER'
   \end{bashcode}
 \begin{itemize}
-  \item \alert{\textdollar} marks variables
-  \item \alert{\textbackslash} escapes following character -- it will not have its special meaning (space to separate arguments, \ldots)
-  \item \alert{*} replaces any characters (\texttt{ls a*} lists all files starting with ``a'')
-  \item \alert{?} replaces one single character
+  \item \alert{\texttt{\textdollar}} marks variables
+  \item \alert{\texttt{\textbackslash}} escapes following character -- it will not have its special meaning (space to separate arguments, \ldots)
+  \item \alert{\texttt{*}} replaces any characters (\texttt{ls a*} lists all files starting with ``a'')
+  \item \alert{\texttt{?}} replaces one single character
 \end{itemize}
 \end{frame}
 
@@ -1033,7 +1060,7 @@ Alias is short cut -- instead of very long command write short alias
   \item \alert{;} -- second command is launched regardless exit status of the first one: \texttt{kshfskcbd; hostname}
   \item \alert{\textbraceleft\ldots\textbraceright} -- commands within curl brackets are launched as one block
   \item \alert{||} -- second command is launched when first command fails (has non zero exit status):\\\texttt{cd newdir || \textbraceleft~mkdir newdir \&\& cd newdir; \textbraceright}
-  \item Behaviour in shells other than bash might be little bit different
+  \item Behavior in shells other than bash might be little bit different
   \item \alert{|} -- pipe -- redirects standard output of one command into standard input of second command: \texttt{ps aux | sort}
 \end{itemize}
 \end{frame}
@@ -1135,7 +1162,7 @@ Alias is short cut -- instead of very long command write short alias
 \begin{itemize}
   \item Different among distributions -- several main methods
   \item Most common is SystemD, less common older init scripts and RC scripts
-  \item Used to manage services like webserver, database, \ldots
+  \item Used to manage services like web server, database, \ldots
   \item \alert{Read documentation for your distribution!}
   \item All actions require root authentication
 \end{itemize}
@@ -1262,7 +1289,7 @@ Alias is short cut -- instead of very long command write short alias
     locate somename # Searches for files/directories in local database
     updatedb # Must be regularly launched to get "locate" to work
     which # Full path to application (shell command)
-    whereis # Path to source code, executables and man pages for the command
+    whereis # Path to source code, executable and man pages for the command
     # Test if executable command exists (good for scripts)
     # If "Application" is missing, script ends with error
     command -v Application >/dev/null 2>&1 || { echo >&2 "Application is
@@ -1307,7 +1334,7 @@ Alias is short cut -- instead of very long command write short alias
   \begin{itemize}
     \item \texttt{man somecommand}
     \item Arrows to list up and down, \texttt{q} to quit
-    \item Type \texttt{/} and type text and hit Enter to search -- next hit by \texttt{n}, quit search by Esc (twice)
+    \item Type \texttt{/} and type text and hit Enter to search -- next hit by \texttt{n}, quit search by ESC (twice)
     \item Command \texttt{info} more advanced -- type \texttt{?} for help
   \end{itemize}
   \item Parameters can be combined, order doesn't matter (same variants: \texttt{ls -la}; \texttt{ls -al}; \texttt{ls -a -l}; \texttt{ls -l -a})
@@ -1322,7 +1349,7 @@ Alias is short cut -- instead of very long command write short alias
 
 \begin{frame}{Package management}
 \begin{itemize}
-  \item Package -- an application or its part (documentation, plugins, translations, \ldots)
+  \item Package -- an application or its part (documentation, plug-ins, translations, \ldots)
   \item Packages are available in repositories on the internet
   \begin{itemize}
     \item System has list of applications available
@@ -1408,7 +1435,7 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
   \begin{bashcode}
     # Go to directory where you downloaded it
     cd directory/with/downloaded/figtree
-    # Uncompress downloaded archive
+    # Decompress downloaded archive
     tar -zxvf FigTree_v1.4.2.tgz
     # Go to created directory
     cd FigTree_v1.4.2/
@@ -1446,7 +1473,7 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
 
 \begin{frame}[fragile]{Basic network information and testing}
   \begin{bashcode}
-    hostnmae # Get name of the computer
+    hostname # Get name of the computer
     ping web.natur.cuni.cz # Ping host. Is it alive? Cancel by Ctrl+C
     traceroute www.metacentrum.cz # Get route to the host
     mtr hostname # Combines ping and traceroute, quit with "q"
@@ -1465,19 +1492,19 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
   \end{bashcode}
 \end{frame}
 
-\subsection{Parallelization}
+\subsection{Palatalization}
 
-\begin{frame}{Parallelization with GNU Parallel}
+\begin{frame}{Palatalization with GNU Parallel}
 \begin{itemize}
   \item \href{https://www.gnu.org/software/parallel/}{GNU Parallel} can distribute task among CPU threads of one computer, or even among different computers in network
-  \item To distribute tasks (manage parallelization) takes some effort -- it is not effective for short/small tasks
+  \item To distribute tasks (manage parallelisation) takes some effort -- it is not effective for short/small tasks
   \item Important operands (for more see \texttt{man parallel})
   \begin{itemize}
     \item \texttt{\{\}} -- input line -- whole line read from input source (typically standard input)
     \item \texttt{\{.\}} -- input line without extension
-    \item \texttt{\{/\}} -- basename of input line -- only file name (without path)
+    \item \texttt{\{/\}} -- base name of input line -- only file name (without path)
     \item \texttt{\{//\}} -- dirname from input line (filename is removed)
-    \item \texttt{\{/.\}} -- basename of input line without extension
+    \item \texttt{\{/.\}} -- base name of input line without extension
     \item \texttt{:::} -- use arguments from command line instead of stdin (::: is placed after the command and before the argument)
     \item \texttt{::::} -- read from argument files
     \item \texttt{-j} -- number of jobs -- if not provide, \texttt{parallel} will use all available CPU threads
@@ -1523,7 +1550,7 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
     # records it into a log file. General usage:
     tee record.txt | command # tee will record output of command
     # If software reads commands from user, we can reuse record next time:
-    command < record.txt # Empy lines are interpreted as Enter key
+    command < record.txt # Empty lines are interpreted as Enter key
                          # Each line is used whenever command waits for new
                          # input (instead of user typing, record.txt is used)
   \end{bashcode}
@@ -1542,7 +1569,7 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
     umount /mount/directory # Unmount disk from /mount/directory
     dmesg | grep sd | tail # Get information about recently plugged media
     mkdir /mnt/iso # Directory must exist prior mounting into it
-    mount -t iso9660 -o loop soubor.iso /mnt/iso # See CD/DVD image content
+    mount -t iso9660 -o loop file.iso /mnt/iso # See CD/DVD image content
       # Mount CD/DVD ISO image file into directory /mnt/iso
   \end{bashcode}
 \end{frame}
@@ -1579,7 +1606,7 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
                   # for next screen, q to quit)
     less textfile # Better version of more - you can scroll up and down by
                   # PgUp, PgDown, arrows, searching by / (type searched
-                  # string, hit Enter, n for next, twice Esc to quit),
+                  # string, hit Enter, n for next, twice ESC to quit),
                   # q to quit viewing
     most textfile # Better version of less
     fmt textfile # Basic formatting of text - joining of commented lines,
@@ -1702,7 +1729,7 @@ For regular expressions, see slide \ref{regexp}.
     ls -l | sed 's/\([0-9]\{3,8\}\)/size:\t\1/g' # Add "size:TAB" before
                        # file size column (we suppose it has 3-8 digits)
   \end{bashcode}
-\texttt{sed} suports regular expressions, see slide \ref{regexp} (same as in \texttt{grep} and \texttt{vim}).
+\texttt{sed} supports regular expressions, see slide \ref{regexp} (same as in \texttt{grep} and \texttt{vim}).
 \end{frame}
 
 \begin{frame}[fragile]{Comparisons}
@@ -1721,9 +1748,9 @@ For regular expressions, see slide \ref{regexp}.
     diff -e textfile1 textfile2 # More simple output
     diff -c textfile1 textfile2 # Show context (lines around change)
     diff -u textfile1 textfile2 # Better version, the most common
-    colordiff # Same usage and parameters as previous, coloured output
+    colordiff # Same usage and parameters as previous, colored output
     diff -u textfile1 textfile2 | view - # Launches vim (exit by :q! Enter)
-    vimdiff # Can show more colours, launches vim (exit by :q! Enter)
+    vimdiff # Can show more colors, launches vim (exit by :q! Enter)
   \end{bashcode}
 \end{frame}
 
@@ -1751,7 +1778,7 @@ For regular expressions, see slide \ref{regexp}.
  \item Modes of \texttt{vim}:
   \begin{enumerate}
    \item ``Normal'' -- nothing is displayed in bottom left corner, every key has some meaning (\texttt{dd} to cut current line, \texttt{r} to replace character below cursor,\texttt{v} for selection of text, \texttt{y} to copy, \texttt{x} to cut, \texttt{p} to paste, \texttt{i} or \texttt{Insert} key to enter insert mode, \texttt{:} to enter command mode, number to get to line of particular line number, \texttt{u} to undo last change(s), \ldots)
-   \item Insert -- in bottom left corner ``-{-} INSERT {-}-'' is displayed -- the most familiar mode -- normal typing etc., exit to normal mode by \texttt{Esc} key
+   \item Insert -- in bottom left corner ``-{-} INSERT {-}-'' is displayed -- the most familiar mode -- normal typing etc., exit to normal mode by \texttt{ESC} key
    \item Command -- in bottom left corner ``\texttt{:}'' is displayed -- awaits commands, e.g. \texttt{w} to write file, \texttt{q} to quit, \texttt{q!} to quit and discard changes, \%s/... to search and replace as in \texttt{sed}, \texttt{syntax on/off} to turn syntax highlight on/off, \texttt{/} to search, \ldots Exit to command mode by \texttt{Backspace} key (delete ``\texttt{:}'').
   \end{enumerate}
   \item For more information see \url{http://www.vim.org/} and \url{http://vim.wikia.com/wiki/Vim_Tips_Wiki}
@@ -1779,16 +1806,16 @@ For regular expressions, see slide \ref{regexp}.
   \item \alert{|} -- either the preceding or following reg exp can be matched (alternation)
   \item \alert{\textbackslash(\ldots\textbackslash)} -- group reg exp (numbered, starting with 1) -- can be called by \alert{\textbackslash\textit{n}}, where \textit{n} is number of the group (starting with 1)
   \item \alert{\textbackslash$<$ \textbackslash$>$} -- word boundary
-  \item \alert{[[:alnum:]]} -- alphanumerical characters (includes whitespace), same like \alert{[a-zA-Z0-9]}
+  \item \alert{[[:alnum:]]} -- alphanumerical characters (includes white space), same like \alert{[a-zA-Z0-9]}
   \item \alert{[[:alpha:]]} -- alphabetic characters, like \alert{[a-zA-Z]}
   \item \alert{[[:blank:]]} -- space and TAB
   \item \alert{[[:cntrl:]]} -- control characters
   \item \alert{[[:digit:]]} -- numeric characters, like \alert{[0-9]}
   \item \alert{[[:graph:]]} -- printable and visible (non-space) characters
   \item \alert{[[:lower:]]} -- lowercase characters, like \alert{[a-z]}
-  \item \alert{[[:print:]]} -- printable characters (includes whitespace)
+  \item \alert{[[:print:]]} -- printable characters (includes white space)
   \item \alert{[[:punct:]]} -- punctuation characters
-  \item \alert{[[:space:]]} -- whitespace characters
+  \item \alert{[[:space:]]} -- white space characters
   \item \alert{[[:upper:]]} -- uppercase characters, like \alert{[A-Z]}
   \item \alert{[[:xdigit:]]} -- hexadecimal digits
   \item \alert{\textasciicircum\$} -- blank line
@@ -2035,7 +2062,7 @@ Remaining part from previous slide\ldots
 
 \begin{frame}[allowframebreaks]{CESNET and MetaCentrum}
 \begin{itemize}
-  \item CESNET is organisation of Czech universities, Academy of Science and other organisations taking care about Czech backbone Internet, one of world leading institutions of this type
+  \item CESNET is organization of Czech universities, Academy of Science and other organizations taking care about Czech backbone Internet, one of world leading institutions of this type
   \item CESNET provides various \href{https://www.cesnet.cz/services/?lang=en}{services}
   \begin{itemize}
     \item Massive computations -- \href{https://www.cesnet.cz/services/massive-computations-metacentrum/?lang=en}{MetaCentrum}
@@ -2063,19 +2090,19 @@ Remaining part from previous slide\ldots
 
 \begin{frame}{MetaCentrum}
 \begin{itemize}
-  \item Also available is Galaxy \url{https://galaxy.metacentrum.cz/galaxy/} -- web based bioinformatic framework (more information at \href{https://wiki.metacentrum.cz/wiki/Galaxy_application}{wiki})
+  \item Also available is Galaxy \url{https://galaxy.metacentrum.cz/galaxy/} -- web based bioinformatics framework (more information at \href{https://wiki.metacentrum.cz/wiki/Galaxy_application}{wiki})
   \item Current state and usage as available at \url{https://metavo.metacentrum.cz/en/}
   \item Manage your user account at \url{http://metavo.metacentrum.cz/en/myaccount/index.html}
   \item Personal view on actual resources and running tasks is at \url{https://metavo.metacentrum.cz/pbsmon2/person}
   \item List of available applications \url{https://wiki.metacentrum.cz/wiki/Kategorie:Applications}
-  \item It has 7 frontends where users log and thousands of computers doing the calculations -- they are not accessed directly, most of computers are running \href{https://www.debian.org/}{Debian GNU/Linux}
+  \item It has 7 front ends where users log and thousands of computers doing the calculations -- they are not accessed directly, most of computers are running \href{https://www.debian.org/}{Debian GNU/Linux}
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{MetaCentrum usage}
 \begin{itemize}
   \item User can transfer data on one of \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontends} by \texttt{scp} or for example \href{http://winscp.net/eng/index.php}{WinSCP}
-  \item Same credentials are used for all frontends, for SSH login as well as file transmissions
+  \item Same credentials are used for all front ends, for SSH login as well as file transmissions
 \end{itemize}
   \begin{bashcode}
     # Login to selected server (tarkil is located in Prague)
@@ -2167,7 +2194,7 @@ Don't forget to make \texttt{metacentrum.sh} executable and modify it according 
                 # Including address, port and password
   \end{bashcode}
 \begin{itemize}
-  \item Launch your favourite VNC client (KRDC, TightVNC, \ldots) and use credentials from above output to connect
+  \item Launch your favorite VNC client (KRDC, TightVNC, \ldots) and use credentials from above output to connect
 \end{itemize}
 \end{frame}
 
@@ -2217,20 +2244,17 @@ Don't forget to make \texttt{metacentrum.sh} executable and modify it according 
 \end{flushright}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{Missing topics}
-  \begin{itemize}
-    \item Launching of Windows and DOS applications in Linux
-    \item Where to look for help, another sources of information
-    \item Brief list of applications to help to switch to Linux
-    \item How to break system :-)
-    \item Security, antiviruses
-    \item How to connect to remote FS
-    \item More for average users (less servers, administrative)
-    \item More examples about software on MetaCentrum, scripts (on MetaCentrum)
-    \item More about regular expressions
-    \item recommend software, how it is with installation
-    \item GIT, GitHub
-  \end{itemize}
-\end{frame}
-
 \end{document}
+
+% % Missing topics
+% Launching of Windows and DOS applications in Linux
+% Where to look for help, another sources of information
+% Brief list of applications to help to switch to Linux
+% How to break system :-)
+% Security, antiviruses
+% How to connect to remote FS
+% More for average users (less servers, administrative)
+% More examples about software on MetaCentrum, scripts (on MetaCentrum)
+% More about regular expressions
+% recommend software, how it is with installation
+% GIT, GitHub
