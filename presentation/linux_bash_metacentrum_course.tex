@@ -1029,6 +1029,27 @@ Alias is short cut -- instead of very long command write short alias
 
 \section{Command line}
 
+\begin{frame}{Launching commands and scripts}
+\begin{itemize}
+  \item Parameters of commands are separated by space and preceded by one or two minus(es)
+  \item Parameter \texttt{-h} or \texttt{{-}-help} usually gives help for particular command
+  \item Getting help with \texttt{man} command
+  \begin{itemize}
+    \item \texttt{man somecommand}
+    \item Arrows to list up and down, \texttt{q} to quit
+    \item Type \texttt{/} and type text and hit Enter to search -- next hit by \texttt{n}, quit search by ESC (twice)
+    \item Command \texttt{info} more advanced -- type \texttt{?} for help
+  \end{itemize}
+  \item Parameters can be combined, order doesn't matter (same variants: \texttt{ls -la}; \texttt{ls -al}; \texttt{ls -a -l}; \texttt{ls -l -a})
+  \item ``Long'' parameters (\texttt{{-}-XXX}) must stay separated
+  \item Commands must be in PATH -- actual directory isn't in PATH
+  \begin{itemize}
+    \item If the script is is current directory, use \texttt{./script.sh} or full path
+  \end{itemize}
+  \item Custom scripts must have execute permission (\texttt{chmod +x script.sh})
+\end{itemize}
+\end{frame}
+
 \begin{frame}{Screen}{Split terminal or keep task running after logging off}
 \begin{itemize}
   \item When you log off or network connection is broken, running tasks for particular terminal usually crash
@@ -1328,151 +1349,44 @@ Alias is short cut -- instead of very long command write short alias
   \end{itemize}
 \end{frame}
 
-\subsection{Software}
-
-\begin{frame}{Launching commands and scripts}
-\begin{itemize}
-  \item Parameters of commands are separated by space and preceded by one or two minus(es)
-  \item Parameter \texttt{-h} or \texttt{{-}-help} usually gives help for particular command
-  \item Getting help with \texttt{man} command
-  \begin{itemize}
-    \item \texttt{man somecommand}
-    \item Arrows to list up and down, \texttt{q} to quit
-    \item Type \texttt{/} and type text and hit Enter to search -- next hit by \texttt{n}, quit search by ESC (twice)
-    \item Command \texttt{info} more advanced -- type \texttt{?} for help
-  \end{itemize}
-  \item Parameters can be combined, order doesn't matter (same variants: \texttt{ls -la}; \texttt{ls -al}; \texttt{ls -a -l}; \texttt{ls -l -a})
-  \item ``Long'' parameters (\texttt{{-}-XXX}) must stay separated
-  \item Commands must be in PATH -- actual directory isn't in PATH
-  \begin{itemize}
-    \item If the script is is current directory, use \texttt{./script.sh} or full path
-  \end{itemize}
-  \item Custom scripts must have execute permission (\texttt{chmod +x script.sh})
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Package management}
-\begin{itemize}
-  \item Package -- an application or its part (documentation, plug-ins, translations, \ldots)
-  \item Packages are available in repositories on the internet
-  \begin{itemize}
-    \item System has list of applications available
-    \item Updates, bug fixes are installed for all applications using one interface (GUI or command line) -- very reliable
-    \item Packages are digitally signed -- security
-    \item User can set custom repositories to get new packages
-  \end{itemize}
-  \item The most different task among distributions
-  \item Packages have dependencies -- required shared libraries and so on -- use package manager and try to avoid downloading packages from the internet
-  \item \alert{Read manual for your distribution!}
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Package management in command line in openSUSE and Debian/Ubuntu}
-Root password is required: use \texttt{sudo \ldots} or \texttt{su -}
-\begin{center}
-\begin{tabular}{lll}
-\textbf{Task} & \textbf{openSUSE} & \textbf{Debian/Ubuntu}\\
-Package name & *.rpm & *.deb\\
-Install & zypper in \textit{package} & apt-get install \textit{package}\\
-Remove & zypper rm \textit{package} & apt-get remove \textit{package}\\
-Refresh repositories & zypper ref & apt-get update\\
-Update & zypper up & apt-get update\\
-Upgrade & zypper dup & apt-get dist-upgrade\\
-Search & zypper se \textit{term} & apt-cache search \textit{term}\\
-Clear packages & rpmorphan & apt-get autoremove\\
-Interactive manager & yast sw\_single & aptitude\\
-Add repository & zypper ar \textit{repository} & nano /etc/apt/sources.list\\
-Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
-\end{tabular}
-\end{center}
-\end{frame}
-
-\begin{frame}[fragile]{Basics of compilation}
-\begin{itemize}
-  \item Some software is distributed only as source code written in languages like C or C++ -- user has to compile it to get binary executable
-  \item Compilation creates binary specific for particular operating system and hardware platform -- can be tuned for optimal performance
-  \item Interpreted languages like Bash, Perl, Python or Java don't have to be compiled (but it is possible) -- they need their interpreter to run, relative easily portable among hardware platforms and OS
-  \item Applications requiring compilation usually have good instructions
-\end{itemize}
-  \begin{bashcode}
-    # General schema:
-    configure # Many possible parameters, settings for compilation
-              # Not required in every time
-    make # Basic building command, sometimes only this is required
-    make install # Final creation of binary, sometimes required
-  \end{bashcode}
-\begin{itemize}
-  \item If you don't have to do it, don't do it. Solving problems can be complicated -- contact someone skilled or author of the application\ldots
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Compilation of RAxML}
-\begin{footnotesize}
-  Available from \url{https://github.com/stamatak/standard-RAxML} (cite \href{https://bioinformatics.oxfordjournals.org/content/30/9/1312.abstract}{Stamakis 2014}).
-\end{footnotesize}
-  \begin{bashcode}
-    # Create working directory
-    mkdir raxml
-    # Go there
-    cd raxml/
-    # Get source code from GitHub (svn downloads only changed files)
-    svn co https://github.com/stamatak/standard-RAxML/tags/v8.1.16
-    # Go to newly created directory
-    cd v8.1.16/
-    ls # List files
-    # No need of Windows version - delete it
-    rm -rf Windows*
-    # Compile standard version (other versions are available for better CPU)
-    make -f Makefile.gcc
-    # Remove unneeded files
-    rm *.o
-    # Launch it - see RAxML help
-    ./raxmlHPC -h
-  \end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Launching Java applications}
-\begin{itemize}
-  \item \href{https://www.java.com/}{Java} is probably the most portable language working on any operating system -- the only condition is to install Java virtual machine
-  \item Let's download \href{http://tree.bio.ed.ac.uk/software/figtree/}{FigTree} from \url{http://tree.bio.ed.ac.uk/download.php?id=90&num=3}
-\end{itemize}
-  \begin{bashcode}
-    # Go to directory where you downloaded it
-    cd directory/with/downloaded/figtree
-    # Decompress downloaded archive
-    tar -zxvf FigTree_v1.4.2.tgz
-    # Go to created directory
-    cd FigTree_v1.4.2/
-    # List files, also in subdirectories
-    ls *
-    # Launch it (command java launches *.jar files)
-    java -jar lib/figtree.jar
-    # Limit its memory usage to 512 MB
-    java -Xmx512m -jar lib/figtree.jar
-  \end{bashcode}
-\end{frame}
-
 \subsection{Network}
 
-\begin{frame}[fragile]{Network connection}
+\begin{frame}{Network protocols}
+  \begin{itemize}
+    \item SSH -- secure shell -- command-line connection to remote server to work there (port 22)
+    \item Telnet -- old deprecated insecure version of SSH, never ever use it (port 23)
+    \item FTP -- file transfer protocol -- outdated, no encryption (port 21)
+    \item FTPS -- FTP with added connection encryption for higher security (port 21)
+    \item SFTP -- FTP over SSH -- common, secure (port 22)
+    \item SCP -- secure copy -- uses SSH, but has restricted possibilities, common, secure (port 22)
+    \item NFS -- network file share/server -- very common in UNIX world, commonly used to permanently connect to network server, share directories, etc. (port 2049)
+    \item webDAV -- file transfer over web (using WWW server) -- not so common, but good (port 80 or 443 -- same as WWW)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Connect to SSH with key}
+  \begin{itemize}
+    \item No need to remember password for every server\ldots
+  \end{itemize}
   \begin{bashcode}
-    ssh -vvv remoteuser@remote.server.cz # When there are problems with SSH
-      # "v" for verbosity - more "v", more information - helps debugging
-      # -X enables X11 forwarding - allows use of graphical applications
-      # X11 forwarding must be allowed on the server, check it there by
-    cat /etc/ssh/sshd_config | grep X11 # Reading might be disabled
-    # Copy files (-r for recursive) over SSH from local computer to
-    # remote server or vice versa (just flip arguments)
-    scp -r localfiles remoteuser@remote.server.cz:/remote/path/
-    rsync -arv somefiles otherlocation # All parameters, recursive, verbose
+    # Create the key
+    ssh-keygen -t rsa -b 4096 # Good security, portable
+    # ECC gives better security, but not all servers/applications support it
+    ssh-keygen -t ecdsa -b 521 # Higher security
+    ssh-keygen -t ed25519 # Same security as ecdsa, higher performance
+    # Empty (no) passphrase will connect to server without password
+    # Copy public key to remote server (private key must be kept locally)
+    ssh-copy-id user@remote.server.cz # or
+    cat ~/.ssh/XXX.pub | ssh user@remote.server.cz \
+      "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+    # Now, public key is on the server and private key in local computer is
+    # unlocking the connection
+    # Unlock the key (no need in some distributions or if there is no
+    # passphrase) - must be done only once per user session
+    ssh-add
+    # Connect as usually
+    ssh user@remote.server.cz
   \end{bashcode}
-\begin{itemize}
-  \item \texttt{rsync} has huge amount of possibilities (see \texttt{man rsync})
-  \item It transmits only changes -- very efficient
-  \item Suitable for local as well as network backup
-  \item Network address for rsync is written in same way as for \texttt{scp}
-  \item \texttt{--delete} deletes in target location files which are not in source location any more
-\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Basic network information and testing}
@@ -1483,25 +1397,91 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
     mtr hostname # Combines ping and traceroute, quit with "q"
     ip a s # Information about all network devices (MAC, IP address, ...)
     ifconfig -a # Older version of above command
+    iwconfig # List of network interfaces
+    ip r # Show routes
     nc -vz web.natur.cuni.cz 22 # Does SSH work on the host?
-       # verbose (-v), scan (-z), host, port number (22 for SSH, can be any)
+      # verbose (-v), scan (-z), host, port number (22 for SSH, can be any)
     man nc # See for more information; "nc" is alias for "netcat"
     netstat -atn # Information about all network connections
-            # -a for all connections, -t for TCP/IP, -n for IP addresses
+    netstat -ntplu # Show open TCP/UDP ports
+    netstat -anp # Show active connections
+    netstat -h # See for explanation of 3 above examples
     nmap -r someserver # Scan someserver for opened ports
                        # If using at faculty, firewall disconnects you!
     nmap botany.natur.cuni.cz --script ssh-hostkey # See SSH key
-    wget http://some.address.cz/internet # Download file(s) from Internet
-    wget --help # -r for recursive download (whole web), -k to convert links
   \end{bashcode}
 \end{frame}
 
-\subsection{Palatalization}
+\begin{frame}[fragile]{Transferring files from/to remote server}
+  \begin{itemize}
+    \item \texttt{curlftpfs} allows mount FTP as local diractory, but FTP is outdated, insecure and not constructed to that usage\ldots
+  \end{itemize}
+  \begin{bashcode}
+    wget http://some.address.cz/internet # Download file(s) from Internet
+    wget --help # -r for recursive download (whole web), -k to convert links
+    # curl is predecessor of wget, without parameter "-o" it prints remote
+    # content to standard output (typically screen)
+    curl http://some.server.cz/some/files -o localfilename
+    # Copy files (-r for recursive) over SSH from local computer to
+    # remote server or vice versa (just flip arguments)
+    scp -r localfiles remoteuser@remote.server.cz:/remote/path/
+    scp -r remoteuser@remote.server.cz:/remote/files /local/directory/
+    # scp behaves like cp, but works over SSH
+  \end{bashcode}
+  \begin{itemize}
+    \item \texttt{rsync} is synchronization tool (commonly used for backups) able to co connect to remote server (next slide)
+  \end{itemize}
+\end{frame}
 
-\begin{frame}{Palatalization with GNU Parallel}
+\begin{frame}[fragile]{Synchronization with rsync}
+  \begin{itemize}
+    \item \texttt{rsync} has huge amount of possibilities (see \texttt{man rsync} or \texttt{rsync -h})
+    \item Works locally as well as over network
+    \item It transmits only changes -- very efficient
+    \item Suitable for local as well as network backup
+    \item Network address for rsync is written in same way as for \texttt{scp}
+    \item \texttt{--delete} delete in target location files which are not in source location any more
+    \item \texttt{--progress} show progress percentage for every file
+    \item \texttt{--exclude=*.jpg} skip JPG files
+    \item For incremental backups use \texttt{duplicity}
+  \end{itemize}
+  \begin{bashcode}
+    rsync -arv somedirectory otherplace # All attributes, recursive, verbose
+    rsync -arv localdirectory user@remote.server.cz:/remote/directory/
+    rsync -arv user@remote.server.cz:/remote/data local/directory/
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Connecting file systems on remote servers}
+  \begin{itemize}
+    \item Mounting and unmounting of remote servers require root privileges
+    \item Target mount point must exist before mounting
+    \item Servers can be accessed by IP address or hostname
+  \end{itemize}
+  \begin{bashcode}
+    # Mount Windows server
+    mount.cifs //windows.server.cz/Some/Directory /mnt/win -o \
+      credentials=/path/to/password.file,uid=USER,gid=GROUP
+    # "password.file" contains login credentials to Windows server:
+    username=user.name
+    password=TopSecretPassword1
+    domain=DOMAINNAME
+    man mount.cifs # See for other connection options
+    # Mounting remote server over SSH (sshfs package must be installed)
+    sshfs zeisek@vyuka.natur.cuni.cz:/some/dir /local/mount/point
+    # Mount NFS share (NFS is common protocol in UNIX world)
+    mount -t nfs some.server.cz:/shared/directory /local/directory
+    # Mount webDAV folder (requires package davfs2 to be installed)
+    mount -t davfs https://owncloud.cesnet.cz/directory /local/directory
+  \end{bashcode}
+\end{frame}
+
+\subsection{Parallelisation}
+
+\begin{frame}{Parallelisation with GNU Parallel}
 \begin{itemize}
   \item \href{https://www.gnu.org/software/parallel/}{GNU Parallel} can distribute task among CPU threads of one computer, or even among different computers in network
-  \item To distribute tasks (manage parallelisation) takes some effort -- it is not effective for short/small tasks
+  \item It is not effective for short/small tasks
   \item Important operands (for more see \texttt{man parallel})
   \begin{itemize}
     \item \texttt{\{\}} -- input line -- whole line read from input source (typically standard input)
@@ -1540,8 +1520,8 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
 \begin{frame}[fragile]{GNU Parallel examples II}
   \begin{bashcode}
     # Run in parallel commands from command list file (list of commands)
-    parallel < command_list # or
-    parallel :::: command_list
+    parallel < command_list.txt # (each command on one line) or
+    parallel :::: command_list.txt
     # Add same text to the end of multiple files
     ls -1 *.txt | parallel 'cat block_to_be_added.txt >> {}'
     # Replace particular text in multiple files with sed and GNU Parallel
@@ -1550,9 +1530,9 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
     # starting and ending date and time
     ls -1 *.nexus | parallel 'echo Start > {}.log && date >> {}.log && \
       mrbayes {} | tee -a {}.log && echo End: >> {}.log && date >> {}.log'
-    # tee (-a for append to existing file) records output of MrBayes and
-    # records it into a log file. General usage:
-    tee record.txt | command # tee will record output of command
+    # tee (-a for append to existing file) records output of MrBayes
+    command | tee record.txt # tee will record whole output of command
+    tee record.txt | command # tee will record user input
     # If software reads commands from user, we can reuse record next time:
     command < record.txt # Empty lines are interpreted as Enter key
                          # Each line is used whenever command waits for new
@@ -1563,18 +1543,23 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
 \subsection{Other}
 
 \begin{frame}[fragile]{Removable media}
+  \begin{itemize}
+    \item Mounting and unmounting of devices require root privileges
+    \item In Linux, physical disks are named from \texttt{sda} to \texttt{sdz}, each disk has partitions (at least one) numbered from \texttt{1}, e.g. \texttt{sda1}, \texttt{sda2}, \texttt{sdb1},~\ldots{ }-- all are accessible in \texttt{/dev} directory (\texttt{/dev/sdc3},~\ldots)
+    \item Target mount point must exist before mounting
+  \end{itemize}
   \begin{bashcode}
     eject # Open CD/DVD drive
-    # Mounting and unmounting of devices require root privileges
     mount # Which FS (disk partitions) are mounted
-    # mount usually recognize FS of mounted device, if not, us -t FStype
+    findmnt # See mounted devices in tree-like structure
+    # mount usually recognize FS of mounted device, if not, us -t FS_type
     mount /dev/sdXY /mount/directory # Mount disk sdXY to /mount/directory
     umount /dev/sdXY # Unmount disk sdXY
     umount /mount/directory # Unmount disk from /mount/directory
     dmesg | grep sd | tail # Get information about recently plugged media
     mkdir /mnt/iso # Directory must exist prior mounting into it
+    # Mount CD/DVD ISO image file into directory /mnt/iso
     mount -t iso9660 -o loop file.iso /mnt/iso # See CD/DVD image content
-      # Mount CD/DVD ISO image file into directory /mnt/iso
   \end{bashcode}
 \end{frame}
 
@@ -1617,7 +1602,7 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
                  # line breaks to break too long lines, ...
     fmt textfile > formatted_file # Save output of fmt into new file
     wc textfile # lines, words and bytes in text file
-    wc -l for only lines, -m for characters, -w for words
+                # wc -l for only lines, -m for characters, -w for words
   \end{bashcode}
 \end{frame}
 
@@ -1640,7 +1625,7 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
     grep -c user /etc/passwd # get number of lines in passwd containing user
     grep -i USER /etc/passwd # -i isn't case sensitive
     grep -q ... # quiet - no output - good for testing in scripts
-    grep -ls user /etc/* # -l prints files with pattern, -s suppresses errors
+    grep -ls user /etc/* # -l print files with pattern, -s suppresse errors
     grep "longer text" textfile # Extract whole phrase
   \end{bashcode}
 Grep supports regular expressions, slide \ref{regexp}.
@@ -1648,22 +1633,50 @@ Grep supports regular expressions, slide \ref{regexp}.
 
 \begin{frame}[fragile]{Get a column -- cut, awk}
   \begin{bashcode}
-    cut column OR delimiter+field textfile
-    cut -c1 /etc/group # Get first character
-    cut -c1-5 /etc/group # Get character 1-5
-    cut -c4- /etc/group # Get character 4 and more
-    cut -c2,5,7 /etc/group # Get characters 2, 5 and 7
-    cut -d':' -f1 /etc/group # Select 1st field separated by ":"
-    cut -d':' -f2-4 /etc/group # Select fields 2-4 separated by ":"
-    cut -d':' -f1,3 /etc/group # Select fields 1 and 3 separated by ":"
+    cut column/delimiter+field textfile
+    cut -c 1 /etc/group # Get first character
+    cut -c 1-5 /etc/group # Get character 1-5
+    cut -c 4- /etc/group # Get character 4 and more
+    cut -c 2,5,7 /etc/group # Get characters 2, 5 and 7
+    cut -d ':' -f 1 /etc/group # Select 1st field separated by ":"
+    cut -d ':' -f 2-4 /etc/group # Select fields 2-4 separated by ":"
+    cut -d ':' -f 1,3 /etc/group # Select fields 1 and 3 separated by ":"
     awk 'regexp { commands parameters }' file
     awk '{print $NF}' textfile # Select last column (separated by tab)
     awk '{print $2}' textfile # Select 2nd column (separated by tab)
     awk '{print $3, $2}' textfile # Print columns 3 and 2 (in this order)
+    awk -F ' ' '{print $4, $1}' textfile # Print columns 4 and 1
+                                         # separated by " " (space)
     ls -l | awk '/^d/ { print $8 "\t" $3 }' # Separate columns by TAB
                # /^d/ for lines starting with "d" (only directories)
   \end{bashcode}
-For regular expressions, see slide \ref{regexp}.
+  \begin{itemize}
+    \item For regular expressions, see slide \ref{regexp}
+    \item BASH can not select column according to its name (Perl can do that)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{More about AWK}
+  \begin{itemize}
+    \item AWK is scripting language for text manipulations
+    \item Only basic examples here\ldots
+  \end{itemize}
+  \begin{bashcode}
+    # Print on each line ">", field 1, make new line (\n) and print field 2
+    awk '{print ">"$1"\n"$2}' textfile
+    # Print field 1, TAB (\t), length of field 2, TAB and field 2
+    awk '{print $1"\t"length($2)"\t"$2}' textfile
+    # If field 1=0, print whole line
+    awk '{if($1==1){print $0}}' textfile
+    # Field 1 is numeric (less then 5 digits) - add leading zeroes
+    awk '{printf "%05d\n", $1;}' textfile
+    # As above, but add leading zeroes to field 1 and print whole line
+    awk '{$1=sprintf("%05d", $1); print $0}' textfile
+    # Field 1 is numeric, select lines where field 1 is higher than 100
+    awk '$1>100' textfile
+    # Print field 4 (fields are separated by "_" or TAB)
+    awk -F '[_\t]' '{print $4}'
+  \end{bashcode}
 \end{frame}
 
 \subsection{Manipulations}
@@ -1693,47 +1706,60 @@ For regular expressions, see slide \ref{regexp}.
 \end{frame}
 
 \begin{frame}[fragile]{Replacements -- tr}
+  \begin{itemize}
+    \item \texttt{tr} replaces or deletes characters from standard input and writes result to standard output -- use pipes and/or redirects:
+  \end{itemize}
   \begin{bashcode}
-    # tr replaces or deletes characters from standard input and writes
-    # result to standard output - use pipes and/or redirects:
-    cat inputtextfile | tr " " "\t" > outputtextfile # Replace space by TAB
-                                                     # in inputtextfile and
-                                                     # save result as
-                                                     # outputtextfile
-    tr -d "text" # Delete "text" from each line
-    tr "[A-Z]" "[a-z]" < inputtextfile > outputtextfile # Replace capital
-                                                        # letters by small
+    # Replace space by TAB in inputtextfile, save result as outputtextfile
+    cat inputtextfile | tr " " "\t" > outputtextfile
+    # Delete "text" from each line and print it to standard output (screen)
+    cat inputtextfile | tr -d "text"
+    # Replace every occurrence of A, B, C or D by a new line (\n)
+    cat inputtextfile | tr "[ABCD]" "\n" > outputtextfile
+    tr --help # See possible replacement patterns
+    # Replace capital letters by small ones
+    tr "[A-Z]" "[a-z]" < inputtextfile > outputtextfile
     # Alternative (easier reading) of previous command:
     cat inputtextfile | tr "[A-Z]" "[a-z]" > outputtextfile
     # Alternative solution using sed (next slide)
-    cat inputtextfile | sed 's/[A-Z]/\L&/g' > outputtextfile # Vice versa:
-    cat inputtextfile | sed 's/[a-z]/\U&/g' > outputtextfile
-    tr --help # See possible replacement patterns
+    sed 's/[A-Z]/\L&/g' inputtextfile > outputtextfile # Vice versa:
+    sed 's/[a-z]/\U&/g' inputtextfile > outputtextfile
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Replacements -- sed}
+\begin{frame}[fragile]{Replacements -- sed I}
   \begin{bashcode}
     sed 's/FindToReplace/Replace/modificator' textfile > newtextfile
-    sed 's/find/replace/g' textfile # Search and replace all occurrences
-                                    # (thanks to "g") of "find" by "replace"
-    # Replace "g" by number to replace number of occurrences
-    # To work only on particular line, place number or range (e.g. 2,6)
+    # Search and replace ("s") all occurrences ("g") of "find" by "replace"
+    sed 's/find/replace/g' textfile
+    # Replace third occurrence of pattern on every line
+    sed 's/pattern/ToReplace/3'
+    # To work only on particular line, place number or range (e.g. 1,7)
     # right before "s" (sed '1,7s/...')
+    sed '1~2n;s/F/R/g' # Work on every second line, starting by line 1
+    sed -n -e '2~10p' # Print every 10th line, starting with line 2
+    seq 1 100 | sed -n -e '2~10p' # Example of above pattern
+    # Replace first TAB (\t) on each line by new line (\n)
+    sed 's/\t/\n/' textfile
     sed 's/find/replace/g' somedirectory/* # Work on all files in directory
-    cat textfile | sed 's/find/replace/g' > newtextfile
-      # Read textfile by cat, pass it to sed and write output into new file
-    sed -i ... # Modify processed file - otherwise output is displayed but
-               # not saved (can be for example piped into text file or so)
+    sed -i ... # Modify processed file - otherwise output is printed on
+               # standard output (screen - can be piped into text file, ...)
+  \end{bashcode}
+  \begin{itemize}
+    \item \texttt{sed} supports regular expressions, see slide \ref{regexp} (same as in \texttt{grep} and \texttt{vim}), with parameter \texttt{-e} can use extended regular expressions (Do not confuse!)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Replacements -- sed II}
+  \begin{bashcode}
     # Groups to remember work in same way in sed, grep as well as vim
     \(ToRemember\) # Remember expression in brackets
     \Number # Use remembered expression (numbered from one)
-    ls -l | sed 's/\(users\)/\1RULEZZZ/g' # Take output of ls -l and replace
-                                          # "users" by "usersRULEZZZ"
-    ls -l | sed 's/\([0-9]\{3,8\}\)/size:\t\1/g' # Add "size:TAB" before
-                       # file size column (we suppose it has 3-8 digits)
+    # Take output of ls -l and replace # "users" by "users-RULEZZZ"
+    ls -l | sed 's/\(users\)/\1-RULEZZZ/g'
+    # Add "size:TAB" before file size column (we suppose it has 3-8 digits)
+    ls -l | sed 's/\([0-9]\{3,8\}\)/size:\t\1/g'
   \end{bashcode}
-\texttt{sed} supports regular expressions, see slide \ref{regexp} (same as in \texttt{grep} and \texttt{vim}).
 \end{frame}
 
 \begin{frame}[fragile]{Comparisons}
@@ -1752,6 +1778,7 @@ For regular expressions, see slide \ref{regexp}.
     diff -e textfile1 textfile2 # More simple output
     diff -c textfile1 textfile2 # Show context (lines around change)
     diff -u textfile1 textfile2 # Better version, the most common
+    diff -y textfile1 textfile2 # In two columns comparing both files
     colordiff # Same usage and parameters as previous, colored output
     diff -u textfile1 textfile2 | view - # Launches vim (exit by :q! Enter)
     vimdiff # Can show more colors, launches vim (exit by :q! Enter)
@@ -2262,3 +2289,4 @@ Don't forget to make \texttt{metacentrum.sh} executable and modify it according 
 % More about regular expressions
 % recommend software, how it is with installation
 % GIT, GitHub
+% placing of files, libraries, ...
