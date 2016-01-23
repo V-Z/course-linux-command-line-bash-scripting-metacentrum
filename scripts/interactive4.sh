@@ -1,20 +1,30 @@
 #!/bin/bash
+
+# Regular expression explanation:
+# From the beginning of the line (^) there is number ([0-9])
+# at least one time (+) up to the end of the line ($)
 NUMBER='^[0-9]+$'
+
 if [ "$#" -ne "3" ]; then
     echo "Error! Requiring 3 parameters! Received $#.
-    Usage number1 -plus/-minus/-product/-quotient number2
+    Usage: number1 -plus/-minus/-product/-quotient number2
     Use -plus for sum, -minus for difference, -product
     for multiplication or -quotient for quotient."
     exit 1
   fi
+
+# "=~" means we are testing if $1 fits to regular expression in $NUMBER
+
 if [[ ! $1 =~ $NUMBER ]]; then
     echo "Parameter 1 is not an integer!"
     exit 1
   fi
+
 if [[ ! $3 =~ $NUMBER ]]; then
     echo "Parameter 3 is not an integer!"
     exit 1
   fi
+
 case $2 in
   -plus) expr $1 '+' $3;;
   -minus) expr $1 '-' $3;;
@@ -26,4 +36,5 @@ case $2 in
     -product for multiplication or -quotient
     for quotient.";;
 esac
+
 exit

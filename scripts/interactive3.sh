@@ -1,6 +1,8 @@
 #!/bin/bash
-# Script has only one parameter ($1) provided as its parameter
+
+# Script has only one parameter ($1) provided
 # "case" is evaluating provided parameter and behaving accordingly
+
 case "$1" in
   -d|--disk)
     echo "Your disk usage is:"
@@ -18,4 +20,5 @@ case "$1" in
       -u or --uptime for computer uptime"
       ;;
 esac
+
 exit
