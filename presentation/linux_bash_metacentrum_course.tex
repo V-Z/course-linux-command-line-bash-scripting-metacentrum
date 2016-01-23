@@ -1808,9 +1808,9 @@ Grep supports regular expressions, slide \ref{regexp}.
 \begin{itemize}
  \item Modes of \texttt{vim}:
   \begin{enumerate}
-   \item ``Normal'' -- nothing is displayed in bottom left corner, every key has some meaning (\texttt{dd} to cut current line, \texttt{r} to replace character below cursor,\texttt{v} for selection of text, \texttt{y} to copy, \texttt{x} to cut, \texttt{p} to paste, \texttt{i} or \texttt{Insert} key to enter insert mode, \texttt{:} to enter command mode, number to get to line of particular line number, \texttt{u} to undo last change(s), \ldots)
-   \item Insert -- in bottom left corner ``-{-} INSERT {-}-'' is displayed -- the most familiar mode -- normal typing etc., exit to normal mode by \texttt{ESC} key
-   \item Command -- in bottom left corner ``\texttt{:}'' is displayed -- awaits commands, e.g. \texttt{w} to write file, \texttt{q} to quit, \texttt{q!} to quit and discard changes, \%s/... to search and replace as in \texttt{sed}, \texttt{syntax on/off} to turn syntax highlight on/off, \texttt{/} to search, \ldots Exit to command mode by \texttt{Backspace} key (delete ``\texttt{:}'').
+   \item ``Normal'' -- nothing is displayed in bottom left corner, every key has some meaning (\texttt{dd} to cut current line, \texttt{r} to replace character below cursor, \texttt{v} for selection of text, \texttt{y} to copy, \texttt{x} to cut, \texttt{p} to paste, \texttt{i} or \texttt{Insert} key to enter insert mode, \texttt{:} to enter command mode, number to get to line of particular line number, \texttt{u} to undo last change(s), \ldots)
+   \item Insert -- in bottom left corner \texttt{-{-} INSERT {-}-} is displayed -- the most familiar mode -- normal typing etc., exit to normal mode by \texttt{ESC} key
+   \item Command -- in bottom left corner \texttt{:} is displayed -- awaits commands, e.g. \texttt{w} to write file, \texttt{q} to quit, \texttt{q!} to quit and discard changes, \%s/... to search and replace as in \texttt{sed}, \texttt{syntax on/off} to turn syntax highlight on/off, \texttt{/} to search, \ldots Exit to command mode by \texttt{Backspace} key (delete ``\texttt{:}'').
   \end{enumerate}
   \item For more information see \url{http://www.vim.org/} and \url{http://vim.wikia.com/wiki/Vim_Tips_Wiki}
   \item In Czech \url{http://www.nti.tul.cz/~satrapa/docs/vim/}
@@ -1824,7 +1824,7 @@ Grep supports regular expressions, slide \ref{regexp}.
 \begin{itemize}
   \item \alert{.} -- any single character
   \item \alert{*} -- any number of characters/occurrences of pattern (including 0)
-  \item \alert{[\ldots]} -- any one character in the brackets
+  \item \alert{[\ldots]} -- any character in the brackets
   \item \alert{[\textasciicircum\ldots]} -- reverse case -- all characters except newline and those listed in brackets
   \item \alert{\textasciicircum} -- first character of reg exp -- beginning of the line
   \item \alert{\$} -- last character of reg exp -- end of the line
@@ -1861,6 +1861,8 @@ Grep supports regular expressions, slide \ref{regexp}.
 
 \section{Scripting}
 
+\subsection{Basic skeleton}
+
 \begin{frame}[fragile]{Basic script}
 \begin{itemize}
  \item Every script begins with \texttt{\#!/bin/bash} (or alternative for another shells, Perl, \ldots)
@@ -1879,17 +1881,21 @@ Grep supports regular expressions, slide \ref{regexp}.
   \end{bashcode}
 \end{frame}
 
+\subsection{Reading variables}
+
 \begin{frame}[fragile]{Script reading two variables}
   \begin{bashcode}
     #!/bin/bash
     # Arguments are read from command line as parameters of the script
     # Order has to be kept (well, not in this case, but generally yes)
-    echo "Sum of two numbers $1 and $2 is `expr $1 + $2` ."
+    echo "Sum of two numbers $1 and $2 is `expr $1 + $2`."
     # "$#" is available every time and contains number of parameters
     # (variables) given to the script
-    echo "Number of parameters is $# ."
+    echo "Number of parameters is $#."
     # "$*" is available every time and contains all supplied parameters
     echo "Those parameters were supplied: $*."
+    #  "$0" is available every time and contains script path
+    echo "Path to the scrip is: \"$0\"."
     echo
     exit
   \end{bashcode}
@@ -1900,7 +1906,9 @@ When done, do:
     chmod +x interactive1.sh
     ./interactive1.sh 8 9 # Or select any other two numbers
   \end{bashcode}
-There is no checking of input values, nothing advanced, \ldots
+  \begin{itemize}
+    \item There is no checking of input values, nothing advanced, \ldots
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Variables will be interactively provided by the user}
@@ -1922,7 +1930,12 @@ When done, do:
     chmod +x interactive2.sh
     ./interactive1.sh # Values will be provided when script asks
   \end{bashcode}
-There is no checking of input values, nothing advanced, \ldots
+  \begin{itemize}
+    \item There is no checking of input values, nothing advanced, \ldots
+  \end{itemize}
+  \begin{bashcode}
+    $(expr $1 + $2) # Alternative - $(...) is same as `...`
+  \end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Provide named parameters}
@@ -1930,7 +1943,7 @@ There is no checking of input values, nothing advanced, \ldots
     #!/bin/bash
     # Script has only one parameter ($1) provided as its parameter
     case "$1" in # evaluating provided parameter and behaving accordingly
-      -d|--disk)
+      -d|--disk) # "|" means alternatives - more possible inputs
         echo "Your disk usage is:"
         df -h
         ;;
@@ -1940,10 +1953,10 @@ There is no checking of input values, nothing advanced, \ldots
         ;;
       # This should be every time last possibility - any other input
       *) # User is then notified he entered nonsense and gets some help
-        echo "Wrong option!
-          Usage: -d or --disk for available disk space or
-          -u or --uptime for computer uptime"
-         ;;
+        echo "Wrong option!"
+        echo "Usage: -d or --disk for available disk space or"
+        echo "-u or --uptime for computer uptime"
+        exit 1;; # In this case, exit with error code 1
     esac
     exit
   \end{bashcode}
@@ -1952,30 +1965,53 @@ There is no checking of input values, nothing advanced, \ldots
 \begin{frame}{Notes to previous script}
 \begin{itemize}
  \item First make \texttt{interactive3.sh} executable and launch it via e.g. \texttt{./interactive3.sh -d} or \texttt{./interactive3.sh -{-}uptime} or so
- \item Function \texttt{case} has basic checking of input available -- as last parameter use ``\alert{*)}'' -- any other input except those defined will produce some warning message or so
+ \item Function \texttt{case} has basic checking of input available -- as last parameter use \texttt{*)} -- any other input except those defined above will produce some warning message, error or so
  \item In same way can be added more parameters (by multiple use of \texttt{case}), but order of parameters must be kept and all parameters are compulsory
- \item Having variable number of parameters, possibility to use only some of them and variable order is more complicated and it usually requires \texttt{case} in \texttt{while} loop and reading variable into an array
+ \item \texttt{case} can evaluate simple regular expressions, e.g. \texttt{--[Uu]ptime)}, \texttt{-d*}, \ldots
 \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Functions in BASH}
+  \begin{itemize}
+    \item Pieces of code, which can be used repeatedly
+  \end{itemize}
+  \begin{bashcode}
+    # Declare new function
+    function MyNewFunction1 {
+      echo "Hello, $USER on $HOSTNAME!"
+      }
+    # Use it in a script as any other command:
+    ...
+    MyNewFunction1
+    ...
+    # Use with variables (same as in previous cases)
+    function MyNewFunction2 {
+      echo "The sum is `expr $1 + $2`."
+      }
+    # Use it in the script
+    ...
+    MyNewFunction2 5 8 # For example
+    ...
+  \end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Provide parameters, verify them and behave accordingly I}
   \begin{bashcode}
     #!/bin/bash
-    NUMBER='^[0-9]+$'
-    if [ "$#" -ne "3" ]; then
-        echo "Error! Requiring 3 parameters! Received $#.
-        Usage number1 -plus/-minus/-product/-quotient number2
-        Use -plus for sum, -minus for difference, -product
-        for multiplication or -quotient for quotient."
-        exit 1
+    NUMBER='^[0-9]+$' # From beginning (^) to the end ($) only number(s)
+    function usagehelp { # Function to print help
+      echo "Usage: number1 plus/minus/product/quotient number2"
+      echo "Use plus for sum, minus for difference, product"
+      echo "for multiplication or quotient for quotient."
+      exit 1
+      }
+    if [ "$#" -ne "3" ]; then # Do we have 3 parameters provided?
+        echo "Error! Requiring 3 parameters! Received $# ($*)."
+        usagehelp # The function to print help
       fi
-    if [[ ! $1 =~ $NUMBER ]]; then
+    if [[ ! $1 =~ $NUMBER ]]; then # Is parameter 1 number?
         echo "Parameter 1 is not an integer!"
-        exit 1
-      fi
-    if [[ ! $3 =~ $NUMBER ]]; then
-        echo "Parameter 3 is not an integer!"
-        exit 1
+        usagehelp # The function to print help
       fi
   \end{bashcode}
 Continues on next slide\ldots
@@ -1984,16 +2020,18 @@ Continues on next slide\ldots
 \begin{frame}[fragile]{Provide parameters, verify them and behave accordingly II}
 Remaining part from previous slide\ldots
   \begin{bashcode}
-    case $2 in
-      -plus) expr $1 '+' $3;;
-      -minus) expr $1 '-' $3;;
-      -product) expr $1 '*' $3;;
-      -quotient) expr $1 '/' $3;;
-      *) echo "Wrong option!
-        Usage number1 -plus/-minus/-product/-quotient number2
-        Use -plus for sum, -minus for difference,
-        -product for multiplication or -quotient
-        for quotient.";;
+    if [[ ! $3 =~ $NUMBER ]]; then # Is parameter 3 number?
+        echo "Parameter 3 is not an integer!"
+        usagehelp # The function to print help
+      fi
+    case "$2" in
+      plus) expr $1 '+' $3;;
+      minus) expr $1 '-' $3;;
+      product) expr $1 '*' $3;;
+      quotient) expr $1 '/' $3;;
+      *) echo "Wrong option!"
+         usagehelp # The function to print help
+         ;;
     esac
     exit
   \end{bashcode}
@@ -2009,9 +2047,9 @@ Remaining part from previous slide\ldots
       fi
     # Two branches - when condition is met and when not
     if expression; then
-        commands1
+        commands1 # expression is TRUE
       else
-        commands2
+        commands2 # expression is FALSE - all other cases
       fi
     # Join together two (or more) if branches
     if expression1; then
