@@ -2170,20 +2170,25 @@ Remaining part from previous slide\ldots
 
 \section{Software}
 
-\begin{frame}{Package management}
-\begin{itemize}
-  \item Package -- an application or its part (documentation, plug-ins, translations, \ldots)
-  \item Packages are available in repositories on the internet
+\begin{frame}[allowframebreaks]{Package management}{Installation of software}
   \begin{itemize}
-    \item System has list of applications available
-    \item Updates, bug fixes are installed for all applications using one interface (GUI or command line) -- very reliable
-    \item Packages are digitally signed -- security
-    \item User can set custom repositories to get new packages
+    \item Package -- an application or its part (documentation, plug-ins, translations, \ldots)
+    \item Packages are available in repositories (directories) on the internet
+    \begin{itemize}
+      \item System has list of applications available
+      \item Updates and bug fixes are installed for all applications using one interface (GUI or command line) -- very reliable
+      \item Packages are digitally signed -- security
+      \item User can set custom repositories to get new packages
+    \end{itemize}
+    \item The most different task among distributions
+    \item Packages have dependencies -- required shared libraries and so on -- use package manager and try to avoid downloading packages from the internet
+    \item \alert{Read manual for your distribution!}
+    \item Package is basically an archive and system has configured directories where to unpack it -- binaries are commonly in \texttt{/usr/bin/}, shared libraries in \texttt{/lib} and \texttt{/lib64} and rest in \texttt{/var}
+    \item User should not care where parts of packages go to -- system is taking the care -- user can only damage it
+    \item Shared libraries are installed automatically whenever some application needs them
+    \item As all files are placed in standard defined directories, it is very simple to use them also for another applications
+    \item Applications not available in repositories, neither as distributional package should be installed into \texttt{$\sim$/bin} for current user or \texttt{/usr/local} for all users (binaries then go into \texttt{bin} and so on)
   \end{itemize}
-  \item The most different task among distributions
-  \item Packages have dependencies -- required shared libraries and so on -- use package manager and try to avoid downloading packages from the internet
-  \item \alert{Read manual for your distribution!}
-\end{itemize}
 \end{frame}
 
 \begin{frame}{Package management in command line in openSUSE and Debian/Ubuntu}
@@ -2270,6 +2275,12 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
     java -Xmx512m -jar lib/figtree.jar
   \end{bashcode}
 \end{frame}
+
+% \begin{frame}{Launching of Windows and DOS applications in Linux}
+%   \begin{itemize}
+%     \item 
+%   \end{itemize}
+% \end{frame}
 
 \section{MetaCentrum}
 
@@ -2415,8 +2426,11 @@ Don't forget to make \texttt{metacentrum.sh} executable and modify it according 
 
 \section{Administration}
 
-\begin{frame}{Creation and control of FS}
+\subsection{File systems}
+
+\begin{frame}[allowframebreaks]{Creation and control of FS}
 \begin{itemize}
+  \item \texttt{fdisk -l} lists disks and partitions
   \item To manage disk partitioning use \texttt{fdisk /dev/sdX} (doesn't support GPT very well yet) or \texttt{gdisk /dev/sdX}
   \item When hard drive is partitioned, partitions must be formatted
   \item Commands \texttt{mkfs.*} create various FS, common syntax is \texttt{mkfs.XXX -parameters /dev/sdXY}, where sdXY is particular disk partition
@@ -2425,13 +2439,26 @@ Don't forget to make \texttt{metacentrum.sh} executable and modify it according 
   \item \texttt{tune2fs -parameters /dev/sdXY} can set various parameters to influence behavior of disk partition
   \item \texttt{hdparm -parameters /dev/sdX} can set advanced hardware parameters of hard drive
   \item The most convenient is using graphical tools available in all distributions\ldots
+  \begin{itemize}
+    \item in openSUSE there is YaST administrative module -- from command line launch \texttt{yast --qt disk} for graphical or \texttt{yast disk} for text-based version
+    \item All distributions have graphical tools like \href{http://gparted.org/}{GParted} where it is possible to comfortable manage disks
+  \end{itemize}
+  \item \texttt{df -h} shows available/occupied space on disks/partitions, but because of special features of Btrfs it doesn't show every time correct values for this FS -- it is better to use \texttt{btrfs fi df /mount/point} (\texttt{/mount/point} use to be the most commonly \texttt{/})
 \end{itemize}
 \end{frame}
+
+% \begin{frame}{Btrfs and Snapper}
+%   \begin{itemize}
+%     \item 
+%   \end{itemize}
+% \end{frame}
+
+\subsection{System services}
 
 \begin{frame}[fragile]{Managing system services}
 \begin{itemize}
   \item Different among distributions -- several main methods
-  \item Most common is SystemD, less common older init scripts and RC scripts
+  \item Most common is \href{https://wiki.freedesktop.org/www/Software/systemd/}{SystemD}, less common older init scripts and RC scripts
   \item Used to manage services like web server, database, \ldots
   \item \alert{Read documentation for your distribution!}
   \item All actions require root authentication
@@ -2446,28 +2473,54 @@ Don't forget to make \texttt{metacentrum.sh} executable and modify it according 
   \end{bashcode}
 \end{frame}
 
-\section{The end}
+\begin{frame}[fragile]{SystemD usage}
+  \begin{bashcode}
+    # List installed services and their status
+    systemctl list-units --type service
+    # Enable/disable/see status/start/stop service
+    systemctl enable/disable/status/start/stop servicename # TAB helps
+    # Show overriden config files
+    systemd-delta
+    # Analyze boot time (how long does each service take to start)
+    systemd-analyze blame # Text output
+    systemd-analyze plot > filename.svg # Same in graphics
+    # Log for particular service
+    journalctl -u servicename
+    # Last logged messages (press Ctrl+C to exit)
+    journalctl -f
+    # Log records since last boot
+    journalctl -b
+    # Time and date information and management
+    timedatectl
+  \end{bashcode}
+\end{frame}
 
-% \begin{frame}[fragile]{}
+% \section{Git}
+
+% \begin{frame}[fragile]{Git and GitHub}
 %   \begin{bashcode}
 %     #
 %   \end{bashcode}
 % \end{frame}
-% 
-% \begin{frame}{}
+
+\section{The end}
+
+% \subsection{Switching to Linux}
+
+% \begin{frame}{Brief list of applications to help to switch to Linux}
 % \begin{itemize}
 %   \item 
 % \end{itemize}
 % \end{frame}
-% 
+
 % \subsection{Resources}
-% 
+
 % \begin{frame}{}
 % \begin{itemize}
 %   \item 
 % \end{itemize}
 % \end{frame}
-% 
+
 % \subsection{The very end}
 
 \begin{frame}{The end}{Our course is over\ldots}
@@ -2491,13 +2544,8 @@ Don't forget to make \texttt{metacentrum.sh} executable and modify it according 
 \end{document}
 
 % % Missing topics
-% Launching of Windows and DOS applications in Linux
-% Where to look for help, another sources of information
-% Brief list of applications to help to switch to Linux
 % How to break system :-)
 % Security, antiviruses
 % More examples about software on MetaCentrum, scripts (on MetaCentrum)
 % More about regular expressions
 % recommend software, how it is with installation
-% GIT, GitHub
-% placing of files, libraries, ...
