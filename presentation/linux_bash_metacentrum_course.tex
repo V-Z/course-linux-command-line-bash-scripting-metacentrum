@@ -1485,7 +1485,7 @@ Alias is short cut -- instead of very long command write short alias
     domain=DOMAINNAME
     man mount.cifs # See for other connection options
     # Mounting remote server over SSH (sshfs package must be installed)
-    sshfs zeisek@vyuka.natur.cuni.cz:/some/dir /local/mount/point
+    sshfs user@vyuka.natur.cuni.cz:/some/dir /local/mount/point
     # Mount NFS share (NFS is common protocol in UNIX world)
     mount -t nfs some.server.cz:/shared/directory /local/directory
     # Mount webDAV folder (requires package davfs2 to be installed)
@@ -2296,6 +2296,9 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
     \item Practically unlimited \href{https://www.cesnet.cz/services/data-storage/?lang=en}{data storage}
     \item \href{https://www.cesnet.cz/services/filesender/?lang=en}{FileSender} to be able to send up to 500~GB file
     \item \href{https://www.cesnet.cz/services/owncloud/?lang=en}{ownCloud} to backup and/or sync data across devices (default capacity is 100~GB)
+    \begin{itemize}
+      \item It is possible to connect by webDAV to ownCloud (slide \ref{transfers}) --many applications support it
+    \end{itemize}
     \item And \href{https://www.cesnet.cz/services/?lang=en}{more\ldots}
   \end{itemize}
   \item Services accessible without registration
