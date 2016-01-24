@@ -833,14 +833,15 @@ Gain root rights:
   \item \texttt{Ctrl+R} -- reverse search in history -- type to search last command containing typed characters
   \item \texttt{TAB} -- list command and files starting by typed characters
   \item \texttt{Home}/\texttt{End} -- go to beginning/end of the line
-  \item \texttt{Ctrl+L} -- clears screen (like \texttt{clear} command)
+  \item \texttt{Ctrl+L} -- clear screen (like \texttt{clear} command)
   \item \texttt{Ctrl+Shift+C}/\texttt{V} -- copy/paste the text
   \item \texttt{Ctrl+C} -- cancel running task
   \item \texttt{Ctrl+D} -- log out (like commands \texttt{exit} or \texttt{logout})
   \item \texttt{Ctrl+U} -- move text before cursor into clipboard
   \item \texttt{Ctrl+K} -- move text after cursor into clipboard
   \item \texttt{Ctrl+left/right arrow} -- skip words
-  \item \texttt{Ctrl+T} -- flips current and left character
+  \item \texttt{Ctrl+T} -- flip current and left character
+  \item \texttt{Ctrl+X+E} -- start text editor in current directory
 \end{itemize}
 \end{frame}
 
@@ -962,6 +963,19 @@ Alias is short cut -- instead of very long command write short alias
     HISTCONTROL='ignoreboth' # Ignore repeated entries in bash history
     HISTFILESIZE='100000' # Length of bash history
   \end{bashcode}
+\end{frame}
+
+\begin{frame}{BASH globbing and wildcards}
+\begin{itemize}
+  \item BASH itself doesn't recognize regular expressions -- it's wildcards have some of functions of regular expressions and can look similarly, but behave differently!
+  \item \texttt{?} -- Any single character
+  \item \texttt{*} -- Any number of characters
+  \item \texttt{[]} -- Range or a list -- \texttt{[abcdef]} and \texttt{[a-f]} are same
+  \item \texttt{[!\ldots]} -- Reverse previous case (\texttt{!}) -- any character except those listed
+  \item \texttt{\{\}} -- Expansion (terms inside are separated by commas \texttt{,}) -- all possible combinations (see next slide for examples)
+  \item \texttt{\textbackslash} -- Escapes following character and it doesn't have its special meaning (e.g. \texttt{\textbackslash *} means asterisk \texttt{*} and not ``any number of characters'')
+  \item For details see \texttt{man 7 glob} and \texttt{man 7 regex}
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Brace expansion and quotes}
@@ -1171,7 +1185,7 @@ Alias is short cut -- instead of very long command write short alias
     lsmod # List loaded kernel modules
     uptime # How long is the system running, number of users, average load
     date # Date and time - plenty of options for formatting
-    mount # Information about mounted file systems
+    mount | column -t # Information about mounted file systems
     findmnt # Display mounted devices in tree structure
   \end{bashcode}
 \end{frame}
@@ -1179,6 +1193,7 @@ Alias is short cut -- instead of very long command write short alias
 \begin{frame}[fragile]{Processes -- Every running program has its own process}
   \begin{bashcode}
     htop # Nice listing of processes (better version of top), quit using "q"
+    pstree # See running processes with child processes, recursively
     pgrep application # Return PID (process ID) of application
     ps # processes related to actual terminal
     ps x # All user's processes
@@ -1207,6 +1222,7 @@ Alias is short cut -- instead of very long command write short alias
     w # Who is logged in, more information
     users # Plain list of currently logged users
     finger # Information about users on current terminals
+    last # Last logged-in users
     passwd # Change password
     passwd USER # Change USER's password
     groups # List your groups
@@ -1819,6 +1835,23 @@ Grep supports regular expressions, slide \ref{regexp}.
 
 \subsection{Regular expressions}
 
+\begin{frame}{Regular expressions are useful\ldots}
+  \begin{multicols}{2}
+    \begin{center}
+      \includegraphics[height=5.5cm]{regular_expressions.png}
+    \end{center}
+    \columnbreak
+    \begin{itemize}
+      \item Find text according to a~pattern
+      \item Manipulate the text -- flip, reformat, replace,~\ldots
+      \item Syntax is variable among programming languages and applications
+      \item Probably the most advanced is Perl
+    \end{itemize}
+    \vfill
+    \url{https://xkcd.com/208/}
+  \end{multicols}
+\end{frame}
+
 \begin{frame}[allowframebreaks]{Regular expressions}
 \label{regexp}
 \begin{itemize}
@@ -1878,6 +1911,30 @@ Grep supports regular expressions, slide \ref{regexp}.
     echo "Hi, $USER, today is `date` and your PATH is $PATH."
     echo
     exit
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Functions in BASH}
+  \begin{itemize}
+    \item Pieces of code, which can be used repeatedly
+  \end{itemize}
+  \begin{bashcode}
+    # Declare new function
+    function MyNewFunction1 {
+      echo "Hello, $USER on $HOSTNAME!"
+      }
+    # Use it in a script as any other command:
+    ...
+    MyNewFunction1
+    ...
+    # Use with variables (same as in previous cases)
+    function MyNewFunction2 {
+      echo "The sum is `expr $1 + $2`."
+      }
+    # Use it in the script
+    ...
+    MyNewFunction2 5 8 # For example
+    ...
   \end{bashcode}
 \end{frame}
 
@@ -1971,30 +2028,6 @@ When done, do:
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Functions in BASH}
-  \begin{itemize}
-    \item Pieces of code, which can be used repeatedly
-  \end{itemize}
-  \begin{bashcode}
-    # Declare new function
-    function MyNewFunction1 {
-      echo "Hello, $USER on $HOSTNAME!"
-      }
-    # Use it in a script as any other command:
-    ...
-    MyNewFunction1
-    ...
-    # Use with variables (same as in previous cases)
-    function MyNewFunction2 {
-      echo "The sum is `expr $1 + $2`."
-      }
-    # Use it in the script
-    ...
-    MyNewFunction2 5 8 # For example
-    ...
-  \end{bashcode}
-\end{frame}
-
 \begin{frame}[fragile]{Provide parameters, verify them and behave accordingly I}
   \begin{bashcode}
     #!/bin/bash
@@ -2039,6 +2072,8 @@ Remaining part from previous slide\ldots
 \texttt{chmod +x interactive4.sh \&\& ./interactive4.sh 7 -plus 5} (for example)
 \end{frame}
 
+\subsection{Branching the code}
+
 \begin{frame}[fragile]{If branching}
   \begin{bashcode}
     # Basic variant - commands are done only if condition is met
@@ -2065,44 +2100,50 @@ Remaining part from previous slide\ldots
 
 \begin{frame}[allowframebreaks]{Evaluation of conditions}
 \begin{itemize}
-  \item ``[ \ldots~]'' (always keep space around it -- inside) is function to evaluate expressions (alternatively use command \texttt{test})
+  \item ``\texttt{[} \ldots~\texttt{]}'' (always keep space around it -- inside) is function to evaluate expressions (alternatively use command \texttt{test})
   \begin{itemize}
     \item \texttt{if [ "\$VAR" -eq 25 ]} or \texttt{test \$VAR -eq 25}
     \item \texttt{if [ "\$VAR" == "value" ]; \ldots}
     \begin{itemize}
-      \item Escaping variables and values by double quotes ("\ldots") is recommended (to be sure), but not strictly required all the time
+      \item Escaping variables and values by double quotes (\texttt{"}\ldots\texttt{"}) is recommended (to be sure), but not strictly required all the time
     \end{itemize}
-    \item \texttt{if [ ! -f regularfile ]; \ldots} -- reverted condition
+    \item \texttt{if [ ! -f regularfile ]; \ldots} -- reverted condition (\texttt{!})
     \item Single-bracket conditions -- file, string, or arithmetic conditions
     \item Double-bracket syntax -- enhanced
     \begin{itemize}
-      \item \texttt{if [[ "\$stringvar" == *[sS]tring* ]]; then} -- regular expressions
-      \item Word splitting is prevented -- \$stringvar can contain spaces
-      \item Expanding file names -- \texttt{if [[ -a *.sh ]]} (variant with only one bracket doesn't when there are multiple sh files)
-      \item Allows more detailed test, e.g. \texttt{if [[ \$num -eq 3 \&\& "\$stringvar" == XXX ]] \ldots}
+      \item Allow usage of regular expressions and globbing patterns
+      \item Word splitting is prevented -- \texttt{\$STRINGVAR} can contain spaces
+      \item Expanding file names -- \texttt{if [[ -a *.sh ]]} (variant with only one bracket doesn't work when there are multiple sh files)
+      \item Allows more detailed test, e.g. \texttt{if [[ \$num -eq 3 \&\& "\$STRINGVAR" == XXX ]] \ldots}
     \end{itemize}
   \end{itemize}
-  \item -eq -- Equal to
-  \item -lt -- Less than
-  \item -gt -- Greater than
-  \item -ge -- Greater than or Equal to
-  \item -le -- Less than or Equal to
-  \item -f \$file -- True if \$file exists and is a regular file
-  \item -r \$file -- True if \$file exists and is readable
-  \item -w \$file -- True if \$file exists and is writable
-  \item -x \$file -- True if \$file exists and is executable
-  \item -d \$file -- True if \$file exists and is a directory
-  \item -s \$file -- True if \$file exists and has a size greater than zero
-  \item -n str -- True if string str is not a null string
-  \item -z str -- True if string str is a null string
-  \item str1 == str2 -- True if both strings are equal
-  \item str -- True if string str is assigned a value and is not null
-  \item str1 != str2 -- True if both strings are unequal
-  \item -s \$file -- True if \$file exists and has a size greater than zero
-  \item -a -- Performs the AND function
-  \item -o -- Performs the OR function
+  \item \texttt{-eq} -- Equal to
+  \item \texttt{-lt} -- Less than
+  \item \texttt{-gt} -- Greater than
+  \item \texttt{-ge} -- Greater than or equal to
+  \item \texttt{-le} -- Less than or equal to
+  \item \texttt{-f \$FILE} -- True if \texttt{\$FILE} exists and is a regular file
+  \item \texttt{-r \$FILE} -- True if \texttt{\$FILE} exists and is readable
+  \item \texttt{-w \$FILE} -- True if \texttt{\$FILE} exists and is writable
+  \item \texttt{-x \$FILE} -- True if \texttt{\$FILE} exists and is executable
+  \item \texttt{-d \$FILE} -- True if \texttt{\$FILE} exists and is a directory
+  \item \texttt{-s \$FILE} -- True if \texttt{\$FILE} exists and has a size greater than zero
+  \item \texttt{-n \$STR} -- True if string \texttt{\$STR} is not a null string
+  \item \texttt{-z \$STR} -- True if string \texttt{\$STR} is a null string
+  \item \texttt{\$STR1 == \$STR2} -- True if both strings are equal
+  \item \texttt{\$STR} -- True if string \texttt{\$STR} is assigned a value and is not null
+  \item \texttt{\$STR1 != \$STR2} -- True if both strings are unequal
+  \item \texttt{-a} -- Performs the \texttt{AND} function
+  \item \texttt{-o} -- Performs the \texttt{OR} function
+  \item Do not confuse globbing patterns and regular expressions when using \texttt{[[ \ldots~]]}
+  \begin{itemize}
+    \item Shell globbing: \texttt{if [[ "\$STRINGVAR" == ?[sS]tring* ]]; then} -- \texttt{?} represents single character \texttt{[]} any character inside and \texttt{*} zero or more characters
+    \item Regular expressions: \texttt{if [[ "\$STRINGVAR" =~ .[sS]tring.* ]]; then} -- \texttt{.} represents single character (\texttt{?} would be zero or one occurrence of preceding expression), \texttt{[]} any character inside and \texttt{.*} zero or more occurrences of any single characters
+  \end{itemize}
 \end{itemize}
 \end{frame}
+
+\subsection{Loops}
 
 \begin{frame}[fragile]{For, while and until cycles}
   \begin{bashcode}
@@ -2124,6 +2165,109 @@ Remaining part from previous slide\ldots
     until expression; do
       commands
       done
+  \end{bashcode}
+\end{frame}
+
+\section{Software}
+
+\begin{frame}{Package management}
+\begin{itemize}
+  \item Package -- an application or its part (documentation, plug-ins, translations, \ldots)
+  \item Packages are available in repositories on the internet
+  \begin{itemize}
+    \item System has list of applications available
+    \item Updates, bug fixes are installed for all applications using one interface (GUI or command line) -- very reliable
+    \item Packages are digitally signed -- security
+    \item User can set custom repositories to get new packages
+  \end{itemize}
+  \item The most different task among distributions
+  \item Packages have dependencies -- required shared libraries and so on -- use package manager and try to avoid downloading packages from the internet
+  \item \alert{Read manual for your distribution!}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Package management in command line in openSUSE and Debian/Ubuntu}
+Root password is required: use \texttt{sudo \ldots} or \texttt{su -}
+\begin{center}
+\begin{tabular}{lll}
+\textbf{Task} & \textbf{openSUSE} & \textbf{Debian/Ubuntu}\\
+Package name & *.rpm & *.deb\\
+Install & zypper in \textit{package} & apt-get install \textit{package}\\
+Remove & zypper rm \textit{package} & apt-get remove \textit{package}\\
+Refresh repositories & zypper ref & apt-get update\\
+Update & zypper up & apt-get update\\
+Upgrade & zypper dup & apt-get dist-upgrade\\
+Search & zypper se \textit{term} & apt-cache search \textit{term}\\
+Clear packages & rpmorphan & apt-get autoremove\\
+Interactive manager & yast sw\_single & aptitude\\
+Add repository & zypper ar \textit{repository} & nano /etc/apt/sources.list\\
+Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Basics of compilation}
+\begin{itemize}
+  \item Some software is distributed only as source code written in languages like C or C++ -- user has to compile it to get binary executable
+  \item Compilation creates binary specific for particular operating system and hardware platform -- can be tuned for optimal performance
+  \item Interpreted languages like Bash, Perl, Python or Java don't have to be compiled (but it is possible) -- they need their interpreter to run, relative easily portable among hardware platforms and OS
+  \item Applications requiring compilation usually have good instructions
+\end{itemize}
+  \begin{bashcode}
+    # General schema:
+    configure # Many possible parameters, settings for compilation
+              # Not required in every time
+    make # Basic building command, sometimes only this is required
+    make install # Final creation of binary, sometimes required
+  \end{bashcode}
+\begin{itemize}
+  \item If you don't have to do it, don't do it. Solving problems can be complicated -- contact someone skilled or author of the application\ldots
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Compilation of RAxML}
+\begin{footnotesize}
+  Available from \url{https://github.com/stamatak/standard-RAxML} (cite \href{https://bioinformatics.oxfordjournals.org/content/30/9/1312.abstract}{Stamakis 2014}).
+\end{footnotesize}
+  \begin{bashcode}
+    # Create working directory
+    mkdir raxml
+    # Go there
+    cd raxml/
+    # Get source code from GitHub (svn downloads only changed files)
+    svn co https://github.com/stamatak/standard-RAxML/tags/v8.2.4
+    # Go to newly created directory
+    cd v8.2.4/
+    ls # List files
+    # No need of Windows version - delete it
+    rm -rf Windows*
+    # Compile standard version (other versions are available for better CPU)
+    make -f Makefile.gcc
+    # Remove unneeded files
+    rm *.o
+    # Launch it - see RAxML help
+    ./raxmlHPC -h
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Launching Java applications}
+\begin{itemize}
+  \item \href{https://www.java.com/}{Java} is probably the most portable language working on any operating system -- the only condition is to install Java virtual machine
+  \item Let's download \href{http://tree.bio.ed.ac.uk/software/figtree/}{FigTree} from \url{http://tree.bio.ed.ac.uk/download.php?id=90&num=3}
+\end{itemize}
+  \begin{bashcode}
+    # Go to directory where you downloaded it
+    cd directory/with/downloaded/figtree
+    # Decompress downloaded archive
+    tar -zxvf FigTree_v1.4.2.tgz
+    # Go to created directory
+    cd FigTree_v1.4.2/
+    # List files, also in subdirectories
+    ls *
+    # Launch it (command java launches *.jar files)
+    java -jar lib/figtree.jar
+    # Limit its memory usage to 512 MB
+    java -Xmx512m -jar lib/figtree.jar
   \end{bashcode}
 \end{frame}
 
@@ -2232,19 +2376,17 @@ Don't forget to make \texttt{metacentrum.sh} executable and modify it according 
   \item Personal view \url{https://metavo.metacentrum.cz/pbsmon2/person} has nice overview of available resources and tasks and allows comfortable construction of submission command
 \end{itemize}
   \begin{bashcode}
-    # We will tun up to 5 days, require 4 GB of RAM, 5 GB of disk space, one
+    # We will run up to 5 days, require 4 GB of RAM, 5 GB of disk space, one
     # physical computer with 8 CPU threads and we get all information mails
     qsub -l walltime=5d -l mem=4gb -l scratch=5gb -l nodes=1:ppn=8 -m abe \
       bayes_batch.sh
     # Check how the task is running (above web) and
     qstat | grep USERNAME
     qstat -u USERNAME
-    qstat 123456789 # The ID of task is available from commands above or mail
+    qstat 123456789 # The task ID is available from commands above or mail
     qstat -f 123456789
-    # Terminate scheduled or running task
-    qdel 123456789
-    # List available resources
-    qfree
+    qdel 123456789 # Terminate scheduled or running task
+    qfree # List available resources
   \end{bashcode}
 \end{frame}
 
@@ -2269,6 +2411,39 @@ Don't forget to make \texttt{metacentrum.sh} executable and modify it according 
 
 \begin{frame}{Running VNC}
 \includegraphics[width=\textwidth]{vnc.png}
+\end{frame}
+
+\section{Administration}
+
+\begin{frame}{Creation and control of FS}
+\begin{itemize}
+  \item To manage disk partitioning use \texttt{fdisk /dev/sdX} (doesn't support GPT very well yet) or \texttt{gdisk /dev/sdX}
+  \item When hard drive is partitioned, partitions must be formatted
+  \item Commands \texttt{mkfs.*} create various FS, common syntax is \texttt{mkfs.XXX -parameters /dev/sdXY}, where sdXY is particular disk partition
+  \item Parameters can set label and various settings of behavior of the disk partition, check \texttt{man mkfs.XXX}
+  \item To check FS for errors use \texttt{fsck.XXX /dev/sdXY} (according to respective FS)
+  \item \texttt{tune2fs -parameters /dev/sdXY} can set various parameters to influence behavior of disk partition
+  \item \texttt{hdparm -parameters /dev/sdX} can set advanced hardware parameters of hard drive
+  \item The most convenient is using graphical tools available in all distributions\ldots
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Managing system services}
+\begin{itemize}
+  \item Different among distributions -- several main methods
+  \item Most common is SystemD, less common older init scripts and RC scripts
+  \item Used to manage services like web server, database, \ldots
+  \item \alert{Read documentation for your distribution!}
+  \item All actions require root authentication
+\end{itemize}
+  \begin{bashcode}
+    # SystemD - huge amount of possibilities
+    systemctl enable/disable/status/start/stop servicename # TAB helps
+    # RC scripts
+    rcservicename status/start/stop # TAB helps to select service
+    # Init scripts
+    /etc/init.d/servicename status/start/stop # TAB helps to select service
+  \end{bashcode}
 \end{frame}
 
 \section{The end}
@@ -2321,8 +2496,6 @@ Don't forget to make \texttt{metacentrum.sh} executable and modify it according 
 % Brief list of applications to help to switch to Linux
 % How to break system :-)
 % Security, antiviruses
-% How to connect to remote FS
-% More for average users (less servers, administrative)
 % More examples about software on MetaCentrum, scripts (on MetaCentrum)
 % More about regular expressions
 % recommend software, how it is with installation
