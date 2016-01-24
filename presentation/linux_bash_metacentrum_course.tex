@@ -1429,8 +1429,9 @@ Alias is short cut -- instead of very long command write short alias
 \end{frame}
 
 \begin{frame}[fragile]{Transferring files from/to remote server}
+  \label{transfers}
   \begin{itemize}
-    \item \texttt{curlftpfs} allows mount FTP as local diractory, but FTP is outdated, insecure and not constructed to that usage\ldots
+    \item \texttt{curlftpfs} allows mount FTP as local directory, but FTP is outdated, insecure and not constructed to that usage\ldots
   \end{itemize}
   \begin{bashcode}
     wget http://some.address.cz/internet # Download file(s) from Internet
@@ -2257,18 +2258,18 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
 
 \begin{frame}[fragile]{Launching Java applications}
 \begin{itemize}
-  \item \href{https://www.java.com/}{Java} is probably the most portable language working on any operating system -- the only condition is to install Java virtual machine
-  \item Let's download \href{http://tree.bio.ed.ac.uk/software/figtree/}{FigTree} from \url{http://tree.bio.ed.ac.uk/download.php?id=90&num=3}
+  \item \href{https://www.java.com/}{Java} is probably the most portable language working on any operating system -- the only condition is to install \href{https://en.wikipedia.org/wiki/Java_virtual_machine}{Java virtual machine (JVM)}
+  \item Linux usually use \href{http://openjdk.java.net/}{OpenJDK} -- search for packages named \texttt{*openjdk*}
+  \item Let's download e.g. \href{http://tree.bio.ed.ac.uk/software/figtree/}{FigTree} from \url{http://tree.bio.ed.ac.uk/download.php?id=90&num=3}
 \end{itemize}
   \begin{bashcode}
     # Go to directory where you downloaded it
     cd directory/with/downloaded/figtree
     # Decompress downloaded archive
-    tar -zxvf FigTree_v1.4.2.tgz
+    tar zxvf FigTree_v1.4.2.tgz
     # Go to created directory
     cd FigTree_v1.4.2/
-    # List files, also in subdirectories
-    ls *
+    ls * # List files, also in subdirectories
     # Launch it (command java launches *.jar files)
     java -jar lib/figtree.jar
     # Limit its memory usage to 512 MB
@@ -2284,60 +2285,79 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
 
 \section{MetaCentrum}
 
+\subsection{Information}
+
 \begin{frame}[allowframebreaks]{CESNET and MetaCentrum}
 \begin{itemize}
-  \item CESNET is organization of Czech universities, Academy of Science and other organizations taking care about Czech backbone Internet, one of world leading institutions of this type
+  \item \href{https://www.cesnet.cz/?lang=en}{CESNET} is organization of Czech universities, Academy of Science and other organizations taking care about Czech backbone Internet, one of world leading institutions of this type
   \item CESNET provides various \href{https://www.cesnet.cz/services/?lang=en}{services}
   \begin{itemize}
     \item Massive computations -- \href{https://www.cesnet.cz/services/massive-computations-metacentrum/?lang=en}{MetaCentrum}
     \item Practically unlimited \href{https://www.cesnet.cz/services/data-storage/?lang=en}{data storage}
     \item \href{https://www.cesnet.cz/services/filesender/?lang=en}{FileSender} to be able to send up to 500~GB file
-    \item \href{https://www.cesnet.cz/services/owncloud/?lang=en}{ownCloud} to backup and/or sync data across devices (capacity is 100~GB)
+    \item \href{https://www.cesnet.cz/services/owncloud/?lang=en}{ownCloud} to backup and/or sync data across devices (default capacity is 100~GB)
     \item And \href{https://www.cesnet.cz/services/?lang=en}{more\ldots}
   \end{itemize}
-  \item Without registration
+  \item Services accessible without registration
   \begin{itemize}
     \item ownCloud \url{https://owncloud.cesnet.cz/}
     \item FileSender \url{https://filesender.cesnet.cz/}
-    \item Go to web and log in with your institutional password (currently this is not available for Institute of Botany)
+    \item Go to web and log in with your institutional password
   \end{itemize}
-  \item Requiring registration (and approval)
+  \item Services requiring registration (and approval)
   \begin{itemize}
     \item To use MetaCentrum fill registration form \url{https://metavo.metacentrum.cz/en/application/form}
     \item To use data storage fill registration form \url{https://einfra.cesnet.cz/perun-registrar-fed/?vo=storage&locale=en}
-    \item Users from Institute of Botany (not having access to \href{https://www.eduid.cz/en/index}{EduID}) have to register first at HostelID \url{https://hostel.eduid.cz/en/index.html}
+    \item Users not having access to \href{https://www.eduid.cz/en/index}{EduID} have to register first at HostelID \url{https://hostel.eduid.cz/en/index.html}
+    \item Note some browser do not have required certificate and registration pages do not work correctly. \href{https://www.mozilla.org/firefox/}{Mozilla Firefox} should be safe choice every time.
   \end{itemize}
-  \item Information about data storage \url{https://du.cesnet.cz/en/start} (contains detailed instructions about usage)
-  \item Information about MetaCentrum \url{https://www.metacentrum.cz/en/} (most of practical information for users are at wiki \url{https://wiki.metacentrum.cz/w/index.php?&setlang=en})
+  \item Information about data storage \url{https://du.cesnet.cz/en/start} contains detailed usage instructions
+  \item Information about MetaCentrum \url{https://www.metacentrum.cz/en/}
+  \item Most of practical information for users are at wiki \url{https://wiki.metacentrum.cz/w/index.php?&setlang=en}
 \end{itemize}
 \end{frame}
 
 \begin{frame}{MetaCentrum}
 \begin{itemize}
-  \item Also available is Galaxy \url{https://galaxy.metacentrum.cz/galaxy/} -- web based bioinformatics framework (more information at \href{https://wiki.metacentrum.cz/wiki/Galaxy_application}{wiki})
+  \item Also available is Galaxy \url{https://galaxy.metacentrum.cz/galaxy/} (same login as to MetaCentrum) -- web based bioinformatics framework (more information at \href{https://wiki.metacentrum.cz/wiki/Galaxy_application}{wiki})
   \item Current state and usage as available at \url{https://metavo.metacentrum.cz/en/}
   \item Manage your user account at \url{http://metavo.metacentrum.cz/en/myaccount/index.html}
   \item Personal view on actual resources and running tasks is at \url{https://metavo.metacentrum.cz/pbsmon2/person}
   \item List of available applications \url{https://wiki.metacentrum.cz/wiki/Kategorie:Applications}
-  \item It has 7 front ends where users log and thousands of computers doing the calculations -- they are not accessed directly, most of computers are running \href{https://www.debian.org/}{Debian GNU/Linux}
+  \item It has 8 front ends where users log and thousands of computers doing the calculations -- they are not accessed directly
+  \item Most of computers are running \href{https://www.debian.org/}{Debian GNU/Linux}
 \end{itemize}
 \end{frame}
 
+\subsection{Usage}
+
 \begin{frame}[fragile]{MetaCentrum usage}
-\begin{itemize}
-  \item User can transfer data on one of \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontends} by \texttt{scp} or for example \href{http://winscp.net/eng/index.php}{WinSCP}
-  \item Same credentials are used for all front ends, for SSH login as well as file transmissions
-\end{itemize}
+  \begin{itemize}
+    \item User can transfer data on one of \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontends} by \texttt{scp} or for example \href{https://winscp.net/}{WinSCP} from Windows
+    \item Same credentials are used for all front ends, for SSH login as well as file transmissions
+  \end{itemize}
   \begin{bashcode}
     # Login to selected server (tarkil is located in Prague)
     ssh -X USER@tarkil.cesnet.cz
     # Continue as in any other command line...
   \end{bashcode}
-\begin{itemize}
-  \item In home directory on the server prepare all needed data and non-interactive script (interactive are more complicated) which will do the calculations
-  \item Tasks are not launched immediately, but using \texttt{qsub} -- task is submitted into queue and system decides when it will be launched
-\end{itemize}
+  \begin{itemize}
+    \item In home directory on the server prepare all needed data and non-interactive script (interactive are more complicated) which will do the calculations
+    \item Tasks are not launched immediately, but using \texttt{qsub} -- task is submitted into queue and system decides when it will be launched
+  \end{itemize}
 \end{frame}
+
+\begin{frame}{File transfers to MetaCentrum}
+  \begin{itemize}
+    \item Graphical applications: \href{http://gftp.org/}{gFTP}, \href{https://filezilla-project.org/}{FileZilla} or from most of file managers
+    \item Protocol is SSH/SSH2/SFTP/SCP, port 22, server is selected \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontend's} address (e.g. \texttt{tarkil.cesnet.cz}) -- it is recommendable to use all the time same frontend
+    \item All servers are accessible under domain \texttt{*.metacentrum.cz}: \texttt{skirit}, \texttt{perian}, \texttt{onyx}, \texttt{zuphux} (located in Brno), \texttt{nympha}, \texttt{minos} (in Pilsen), \texttt{hermes} (in České Budějovice) and \texttt{tarkil} (in Prague) -- so that e.g. \texttt{tarkil.cesnet.cz} is synonymous to \texttt{tarkil.metacentrum.cz}
+    \item See slide \ref{transfers} and following to command-line transfers of files
+  \end{itemize}
+  \includegraphics[width=\textwidth]{gftp.png}
+\end{frame}
+
+\subsection{Tasks}
 
 \begin{frame}[fragile]{Basic skeleton of script running tasks I}
   \begin{bashcode}
@@ -2347,7 +2367,7 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
     WORKDIR="bayes_batch"
     DATADIR="/storage/praha1/home/$LOGNAME"
     # So there is directory /storage/praha1/home/gunnera/bayes_batch
-    # containing all the data needed for calculations
+    # (in this case) containing all the data needed for calculations
     # Clean-up of SCRATCH (it is temporal directory created by server) -
     # the commands will be launched on the end when the job is done
     trap 'clean_scratch' TERM EXIT
@@ -2359,26 +2379,32 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
     # calculations are done
     cd $SCRATCHDIR/ || exit 2 # If it fails, exit script
   \end{bashcode}
-Ends on following slide
+Ends on following slide\ldots
 \end{frame}
 
 \begin{frame}[fragile]{Basic skeleton of script running tasks II}
-Begins on previous slide
+\ldots begins on previous slide.
 \vfil
   \begin{bashcode}
     # Prepare calculations - load required application modules
     # See https://wiki.metacentrum.cz/wiki/Kategorie:Applications
-    # Every application module is loaded by "modile add XXX"
+    # Every application module is loaded by "module add XXX"
     . /packages/run/modules-2.0/init/sh
     module add parallel # In this case GNU Parallel and MrBayes
-    module add mrbayes-3.2.2
+    module add mrbayes-3.2.4
     # Launch the analysis - calculate MrBayes for multiple files
+    # Note Parallel will distribute task among 8 CPU threads (-j 8),
+    # so that qsub must in this case contain nodes=1:ppn=8 (see further)
     ls -1 *.nexus | parallel -j 8 'mb {} | tee -a {}.log'
     # Copy results back to home directory
     cp -ar $SCRATCHDIR $DATADIR/$WORKDIR || export CLEAN_SCRATCH=false
     # This is all needed, the script is ready to be launched...
+    exit
   \end{bashcode}
-Don't forget to make \texttt{metacentrum.sh} executable and modify it according to your needs\ldots{ }If the script was written on Windows, convert EOL and possibly encoding as well\ldots
+  \begin{itemize}
+    \item Make \texttt{metacentrum.sh} executable and modify it to fit your needs\ldots
+    \item If it was written on Windows, convert EOL (and encoding)\ldots
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Launching of tasks}
@@ -2392,14 +2418,73 @@ Don't forget to make \texttt{metacentrum.sh} executable and modify it according 
     qsub -l walltime=5d -l mem=4gb -l scratch=5gb -l nodes=1:ppn=8 -m abe \
       bayes_batch.sh
     # Check how the task is running (above web) and
-    qstat | grep USERNAME
-    qstat -u USERNAME
+    qstat | grep $USER
+    qstat -u $USER
     qstat 123456789 # The task ID is available from commands above or mail
-    qstat -f 123456789
+    qstat -f 123456789 # Print a lot of details
     qdel 123456789 # Terminate scheduled or running task
     qfree # List available resources
   \end{bashcode}
 \end{frame}
+
+\begin{frame}{Common problems with launching the tasks}
+  \begin{itemize}
+    \item Script fails because of wrong PATH or missing file -- ensure all needed files are transferred and applications receive correct paths
+    \begin{itemize}
+      \item Do not use absolute paths (starting with \texttt{/}) -- only relative
+    \end{itemize}
+    \item Not all required applications are correctly loaded
+    \begin{itemize}
+      \item Check \href{https://wiki.metacentrum.cz/wiki/Kategorie:Applications}{wiki} and load all needed applications
+      \item Names of binaries are commonly little bit different -- contain names of versions etc
+    \end{itemize}
+    \item Estimation of time needed to run the task
+    \begin{itemize}
+      \item No really good solution\ldots
+      \item Make some trials and try to estimate\ldots
+      \item There are very different CPUs available (with different speeds) -- it is possible to require particular CPU type (but it reduces number of available nodes\ldots)
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Get to task's working directory}
+\begin{itemize}
+  \item Go to \url{https://metavo.metacentrum.cz/pbsmon2/person} and click to list of your tasks and click to selected task
+  \item Search for information \textbf{exec\_host} (address of node doing the task) and \textbf{SCRATCHDIR} (temporal directory for all data and results)
+  \item Sometimes one needs to monitor task progress or influence it
+  \item It is not possible to directly modify running task, but at least check (and possibly modify) input data and see outputs
+\end{itemize}
+  \begin{bashcode}
+    # From MetaCentrum frontend login to respective node running the task
+    ssh exec_host # No need to specify user name
+    # Go to SCRATCH directory
+    cd SCRATCHDIR
+    # There are working data of currently running task...
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Interactive tasks}
+\begin{itemize}
+  \item See information at \url{https://wiki.metacentrum.cz/wiki/Interactive_job}
+\end{itemize}
+  \begin{bashcode}
+    # Again launch qsub according to actual needs
+    # Note "-I" for interactive session and missing script name
+    qsub -I -l walltime=2h -l nodes=1:ppn=1 -l mem=2gb
+    # Wait for job to start..
+    # After we get the interactive task, we are on new server
+    hostname # See where we are - we can connect to that server directly
+    ssh USER@given.server.cz # User name and password are the same
+                             # Server address is output from "hostname"
+    screen # Secure we can log off in the meantime
+  \end{bashcode}
+\begin{itemize}
+  \item Work as on normal Linux server\ldots
+  \item With \texttt{screen} we can disconnect as usually and let tasks run in background
+\end{itemize}
+\end{frame}
+
+\subsection{Graphical connection}
 
 \begin{frame}[fragile]{Graphical interactive task}
 \begin{itemize}
@@ -2407,16 +2492,20 @@ Don't forget to make \texttt{metacentrum.sh} executable and modify it according 
 \end{itemize}
   \begin{bashcode}
     # Again launch qsub according to actual needs
+    # Note "-I" for interactive session and missing script name
     qsub -I -l walltime=2h -l nodes=1:ppn=1 -l mem=2gb
+    # Wait for job to start..
     # After we get the interactive task, we are on new server
     screen # Secure we can log off in the meantime
     module add gui # We need to add GUI module
     gui start # Start GUI (see above link for details)
     gui info -p # Print information about running VNC sessions
-                # Including address, port and password
+                # Including address, port and password to connect
   \end{bashcode}
 \begin{itemize}
-  \item Launch your favorite VNC client (KRDC, TightVNC, \ldots) and use credentials from above output to connect
+  \item Launch your favorite VNC client (\href{https://www.kde.org/applications/internet/krdc/}{KRDC}, \href{http://www.tightvnc.com/}{TightVNC}, \ldots) and use credentials from above output to connect
+  \item Work as on normal Linux desktop\ldots
+  \item With \texttt{screen} we can disconnect as usually
 \end{itemize}
 \end{frame}
 
