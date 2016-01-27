@@ -50,6 +50,9 @@
 \sethlcolor{Beige}
 \renewcommand{\texttt}[1]{\hl{\ttfamily #1}}
 
+% Change text color of highlighted text back to red
+\renewcommand{\alert}[1]{\textcolor{red}{#1}}
+
 % Syntax higlight
 \usepackage{minted}
 \usemintedstyle{vim} % Styles are listed by pygmentize -L styles; languages are listed by pygmentize -L lexers
@@ -1039,6 +1042,17 @@ Alias is short cut -- instead of very long command write short alias
     -rw-r--r-- 2 vojta users  2707 29. lis 16.21 .bashrc # Same file as below
     -rw-r--r-- 2 vojta users  2707 29. lis 16.21 .bashrcX # Two links
   \end{bashcode}
+\end{frame}
+
+\begin{frame}{Places to store BASH settings}
+  \begin{itemize}
+    \item \texttt{$\sim$/.bashrc} -- File is loaded each time user creates new session (typically opens new terminal window)
+    \item \texttt{$\sim$/.bash\_profile} -- Used specifically (not in every system) when user is using remote connection (SSH)
+    \item \texttt{/etc/bash.bashrc} -- System wide BASH settings -- can be overridden by user's configuration
+    \item \texttt{$\sim$/.profile} -- Settings loaded when user logs-in (mainly for language settings), sometimes used by remote connections
+    \item \texttt{/etc/profile} -- System wide profile file -- can be overridden by user's configuration
+    \item \alert{Note:} BASH scripts are non-interactive shells -- they do not read settings above -- there are no aliases, \ldots{ }but they inherit some settings (PATH, language, \ldots)
+  \end{itemize}
 \end{frame}
 
 \section{Command line}
@@ -2070,7 +2084,7 @@ Remaining part from previous slide\ldots
     exit
   \end{bashcode}
 \vfil
-\texttt{chmod +x interactive4.sh \&\& ./interactive4.sh 7 -plus 5} (for example)
+\texttt{chmod +x interactive4.sh \&\& ./interactive4.sh 7 plus 5} (for example)
 \end{frame}
 
 \subsection{Branching the code}
@@ -2139,7 +2153,7 @@ Remaining part from previous slide\ldots
   \item Do not confuse globbing patterns and regular expressions when using \texttt{[[ \ldots~]]}
   \begin{itemize}
     \item Shell globbing: \texttt{if [[ "\$STRINGVAR" == ?[sS]tring* ]]; then} -- \texttt{?} represents single character \texttt{[]} any character inside and \texttt{*} zero or more characters
-    \item Regular expressions: \texttt{if [[ "\$STRINGVAR" =~ .[sS]tring.* ]]; then} -- \texttt{.} represents single character (\texttt{?} would be zero or one occurrence of preceding expression), \texttt{[]} any character inside and \texttt{.*} zero or more occurrences of any single characters
+    \item Regular expressions: \texttt{if [[ "\$STRINGVAR" =$\sim$ .[sS]tring.* ]]; then} -- \texttt{.} represents single character (\texttt{?} would be zero or one occurrence of preceding expression), \texttt{[]} any character inside and \texttt{.*} zero or more occurrences of any single characters
   \end{itemize}
 \end{itemize}
 \end{frame}
@@ -2636,8 +2650,7 @@ Ends on following slide\ldots
 \end{document}
 
 % % Missing topics
-% How to break system :-)
-% Security, antiviruses
-% More examples about software on MetaCentrum, scripts (on MetaCentrum)
-% More about regular expressions
-% recommend software, how it is with installation
+% * How to break system :-)
+% * Security, antiviruses
+% * More examples about software on MetaCentrum, scripts (on MetaCentrum)
+% * More about regular expressions
