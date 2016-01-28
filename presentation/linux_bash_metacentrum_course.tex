@@ -335,7 +335,7 @@
     \item The most easy -- burn ISO image of CD from web of almost any Linux distribution or use for example \href{https://unetbootin.github.io/}{UNetbootin} to prepare bootable flash
     \item You only have to know how to boot from CD/USB (usually press \texttt{ESC}, \texttt{DEL}, \texttt{F2}, \texttt{F10}, \texttt{F12}, \ldots~when starting computer -- varies according to manufacturer)
   \end{itemize}
-  \item Visualization
+  \item Virtualization
   \begin{itemize}
     \item Requires relatively powerful computer (preferable Intel i5 or i7 and over 4~GB of RAM)
     \item Install virtual machine (probably the most easy is \href{https://www.virtualbox.org/}{VirtualBox}) -- allows install and run another operating system inside host as an ordinary application -- very easy and comfortable
@@ -546,7 +546,7 @@ x & 1 & Enter it & Launch application \\
 \end{tabular}
 \end{center}
 \begin{itemize}
-  \item \texttt{rwxr-wr{-}-} -- 3*3 characters for permissions for owner of the file/directory, group it is belonging to, and other users (\texttt{d} on beginning marks directories, \texttt{l} links, \texttt{+} ACL, slide \ref{acl})
+  \item \texttt{rwxr-wr--} -- 3*3 characters for permissions for owner of the file/directory, group it is belonging to, and other users (\texttt{d} on beginning marks directories, \texttt{l} links, \texttt{+} ACL, slide \ref{acl})
   \item \texttt{764} -- same as above --- numbers for each role are summed -- first one is for owner, second for group and last for others
 \end{itemize}
 \end{frame}
@@ -618,7 +618,7 @@ Permission to ``write'' also means permission to \textbf{delete} it.
 \begin{frame}{Set default permissions for new files}
 \begin{itemize}
   \item \texttt{umask} sets implicit permissions for newly created files for user
-  \item syntax is similar to \texttt{chmod}, but reverse (e.g. 027 keeps all rights for owner, for group only reading and nothing for others)
+  \item syntax is similar to \texttt{chmod}, but reverse (e.g. \texttt{027} keeps all rights for owner, for group only reading and nothing for others)
   \begin{itemize}
     \item \texttt{umask} number \textbf{removes} certain permissions
   \end{itemize}
@@ -664,7 +664,7 @@ Permission to ``write'' also means permission to \textbf{delete} it.
   \item System usually shows names of groups and users, but important are IDs: GID and UID
   \item Commands chown requires root privileges
   \item Commands chgrp commonly requires root privileges -- user has to be member of particular group to be able to change ownership to it
-  \item Information about users and groups and their IDs are in /etc/group and /etc/passwd
+  \item Information about users and groups and their IDs are in \texttt{/etc/group} and \texttt{/etc/passwd}
 \end{itemize}
   \begin{bashcode}
     ls -l # Shows also owner and group
@@ -684,7 +684,7 @@ Permission to ``write'' also means permission to \textbf{delete} it.
     \item ``Human'' users don't have access to system files (at least not for modification), homes of users are separated
   \end{itemize}
 \end{itemize}
-Gain root rights:
+Gain root privileges:
   \begin{bashcode}
     su # Requires root password (stay in current directory)
     su - # Requires root password (go to /root)
@@ -938,7 +938,8 @@ Gain root rights:
     y=`expr $x + 1` # This will work - note ` and space around +
     echo $y # Result
     echo `expr length "MetaCentrum and Linux"` # Get length of chain
-    echo `expr substr "MetaCentrum and Linux" 12 10` # Length of subchain
+    # String of 10 characters starting at position 12 of the text
+    echo `expr substr "MetaCentrum and Linux" 12 10`
     # Does 1st chain contain 2nd chain? Get position of first hit
     echo `expr index "GNU Linux" "Linux"` # If no overlap, return value is 0
   \end{bashcode}
@@ -999,17 +1000,17 @@ Alias is short cut -- instead of very long command write short alias
 \begin{frame}[fragile]{Exemplar quotes and more}
   \begin{bashcode}
     a=abcdef # Set new variable
-    echo $a # See variable's content
+    echo $A # See variable's content
     abcdef
-    echo '$a' # Single quotes preserve literal value
-    $a
-    echo "$a" # Double quotes preserve literal value, except $, `, \
+    echo '$A' # Single quotes preserve literal value
+    $A
+    echo "$A" # Double quotes preserve literal value, except $, `, \
     abcdef
-    echo `$a` # Text between back ticks is evaluated and launched
+    echo `$A` # Text between back ticks is evaluated and launched
     abcdef: command not found # There is no command "abcdef"...
-    workdir=`pwd` && echo $workdir # Common use of `...` and $
+    WORKDIR=`pwd` && echo $WORKDIR # Common use of `...` and $
     echo "Hi, dear $USER" # Compare this and following command...
-    echo 'Hi, dear $USER'
+    echo 'Hi, dear $USER' # Single quotes do not evaluate variables
   \end{bashcode}
 \begin{itemize}
   \item \alert{\texttt{\textdollar}} marks variables
@@ -1060,7 +1061,7 @@ Alias is short cut -- instead of very long command write short alias
 \begin{frame}{Launching commands and scripts}
 \begin{itemize}
   \item Parameters of commands are separated by space and preceded by one or two minus(es)
-  \item Parameter \texttt{-h} or \texttt{{-}-help} usually gives help for particular command
+  \item Parameter \texttt{-h} or \texttt{--help} usually gives help for particular command
   \item Getting help with \texttt{man} command
   \begin{itemize}
     \item \texttt{man somecommand}
@@ -1204,7 +1205,7 @@ Alias is short cut -- instead of very long command write short alias
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Processes -- Every running program has its own process}
+\begin{frame}[fragile]{Processes -- every running program has its own process}
   \begin{bashcode}
     htop # Nice listing of processes (better version of top), quit using "q"
     pstree # See running processes with child processes, recursively
@@ -1795,15 +1796,14 @@ Grep supports regular expressions, slide \ref{regexp}.
 
 \begin{frame}[fragile]{Comparisons}
   \begin{bashcode}
-    join textfile1 textfile2 # Compare two sorted text files and write
-                             # shared lines (duplicitous lines 
-                             # are shown just once)
-    comm textfile1 textfile2 # Compare two sorted columns. Output
+    # Compare two sorted columns
+    comm textfile1 textfile2
       # 1st column - lines only in textfile1
       # 2nd column - lines only in textfile2
       # 3rd column - lines in both files
     comm -2 textfile1 textfile2 # Don't show 2nd column (similarly -1, -3)
-    diff textfile1 textfile2 # Show differences between text files
+    # Show differences between text files
+    diff textfile1 textfile2
       # First number shows line(s) in 1st file, then if add/delete/change
       # and last number shows line(s) in the second file, <> show direction
     diff -e textfile1 textfile2 # More simple output
@@ -1813,6 +1813,22 @@ Grep supports regular expressions, slide \ref{regexp}.
     colordiff # Same usage and parameters as previous, colored output
     diff -u textfile1 textfile2 | view - # Launches vim (exit by :q! Enter)
     vimdiff # Can show more colors, launches vim (exit by :q! Enter)
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Joining}
+  \begin{bashcode}
+    # Join compares every lines and creates all combinations -
+    # ensure to have sorted input files with unique text
+    # Compare two sorted text files and write shared lines
+    # (duplicitous lines are shown just once)
+    join textfile1 textfile2
+    # Add file to the end of another text file
+    cat file1 >> file2 # file2 will contain both files, file1 is unchanged
+    # Add second file as second column
+    paste file1 file2 > outputfile
+    # Output will contain two columns (consisting of file1 and file2)
+    # separated by TAB
   \end{bashcode}
 \end{frame}
 
@@ -1840,8 +1856,8 @@ Grep supports regular expressions, slide \ref{regexp}.
  \item Modes of \texttt{vim}:
   \begin{enumerate}
    \item ``Normal'' -- nothing is displayed in bottom left corner, every key has some meaning (\texttt{dd} to cut current line, \texttt{r} to replace character below cursor, \texttt{v} for selection of text, \texttt{y} to copy, \texttt{x} to cut, \texttt{p} to paste, \texttt{i} or \texttt{Insert} key to enter insert mode, \texttt{:} to enter command mode, number to get to line of particular line number, \texttt{u} to undo last change(s), \ldots)
-   \item Insert -- in bottom left corner \texttt{-{-} INSERT {-}-} is displayed -- the most familiar mode -- normal typing etc., exit to normal mode by \texttt{ESC} key
-   \item Command -- in bottom left corner \texttt{:} is displayed -- awaits commands, e.g. \texttt{w} to write file, \texttt{q} to quit, \texttt{q!} to quit and discard changes, \%s/... to search and replace as in \texttt{sed}, \texttt{syntax on/off} to turn syntax highlight on/off, \texttt{/} to search, \ldots Exit to command mode by \texttt{Backspace} key (delete ``\texttt{:}'').
+   \item Insert -- in bottom left corner ``\texttt{-- INSERT --}'' is displayed -- the most familiar mode -- normal typing etc., exit to normal mode by \texttt{ESC} key
+   \item Command -- in bottom left corner \texttt{:} is displayed -- awaits commands, e.g. \texttt{w} to write file, \texttt{q} to quit, \texttt{q!} to quit and discard changes, \%s/... to search and replace as in \texttt{sed}, \texttt{syntax on/off} to turn syntax highlight on/off, \texttt{/} to search, \ldots{ }Exit to command mode by \texttt{Backspace} key (delete ``\texttt{:}'').
   \end{enumerate}
   \item For more information see \url{http://www.vim.org/} and \url{http://vim.wikia.com/wiki/Vim_Tips_Wiki}
   \item In Czech \url{http://www.nti.tul.cz/~satrapa/docs/vim/}
@@ -1872,6 +1888,8 @@ Grep supports regular expressions, slide \ref{regexp}.
 \begin{itemize}
   \item \alert{.} -- any single character
   \item \alert{*} -- any number of characters/occurrences of pattern (including 0)
+  \item \alert{+} -- one or more occurrences of the preceding reg exp
+  \item \alert{?} -- zero or one occurrences of the preceding reg exp
   \item \alert{[\ldots]} -- any character in the brackets
   \item \alert{[\textasciicircum\ldots]} -- reverse case -- all characters except newline and those listed in brackets
   \item \alert{\textasciicircum} -- first character of reg exp -- beginning of the line
@@ -1880,8 +1898,6 @@ Grep supports regular expressions, slide \ref{regexp}.
   \item \alert{\textbackslash\{n\textbackslash\}} -- exactly \textit{n} occurrences
   \item \alert{\textbackslash\{n,\textbackslash\}} -- at least \textit{n} occurrences
   \item \alert{\textbackslash} -- escape following special character
-  \item \alert{+} -- one or more occurrences of the preceding reg exp
-  \item \alert{?} -- zero or one occurrences of the preceding reg exp
   \item \alert{|} -- either the preceding or following reg exp can be matched (alternation)
   \item \alert{\textbackslash(\ldots\textbackslash)} -- group reg exp (numbered, starting with 1) -- can be called by \alert{\textbackslash\textit{n}}, where \textit{n} is number of the group (starting with 1)
   \item \alert{\textbackslash$<$ \textbackslash$>$} -- word boundary
@@ -1904,6 +1920,7 @@ Grep supports regular expressions, slide \ref{regexp}.
   \item Implementation in \texttt{vim}, \texttt{sed}, \texttt{grep}, \texttt{awk} and \texttt{perl} and among various UNIX systems is almost same, but not identical\ldots
   \item \textbf{grep}, \textbf{sed} and \textbf{vim} require escaping of \alert{+}, \alert{?}, \alert{\{}, \alert{\}}, \alert{(} and \alert{)} -- \textbf{egrep} (extended version, launched as \texttt{grep -E \ldots} or \texttt{egrep \ldots}) and \textbf{perl} not
   \item Read \url{http://www.regular-expressions.info/}, in Czech \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{http://www.root.cz/serialy/regularni-vyrazy/} and \url{http://www.regularnivyrazy.info/}, and manuals for Grep, Vim, Sed, Awk, Perl, \ldots
+  \item Mac OS~X has by default very outdated version of \texttt{sed} and another tools -- it does not have all advanced features -- users need to install e.g. \texttt{gnu-sed} formulae from \href{http://brew.sh/}{Homebrew}
 \end{itemize}
 \end{frame}
 
@@ -2036,7 +2053,7 @@ When done, do:
 
 \begin{frame}{Notes to previous script}
 \begin{itemize}
- \item First make \texttt{interactive3.sh} executable and launch it via e.g. \texttt{./interactive3.sh -d} or \texttt{./interactive3.sh -{-}uptime} or so
+ \item First make \texttt{interactive3.sh} executable and launch it via e.g. \texttt{./interactive3.sh -d} or \texttt{./interactive3.sh --uptime} or so
  \item Function \texttt{case} has basic checking of input available -- as last parameter use \texttt{*)} -- any other input except those defined above will produce some warning message, error or so
  \item In same way can be added more parameters (by multiple use of \texttt{case}), but order of parameters must be kept and all parameters are compulsory
  \item \texttt{case} can evaluate simple regular expressions, e.g. \texttt{--[Uu]ptime)}, \texttt{-d*}, \ldots
@@ -2311,7 +2328,7 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
     \item \href{https://www.cesnet.cz/services/filesender/?lang=en}{FileSender} to be able to send up to 500~GB file
     \item \href{https://www.cesnet.cz/services/owncloud/?lang=en}{ownCloud} to backup and/or sync data across devices (default capacity is 100~GB)
     \begin{itemize}
-      \item It is possible to connect by webDAV to ownCloud (slide \ref{transfers}) --many applications support it
+      \item It is possible to connect by webDAV to ownCloud (slide \ref{transfers}) -- many applications support it
     \end{itemize}
     \item And \href{https://www.cesnet.cz/services/?lang=en}{more\ldots}
   \end{itemize}
