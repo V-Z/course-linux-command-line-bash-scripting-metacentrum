@@ -33,8 +33,7 @@
 \useinnertheme{circles}
 
 % Basic packages
-\usepackage{xltxtra} % Loads following 4 packages for processing with XeLaTeX
-\usepackage{fixltx2e}
+\usepackage{xltxtra} % Loads following 3 packages for processing with XeLaTeX
 \usepackage{metalogo}
 \usepackage{xunicode}
 \usepackage{fontspec}
@@ -76,11 +75,11 @@
 
 % Title page
 \author{Vojtěch Zeisek}
-\institute[\url{https://trapa.cz/}]{Department of Botany, Faculty of Science, Charles University in Prague\\Institute of Botany, Czech Academy of Sciences, Průhonice\\\url{https://trapa.cz/}, \href{mailto:zeisek@natur.cuni.cz}{zeisek@natur.cuni.cz}}
+\institute[\url{https://trapa.cz/}]{Department of Botany, Faculty of Science, Charles University, Prague\\Institute of Botany, Czech Academy of Sciences, Průhonice\\\url{https://trapa.cz/}, \href{mailto:zeisek@natur.cuni.cz}{zeisek@natur.cuni.cz}}
 \title{Linux, command line \& MetaCentrum}
 \subtitle{Use of Linux command line not only for MetaCentrum of CESNET}
 \titlegraphic{\includegraphics[width=2cm]{tux.png}}
-\date{January 28 and 29, 2016}
+\date{January 26 and 27, 2017}
 
 \begin{document}
 
@@ -96,9 +95,9 @@
 
 \begin{frame}{The course information}
   \begin{itemize}
-    \item The course page: \url{https://trapa.cz/en/course-linux-command-line-2016}
+    \item The course page: \url{https://trapa.cz/en/course-linux-command-line-2017}
     \begin{itemize}
-      \item Česky: \url{https://trapa.cz/cs/kurz-prikazove-radky-linuxu-2016}
+      \item Česky: \url{https://trapa.cz/cs/kurz-prikazove-radky-linuxu-2017}
     \end{itemize}
     \item Subject in SIS: \url{https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=MB120C17}
     \begin{itemize}
@@ -111,10 +110,11 @@
 
 \begin{frame}{Materials to help you\ldots}
 \begin{itemize}
- \item Download the presentation \url{https://trapa.cz/sites/default/linuxcourse/linux_bash_metacentrum_course.pdf}
- \item Download the scripts and toy data \url{https://trapa.cz/sites/default/linuxcourse/scripts.zip}
+ \item Download the presentation \url{https://soubory.trapa.cz//linuxcourse/linux_bash_metacentrum_course.pdf}
+ \item Download the scripts and toy data \url{https://soubory.trapa.cz//linuxcourse/scripts.zip}
  \begin{itemize}
   \item \alert{Note:} Open the scripts in some \alert{good} \href{http://texteditors.org/cgi-bin/wiki.pl?PickingATextEditor}{text editor} -- showing syntax highlight, line numbers, etc. (\alert{NO} Windows notepad); the file is in UTF-8 encoding and with UNIX end of lines (so that too silly programs like Windows notepad won't be able to open it correctly)
+  \item \alert{Never ever} open any script file in software like MS~Word -- they destroy quotation marks and other things by ``typographical enhancements'' making the script unusable
  \end{itemize}
 \end{itemize}
 \end{frame}
@@ -123,7 +123,7 @@
   \begin{multicols}{2}
     \begin{itemize}
       \item If you do not have Linux installed, download VirtualBox from \url{https://www.virtualbox.org/}
-      \item Download openSUSE Leap 42.1 Linux distribution for this course from \url{ftp://botany.natur.cuni.cz/openSUSE_Linux_course.ova} (1.9~GB)
+      \item Download openSUSE Leap 42.2 Linux distribution for this course from \url{ftp://botany.natur.cuni.cz/openSUSE_Leap_Linux_course.ova} (3.7~GB)
       \item Launch VirtualBox and go to menu \textbf{File | Import appliance\ldots} to import it. When do, launch it (\textbf{Start})
     \end{itemize}
     \includegraphics[height=6cm]{virtualbox.png}
@@ -134,23 +134,23 @@
 \begin{itemize}
   \item UNIX
   \begin{itemize}
-    \item Originally developed in Bell labs of AT\&T in 1696, written in C, since then  huge radiation, hybridization, HGT, \ldots
-    \item Trademark -- only systems passing certain conditions (paid certification) can be called ``UNIX'' -- Solaris, HP-UX, AIX, \ldots~-- commercial systems for big servers
-    \item main principles: simple, multitasking, hierarchical, network, for more users (takes cares about permissions etc.), configuration written in plain text files, important relationships among applications (generally one application = one task -- they are chained), work primarily with text, has kernel and API (interface to communicate with the rest of the system)
-    \item unix-line (UN*X) -- systems compatible with UNIX (Linux, BSD and its variants, Mac OS X, \ldots)
+    \item Originally developed in Bell labs of AT\&T in 1696, written in C, since then  huge radiation, hybridization, HGT,~\ldots
+    \item Trademark -- only systems passing certain conditions (paid certification) can be called ``UNIX'' -- Solaris, HP-UX, AIX, etc. -- commercial systems for big servers
+    \item Main principles: simple, multitasking, hierarchical, network, for more users (takes cares about permissions etc.), configuration written in plain text files, important relationships among applications (generally one application = one task -- they are chained), work primarily with text, has kernel and API (interface to communicate with the rest of the system)
+    \item UNIX-like (UN*X) -- systems compatible with UNIX (Linux, BSD and its variants, Mac OS X,~\ldots)
     \begin{itemize}
       \item Mainly open-source (UNIX is commonly commercial -- source code is not available, but specification is)
       \item Nowadays prevailing over ``old'' UNIX systems, used in many devices from tiny embedded toys to huge data centers
       \item Try to provide same service as paid systems, but (mostly) for free
     \end{itemize}
-    \item Many courts about copyrights, parts of code, patents, ... -- USA allow software patents, EU not -- GNU, Linux, BSD, \ldots~try to ensure to have only code not covered by any patents to avoid possible courts
+    \item Many courts about copyrights, parts of code, patents -- USA allow software patents, EU not -- GNU, Linux, BSD, etc. try to ensure to have only code not covered by any patents to avoid possible courts
   \end{itemize}
   \item \href{https://www.gnu.org/}{GNU}
   \begin{itemize}
     \item ``GNU's Not Unix!'' -- but they are compatible
     \item Since 1984 Richard Stallman (founder of \href{https://www.fsf.org/}{Free Software Foundation}) tried to make new kernel (Hurd -- not finished yet\ldots)
-    \item Generally set of basic system tools -- working with many kernels (Linux BSD*, Mac's Darwin, \ldots), also present in many commercial paid UNIX systems
-    \item Source code is free -- anyone can study it (Security!), report bugs, contribute, modify, share it, \ldots
+    \item Generally set of basic system tools -- working with many kernels (Linux BSD*, Mac's Darwin,~\ldots), also present in many commercial paid UNIX systems
+    \item Source code is free -- anyone can study it (Security!), report bugs, contribute, modify, share it,~\ldots
     \item GNU General Public License (GPL) -- free spirit of open-source -- license, idea, how to share software
   \end{itemize}
   \item Linux
@@ -158,9 +158,9 @@
     \item First version of kernel written by Linus Torvalds in Helsinki in 1991
     \item Kernel was in principle inspired by various UNIX systems and using GNU tools for work
     \item Quickly became popular -- anyone can take it and use for any needs
-    \item Used in small embedded (commonly network) devices, mobile devices (book readers, Android, \ldots), personal computers, servers (from home level to biggest data centers), \ldots
+    \item Used in small embedded (commonly network) devices, mobile devices (book readers, Android,~\ldots), personal computers, servers (from home level to biggest data centers),~\ldots
     \item Nowadays powering most of the Internet
-    \item Anyone can contribute -- not only code, also documentation, design, translations, \ldots
+    \item Anyone can contribute -- not only code, also documentation, design, translations,~\ldots
   \end{itemize}
 \end{itemize}
 \end{frame}
@@ -193,13 +193,13 @@
 
 \begin{frame}[allowframebreaks]{Free and open-source software}
 \begin{itemize}
-  \item Free like freedom of speech, \alert{not} like free beer!
-  \item Not every OSS (generally less strict conditions) has to be \textbf{F}OSS (you can do with it (almost) whatever you like)-- source code might be available under some circumstance (only to look), but modification and/or reuse of the code prohibited (and then it is not \textbf{free})
+  \item \textbf{Free like freedom of speech, \alert{not} like free beer!}
+  \item Not every OSS (generally less strict conditions) has to be \textbf{F}OSS (you can do with it (almost) whatever you like) -- source code might be available under some circumstance (only to look), but modification and/or reuse of the code prohibited (and then it is not \textbf{free})
   \item Open-source -- source code can be seen by the holder of the license -- many variants what he can do with the code then
   \item GNU GPL (``\href{https://www.gnu.org/copyleft/}{copyleft}'') -- probably most common OSS license, strict, viral -- derived code has to keep the license -- surprisingly not fully ``free'' as it doesn't allow changes of license
   \item LGPL -- Lesser GPL -- more permissive
-  \item BSD license -- permissive -- allow derived code to became closed-source (commonly used by Apple Mac OS X, Safari browser, \ldots)
-  \item Apache license, Mozilla license,~\ldots -- many variants\ldots~for specific use in particular software
+  \item BSD license -- permissive -- allow derived code to became closed-source (commonly used by Apple Mac OS X, Safari browser,~\ldots)
+  \item Apache license, Mozilla license,~\ldots{ }-- many variants for specific use in particular software
   \item Creative Commons (CC) -- software licenses above not suitable for multimedia, text, etc. -- CC has many options (including denial of reuse of the product), see \url{https://creativecommons.org/}
   \item And many more\ldots
   \item Orientation might be tricky, but practical output for users is more or less same -- the software can be independently checked for bugs, backdoors, malware, can be improved and under some circumstances, new software can be derived, and usually, it is available for free
@@ -214,7 +214,7 @@
   \item Software as service
   \begin{itemize}
     \item (F)OSS is available for free -- user can use it as it is or buy a support -- help
-    \item No vendor lock-in -- user has the code, so he can modify the software himself, change solution, \ldots
+    \item No vendor lock-in -- user has the code, so he can modify the software himself, change provider of the services,~\ldots
     \item Cheap for user as well as company -- company specialized for one task, let's say server database, doesn't have to take care about the rest of the system -- someone else does; user pays only what he needs
     \item Our faculty is using \href{https://plone.org/}{Plone} system for web pages -- anyone can use it for free, someone (like we) found company to help, and if we'd decided, we  could keep Plone and maintain it ourselves or find another company to help us with it
   \end{itemize}
@@ -228,20 +228,20 @@
   \item Operating system respecting principles of UNIX
   \item Components
   \begin{itemize}
-    \item Linux kernel -- basic part of the system responsible for hardware and very basic low-level running of the system
+    \item Linux kernel -- basic part of the system responsible for hardware and very basic low-level running of the system (``Linus \textit{sensu stricto}'')
     \item GNU core utilities -- basic applications
     \item Graphical user environment (GUI) -- many choices
     \item Many other applications -- according to use -- whatever imaginable
   \end{itemize}
-  \item Linux distribution?
+  \item Linux distribution? (``Linux \textit{senso lato}'')
   \begin{itemize}
     \item Somehow assemble Linux kernel, basic tools and some applications
     \item Optionally add some patches and extra tools and gadgets
     \item Make your own design! (very important)
-    \item If lazy, remake existing distribution ;-)
+    \item If lazy, remake existing distribution ;-) (using e.g. \href{https://susestudio.com/}{web service})
     \item Still surprised there are hundreds of them?
     \item It is like Lego -- pieces are more or less same across distributions, but result is very variable
-    \item From ``general'' for daily use (pick up whatever you like) to very specialized -- special hardware devices, network services, rescue, \ldots
+    \item From ``general'' for daily use (pick up whatever you like) to very specialized -- special hardware devices, network services, rescue,~\ldots
   \end{itemize}
 \end{itemize}
 \end{frame}
@@ -253,7 +253,7 @@
 
 \begin{frame}{Extremely simplified adaptive radiation of Linux distributions}
   \includegraphics[width=\textwidth]{linux_fylogen_2.png}\\
-  \url{https://en.wikipedia.org/wiki/List_of_Linux_distributions} and \url{https://distrowatch.com/} (currently $\sim$760 distributions)
+  \url{https://en.wikipedia.org/wiki/List_of_Linux_distributions} and \url{https://distrowatch.com/} ($\sim$800 distributions, $\sim$260 active)
 \end{frame}
 
 \subsection{Choose one}
@@ -263,20 +263,20 @@
   \item \href{http://distrowatch.com/search.php?package=DEB}{Debian (DEB) based}
   \begin{itemize}
     \item \href{https://www.debian.org/}{Debian} -- one of oldest and most common, especially on servers
-    \item \href{http://www.ubuntu.com/}{Ubuntu} (nowadays probably the most popular on PCs and notebooks) and derivatives -- \href{https://www.kubuntu.org/}{Kubuntu}, \href{https://xubuntu.org/}{Xubuntu}, \href{http://lubuntu.net/}{Lubuntu}, \ldots~(according to GUI used)
+    \item \href{http://www.ubuntu.com/}{Ubuntu} (nowadays probably the most popular on PCs and notebooks) and derivatives -- \href{https://www.kubuntu.org/}{Kubuntu}, \href{https://xubuntu.org/}{Xubuntu}, \href{http://lubuntu.net/}{Lubuntu},~\ldots~(according to GUI used -- most of the system is same)
     \item \href{http://linuxmint.com/}{Mint} -- Based on Ubuntu as well as Debian, very user-friendly
-    \item Kali, KNOPPIX, \ldots
+    \item Kali, KNOPPIX,~\ldots
   \end{itemize}
   \item \href{http://distrowatch.com/search.php?package=RPM}{Red Hat (RPM) based}
   \begin{itemize}
     \item \href{https://www.redhat.com/}{Red Hat} -- probably the most common commercial
     \item \href{https://getfedora.org/}{Fedora} -- ``playground'' for Red Hat -- very experimental
     \item \href{https://www.centos.org/}{Centos} -- Clone of Red Hat
-    \item \href{https://www.opensuse.org/}{openSUSE} -- SUSE is second largest Linux company, openSUSE is community distribution (free)
-    \item Scientific Linux, Mageia, PCLinuxOS, \ldots
+    \item \href{https://www.opensuse.org/}{openSUSE} -- SUSE is second largest Linux company, openSUSE is community distribution (free) companion of SUSE Linux Enterprise
+    \item Scientific Linux, Mageia, PCLinuxOS,~\ldots
   \end{itemize}
   \item Android
-  \item For experienced users: Arch, Slackware, Gentoo, \ldots
+  \item For experienced users: Arch, Slackware, Gentoo,~\ldots
 \end{itemize}
 \end{frame}
 
@@ -333,7 +333,7 @@
   \item Live CD/USB
   \begin{itemize}
     \item The most easy -- burn ISO image of CD from web of almost any Linux distribution or use for example \href{https://unetbootin.github.io/}{UNetbootin} to prepare bootable flash
-    \item You only have to know how to boot from CD/USB (usually press \texttt{ESC}, \texttt{DEL}, \texttt{F2}, \texttt{F10}, \texttt{F12}, \ldots~when starting computer -- varies according to manufacturer)
+    \item You only have to know how to boot from CD/USB (usually press \texttt{ESC}, \texttt{DEL}, \texttt{F2}, \texttt{F10}, \texttt{F12},~\ldots~when starting computer -- varies according to manufacturer)
   \end{itemize}
   \item Virtualization
   \begin{itemize}
@@ -350,11 +350,11 @@
   \item Try several distributions and just choose one you like\ldots
   \item Unless selecting among the most common, it doesn't matter much which one you pick up
   \item Which design do you like?
-  \item Which distribution is your friend or colleague using?
-  \item You can change GUI without change of distribution
+  \item Which distribution is your friend or colleague using? To have someone to ask for help\ldots :-)
+  \item You can change GUI (or its design) without change of distribution
   \item Applications are still same -- no difference in Firefox across distributions -- keep your settings when changing distribution
   \item Everyone using Android is using Linux ;-)
-  \item Special use -- \href{http://www.freenas.org/}{FreeNAS} for home as well as business file server, \href{https://partedmagic.com/}{Parted Magic} and/or \href{https://www.system-rescue-cd.org/SystemRescueCd_Homepage}{SystemRescueCD} to repair broken system (disk failure) and save data, \ldots
+  \item Special use -- \href{http://www.freenas.org/}{FreeNAS} for home as well as business file servers, \href{https://partedmagic.com/}{Parted Magic} and/or \href{https://www.system-rescue-cd.org/SystemRescueCd_Homepage}{SystemRescueCD} to repair broken system (disk failure) and save data,~\ldots
 \end{itemize}
 \end{frame}
 
@@ -378,9 +378,9 @@
 
 \begin{frame}{Short overview of hard disk layout}
 \begin{itemize}
-  \item Physical disk (piece of hardware) has at least 1 partition -- division seen in Windows as ``disks'' (\texttt{C}, \texttt{D}, \ldots) and mounted directory in UNIX
+  \item Physical disk (piece of hardware) has at least 1 partition -- division seen in Windows as ``disks'' (\texttt{C}, \texttt{D},~\ldots) and mounted directory in UNIX
   \item MBR -- older description of disk division, up to 4 primary partitions (OS typically requires at leas one to run), one can be extended and contain more partitions, disks up to 2 TB
-  \item GPT -- newer, no relevant limits, requires UEFI (replacement of BIOS, newer computers)
+  \item GPT -- newer, no relevant limits, requires UEFI (replacement of BIOS in newer computers)
   \item If unsure what to do, high probability to break it\ldots
   \item Blank new partition has to be formatted to desired file system according to use and target operating system
   \item Linux distributions have easy graphical tools to manage disk partitions
@@ -394,7 +394,7 @@
   \item RAID~0 -- stripping, no redundancy, no security, speed up (two or more disks joined into one, files divided among disks)
   \item RAID~1 -- mirroring -- even number of disks of same size -- resulting capacity is half, very fast, secure
   \item RAID~5 -- at least three disks, one is used for parity control, little bit slower
-  \item Combinations (RAID~10, \ldots)
+  \item Combinations (RAID~10,~\ldots)
   \item \href{https://en.wikipedia.org/wiki/Logical_volume_management}{LVM} -- Logical Volume Management -- built over several partitions/disks -- seen by OS as one continuous space, can be dynamically managed
   \item Functionality of RAID and LVM (and more) is more or less covered by XFS and Btrfs (next slide)
 \end{itemize}
@@ -454,12 +454,12 @@ Btrfs & 255 & Any & ? & 16 EiB & 16 EiB & UN*X\\
   \item Everything else (including disks and network shares) are mounted in subdirectories (/\ldots)
   \item \texttt{/bin} -- very basic command line utilities
   \item \texttt{/boot} -- bootloader responsible for start of system
-  \item \texttt{/dev} -- devices -- disks, CD, RAM, USB devices, \ldots
+  \item \texttt{/dev} -- devices -- disks, CD, RAM, USB devices,~\ldots
   \item \alert{\texttt{/etc}} -- system configuration in plain text files -- edit them to change settings (read documentation and comments there)
   \item \alert{\texttt{/home}} -- users' homes
   \item \texttt{/lib}, \texttt{/lib64} -- basic system libraries
   \item \texttt{/lost+found} -- feature of FS, after crash and recovery of FS, restored files are there
-  \item \alert{\texttt{/media}} -- attached disks (USB flash, \ldots) usually appear there (might be in \texttt{/var/run/media}) -- subdirectories are automatically created when device is plugged and disappears when unplugged
+  \item \alert{\texttt{/media}} -- attached disks (USB flash,~\ldots) usually appear there (might be in \texttt{/var/run/media}) -- subdirectories are automatically created when device is plugged and disappears when unplugged
   \item \texttt{/mnt} -- usually manually mounted file systems (but can it can be mounted elsewhere)
   \item \texttt{/opt} -- optional, usually locally compiled software
   \item \texttt{/proc} -- dynamic information about system processes
@@ -470,7 +470,7 @@ Btrfs & 255 & Any & ? & 16 EiB & 16 EiB & UN*X\\
   \item \texttt{/sys} -- basic system
   \item \texttt{/tmp} -- temporary files -- users have private dynamically created spaces there
   \item \texttt{/usr} -- binaries (executable applications) and libraries of installed applications
-  \item \alert{\texttt{/var}} -- data of most of applications and services, including e.g. database data, system logs, \ldots
+  \item \alert{\texttt{/var}} -- data of most of applications and services, including e.g. database data, system logs,~\ldots
   \item \alert{\texttt{/windows}} -- if on dual boot, Windows disks are commonly mounted here
   \item Can be altered, modified
   \item Usually, work only in your home, anywhere else modify files only if you are absolutely sure what you are doing
@@ -481,17 +481,17 @@ Btrfs & 255 & Any & ? & 16 EiB & 16 EiB & UN*X\\
 
 \begin{frame}{Configuration in /etc (examples)}
 \begin{itemize}
-  \item Configuration of system services (servers, \ldots) and behavior
+  \item Configuration of system services (servers,~\ldots) and behavior
   \begin{itemize}
-    \item Apache web server, database, FTP server, networking, basic system settings, \ldots
+    \item Apache web server, database, FTP server, networking, basic system settings,~\ldots
   \end{itemize}
-  \item cron* -- cron automatically repeatedly runs tasks
-  \item fstab -- description of mounted FS
-  \item group -- list of users and groups
-  \item passwd -- basic settings of for users (home directory, default shell, \ldots)
-  \item resolv.conf --  DNS settings (part of basic networking)
-  \item shadow -- users passwords in encrypted format
-  \item skel -- basic directories and configuration for new users
+  \item \texttt{cron*} -- cron automatically repeatedly runs tasks
+  \item \texttt{fstab} -- description of mounted FS
+  \item \texttt{group} -- list of users and groups
+  \item \texttt{passwd} -- basic settings of for users (home directory, default shell,~\ldots)
+  \item \texttt{resolv.conf} --  DNS settings (part of basic networking)
+  \item \texttt{shadow} -- users passwords in encrypted format
+  \item \texttt{skel} -- basic directories and configuration for new users
   \item Much more\ldots
 \end{itemize}
 \end{frame}
@@ -503,7 +503,7 @@ Btrfs & 255 & Any & ? & 16 EiB & 16 EiB & UN*X\\
   \item Directory -- in UNIX special type of file, marked by \texttt{d}
   \item Symbolic link (symlink, ``soft link'') -- points to another place, marked by \texttt{l}, slide \ref{links}
   \item Hard link -- just another name for existing file, no special symbol, slide \ref{links}
-  \item Block and character device -- in \texttt{/dev}, representations of devices (hard disks, terminals, \ldots), marked by \texttt{b} or \texttt{c} respectively
+  \item Block and character device -- in \texttt{/dev}, representations of devices (hard disks, terminals,~\ldots), marked by \texttt{b} or \texttt{c} respectively
   \item Named pipe -- pipe can be saved (by \texttt{mkfifo}), looks like a file, more at slide \ref{pipe}
   \item Socket -- for communication among processes, also bidirectional, available on network
 \end{itemize}
@@ -511,7 +511,9 @@ Btrfs & 255 & Any & ? & 16 EiB & 16 EiB & UN*X\\
 
 \begin{frame}[fragile]{Login to remote server}
 \begin{multicols}{2}
+  \vfill
   SSH -- secure shell -- encrypted connection
+  \vfill
   \begin{bashcode}
     ssh remoteUser@remote.server.cz
     # When logging first time, check
@@ -521,10 +523,13 @@ Btrfs & 255 & Any & ? & 16 EiB & 16 EiB & UN*X\\
     # (nothing is shown when typing)
     # Confirm by Enter
   \end{bashcode}
+  \vfill
   Our toy server: user names from \texttt{u01} to \texttt{u30}, password: \texttt{Cuser1}
+  \vfill
   \bash/ssh uXY@vyuka.natur.cuni.cz/
+  \vfill
   If fingerprint key changes, ssh complains a lot -- possible \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{man in the middle attack}
-  \columnbreak
+  \vfill
   \begin{center}
     \includegraphics[height=6.5cm]{putty.png}
   \end{center}
@@ -552,7 +557,7 @@ x & 1 & Enter it & Launch application \\
 \end{frame}
 
 \begin{frame}[fragile]{Permission examples}
-\begin{bashcode}
+  \begin{bashcode}
     ls -l
     # Only owner can read and write the file; 600
     -rw-------   1 vojta users   38211 20. led 09.23 .bash_history
@@ -570,9 +575,11 @@ x & 1 & Enter it & Launch application \\
     # Executable (application) - everyone can launch it, but only
     # owner can write into the file; 755
     -rwxr-xr-x   1 vojta users    2187 27. lis 13.10 strap.sh*
-\end{bashcode}
-\vfil
-Permission to ``write'' also means permission to \textbf{delete} it.
+  \end{bashcode}
+  \vfil
+  \begin{itemize}
+    \item Permission to ``write'' also means permission to \textbf{delete} it
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Check and modify permissions}
@@ -684,7 +691,7 @@ Permission to ``write'' also means permission to \textbf{delete} it.
     \item ``Human'' users don't have access to system files (at least not for modification), homes of users are separated
   \end{itemize}
 \end{itemize}
-Gain root privileges:
+Gain root privileges
   \begin{bashcode}
     su # Requires root password (stay in current directory)
     su - # Requires root password (go to /root)
@@ -692,8 +699,8 @@ Gain root privileges:
     su USER # Became USER (his password is required)
     sudo -i # For trusted users, became root (asks for user's password)
             # User has to be listed in /etc/sudoers
-            # Can be restricted for particular commands
     sudo somecommand # Launch somecommand with root's privileges
+                     # Can be restricted for particular commands
   \end{bashcode}
 \end{frame}
 
@@ -720,15 +727,14 @@ Gain root privileges:
 \end{frame}
 
 \begin{frame}[fragile]{Converting the text}{Prevent bad display and weird errors when launching scripts}
-  Mac OS X mostly uses same encoding and EOL as Linux (and rest of UNIX world), so there are no problems with compatibility
   \begin{bashcode}
     unix2dos textfile # Convert text file from UNIX to Windows EOL
     unix2mac textfile # Convert text file from UNIX to old Mac EOL
     dos2unix textfile # Convert text file from Windows to UNIX EOL
     mac2unix textfile # Convert text file from old Mac to UNIX EOL
     unix2dos --help # More information about usage, include encodings
+    # Converts encoding of input file (ISO-8859-2) to outfile in UTF-8
     iconv -f ISO-8859-2 -t UTF-8 infile.txt > outfile.txt
-      # Converts encoding of input file (ISO-8859-2) to outfile in UTF-8
     iconv -l # List of available encodings to convert
     iconv --help # More information about usage
     recode CP1250..UTF-8 textfile # Convert encoding from CP-1250 to UTF-8
@@ -736,7 +742,10 @@ Gain root privileges:
     recode -l # List of available encodings to convert
     recode --help # More information about usage
   \end{bashcode}
-  Launching of bash script written on Windows on Linux will probably fail (because of different EOL)
+  \begin{itemize}
+    \item Mac OS X mostly uses same encoding and EOL as Linux (and rest of UNIX world), so there are no problems with compatibility
+    \item Launching of bash script written on Windows on Linux will probably fail (because of different EOL)
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[label=editors]{Importance of good text editor}{Can your text editor\ldots ?}
@@ -785,12 +794,12 @@ Gain root privileges:
   \end{flushright}
 \end{frame}
 
-\subsection{FISH}
+\subsection{BASH and others}
 
-\begin{frame}{Friendly interactive shell}
+\begin{frame}{The shell}
 \begin{itemize}
   \item Many names, many ways how to get it, still the same thing
-  \item Fish -- the command line interface
+  \item Fish -- friendly interactive shell -- the command line interface
   \item Terminal (console)
   \begin{itemize}
     \item Originally machine used for connection to remote server
@@ -806,8 +815,8 @@ Gain root privileges:
   \item Terminal emulator
   \begin{itemize}
     \item Application used to get the ``terminal'' and work in command line
-    \item Every GUI has some -- Konsole, Yakuake, XTerm, Gnome Terminal, Guake, LxTerminal, \ldots
-    \item Commonly allow appearance customization -- font, colors, background, style of notifications, \ldots
+    \item Every GUI has some -- Konsole, Yakuake, XTerm, Gnome Terminal, Guake, LxTerminal,~\ldots
+    \item Commonly allow appearance customization -- font, colors, background, style of notifications,~\ldots
     \item Launch as many copies as you need (some allow tabs for easier work)
   \end{itemize}
 \end{itemize}
@@ -848,9 +857,11 @@ Gain root privileges:
 \end{itemize}
 \end{frame}
 
+\subsection{Variables}
+
 \begin{frame}{Variables}
 \begin{itemize}
-  \item Variables contain various information (where to look for the executable programs, name of the computer, user settings, \ldots)
+  \item Variables contain various information (where to look for the executable programs, name of the computer, user settings,~\ldots)
   \item Can be local (within a script for some temporal purpose) or global -- available for all processes
   \item Commonly written in CAPITALS (just a costume)
   \item Popular and useful variables
@@ -1014,7 +1025,7 @@ Alias is short cut -- instead of very long command write short alias
   \end{bashcode}
 \begin{itemize}
   \item \alert{\texttt{\textdollar}} marks variables
-  \item \alert{\texttt{\textbackslash}} escapes following character -- it will not have its special meaning (space to separate arguments, \ldots)
+  \item \alert{\texttt{\textbackslash}} escapes following character -- it will not have its special meaning (space to separate arguments,~\ldots)
   \item \alert{\texttt{*}} replaces any characters (\texttt{ls a*} lists all files starting with ``a'')
   \item \alert{\texttt{?}} replaces one single character
 \end{itemize}
@@ -1052,7 +1063,7 @@ Alias is short cut -- instead of very long command write short alias
     \item \texttt{/etc/bash.bashrc} -- System wide BASH settings -- can be overridden by user's configuration
     \item \texttt{$\sim$/.profile} -- Settings loaded when user logs-in (mainly for language settings), sometimes used by remote connections
     \item \texttt{/etc/profile} -- System wide profile file -- can be overridden by user's configuration
-    \item \alert{Note:} BASH scripts are non-interactive shells -- they do not read settings above -- there are no aliases, \ldots{ }but they inherit some settings (PATH, language, \ldots)
+    \item \alert{Note:} BASH scripts are non-interactive shells -- they do not read settings above -- there are no aliases,~\ldots{ }but they inherit some settings (PATH, language,~\ldots)
   \end{itemize}
 \end{frame}
 
@@ -1282,7 +1293,7 @@ Alias is short cut -- instead of very long command write short alias
 \begin{multicols}{2}
 \begin{itemize}
   \item \texttt{mc} to launch MC
-  \item Move, copy, delete, files/directories, connect to SSH/(S)FTP, \ldots
+  \item Move, copy, delete, files/directories, connect to SSH/(S)FTP,~\ldots
   \item Can be used with mouse
   \item Edit text files (\texttt{F4})
   \item \texttt{F2} for quick menu
@@ -1855,9 +1866,9 @@ Grep supports regular expressions, slide \ref{regexp}.
 \begin{itemize}
  \item Modes of \texttt{vim}:
   \begin{enumerate}
-   \item ``Normal'' -- nothing is displayed in bottom left corner, every key has some meaning (\texttt{dd} to cut current line, \texttt{r} to replace character below cursor, \texttt{v} for selection of text, \texttt{y} to copy, \texttt{x} to cut, \texttt{p} to paste, \texttt{i} or \texttt{Insert} key to enter insert mode, \texttt{:} to enter command mode, number to get to line of particular line number, \texttt{u} to undo last change(s), \ldots)
+   \item ``Normal'' -- nothing is displayed in bottom left corner, every key has some meaning (\texttt{dd} to cut current line, \texttt{r} to replace character below cursor, \texttt{v} for selection of text, \texttt{y} to copy, \texttt{x} to cut, \texttt{p} to paste, \texttt{i} or \texttt{Insert} key to enter insert mode, \texttt{:} to enter command mode, number to get to line of particular line number, \texttt{u} to undo last change(s),~\ldots)
    \item Insert -- in bottom left corner ``\texttt{-- INSERT --}'' is displayed -- the most familiar mode -- normal typing etc., exit to normal mode by \texttt{ESC} key
-   \item Command -- in bottom left corner \texttt{:} is displayed -- awaits commands, e.g. \texttt{w} to write file, \texttt{q} to quit, \texttt{q!} to quit and discard changes, \%s/... to search and replace as in \texttt{sed}, \texttt{syntax on/off} to turn syntax highlight on/off, \texttt{/} to search, \ldots{ }Exit to command mode by \texttt{Backspace} key (delete ``\texttt{:}'').
+   \item Command -- in bottom left corner \texttt{:} is displayed -- awaits commands, e.g. \texttt{w} to write file, \texttt{q} to quit, \texttt{q!} to quit and discard changes, \%s/... to search and replace as in \texttt{sed}, \texttt{syntax on/off} to turn syntax highlight on/off, \texttt{/} to search,~\ldots{ }Exit to command mode by \texttt{Backspace} key (delete ``\texttt{:}'').
   \end{enumerate}
   \item For more information see \url{http://www.vim.org/} and \url{http://vim.wikia.com/wiki/Vim_Tips_Wiki}
   \item In Czech \url{http://www.nti.tul.cz/~satrapa/docs/vim/}
@@ -1919,7 +1930,7 @@ Grep supports regular expressions, slide \ref{regexp}.
   \item \alert{\&} -- content of pattern that was matched
   \item Implementation in \texttt{vim}, \texttt{sed}, \texttt{grep}, \texttt{awk} and \texttt{perl} and among various UNIX systems is almost same, but not identical\ldots
   \item \textbf{grep}, \textbf{sed} and \textbf{vim} require escaping of \alert{+}, \alert{?}, \alert{\{}, \alert{\}}, \alert{(} and \alert{)} -- \textbf{egrep} (extended version, launched as \texttt{grep -E \ldots} or \texttt{egrep \ldots}) and \textbf{perl} not
-  \item Read \url{http://www.regular-expressions.info/}, in Czech \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{http://www.root.cz/serialy/regularni-vyrazy/} and \url{http://www.regularnivyrazy.info/}, and manuals for Grep, Vim, Sed, Awk, Perl, \ldots
+  \item Read \url{http://www.regular-expressions.info/}, in Czech \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{http://www.root.cz/serialy/regularni-vyrazy/} and \url{http://www.regularnivyrazy.info/}, and manuals for Grep, Vim, Sed, Awk, Perl,~\ldots
   \item Mac OS~X has by default very outdated version of \texttt{sed} and another tools -- it does not have all advanced features -- users need to install e.g. \texttt{gnu-sed} formulae from \href{http://brew.sh/}{Homebrew}
 \end{itemize}
 \end{frame}
@@ -1930,7 +1941,7 @@ Grep supports regular expressions, slide \ref{regexp}.
 
 \begin{frame}[fragile]{Basic script}
 \begin{itemize}
- \item Every script begins with \texttt{\#!/bin/bash} (or alternative for another shells, Perl, \ldots)
+ \item Every script begins with \texttt{\#!/bin/bash} (or alternative for another shells, Perl,~\ldots)
  \item Add any commands you like\ldots
  \item Every script should end with \texttt{exit} (but it is not necessary)
  \item After writing the script, add execution permission (\texttt{chmod o+x noninteractive.sh} or \texttt{chmod +x noninteractive.sh})
@@ -1996,7 +2007,7 @@ When done, do:
     ./interactive1.sh 8 9 # Or select any other two numbers
   \end{bashcode}
   \begin{itemize}
-    \item There is no checking of input values, nothing advanced, \ldots
+    \item There is no checking of input values, nothing advanced,~\ldots
   \end{itemize}
 \end{frame}
 
@@ -2020,7 +2031,7 @@ When done, do:
     ./interactive1.sh # Values will be provided when script asks
   \end{bashcode}
   \begin{itemize}
-    \item There is no checking of input values, nothing advanced, \ldots
+    \item There is no checking of input values, nothing advanced,~\ldots
   \end{itemize}
   \begin{bashcode}
     $(expr $1 + $2) # Alternative - $(...) is same as `...`
@@ -2056,7 +2067,7 @@ When done, do:
  \item First make \texttt{interactive3.sh} executable and launch it via e.g. \texttt{./interactive3.sh -d} or \texttt{./interactive3.sh --uptime} or so
  \item Function \texttt{case} has basic checking of input available -- as last parameter use \texttt{*)} -- any other input except those defined above will produce some warning message, error or so
  \item In same way can be added more parameters (by multiple use of \texttt{case}), but order of parameters must be kept and all parameters are compulsory
- \item \texttt{case} can evaluate simple regular expressions, e.g. \texttt{--[Uu]ptime)}, \texttt{-d*}, \ldots
+ \item \texttt{case} can evaluate simple regular expressions, e.g. \texttt{--[Uu]ptime)}, \texttt{-d*},~\ldots
 \end{itemize}
 \end{frame}
 
@@ -2204,7 +2215,7 @@ Remaining part from previous slide\ldots
 
 \begin{frame}[allowframebreaks]{Package management}{Installation of software}
   \begin{itemize}
-    \item Package -- an application or its part (documentation, plug-ins, translations, \ldots)
+    \item Package -- an application or its part (documentation, plug-ins, translations,~\ldots)
     \item Packages are available in repositories (directories) on the internet
     \begin{itemize}
       \item System has list of applications available
@@ -2537,7 +2548,7 @@ Ends on following slide\ldots
                 # Including address, port and password to connect
   \end{bashcode}
 \begin{itemize}
-  \item Launch your favorite VNC client (\href{https://www.kde.org/applications/internet/krdc/}{KRDC}, \href{http://www.tightvnc.com/}{TightVNC}, \ldots) and use credentials from above output to connect
+  \item Launch your favorite VNC client (\href{https://www.kde.org/applications/internet/krdc/}{KRDC}, \href{http://www.tightvnc.com/}{TightVNC},~\ldots) and use credentials from above output to connect
   \item Work as on normal Linux desktop\ldots
   \item With \texttt{screen} we can disconnect as usually
 \end{itemize}
@@ -2582,7 +2593,7 @@ Ends on following slide\ldots
 \begin{itemize}
   \item Different among distributions -- several main methods
   \item Most common is \href{https://wiki.freedesktop.org/www/Software/systemd/}{SystemD}, less common older init scripts and RC scripts
-  \item Used to manage services like web server, database, \ldots
+  \item Used to manage services like web server, database,~\ldots
   \item \alert{Read documentation for your distribution!}
   \item All actions require root authentication
 \end{itemize}
