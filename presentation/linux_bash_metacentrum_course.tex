@@ -84,7 +84,7 @@
 \begin{document}
 
 \begin{frame}
-\titlepage
+  \titlepage
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Outline}
@@ -104,25 +104,25 @@
       \item Česky: \url{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=MB120C17}
       \item For students having subscribed the subject, active participation and presence whole course is required
     \end{itemize}
-    \item Working version is available at \url{https://github.com/V-Z/course-r-mol-data} -- feel free to contribute, request new parts or report bugs
+    \item Working version is available at \url{https://github.com/V-Z/course-linux-command-line-bash-scripting-metacentrum} -- feel free to contribute, request new parts or report bugs
   \end{itemize}
 \end{frame}
 
 \begin{frame}{Materials to help you\ldots}
-\begin{itemize}
- \item Download the presentation \url{https://soubory.trapa.cz//linuxcourse/linux_bash_metacentrum_course.pdf}
- \item Download the scripts and toy data \url{https://soubory.trapa.cz//linuxcourse/scripts.zip}
- \begin{itemize}
-  \item \alert{Note:} Open the scripts in some \alert{good} \href{http://texteditors.org/cgi-bin/wiki.pl?PickingATextEditor}{text editor} -- showing syntax highlight, line numbers, etc. (\alert{NO} Windows notepad); the file is in UTF-8 encoding and with UNIX end of lines (so that too silly programs like Windows notepad won't be able to open it correctly)
-  \item \alert{Never ever} open any script file in software like MS~Word -- they destroy quotation marks and other things by ``typographical enhancements'' making the script unusable
- \end{itemize}
-\end{itemize}
+  \begin{itemize}
+    \item Download the presentation from \url{https://soubory.trapa.cz//linuxcourse/linux_bash_metacentrum_course.pdf}
+    \item Download the scripts and toy data from \url{https://soubory.trapa.cz//linuxcourse/scripts.zip}
+    \begin{itemize}
+      \item \alert{Note:} Open the scripts in some \alert{good} \href{http://texteditors.org/cgi-bin/wiki.pl?PickingATextEditor}{text editor} -- showing syntax highlight, line numbers, etc. (\alert{NO} Windows notepad); the files are in UTF-8 encoding and with UNIX end of lines (so that too silly programs like Windows notepad won't be able to open them correctly)
+      \item \alert{Never ever} open any script file in software like MS~Word -- they destroy quotation marks and other things by ``typographical enhancements'' making the script unusable
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Virtual machine for learning}
   \begin{multicols}{2}
     \begin{itemize}
-      \item If you do not have Linux installed, download VirtualBox from \url{https://www.virtualbox.org/}
+      \item If you do not have Linux installed, download and install VirtualBox from \url{https://www.virtualbox.org/}
       \item Download openSUSE Leap 42.2 Linux distribution for this course from \url{ftp://botany.natur.cuni.cz/openSUSE_Leap_Linux_course.ova} (3.7~GB)
       \item Launch VirtualBox and go to menu \textbf{File | Import appliance\ldots} to import it. When do, launch it (\textbf{Start})
     \end{itemize}
@@ -130,246 +130,251 @@
   \end{multicols}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{What it is UNIX, Linux and GNU\ldots}
-\begin{itemize}
-  \item UNIX
+\begin{frame}[allowframebreaks]{What it is UNIX, Linux and GNU}
   \begin{itemize}
-    \item Originally developed in Bell labs of AT\&T in 1696, written in C, since then  huge radiation, hybridization, HGT,~\ldots
-    \item Trademark -- only systems passing certain conditions (paid certification) can be called ``UNIX'' -- Solaris, HP-UX, AIX, etc. -- commercial systems for big servers
-    \item Main principles: simple, multitasking, hierarchical, network, for more users (takes cares about permissions etc.), configuration written in plain text files, important relationships among applications (generally one application = one task -- they are chained), work primarily with text, has kernel and API (interface to communicate with the rest of the system)
-    \item UNIX-like (UN*X) -- systems compatible with UNIX (Linux, BSD and its variants, Mac OS X,~\ldots)
+    \item UNIX
     \begin{itemize}
-      \item Mainly open-source (UNIX is commonly commercial -- source code is not available, but specification is)
-      \item Nowadays prevailing over ``old'' UNIX systems, used in many devices from tiny embedded toys to huge data centers
-      \item Try to provide same service as paid systems, but (mostly) for free
+      \item Originally developed in Bell labs of AT\&T in 1696, written in C, since then  huge radiation, hybridization, HGT,~\ldots
+      \item Trademark -- only systems passing certain conditions (paid certification) can be called ``UNIX'' -- Solaris, HP-UX, AIX, etc. (commercial systems for big servers)
+      \item Main principles: simple, multitasking, hierarchical, network, for more users (takes cares about permissions etc.), configuration written in plain text files, important relationships among applications (generally one application = one task -- they are chained), work primarily with text, has kernel and API (interface to communicate with the rest of the system)
+      \item UNIX-like (UN*X)
+      \begin{itemize}
+	\item Systems compatible with UNIX (Linux, BSD and its variants, Mac OS~X,~\ldots)
+	\item Mainly open-source (UNIX is commonly commercial -- source code is not available for public, but its specification is)
+	\item Nowadays prevailing over ``old'' UNIX systems, used in many devices from tiny embedded toys to huge data centers
+	\item Try to provide same quality as paid systems, but (mostly) for free
+      \end{itemize}
+      \item Many courts about copyrights, parts of code, patents -- USA allow software patents, EU not -- GNU, Linux, BSD, etc. try to ensure to have only code not covered by any patents to avoid possible courts
     \end{itemize}
-    \item Many courts about copyrights, parts of code, patents -- USA allow software patents, EU not -- GNU, Linux, BSD, etc. try to ensure to have only code not covered by any patents to avoid possible courts
+    \item \href{https://www.gnu.org/}{GNU}
+    \begin{itemize}
+      \item ``GNU's Not Unix!'' -- but they are compatible
+      \item Since 1984 Richard Stallman (founder of \href{https://www.fsf.org/}{Free Software Foundation}) tried to make new kernel (Hurd -- not finished yet\ldots)
+      \item Generally set of basic system tools -- working with many kernels (Linux BSD*, Mac's Darwin,~\ldots), also present in many commercial paid UNIX systems
+      \item Source code is free -- anyone can study it (Security!), report bugs, contribute, modify, share it,~\ldots
+      \item GNU General Public License (GPL) -- free spirit of open-source -- license, idea, how to share software
+    \end{itemize}
+    \item Linux
+    \begin{itemize}
+      \item First version of kernel written by Linus Torvalds in Helsinki in 1991
+      \item Kernel was in principle inspired by various UNIX systems and using GNU tools for work
+      \item Quickly became popular -- anyone can take it and use for any needs
+      \item Used in small embedded (commonly network) devices, mobile devices (book readers, Android,~\ldots), personal computers, servers (from home level to biggest data centers),~\ldots
+      \item Nowadays powering most of the Internet
+      \item Anyone can contribute -- not only code, also documentation, design, translations,~\ldots
+    \end{itemize}
   \end{itemize}
-  \item \href{https://www.gnu.org/}{GNU}
-  \begin{itemize}
-    \item ``GNU's Not Unix!'' -- but they are compatible
-    \item Since 1984 Richard Stallman (founder of \href{https://www.fsf.org/}{Free Software Foundation}) tried to make new kernel (Hurd -- not finished yet\ldots)
-    \item Generally set of basic system tools -- working with many kernels (Linux BSD*, Mac's Darwin,~\ldots), also present in many commercial paid UNIX systems
-    \item Source code is free -- anyone can study it (Security!), report bugs, contribute, modify, share it,~\ldots
-    \item GNU General Public License (GPL) -- free spirit of open-source -- license, idea, how to share software
-  \end{itemize}
-  \item Linux
-  \begin{itemize}
-    \item First version of kernel written by Linus Torvalds in Helsinki in 1991
-    \item Kernel was in principle inspired by various UNIX systems and using GNU tools for work
-    \item Quickly became popular -- anyone can take it and use for any needs
-    \item Used in small embedded (commonly network) devices, mobile devices (book readers, Android,~\ldots), personal computers, servers (from home level to biggest data centers),~\ldots
-    \item Nowadays powering most of the Internet
-    \item Anyone can contribute -- not only code, also documentation, design, translations,~\ldots
-  \end{itemize}
-\end{itemize}
 \end{frame}
 
 \begin{frame}{Extremely simplified UNIX phylogeny}
-\begin{center}
-  \includegraphics[height=7cm]{unix_history-simple.png}
-\end{center}
+  \begin{center}
+    \includegraphics[height=7cm]{unix_history-simple.png}
+  \end{center}
 \end{frame}
 
 \subsection{Licenses and money}
 
 \begin{frame}{Cathedral vs. market place}{What is principal difference between free open-source and commercial software}
-\begin{itemize}
-  \item Commercial software is like a cathedral
   \begin{itemize}
-    \item Pay big money and get it in the state which the architect like
-    \item User can not modify it (or it is terribly expensive)
-    \item Might be you don't need everything -- but still paying whole set
+    \item Commercial software is like a cathedral
+    \begin{itemize}
+      \item Pay big money and get it in the state which the architect like
+      \item User can not modify it (or it is terribly expensive)
+      \item Might be you don't need everything -- but still paying whole set
+    \end{itemize}
+    \item Free open-source software (FOSS) is like a market place
+    \begin{itemize}
+      \item Find there many producers of same tools -- pick up those you like -- freedom of choice
+      \item Take exactly the tools you need -- any combination is possible
+      \item Much cheaper to shop there
+    \end{itemize}
+    \item Both have pros and cons -- depends what you wish\ldots
   \end{itemize}
-  \item Free open-source software (FOSS) is like a market place
-  \begin{itemize}
-    \item Find there many producers of same tools -- pick up those you like -- freedom of choice
-    \item Take exactly the tools you need -- any combination is possible
-    \item Much cheaper to shop there
-  \end{itemize}
-  \item Both have pros and cons -- depends what you wish\ldots
-\end{itemize}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{Free and open-source software}
-\begin{itemize}
-  \item \textbf{Free like freedom of speech, \alert{not} like free beer!}
-  \item Not every OSS (generally less strict conditions) has to be \textbf{F}OSS (you can do with it (almost) whatever you like) -- source code might be available under some circumstance (only to look), but modification and/or reuse of the code prohibited (and then it is not \textbf{free})
-  \item Open-source -- source code can be seen by the holder of the license -- many variants what he can do with the code then
-  \item GNU GPL (``\href{https://www.gnu.org/copyleft/}{copyleft}'') -- probably most common OSS license, strict, viral -- derived code has to keep the license -- surprisingly not fully ``free'' as it doesn't allow changes of license
-  \item LGPL -- Lesser GPL -- more permissive
-  \item BSD license -- permissive -- allow derived code to became closed-source (commonly used by Apple Mac OS X, Safari browser,~\ldots)
-  \item Apache license, Mozilla license,~\ldots{ }-- many variants for specific use in particular software
-  \item Creative Commons (CC) -- software licenses above not suitable for multimedia, text, etc. -- CC has many options (including denial of reuse of the product), see \url{https://creativecommons.org/}
-  \item And many more\ldots
-  \item Orientation might be tricky, but practical output for users is more or less same -- the software can be independently checked for bugs, backdoors, malware, can be improved and under some circumstances, new software can be derived, and usually, it is available for free
-  \item Aim is to ``liberate'' software to keep open sharing of ideas, mutual improve and security control -- although the point is clear, there are debates how to reach it\ldots
-\end{itemize}
+\begin{frame}[allowframebreaks]{Free and open-source software -- (F)OSS}
+  \begin{itemize}
+    \item \textbf{Free like freedom of speech, \alert{not} like free beer!}
+    \item Not every OSS (generally less strict conditions) has to be \textbf{F}OSS (you can do with it (almost) whatever you like) -- source code might be available under some circumstance (only to look), but modification and/or reuse of the code prohibited (and then it is not \textbf{free})
+    \item Open-source -- source code can be seen by the holder of the license -- many variants of exact conditions
+    \item GNU GPL (``\href{https://www.gnu.org/copyleft/}{copyleft}'') -- probably most common OSS license, strict, viral -- derived code has to keep the license -- surprisingly not fully ``free'' as it doesn't allow changes of license
+    \item LGPL -- Lesser GPL -- more permissive
+    \item BSD license -- permissive -- allow derived code to became closed-source (commonly used by Apple Mac OS~X, Safari browser,~\ldots)
+    \item Apache license, Mozilla license,~\ldots{ }-- many variants for specific use in particular software
+    \item Creative Commons (CC) -- software licenses above not suitable for multimedia, text, etc. -- CC has many options (including denial of reuse of the product), see \url{https://creativecommons.org/}
+    \item And many more\ldots
+    \item Orientation might be tricky, but practical output for users is more or less same -- the software can be independently checked for bugs, backdoors, malware, can be improved and under some circumstances, new software can be derived, and usually, it is available for free
+    \item Aim is to ``liberate'' software to keep open sharing of ideas, mutual improve and security control -- although the point is clear, there are debates how to reach it\ldots
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{How to make money with free open-source software?}
-\begin{itemize}
-  \item Traditional model -- user rents right (``buys a license'') to use the software (and sometimes for support -- usually for extra money)
-  \item Common mistake -- software is not ``bought'' -- only license is rented
-  \item Software as service
   \begin{itemize}
-    \item (F)OSS is available for free -- user can use it as it is or buy a support -- help
-    \item No vendor lock-in -- user has the code, so he can modify the software himself, change provider of the services,~\ldots
-    \item Cheap for user as well as company -- company specialized for one task, let's say server database, doesn't have to take care about the rest of the system -- someone else does; user pays only what he needs
-    \item Our faculty is using \href{https://plone.org/}{Plone} system for web pages -- anyone can use it for free, someone (like we) found company to help, and if we'd decided, we  could keep Plone and maintain it ourselves or find another company to help us with it
+    \item Traditional model -- user rents right (``buys a license'') to use the software (and sometimes for support -- usually for extra money)
+    \item Common mistake -- software is not ``bought'' -- only license is rented (``permission to use it'')
+    \item Software as service
+    \begin{itemize}
+      \item (F)OSS is available for free -- user can use it as it is or buy a support -- help
+      \item No vendor lock-in -- user has the code, so he can modify the software himself, change provider of the services,~\ldots
+      \item Cheap for user as well as company -- company specialized for one task, let's say server database, doesn't have to take care about the rest of the system -- someone else does; user pays only what he needs
+      \item Our faculty is using \href{https://plone.org/}{Plone} system for web pages -- anyone can use it for free, someone (like we) found company to help, and if we'd decided, we  could keep Plone and maintain it ourselves or find another company to help us with it
+    \end{itemize}
   \end{itemize}
-\end{itemize}
 \end{frame}
 
 \section{Linux}
 
 \begin{frame}{What it is a ``Linux''}
-\begin{itemize}
-  \item Operating system respecting principles of UNIX
-  \item Components
   \begin{itemize}
-    \item Linux kernel -- basic part of the system responsible for hardware and very basic low-level running of the system (``Linus \textit{sensu stricto}'')
-    \item GNU core utilities -- basic applications
-    \item Graphical user environment (GUI) -- many choices
-    \item Many other applications -- according to use -- whatever imaginable
+    \item Operating system respecting principles of UNIX
+    \item Components
+    \begin{itemize}
+      \item Linux kernel -- basic part of the system responsible for hardware and very basic low-level running of the system (``Linus \textit{sensu stricto}'')
+      \item GNU core utilities -- basic applications
+      \item Graphical user environment (GUI) -- many choices
+      \item Many other applications -- according to use -- whatever imaginable
+    \end{itemize}
+    \item Linux distribution (``Linux \textit{senso lato}'')
+    \begin{itemize}
+      \item Somehow assemble Linux kernel, basic tools and some applications
+      \item Optionally add some patches and extra tools and gadgets
+      \item Make your own design! (very important)
+      \item If lazy, remake existing distribution (using e.g. \href{https://susestudio.com/}{web service})
+      \item Still surprised there are hundreds of them?
+      \item It is like Lego -- pieces are more or less same across distributions, but result is very variable
+      \item From ``general'' for daily use (pick up whatever you like) to very specialized -- special hardware devices, network services, rescue,~\ldots
+    \end{itemize}
   \end{itemize}
-  \item Linux distribution? (``Linux \textit{senso lato}'')
-  \begin{itemize}
-    \item Somehow assemble Linux kernel, basic tools and some applications
-    \item Optionally add some patches and extra tools and gadgets
-    \item Make your own design! (very important)
-    \item If lazy, remake existing distribution ;-) (using e.g. \href{https://susestudio.com/}{web service})
-    \item Still surprised there are hundreds of them?
-    \item It is like Lego -- pieces are more or less same across distributions, but result is very variable
-    \item From ``general'' for daily use (pick up whatever you like) to very specialized -- special hardware devices, network services, rescue,~\ldots
-  \end{itemize}
-\end{itemize}
 \end{frame}
 
 \begin{frame}{Linux kernel and other part around it}
-  \includegraphics[width=\textwidth]{linux_kernel_ubiquity.png}\\
+  \includegraphics[width=\textwidth]{linux_kernel_ubiquity.png}
+  \vfil
   \url{https://en.wikipedia.org/wiki/Linux_distribution}
+  \vfill
 \end{frame}
 
 \begin{frame}{Extremely simplified adaptive radiation of Linux distributions}
-  \includegraphics[width=\textwidth]{linux_fylogen_2.png}\\
+  \includegraphics[width=\textwidth]{linux_fylogen_2.png}
+  \vfil
   \url{https://en.wikipedia.org/wiki/List_of_Linux_distributions} and \url{https://distrowatch.com/} ($\sim$800 distributions, $\sim$260 active)
+  \vfill
 \end{frame}
 
 \subsection{Choose one}
 
 \begin{frame}{Most common Linux distributions}
-\begin{itemize}
-  \item \href{http://distrowatch.com/search.php?package=DEB}{Debian (DEB) based}
   \begin{itemize}
-    \item \href{https://www.debian.org/}{Debian} -- one of oldest and most common, especially on servers
-    \item \href{http://www.ubuntu.com/}{Ubuntu} (nowadays probably the most popular on PCs and notebooks) and derivatives -- \href{https://www.kubuntu.org/}{Kubuntu}, \href{https://xubuntu.org/}{Xubuntu}, \href{http://lubuntu.net/}{Lubuntu},~\ldots~(according to GUI used -- most of the system is same)
-    \item \href{http://linuxmint.com/}{Mint} -- Based on Ubuntu as well as Debian, very user-friendly
-    \item Kali, KNOPPIX,~\ldots
+    \item \href{http://distrowatch.com/search.php?package=DEB}{Debian (DEB) based}
+    \begin{itemize}
+      \item \href{https://www.debian.org/}{Debian} -- one of oldest and most common, especially on servers
+      \item \href{http://www.ubuntu.com/}{Ubuntu} (nowadays probably the most popular on PCs and notebooks) and derivatives -- \href{https://www.kubuntu.org/}{Kubuntu}, \href{https://xubuntu.org/}{Xubuntu}, \href{http://lubuntu.net/}{Lubuntu},~\ldots~(according to GUI used -- most of the system is same)
+      \item \href{http://linuxmint.com/}{Mint} -- Based on Ubuntu as well as Debian, very user-friendly
+      \item Kali, KNOPPIX,~\ldots
+    \end{itemize}
+    \item \href{http://distrowatch.com/search.php?package=RPM}{Red Hat (RPM) based}
+    \begin{itemize}
+      \item \href{https://www.redhat.com/}{Red Hat} -- probably the most common commercial
+      \item \href{https://getfedora.org/}{Fedora} -- ``playground'' for Red Hat -- very experimental
+      \item \href{https://www.centos.org/}{Centos} -- Clone of Red Hat
+      \item \href{https://www.opensuse.org/}{openSUSE} -- SUSE is second largest Linux company, openSUSE is community distribution (free) companion of SUSE Linux Enterprise
+      \item \href{https://www.scientificlinux.org/}{Scientific Linux}, \href{https://www.mageia.org/}{Mageia}, \href{http://www.pclinuxos.com/}{PCLinuxOS},~\ldots
+    \end{itemize}
+    \item Android
+    \item For experienced users: Arch, Slackware, Gentoo,~\ldots
   \end{itemize}
-  \item \href{http://distrowatch.com/search.php?package=RPM}{Red Hat (RPM) based}
-  \begin{itemize}
-    \item \href{https://www.redhat.com/}{Red Hat} -- probably the most common commercial
-    \item \href{https://getfedora.org/}{Fedora} -- ``playground'' for Red Hat -- very experimental
-    \item \href{https://www.centos.org/}{Centos} -- Clone of Red Hat
-    \item \href{https://www.opensuse.org/}{openSUSE} -- SUSE is second largest Linux company, openSUSE is community distribution (free) companion of SUSE Linux Enterprise
-    \item Scientific Linux, Mageia, PCLinuxOS,~\ldots
-  \end{itemize}
-  \item Android
-  \item For experienced users: Arch, Slackware, Gentoo,~\ldots
-\end{itemize}
 \end{frame}
 
-\begin{frame}{Graphical User Interfaces}{More like ``Mac-style'', ``Windows-style'' or something else? Feature rich or minimalistic?}
-\begin{itemize}
-  \item Most of GUIs are available for most of common distributions -- one is picked as default and ``only'' color style is different
-  \item \href{https://unity.ubuntu.com/}{Unity} -- developed by Ubuntu, relatively specific (not common outside Ubuntu), ``Mac-style''
-  \item \href{https://www.kde.org/}{KDE} -- one of the most common, feature extremely rich, basically ``Windows-like'' (can be changed)
-  \item \href{https://www.gnome.org/}{GNOME} -- one of the most common, relatively simplistic interface, but still feature rich, ``Mac-like''
-  \item \href{http://xfce.org/}{XFCE} -- lightweight version of older GNOME -- for older computers or users not willing to be disturbed by graphical effects, basically ``Mac-like'' looking, but panels can be moved to ``Windows style''
-  \item \href{http://cinnamon.linuxmint.com/}{Cinnamon} -- remake of GNOME to look more like Windows\ldots
-  \item And much more\ldots
-  \item Choose what you like -- doesn't matter much which one\ldots
-\end{itemize}
+\begin{frame}{Graphical User Interfaces (GUI)}{More like ``Mac-style'', ``Windows-style'' or something else? Feature rich or minimalistic?}
+  \begin{itemize}
+    \item Most of GUIs are available for most of common distributions -- one is picked as default and ``only'' color style is different
+    \item \href{https://unity.ubuntu.com/}{Unity} -- developed by Ubuntu, relatively specific (not common outside Ubuntu), ``Mac-style''
+    \item \href{https://www.kde.org/}{KDE} -- one of the most common, feature extremely rich, basically ``Windows-like'' (can be changed)
+    \item \href{https://www.gnome.org/}{GNOME} -- one of the most common, relatively simplistic interface, but still feature rich, ``Mac-like''
+    \item \href{http://xfce.org/}{XFCE} -- lightweight version of older GNOME -- for older computers or users not willing to be disturbed by graphical effects, basically ``Mac-like'' looking, but panels can be moved to ``Windows style''
+    \item \href{http://cinnamon.linuxmint.com/}{Cinnamon} -- remake of GNOME to look more like Windows\ldots
+    \item And much more\ldots
+    \item Choose what you like -- doesn't matter much which one\ldots
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Ubuntu with Unity}
-\begin{center}
-  \includegraphics[height=7cm]{ubuntu.png}
-\end{center}
+  \begin{center}
+    \includegraphics[height=7cm]{ubuntu.png}
+  \end{center}
 \end{frame}
 
 \begin{frame}{openSUSE with KDE -- Kubuntu is same, but blue\ldots}
-\begin{center}
-  \includegraphics[height=7cm]{opensuse.png}
-\end{center}
+  \begin{center}
+    \includegraphics[height=7cm]{opensuse.png}
+  \end{center}
 \end{frame}
 
 \begin{frame}{Fedora with GNOME}
-\begin{center}
-  \includegraphics[height=7cm]{fedora.png}
-\end{center}
+  \begin{center}
+    \includegraphics[height=7cm]{fedora.png}
+  \end{center}
 \end{frame}
 
 \begin{frame}{Linux Mint with Cinnamon}
-\begin{center}
-  \includegraphics[height=7cm]{mint.png}
-\end{center}
+  \begin{center}
+    \includegraphics[height=7cm]{mint.png}
+  \end{center}
 \end{frame}
 
 \begin{frame}{Debian with XFCE -- Xubuntu has more ``modern'' design}
-\begin{center}
-  \includegraphics[height=7cm]{debian.png}
-\end{center}
+  \begin{center}
+    \includegraphics[height=7cm]{debian.png}
+  \end{center}
 \end{frame}
 
 \begin{frame}{How to try it?}
-\begin{itemize}
-  \item Install it on some computer together with or instead of Windows
   \begin{itemize}
-    \item If you can use whole disk, just boot from CD/USB and click ``Next''\ldots
-    \item If you don't have whole disk, you need at least one (commonly more) disk partition(s) -- if you don't know how to manage them, ask someone skilled\ldots
+    \item Install it on some computer together with or instead of Windows
+    \begin{itemize}
+      \item If you can use whole disk, just boot from CD/USB and click ``Next''\ldots
+      \item If you don't have whole disk, you need at least one (commonly more) disk partition(s) -- if you don't know how to manage them, ask someone skilled\ldots
+    \end{itemize}
+    \item Live CD/USB
+    \begin{itemize}
+      \item The most easy -- burn ISO image of CD from web of almost any Linux distribution or use for example \href{https://unetbootin.github.io/}{UNetbootin} to prepare bootable flash
+      \item You only have to know how to boot from CD/USB (usually press \texttt{ESC}, \texttt{DEL}, \texttt{F2}, \texttt{F10}, \texttt{F12},~\ldots{ }when starting computer -- varies according to manufacturer)
+    \end{itemize}
+    \item Virtualization
+    \begin{itemize}
+      \item Requires relatively powerful computer (preferable Intel i5 or i7 and over 4~GB of RAM)
+      \item Install virtual machine (probably the most easy is \href{https://www.virtualbox.org/}{VirtualBox}) -- allows install and run another operating system inside host as an ordinary application -- very easy and comfortable
+    \end{itemize}
   \end{itemize}
-  \item Live CD/USB
-  \begin{itemize}
-    \item The most easy -- burn ISO image of CD from web of almost any Linux distribution or use for example \href{https://unetbootin.github.io/}{UNetbootin} to prepare bootable flash
-    \item You only have to know how to boot from CD/USB (usually press \texttt{ESC}, \texttt{DEL}, \texttt{F2}, \texttt{F10}, \texttt{F12},~\ldots~when starting computer -- varies according to manufacturer)
-  \end{itemize}
-  \item Virtualization
-  \begin{itemize}
-    \item Requires relatively powerful computer (preferable Intel i5 or i7 and over 4~GB of RAM)
-    \item Install virtual machine (probably the most easy is \href{https://www.virtualbox.org/}{VirtualBox}) -- allows install and run another operating system inside host as an ordinary application -- very easy and comfortable
-  \end{itemize}
-\end{itemize}
 \end{frame}
 
 \subsection{Differences}
 
 \begin{frame}{The Linux diversity\ldots}
-\begin{itemize}
-  \item Try several distributions and just choose one you like\ldots
-  \item Unless selecting among the most common, it doesn't matter much which one you pick up
-  \item Which design do you like?
-  \item Which distribution is your friend or colleague using? To have someone to ask for help\ldots :-)
-  \item You can change GUI (or its design) without change of distribution
-  \item Applications are still same -- no difference in Firefox across distributions -- keep your settings when changing distribution
-  \item Everyone using Android is using Linux ;-)
-  \item Special use -- \href{http://www.freenas.org/}{FreeNAS} for home as well as business file servers, \href{https://partedmagic.com/}{Parted Magic} and/or \href{https://www.system-rescue-cd.org/SystemRescueCd_Homepage}{SystemRescueCD} to repair broken system (disk failure) and save data,~\ldots
-\end{itemize}
+  \begin{itemize}
+    \item Try several distributions and just choose one you like\ldots
+    \item Unless selecting among the most common, it doesn't matter much which one you pick up
+    \item Which design do you like?
+    \item Which distribution is your friend or colleague using? To have someone to ask for help\ldots
+    \item You can change GUI (or its design) without change of distribution (it use to be highly configurable)
+    \item Applications are still same -- no difference in Firefox across distributions -- keep your settings when changing distribution
+    \item Everyone using Android is using Linux
+    \item Special use -- \href{http://www.freenas.org/}{FreeNAS} for home as well as business file servers, \href{https://partedmagic.com/}{Parted Magic} and/or \href{https://www.system-rescue-cd.org/SystemRescueCd_Homepage}{SystemRescueCD} to repair broken system (disk failure) and save data,~\ldots
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Differences among (common) Linux distributions}
-\begin{itemize}
-  \item Design and colors ;-)
-  \item Default GUI
-  \item Applications available right after installation
-  \item Default settings (not much)
-  \item Package management -- especially in command line
-  \item Management of system services (how to start/stop certain server service like database or web) -- not important for daily usage for most of users
-  \item Sometimes in location of some configuration files (for system services) -- also not important in daily usage of most of users
-  \item Kernel is almost same, applications are used in same way
-  \item Command line is almost same across Linux, and almost same as in other UNIX systems
-\end{itemize}
+  \begin{itemize}
+    \item Design and colors ;-)
+    \item Default GUI
+    \item Applications available right after installation
+    \item Default settings (not much)
+    \item Package management -- especially in command line
+    \item Management of system services (how to start/stop certain server service like database or web) -- not important for daily usage for most of users
+    \item Sometimes in location of some system files (for system services) -- also not important in daily usage of most of users
+    \item Kernel is almost same, applications are same and used in same way
+    \item Command line is almost same across Linux, and almost same as in other UNIX systems
+  \end{itemize}
 \end{frame}
 
 \section{UN*X}
@@ -712,7 +717,7 @@ Gain root privileges
   \begin{itemize}
     \item UNIX: LF (\texttt{\textbackslash n})
     \item Windows/DOS: CR+LF (\texttt{\textbackslash r\textbackslash n})
-    \item Older Mac: CR (\texttt{\textbackslash r}) (Mac up to 9 wasn't UN*X, since OS X is)
+    \item Older Mac: CR (\texttt{\textbackslash r}) (Mac up to 9 wasn't UN*X, since OS~X is)
   \end{itemize}
   \item Good text editor can open correctly any EOL, but for example execution of script written in Windows will probably fail on Linux
   \item Different systems use different encoding
@@ -743,7 +748,7 @@ Gain root privileges
     recode --help # More information about usage
   \end{bashcode}
   \begin{itemize}
-    \item Mac OS X mostly uses same encoding and EOL as Linux (and rest of UNIX world), so there are no problems with compatibility
+    \item Mac OS~X mostly uses same encoding and EOL as Linux (and rest of UNIX world), so there are no problems with compatibility
     \item Launching of bash script written on Windows on Linux will probably fail (because of different EOL)
   \end{itemize}
 \end{frame}
