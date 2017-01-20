@@ -88,7 +88,7 @@
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Outline}
-\tableofcontents
+  \tableofcontents
 \end{frame}
 
 \section{Introduction}
@@ -120,6 +120,7 @@
 \end{frame}
 
 \begin{frame}{Virtual machine for learning}
+  \label{VBox}
   \begin{multicols}{2}
     \begin{itemize}
       \item If you do not have Linux installed, download and install VirtualBox from \url{https://www.virtualbox.org/}
@@ -132,12 +133,12 @@
 
 \begin{frame}[allowframebreaks]{What it is UNIX, Linux and GNU}
   \begin{itemize}
-    \item UNIX
+    \item \href{https://en.wikipedia.org/wiki/Unix}{UNIX}
     \begin{itemize}
       \item Originally developed in Bell labs of AT\&T in 1696, written in C, since then  huge radiation, hybridization, HGT,~\ldots
       \item Trademark -- only systems passing certain conditions (paid certification) can be called ``UNIX'' -- Solaris, HP-UX, AIX, etc. (commercial systems for big servers)
       \item Main principles: simple, multitasking, hierarchical, network, for more users (takes cares about permissions etc.), configuration written in plain text files, important relationships among applications (generally one application = one task -- they are chained), work primarily with text, has kernel and API (interface to communicate with the rest of the system)
-      \item UNIX-like (UN*X)
+      \item \href{https://en.wikipedia.org/wiki/Unix-like}{UNIX-like} (UN*X, *nix)
       \begin{itemize}
 	\item Systems compatible with UNIX (Linux, BSD and its variants, Mac OS~X,~\ldots)
 	\item Mainly open-source (UNIX is commonly commercial -- source code is not available for public, but its specification is)
@@ -148,13 +149,13 @@
     \end{itemize}
     \item \href{https://www.gnu.org/}{GNU}
     \begin{itemize}
-      \item ``GNU's Not Unix!'' -- but they are compatible
+      \item ``GNU's Not Unix!'' -- but it is compatible, respects its principles
       \item Since 1984 Richard Stallman (founder of \href{https://www.fsf.org/}{Free Software Foundation}) tried to make new kernel (Hurd -- not finished yet\ldots)
       \item Generally set of basic system tools -- working with many kernels (Linux BSD*, Mac's Darwin,~\ldots), also present in many commercial paid UNIX systems
       \item Source code is free -- anyone can study it (Security!), report bugs, contribute, modify, share it,~\ldots
       \item GNU General Public License (GPL) -- free spirit of open-source -- license, idea, how to share software
     \end{itemize}
-    \item Linux
+    \item \href{https://en.wikipedia.org/wiki/Linux}{Linux}
     \begin{itemize}
       \item First version of kernel written by Linus Torvalds in Helsinki in 1991
       \item Kernel was in principle inspired by various UNIX systems and using GNU tools for work
@@ -200,7 +201,7 @@
     \item GNU GPL (``\href{https://www.gnu.org/copyleft/}{copyleft}'') -- probably most common OSS license, strict, viral -- derived code has to keep the license -- surprisingly not fully ``free'' as it doesn't allow changes of license
     \item LGPL -- Lesser GPL -- more permissive
     \item BSD license -- permissive -- allow derived code to became closed-source (commonly used by Apple Mac OS~X, Safari browser,~\ldots)
-    \item Apache license, Mozilla license,~\ldots{ }-- many variants for specific use in particular software
+    \item Apache license, Mozilla license, etc. -- many variants for specific use in particular software
     \item Creative Commons (CC) -- software licenses above not suitable for multimedia, text, etc. -- CC has many options (including denial of reuse of the product), see \url{https://creativecommons.org/}
     \item And many more\ldots
     \item Orientation might be tricky, but practical output for users is more or less same -- the software can be independently checked for bugs, backdoors, malware, can be improved and under some circumstances, new software can be derived, and usually, it is available for free
@@ -214,10 +215,10 @@
     \item Common mistake -- software is not ``bought'' -- only license is rented (``permission to use it'')
     \item Software as service
     \begin{itemize}
-      \item (F)OSS is available for free -- user can use it as it is or buy a support -- help
+      \item (F)OSS is available for free -- user can use it as it is or buy a support -- help of any type
       \item No vendor lock-in -- user has the code, so he can modify the software himself, change provider of the services,~\ldots
       \item Cheap for user as well as company -- company specialized for one task, let's say server database, doesn't have to take care about the rest of the system -- someone else does; user pays only what he needs
-      \item Our faculty is using \href{https://plone.org/}{Plone} system for web pages -- anyone can use it for free, someone (like we) found company to help, and if we'd decided, we  could keep Plone and maintain it ourselves or find another company to help us with it
+      \item Our faculty is using \href{https://plone.org/}{Plone} system for web pages -- anyone can use it for free, someone (like we) asked a company to help, and if we'd decided, we  could keep Plone and maintain it ourselves or find another company to help us with it
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -229,7 +230,7 @@
     \item Operating system respecting principles of UNIX
     \item Components
     \begin{itemize}
-      \item Linux kernel -- basic part of the system responsible for hardware and very basic low-level running of the system (``Linus \textit{sensu stricto}'')
+      \item Linux kernel -- basic part of the system responsible for hardware and very basic low-level running of the system (``Linux \textit{sensu stricto}'')
       \item GNU core utilities -- basic applications
       \item Graphical user environment (GUI) -- many choices
       \item Many other applications -- according to use -- whatever imaginable
@@ -270,7 +271,7 @@
       \item \href{https://www.debian.org/}{Debian} -- one of oldest and most common, especially on servers
       \item \href{http://www.ubuntu.com/}{Ubuntu} (nowadays probably the most popular on PCs and notebooks) and derivatives -- \href{https://www.kubuntu.org/}{Kubuntu}, \href{https://xubuntu.org/}{Xubuntu}, \href{http://lubuntu.net/}{Lubuntu},~\ldots~(according to GUI used -- most of the system is same)
       \item \href{http://linuxmint.com/}{Mint} -- Based on Ubuntu as well as Debian, very user-friendly
-      \item Kali, KNOPPIX,~\ldots
+      \item \href{https://www.kali.org/}{Kali}, \href{http://knopper.net/knoppix/index-en.html}{KNOPPIX}, \href{https://elementary.io/}{elementaryOS},~\ldots
     \end{itemize}
     \item \href{http://distrowatch.com/search.php?package=RPM}{Red Hat (RPM) based}
     \begin{itemize}
@@ -310,7 +311,7 @@
   \end{center}
 \end{frame}
 
-\begin{frame}{Fedora with GNOME}
+\begin{frame}{Fedora with GNOME -- GNOME is always almost same}
   \begin{center}
     \includegraphics[height=7cm]{fedora.png}
   \end{center}
@@ -340,7 +341,7 @@
       \item The most easy -- burn ISO image of CD from web of almost any Linux distribution or use for example \href{https://unetbootin.github.io/}{UNetbootin} to prepare bootable flash
       \item You only have to know how to boot from CD/USB (usually press \texttt{ESC}, \texttt{DEL}, \texttt{F2}, \texttt{F10}, \texttt{F12},~\ldots{ }when starting computer -- varies according to manufacturer)
     \end{itemize}
-    \item Virtualization
+    \item Virtualization (slide~\ref{VBox})
     \begin{itemize}
       \item Requires relatively powerful computer (preferable Intel i5 or i7 and over 4~GB of RAM)
       \item Install virtual machine (probably the most easy is \href{https://www.virtualbox.org/}{VirtualBox}) -- allows install and run another operating system inside host as an ordinary application -- very easy and comfortable
@@ -366,12 +367,13 @@
 \begin{frame}{Differences among (common) Linux distributions}
   \begin{itemize}
     \item Design and colors ;-)
-    \item Default GUI
+    \item Default GUI (other can be installed)
     \item Applications available right after installation
     \item Default settings (not much)
     \item Package management -- especially in command line
-    \item Management of system services (how to start/stop certain server service like database or web) -- not important for daily usage for most of users
-    \item Sometimes in location of some system files (for system services) -- also not important in daily usage of most of users
+    \item Development model -- conservative or experimental, fast or slow
+    \item Management of system services (how to start/stop certain services like database or web) -- not important for daily usage for most of users
+    \item Sometimes in location of some system files -- also not important in daily usage of most of users
     \item Kernel is almost same, applications are same and used in same way
     \item Command line is almost same across Linux, and almost same as in other UNIX systems
   \end{itemize}
@@ -379,58 +381,83 @@
 
 \section{UN*X}
 
-\subsection{Basic theory of operating system}
-
-\begin{frame}{Short overview of hard disk layout}
-\begin{itemize}
-  \item Physical disk (piece of hardware) has at least 1 partition -- division seen in Windows as ``disks'' (\texttt{C}, \texttt{D},~\ldots) and mounted directory in UNIX
-  \item MBR -- older description of disk division, up to 4 primary partitions (OS typically requires at leas one to run), one can be extended and contain more partitions, disks up to 2 TB
-  \item GPT -- newer, no relevant limits, requires UEFI (replacement of BIOS in newer computers)
-  \item If unsure what to do, high probability to break it\ldots
-  \item Blank new partition has to be formatted to desired file system according to use and target operating system
-  \item Linux distributions have easy graphical tools to manage disk partitions
-  \item Always have backup before such management!
-\end{itemize}
+\begin{frame}[fragile]{Root vs. ``normal'' user}
+  \begin{itemize}
+    \item Root is administrator -- more than God -- can do anything
+    \item Other users have limited permissions
+    \begin{itemize}
+      \item System users providing particular service (web server, database, networking service) are as restricted as possible to do the task -- security
+      \item ``Human'' users don't have access to system files (at least not for modification), homes of users are separated
+    \end{itemize}
+  \end{itemize}
+  \begin{bashcode}
+    # Gain root privileges
+    su # Requires root password (stay in current directory)
+    su - # Requires root password (go to /root)
+    su -c "some command" # Launch one command with root permissions
+    su USER # Became USER (his password is required)
+    sudo -i # For trusted users, became root (asks for user's password)
+            # User has to be listed in /etc/sudoers
+    sudo somecommand # Launch somecommand with root's privileges
+                     # Can be restricted for particular commands
+  \end{bashcode}
 \end{frame}
 
-\begin{frame}{Put together more disks}
-\begin{itemize}
-  \item \href{https://en.wikipedia.org/wiki/RAID}{RAID} -- Redundant Array of Inexpensive/Independent Disks
-  \item RAID~0 -- stripping, no redundancy, no security, speed up (two or more disks joined into one, files divided among disks)
-  \item RAID~1 -- mirroring -- even number of disks of same size -- resulting capacity is half, very fast, secure
-  \item RAID~5 -- at least three disks, one is used for parity control, little bit slower
-  \item Combinations (RAID~10,~\ldots)
-  \item \href{https://en.wikipedia.org/wiki/Logical_volume_management}{LVM} -- Logical Volume Management -- built over several partitions/disks -- seen by OS as one continuous space, can be dynamically managed
-  \item Functionality of RAID and LVM (and more) is more or less covered by XFS and Btrfs (next slide)
-\end{itemize}
+\subsection{Disks}
+
+\begin{frame}{Short overview of hard disk layout}
+  \begin{itemize}
+    \item Physical disk (piece of hardware) has at least 1 partition -- division seen in Windows as ``disks'' (\texttt{C}, \texttt{D},~\ldots) and mounted directory in UNIX
+    \item MBR -- older description of disk division, up to 4 primary partitions (OS typically requires at leas one to run), one can be extended and contain more partitions, disks up to 2 TB
+    \item GPT -- newer, no relevant limits, requires UEFI (replacement of BIOS -- responsible for computer to start -- in newer computers)
+    \item If unsure what to do, high probability to break it\ldots
+    \item Blank new partition has to be formatted to desired file system according to use and target operating system
+    \item Linux distributions have easy graphical tools to manage disk partitions (e.g. \href{http://gparted.org/}{GParted})
+    \item Always have backup before such management!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Put together more disks}{Extend space and get higher data security}
+  \begin{itemize}
+    \item \href{https://en.wikipedia.org/wiki/RAID}{RAID} -- Redundant Array of Inexpensive/Independent Disks
+    \item RAID~0 -- stripping, no redundancy, no security, speed up (two or more disks joined into one, files divided among disks)
+    \item RAID~1 -- mirroring -- even number of disks of same size -- resulting capacity is half, very fast, secure
+    \item RAID~5 -- at least three disks, one is used for parity control, little bit slower
+    \item Combinations (RAID~10,~\ldots)
+    \item \href{https://en.wikipedia.org/wiki/Logical_volume_management}{LVM} -- Logical Volume Management -- built over several partitions/disks -- seen by OS as one continuous space, can be dynamically managed
+    \item Functionality of RAID and LVM (and more) is more or less covered by XFS and Btrfs (next slide)
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{File systems}
-\begin{center}
-\begin{footnotesize}\begin{tabular}{ccccccc}
-\textbf{FS name} & \begin{tabular}[x]{@{}c@{}}\textbf{Name}\\\textbf{length}\end{tabular} & \begin{tabular}[x]{@{}c@{}}\textbf{Characters}\\\textbf{in file name}\end{tabular} & \begin{tabular}[x]{@{}c@{}}\textbf{Path}\\\textbf{length}\end{tabular} & \textbf{File size} & \begin{tabular}[x]{@{}c@{}}\textbf{Partition}\\\textbf{size}\end{tabular} & \textbf{Systems}\\
-FAT32 & 255 & Unicode & No limit & 4 GiB & 2 TiB & Any\\
-exFAT & 255 & ? & No limit & 16 EiB & 64 ZiB & Any\\
-NTFS & 255 & Variable & Variable & 16 TiB & 16 EiB & \begin{tabular}[x]{@{}c@{}}Windows,\\read-write\\in UN*X\end{tabular}\\
-HFS+ & 255 & Unicode & ? & 8 EiB & 8 EiB & Mac OS\\
-ext4 & 255 & Any, not / & No limit & 16 TiB & 1 EiB & UN*X\\
-XFS & 255 & Any & No limit & 9 EiB & 9 EiB & UN*X\\
-Btrfs & 255 & Any & ? & 16 EiB & 16 EiB & UN*X\\
-\end{tabular}
-\end{footnotesize}
-\end{center}
-\begin{itemize}
-  \item FAT32 (including extensions) is old-fashioned and not reliable FS
-  \item NTFS, FAT do not support UNIX permissions, so they can't be used as system partition in Linux
-  \item ext4, XFS and Btrfs are not accessible in Windows
-  \item XFS and Btrfs are the most advanced FS in common use
-\end{itemize}
+  \begin{center}
+    \begin{footnotesize}
+      \begin{tabular}{ccccccc}
+	\textbf{FS name} & \begin{tabular}[x]{@{}c@{}}\textbf{Name}\\\textbf{length}\end{tabular} & \begin{tabular}[x]{@{}c@{}}\textbf{Characters}\\\textbf{in file name}\end{tabular} & \begin{tabular}[x]{@{}c@{}}\textbf{Path}\\\textbf{length}\end{tabular} & \textbf{File size} & \begin{tabular}[x]{@{}c@{}}\textbf{Partition}\\\textbf{size}\end{tabular} & \textbf{Systems}\\
+	FAT32 & 255 & Unicode & No limit & 4 GiB & 2 TiB & Any\\
+	exFAT & 255 & ? & No limit & 16 EiB & 64 ZiB & Any\\
+	NTFS & 255 & Variable & Variable & 16 TiB & 16 EiB & \begin{tabular}[x]{@{}c@{}}Windows,\\read-write\\in UN*X\end{tabular}\\
+	HFS+ & 255 & Unicode & ? & 8 EiB & 8 EiB & Mac OS\\
+	ext4 & 255 & Any, not / & No limit & 16 TiB & 1 EiB & UN*X\\
+	XFS & 255 & Any & No limit & 9 EiB & 9 EiB & UN*X\\
+	Btrfs & 255 & Any & ? & 16 EiB & 16 EiB & UN*X
+      \end{tabular}
+    \end{footnotesize}
+  \end{center}
+  \begin{itemize}
+    \item FAT32 (including extensions) is old-fashioned and not reliable FS
+    \item NTFS, FAT do not support UNIX permissions, so they can't be used as system partition in Linux
+    \item ext4, XFS and Btrfs are not accessible in Windows
+    \item XFS and Btrfs are the most advanced FS in common use
+  \end{itemize}
 \end{frame}
 
+\subsection{Files and directories}
+
 \begin{frame}[fragile]{File names}
-\begin{itemize}
-  \item Linux allow \alert{any} character in file name, except \alert{slash} (\texttt{/}), so including anything on keyboard as well as line break (!). Be conservative\ldots
-\end{itemize}
+  \begin{itemize}
+    \item Linux allow \alert{any} character in file name, except \alert{slash} (\texttt{/}), so including anything on keyboard as well as line break (!). Be conservative\ldots
+  \end{itemize}
   \begin{bashcode}
     mkdir My New Directory # Produces THREE directories (mkdir creates
                            # directories; spaces separate parameters)
@@ -438,132 +465,149 @@ Btrfs & 255 & Any & ? & 16 EiB & 16 EiB & UN*X\\
     mkdir "My New Directory" # (you can use simple quotes '...' as well) or
     mkdir My\ New\ Directory # "\" escapes following character
     rmdir My\ New\ Directory # Same problem and solution when removing it
-    touch \* # Creates new empty file named just *
+    touch \* # Creates new empty file named just * (yes, asterisk)
     rm * # What would be removed? :-)
     rm \* # This works...
   \end{bashcode}
-\begin{itemize}
-  \item Files and directories starting by \alert{dot} (\texttt{.}) are hidden by default (typically user settings and application data in user home)
-\end{itemize}
+  \begin{itemize}
+    \item Files and directories starting by \alert{dot} (\texttt{.}) are hidden by default (typically user settings and application data in user home)
+  \end{itemize}
   \begin{bashcode}
     touch .hiddenfile # Let's make empty text file hidden by default
-    ls # We will not see it
-    ls -a # We will see it
+    ls # We will not see it (ls lists only "visible" directories)
+    ls -a # We will see it ("-a" to see all - also hidden - files)
   \end{bashcode}
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Directory structure in Linux}
-\begin{itemize}
-  \item Similar in another UN*X systems
-  \item Top directory ``\texttt{/}'' -- ``root''
-  \item Everything else (including disks and network shares) are mounted in subdirectories (/\ldots)
-  \item \texttt{/bin} -- very basic command line utilities
-  \item \texttt{/boot} -- bootloader responsible for start of system
-  \item \texttt{/dev} -- devices -- disks, CD, RAM, USB devices,~\ldots
-  \item \alert{\texttt{/etc}} -- system configuration in plain text files -- edit them to change settings (read documentation and comments there)
-  \item \alert{\texttt{/home}} -- users' homes
-  \item \texttt{/lib}, \texttt{/lib64} -- basic system libraries
-  \item \texttt{/lost+found} -- feature of FS, after crash and recovery of FS, restored files are there
-  \item \alert{\texttt{/media}} -- attached disks (USB flash,~\ldots) usually appear there (might be in \texttt{/var/run/media}) -- subdirectories are automatically created when device is plugged and disappears when unplugged
-  \item \texttt{/mnt} -- usually manually mounted file systems (but can it can be mounted elsewhere)
-  \item \texttt{/opt} -- optional, usually locally compiled software
-  \item \texttt{/proc} -- dynamic information about system processes
-  \item \texttt{/root} -- root's (admin's) home
-  \item \texttt{/sbin} -- basic system utilities
-  \item \texttt{/selinux} -- SELinux is security framework
-  \item \texttt{/srv} -- FTP and WWW server data (can be in \texttt{/var/srv})
-  \item \texttt{/sys} -- basic system
-  \item \texttt{/tmp} -- temporary files -- users have private dynamically created spaces there
-  \item \texttt{/usr} -- binaries (executable applications) and libraries of installed applications
-  \item \alert{\texttt{/var}} -- data of most of applications and services, including e.g. database data, system logs,~\ldots
-  \item \alert{\texttt{/windows}} -- if on dual boot, Windows disks are commonly mounted here
-  \item Can be altered, modified
-  \item Usually, work only in your home, anywhere else modify files only if you are absolutely sure what you are doing
-  \item Normal user doesn't have permission to modify files outside his directory (with exception of plugged removable media)
-  \item Try \texttt{man hier} for details
-\end{itemize}
+  \begin{itemize}
+    \item Similar is also in another UN*X systems
+    \item Top directory ``\texttt{/}'' -- ``root''
+    \item Everything else (including disks and network shares) are mounted in subdirectories (\texttt{/\ldots})
+    \item \texttt{/bin} -- very basic command line utilities
+    \item \texttt{/boot} -- bootloader responsible for start of system
+    \item \texttt{/dev} -- devices -- representations of disks, CD, RAM, USB devices,~\ldots
+    \item \alert{\texttt{/etc}} -- system configuration in plain text files -- edit them to change system-wide settings (read documentation and comments there)
+    \item \alert{\texttt{/home}} -- users' homes
+    \item \texttt{/lib}, \texttt{/lib64} -- basic system libraries (32 and 64bits)
+    \item \texttt{/lost+found} -- feature of FS, after crash and recovery of FS, restored files are there
+    \item \alert{\texttt{/media}} -- attached disks (USB flash,~\ldots) usually appear there (might be in \texttt{/var/run/media}) -- subdirectories are automatically created when device is plugged and disappears when unplugged
+    \item \texttt{/mnt} -- usually manually mounted file systems (but can it can be mounted elsewhere)
+    \item \texttt{/opt} -- optional, usually locally compiled software
+    \item \texttt{/proc} -- dynamic information about system processes
+    \item \texttt{/root} -- root's (admin's) home
+    \item \texttt{/sbin} -- basic system utilities
+    \item \texttt{/selinux} -- SELinux is security framework
+    \item \texttt{/srv} -- FTP and WWW server data (can be in \texttt{/var/srv})
+    \item \texttt{/sys} -- basic system
+    \item \texttt{/tmp} -- temporary files -- users have private dynamically created spaces there
+    \item \texttt{/usr} -- binaries (executable applications) and libraries of installed applications
+    \item \alert{\texttt{/var}} -- data of most of applications and services, including e.g. database data, system logs,~\ldots
+    \item \alert{\texttt{/windows}} -- if on dual boot, Windows disks are commonly mounted here
+    \item Can be altered, modified
+    \item Usually, work only in your home, anywhere else modify files only if you are absolutely sure what you are doing
+    \item Normal user doesn't have permission to modify files outside his directory (with exception of plugged removable media)
+    \item Try \texttt{man hier} for details
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Configuration in /etc (examples)}
-\begin{itemize}
-  \item Configuration of system services (servers,~\ldots) and behavior
   \begin{itemize}
-    \item Apache web server, database, FTP server, networking, basic system settings,~\ldots
+    \item Configuration of system services (servers,~\ldots) and behavior
+    \begin{itemize}
+      \item Apache web server, database, FTP server, networking, basic system settings,~\ldots
+    \end{itemize}
+    \item \texttt{cron*} -- cron automatically repeatedly runs tasks
+    \item \texttt{fstab} -- description of FS mounted during startup
+    \item \texttt{group} -- list of users and groups
+    \item \texttt{passwd} -- basic settings of for users (home directory, default shell,~\ldots)
+    \item \texttt{resolv.conf} --  DNS settings (part of basic networking)
+    \item \texttt{shadow} -- users passwords in encrypted format
+    \item \texttt{skel} -- basic directories and configuration for new users
+    \item Much more\ldots
   \end{itemize}
-  \item \texttt{cron*} -- cron automatically repeatedly runs tasks
-  \item \texttt{fstab} -- description of mounted FS
-  \item \texttt{group} -- list of users and groups
-  \item \texttt{passwd} -- basic settings of for users (home directory, default shell,~\ldots)
-  \item \texttt{resolv.conf} --  DNS settings (part of basic networking)
-  \item \texttt{shadow} -- users passwords in encrypted format
-  \item \texttt{skel} -- basic directories and configuration for new users
-  \item Much more\ldots
-\end{itemize}
 \end{frame}
 
 \begin{frame}{Types of files}
-\begin{itemize}
-  \item \bash/ls -la/
-  \item Regular file -- ordinary file, marked by \texttt{-}
-  \item Directory -- in UNIX special type of file, marked by \texttt{d}
-  \item Symbolic link (symlink, ``soft link'') -- points to another place, marked by \texttt{l}, slide \ref{links}
-  \item Hard link -- just another name for existing file, no special symbol, slide \ref{links}
-  \item Block and character device -- in \texttt{/dev}, representations of devices (hard disks, terminals,~\ldots), marked by \texttt{b} or \texttt{c} respectively
-  \item Named pipe -- pipe can be saved (by \texttt{mkfifo}), looks like a file, more at slide \ref{pipe}
-  \item Socket -- for communication among processes, also bidirectional, available on network
-\end{itemize}
+  \begin{itemize}
+    \item \bash/ls -la ~/
+    \item Regular file -- ordinary file, marked by \texttt{-}
+    \item Directory -- in UNIX special type of file, marked by \texttt{d}
+    \item Symbolic link (symlink, ``soft link'') -- points to another place, marked by \texttt{l}, slide \ref{links}
+    \item Hard link -- just another name for existing file, no special symbol, slide \ref{links}
+    \item Block and character device -- in \texttt{/dev}, representations of devices (hard disks, terminals,~\ldots), marked by \texttt{b} or \texttt{c} respectively
+    \item Named pipe -- pipe can be saved (by \texttt{mkfifo}), looks like a file, more at slide \ref{pipe}
+    \item Socket -- for communication among processes, also bidirectional, available on network
+  \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Login to remote server}
-\begin{multicols}{2}
-  \vfill
-  SSH -- secure shell -- encrypted connection
-  \vfill
+\begin{frame}[fragile]{Links}
+  \label{links}
+  \begin{itemize}
+    \item Soft links -- like links on the web -- short-cut to another place: \texttt{ln -s source target}
+    \begin{itemize}
+      \item When we delete link, nothing happens, when target, non-working link remains
+    \end{itemize}
+  \end{itemize}
   \begin{bashcode}
-    ssh remoteUser@remote.server.cz
-    # When logging first time, check
-    # and confirm fingerprint key
-    yes # And press Enter
-    # Type remote user's password
-    # (nothing is shown when typing)
-    # Confirm by Enter
+    ls -l bin/cinema5
+    lrwxrwxrwx 1 vojta users 42 5. dub 2014 cinema5 -> # "l" marks link
+      /home/vojta/bin/cinema5-0.2.1-beta/cinema5* # "->" points to target
   \end{bashcode}
-  \vfill
-  Our toy server: user names from \texttt{u01} to \texttt{u30}, password: \texttt{Cuser1}
-  \vfill
-  \bash/ssh uXY@vyuka.natur.cuni.cz/
-  \vfill
-  If fingerprint key changes, ssh complains a lot -- possible \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{man in the middle attack}
-  \vfill
-  \begin{center}
-    \includegraphics[height=6.5cm]{putty.png}
-  \end{center}
-\end{multicols}
+  \begin{itemize}
+    \item Hard links -- only second name for file already presented on the disk (available only for files): \texttt{ln source target}
+  \end{itemize}
+  \begin{bashcode}
+    ln .bashrc .bashrcX
+    ls -l .bash* # Numbers in first column show links pointing to it
+                 # For directories - number of items, for files = 1
+    -rw------- 1 vojta users 27298 21. led 16.43 .bash_history # One link
+    -rw-r--r-- 2 vojta users  2707 29. lis 16.21 .bashrc # Same file as below
+    -rw-r--r-- 2 vojta users  2707 29. lis 16.21 .bashrcX # Two links
+  \end{bashcode}
 \end{frame}
 
 \subsection{Permissions}
 
-\begin{frame}{File permissions}
-\begin{itemize}
-  \item Combination of permissions to read/write/execute for user(owner)/group/others
-\end{itemize}
-\begin{center}
-\begin{tabular}{llll}
-\textbf{Permission} & \textbf{Number} & \textbf{Directory} & \textbf{File}\\
-r & 4 & Read content & Read content\\
-w & 2 & Write into it & Write into it\\
-x & 1 & Enter it & Launch application \\
-\end{tabular}
-\end{center}
-\begin{itemize}
-  \item \texttt{rwxr-wr--} -- 3*3 characters for permissions for owner of the file/directory, group it is belonging to, and other users (\texttt{d} on beginning marks directories, \texttt{l} links, \texttt{+} ACL, slide \ref{acl})
-  \item \texttt{764} -- same as above --- numbers for each role are summed -- first one is for owner, second for group and last for others
-\end{itemize}
+\begin{frame}[fragile]{Owner and group}
+  \begin{itemize}
+    \item Every file has an owner and group -- for finer setting of rights
+    \item Group can have just one member -- the user
+    \item System usually shows names of groups and users, but important are IDs: GID and UID
+    \item Commands \texttt{chown} requires root privileges
+    \item Commands \texttt{chgrp} commonly requires root privileges -- user has to be member of particular group to be able to change ownership to it (if not, \texttt{root} most change group ownership)
+    \item Information about users and groups and their IDs are in \texttt{/etc/group} and \texttt{/etc/passwd}
+  \end{itemize}
+  \begin{bashcode}
+    ls -l # Shows also owner and group
+    id # Display UID and GIDs of current user
+    chown newowner:newgroup files # Change owner and group
+    chown -R newowner files # Recursively (-R) change owner
+    chgrp -R newgroup files # Recursively (-R) change group
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}{File and directory permissions}
+  \begin{itemize}
+    \item Combination of permissions to read/write/execute for user(owner)/group/others
+  \end{itemize}
+  \begin{center}
+    \begin{tabular}{llll}
+      \textbf{Permission} & \textbf{Number} & \textbf{Directory} & \textbf{File}\\
+      r & 4 & Read content & Read content\\
+      w & 2 & Write into it & Write into it\\
+      x & 1 & Enter it & Launch application
+    \end{tabular}
+  \end{center}
+  \begin{itemize}
+    \item \texttt{rwxr-wr--} -- 3*3 characters for permissions for owner of the file/directory, group it is belonging to, and other users (\texttt{d} on beginning marks directories, \texttt{l} links, \texttt{+} ACL, slide \ref{acl})
+    \item \texttt{764} -- same as above --- numbers for each role are summed -- first one is for owner, second for group and last for others
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Permission examples}
   \begin{bashcode}
-    ls -l
+    ls -l # Shows permissions, links, owner, group, size, date, name
     # Only owner can read and write the file; 600
     -rw-------   1 vojta users   38211 20. led 09.23 .bash_history
     # Owner can write read and write the file, others read; 644
@@ -596,9 +640,8 @@ x & 1 & Enter it & Launch application \\
     ls -h # Human readable size units (use with -l or -s)
     ls --color ## Coloured output
     ls -laFh --color # Combine any parameters you like
-    chmod u/g/o/a+/-r/w/x FILE # For respective user/group/others/all
-                               # adds/removes permission to
-                               # read/write/execute
+    chmod u/g/o/a+/-r/w/x FILE # For respective user/group/others/all adds/
+                               # removes permission to read/write/execute
     chmod XYZ FILE # Instead of XYZ use number code of permission
     chmod -R # Recursive (including subdirectories)
     chmod +x script.sh # Make script.sh executable for everyone
@@ -607,18 +650,19 @@ x & 1 & Enter it & Launch application \\
                           # writable only by their owner
     chmod 000 FILE # No one can do anything - owner or root must add
                    # some permissions before any manipulation...
-    chmod 777 * # All permissions for everyone on everything
+    chmod 777 * # All permissions for everyone on everything (no recursive)
   \end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile, label=acl]{Extending permissions -- ACL}{Access control list}
-\begin{itemize}
-  \item By default, it is not possible to give specific permission to the user who is not owner, nor member of group owing the file
-  \item In ext4 FS it has to be turned on manually (usually it is by default), it is part of XFS and Btrfs
-  \item Command \texttt{getfacl} lists those extra permissions
-  \item When in use, ``basic'' tools listing permissions (e.g. \texttt{ls -l}, ACL in use is marked by \texttt{+} on the beginning of the line) sometimes do not show correct result
-  \item Command \texttt{setfacl} sets it
-\end{itemize}
+  \begin{itemize}
+    \item By default, it is not possible to give specific permission to the user who is not owner, nor member of group owning the file
+    \item In ext4 FS it has to be turned on manually (usually it is by default), it is part of XFS and Btrfs
+    \item Command \texttt{getfacl} lists those extra permissions, \texttt{setfacl} sets
+    \item When in use, ``basic'' tools listing permissions (e.g. \texttt{ls -l}, ACL in use is marked by \texttt{+} on the beginning of the line) sometimes do not show correct result
+    \item Important especially in network environment with many users
+    \item If intensively used, \texttt{ls -l} sometimes doesn't show correct permissions
+  \end{itemize}
   \begin{bashcode}
     getfacl FILE # get ACL for FILE
     setfacl -m u/g:USER/GROUP:r/w/x FILE # Add for USER/GROUP r/w/x right
@@ -628,40 +672,40 @@ x & 1 & Enter it & Launch application \\
 \end{frame}
 
 \begin{frame}{Set default permissions for new files}
-\begin{itemize}
-  \item \texttt{umask} sets implicit permissions for newly created files for user
-  \item syntax is similar to \texttt{chmod}, but reverse (e.g. \texttt{027} keeps all rights for owner, for group only reading and nothing for others)
   \begin{itemize}
-    \item \texttt{umask} number \textbf{removes} certain permissions
+    \item \texttt{umask} sets implicit permissions for newly created files for user
+    \item syntax is similar to \texttt{chmod}, but reverse (e.g. \texttt{027} keeps all rights for owner, for group only reading and nothing for others)
+    \begin{itemize}
+      \item \texttt{umask} number \textbf{removes} certain permissions
+    \end{itemize}
+    \item \texttt{umask 027} (or other number) is typically set in file \texttt{$\sim$/.bashrc}
+    \item Typically used in network environment
+    \item Set with care -- new permissions will have plenty of consequences (different are typically needed for web pages, private files, shared files etc.)
+    \item \texttt{umask} work recursively for all new files in user home directory -- it is not possible to set new implicit rules for particular directory
   \end{itemize}
-  \item \texttt{umask 027} (or other number) is typically set in \texttt{$\sim$/.bashrc}
-  \item Typically used in network environment
-  \item Set with care -- new permissions will have plenty of consequences (different are typically needed for web pages, private files, shared files etc.)
-  \item \texttt{umask} work recursively for all new files in user home directory -- it is not possible to set new implicit rules for particular directory
-\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Other permissions}
-\begin{itemize}
-  \item sticky bit -- new directory/file in shared directory (where everyone can write) will be deletable only by owner (typically in \texttt{/tmp})
-\end{itemize}
+  \begin{itemize}
+    \item \texttt{sticky bit} -- new directory/file in shared directory (where everyone can write) will be deletable only by owner (typically in \texttt{/tmp})
+  \end{itemize}
   \begin{bashcode}
     chmod +t somedirectory
     ls -la /
     drwxrwxrwt 22 root root 800 21. led 18.20 tmp # "t" marks it
   \end{bashcode}
-\begin{itemize}
-  \item setgid -- application can have root permission even it was launched by normal user
-\end{itemize}
+  \begin{itemize}
+    \item \texttt{setgid} -- application can have root permission even it was launched by normal user
+  \end{itemize}
   \begin{bashcode}
     chmod u+s someapplication
     ls -al /bin/passwd
     -rwsr-xr-x 1 root shadow 51200 25. zář 08.38 /usr/bin/passwd # Note "s"
   \end{bashcode}
-\begin{itemize}
-  \item \texttt{chattr} -- change of advanced attributes on Linux FS
-  \item Usually, there is no need to modify them
-\end{itemize}
+  \begin{itemize}
+    \item \texttt{chattr} -- change of advanced attributes on Linux FS
+    \item Mostly, there is no need to modify them
+  \end{itemize}
   \begin{bashcode}
     chattr -RVf -+=aAcCdDeijsStTu files
     man chattr # See explanation of attributes
@@ -669,47 +713,53 @@ x & 1 & Enter it & Launch application \\
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Owner and group}
-\begin{itemize}
-  \item Every file has a owner and group -- for finer setting of rights
-  \item Group can have just one member -- the user
-  \item System usually shows names of groups and users, but important are IDs: GID and UID
-  \item Commands chown requires root privileges
-  \item Commands chgrp commonly requires root privileges -- user has to be member of particular group to be able to change ownership to it
-  \item Information about users and groups and their IDs are in \texttt{/etc/group} and \texttt{/etc/passwd}
-\end{itemize}
-  \begin{bashcode}
-    ls -l # Shows also owner and group
-    id # Display UID and GIDs of current user
-    chown newowner:newgroup files # Change owner and group
-    chown -R newowner files # Recursively (-R) change owner
-    chgrp -R newgroup files # Recursively (-R) change group
-  \end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Root vs. ``normal'' user}
-\begin{itemize}
-  \item Root is administrator -- more than God -- can do anything
-  \item Other users have limited permissions
-  \begin{itemize}
-    \item System users providing particular service (web server, database, networking service) are as restricted as possible to do the task -- security
-    \item ``Human'' users don't have access to system files (at least not for modification), homes of users are separated
-  \end{itemize}
-\end{itemize}
-Gain root privileges
-  \begin{bashcode}
-    su # Requires root password (stay in current directory)
-    su - # Requires root password (go to /root)
-    su -c "some command" # Launch one command with root permissions
-    su USER # Became USER (his password is required)
-    sudo -i # For trusted users, became root (asks for user's password)
-            # User has to be listed in /etc/sudoers
-    sudo somecommand # Launch somecommand with root's privileges
-                     # Can be restricted for particular commands
-  \end{bashcode}
-\end{frame}
-
 \subsection{Text}
+
+\begin{frame}{It \textbf{is} important to select \textbf{good} text editor\ldots}
+  \begin{center}
+    \includegraphics[width=\textwidth-1cm]{real_programmers.png}
+  \end{center}
+  \begin{flushright}
+    \url{https://xkcd.com/378/}
+  \end{flushright}
+\end{frame}
+
+\begin{frame}[label=editors]{Importance of good text editor}{Can your text editor\ldots ?}
+\begin{multicols}{2}
+  \begin{itemize}
+    \item Show syntax highlight
+    \item Show line numbers
+    \item Show space between brackets
+    \item Open any encoding and EOL
+    \item Fold source code
+    \item Show line breaks
+    \item Mark lines
+    \item Open multiple files
+    \item Advanced search and replace
+    \item Use regular expressions
+    \item Make projects
+    \item Add notes
+    \item Use command line
+    \item Debug source code
+  \end{itemize}
+\end{multicols}
+\begin{multicols}{4}
+  \begin{itemize}
+    \item \href{http://kate-editor.org/}{Kate}
+    \item \href{https://www.kde.org/applications/utilities/kwrite/}{KWrite}
+    \item \href{http://www.vim.org/}{Vim}
+    \item \href{https://en.wikipedia.org/wiki/Emacs}{GNU Emacs}
+    \item \href{http://www.geany.org/}{Geany}
+    \item \href{http://bluefish.openoffice.nl/index.html}{Bluefish}
+    \item \href{https://wiki.gnome.org/Apps/Gedit}{Gedit}
+    \item \href{https://notepad-plus-plus.org/}{Notepad++}
+    \item \href{https://www.sublimetext.com/}{Sublime}
+    \item \href{https://atom.io/}{Atom}
+    \item \href{http://www.nano-editor.org/}{Nano}
+    \item And \href{http://texteditors.org/cgi-bin/wiki.pl?PickingATextEditor}{more}\ldots
+  \end{itemize}
+\end{multicols}
+\end{frame}
 
 \begin{frame}{Text and text -- differences among operating systems}
 \begin{itemize}
@@ -751,115 +801,6 @@ Gain root privileges
     \item Mac OS~X mostly uses same encoding and EOL as Linux (and rest of UNIX world), so there are no problems with compatibility
     \item Launching of bash script written on Windows on Linux will probably fail (because of different EOL)
   \end{itemize}
-\end{frame}
-
-\begin{frame}[label=editors]{Importance of good text editor}{Can your text editor\ldots ?}
-\begin{multicols}{2}
-  \begin{itemize}
-    \item Show syntax highlight
-    \item Show line numbers
-    \item Show space between brackets
-    \item Open any encoding and EOL
-    \item Fold source code
-    \item Show line breaks
-    \item Mark lines
-    \item Open multiple files
-    \item Advanced search and replace
-    \item Use regular expressions
-    \item Make projects
-    \item Add notes
-    \item Use command line
-    \item Debug source code
-  \end{itemize}
-\end{multicols}
-\begin{multicols}{4}
-  \begin{itemize}
-    \item \href{http://kate-editor.org/}{Kate}
-    \item \href{https://www.kde.org/applications/utilities/kwrite/}{KWrite}
-    \item \href{http://www.vim.org/}{Vim}
-    \item \href{https://en.wikipedia.org/wiki/Emacs}{GNU Emacs}
-    \item \href{http://www.geany.org/}{Geany}
-    \item \href{http://bluefish.openoffice.nl/index.html}{Bluefish}
-    \item \href{https://wiki.gnome.org/Apps/Gedit}{Gedit}
-    \item \href{https://notepad-plus-plus.org/}{Notepad++}
-    \item \href{https://www.sublimetext.com/}{Sublime}
-    \item \href{https://atom.io/}{Atom}
-    \item \href{http://www.nano-editor.org/}{Nano}
-    \item And \href{http://texteditors.org/cgi-bin/wiki.pl?PickingATextEditor}{more}\ldots
-  \end{itemize}
-\end{multicols}
-\end{frame}
-
-\begin{frame}{It \textbf{is} important to select \textbf{good} text editor\ldots}
-  \begin{center}
-    \includegraphics[width=\textwidth-1cm]{real_programmers.png}
-  \end{center}
-  \begin{flushright}
-    \url{https://xkcd.com/378/}
-  \end{flushright}
-\end{frame}
-
-\subsection{BASH and others}
-
-\begin{frame}{The shell}
-\begin{itemize}
-  \item Many names, many ways how to get it, still the same thing
-  \item Fish -- friendly interactive shell -- the command line interface
-  \item Terminal (console)
-  \begin{itemize}
-    \item Originally machine used for connection to remote server
-    \item System uses old fashioned terminal for inner purposes
-    \begin{itemize}
-      \item From GUI available using \texttt{Ctrl+Alt+F1} to \texttt{F12}
-      \item Changing terminals using \texttt{Alt+F1} to \texttt{F12}
-      \item Return back to GUI using \texttt{Alt+F7}
-      \item Some are used for log outputs etc.
-    \end{itemize}
-    \item Nowadays used ``indirectly'' with special applications (``emulators'')
-  \end{itemize}
-  \item Terminal emulator
-  \begin{itemize}
-    \item Application used to get the ``terminal'' and work in command line
-    \item Every GUI has some -- Konsole, Yakuake, XTerm, Gnome Terminal, Guake, LxTerminal,~\ldots
-    \item Commonly allow appearance customization -- font, colors, background, style of notifications,~\ldots
-    \item Launch as many copies as you need (some allow tabs for easier work)
-  \end{itemize}
-\end{itemize}
-\end{frame}
-
-\begin{frame}{BASH and others}
-\begin{itemize}
-  \item Shell (sh) -- feature rich scripting programming language -- general specification, several variants
-  \item So called POSIX shell -- Portable Operating System Interface -- transferable among hardware platforms (and UNIX variants)
-  \item \textbf{Interpreter of our commands inserted into command line}
-  \item \textbf{BASH} -- Bourne again shell
-  \begin{itemize}
-    \item Probably the most common shell, based on original sh, respecting original specification, adding new features
-    \item We will use it
-  \end{itemize}
-  \item Other variants: \textbf{csh} (syntax influenced by C), \textbf{ksh} (younger, backward compatible with bash), \textbf{zsh} (extended bash), \textbf{ash} (mainly in BSD)
-  \item There are subtle differences in syntax and features
-  \item Language suitable for easy scripting and system tasks, not for ``big'' programming, neither for graphical applications
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Nice BASH features for easier work (selection)}
-\begin{itemize}
-  \item Arrows up and down list in the history of commands
-  \item List whole history by command \texttt{history}
-  \item \texttt{Ctrl+R} -- reverse search in history -- type to search last command containing typed characters
-  \item \texttt{TAB} -- list command and files starting by typed characters
-  \item \texttt{Home}/\texttt{End} -- go to beginning/end of the line
-  \item \texttt{Ctrl+L} -- clear screen (like \texttt{clear} command)
-  \item \texttt{Ctrl+Shift+C}/\texttt{V} -- copy/paste the text
-  \item \texttt{Ctrl+C} -- cancel running task
-  \item \texttt{Ctrl+D} -- log out (like commands \texttt{exit} or \texttt{logout})
-  \item \texttt{Ctrl+U} -- move text before cursor into clipboard
-  \item \texttt{Ctrl+K} -- move text after cursor into clipboard
-  \item \texttt{Ctrl+left/right arrow} -- skip words
-  \item \texttt{Ctrl+T} -- flip current and left character
-  \item \texttt{Ctrl+X+E} -- start text editor in current directory
-\end{itemize}
 \end{frame}
 
 \subsection{Variables}
@@ -964,6 +905,42 @@ Gain root privileges
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Exemplar quotes and more}
+  \begin{bashcode}
+    a=abcdef # Set new variable
+    echo $A # See variable's content
+    abcdef
+    echo '$A' # Single quotes preserve literal value
+    $A
+    echo "$A" # Double quotes preserve literal value, except $, `, \
+    abcdef
+    echo `$A` # Text between back ticks is evaluated and launched
+    abcdef: command not found # There is no command "abcdef"...
+    WORKDIR=`pwd` && echo $WORKDIR # Common use of `...` and $
+    echo "Hi, dear $USER" # Compare this and following command...
+    echo 'Hi, dear $USER' # Single quotes do not evaluate variables
+  \end{bashcode}
+\begin{itemize}
+  \item \alert{\texttt{\textdollar}} marks variables
+  \item \alert{\texttt{\textbackslash}} escapes following character -- it will not have its special meaning (space to separate arguments,~\ldots)
+  \item \alert{\texttt{*}} replaces any characters (\texttt{ls a*} lists all files starting with ``a'')
+  \item \alert{\texttt{?}} replaces one single character
+\end{itemize}
+\end{frame}
+
+\section{Command line}
+
+\begin{frame}{Places to store BASH settings}
+  \begin{itemize}
+    \item \texttt{$\sim$/.bashrc} -- File is loaded each time user creates new session (typically opens new terminal window)
+    \item \texttt{$\sim$/.bash\_profile} -- Used specifically (not in every system) when user is using remote connection (SSH)
+    \item \texttt{/etc/bash.bashrc} -- System wide BASH settings -- can be overridden by user's configuration
+    \item \texttt{$\sim$/.profile} -- Settings loaded when user logs-in (mainly for language settings), sometimes used by remote connections
+    \item \texttt{/etc/profile} -- System wide profile file -- can be overridden by user's configuration
+    \item \alert{Note:} BASH scripts are non-interactive shells -- they do not read settings above -- there are no aliases,~\ldots{ }but they inherit some settings (PATH, language,~\ldots)
+  \end{itemize}
+\end{frame}
+
 \begin{frame}[fragile]{Aliases and BASH settings -- became lazy}
 Alias is short cut -- instead of very long command write short alias
   \begin{bashcode}
@@ -1013,66 +990,95 @@ Alias is short cut -- instead of very long command write short alias
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Exemplar quotes and more}
-  \begin{bashcode}
-    a=abcdef # Set new variable
-    echo $A # See variable's content
-    abcdef
-    echo '$A' # Single quotes preserve literal value
-    $A
-    echo "$A" # Double quotes preserve literal value, except $, `, \
-    abcdef
-    echo `$A` # Text between back ticks is evaluated and launched
-    abcdef: command not found # There is no command "abcdef"...
-    WORKDIR=`pwd` && echo $WORKDIR # Common use of `...` and $
-    echo "Hi, dear $USER" # Compare this and following command...
-    echo 'Hi, dear $USER' # Single quotes do not evaluate variables
-  \end{bashcode}
-\begin{itemize}
-  \item \alert{\texttt{\textdollar}} marks variables
-  \item \alert{\texttt{\textbackslash}} escapes following character -- it will not have its special meaning (space to separate arguments,~\ldots)
-  \item \alert{\texttt{*}} replaces any characters (\texttt{ls a*} lists all files starting with ``a'')
-  \item \alert{\texttt{?}} replaces one single character
-\end{itemize}
-\end{frame}
+\subsection{BASH and others}
 
-\begin{frame}[fragile, label=links]{Links}
+\begin{frame}{The shell}
 \begin{itemize}
-  \item Soft links -- like links on the web -- short-cut to another place: \texttt{ln -s source target}
+  \item Many names, many ways how to get it, still the same thing
+  \item Fish -- friendly interactive shell -- the command line interface
+  \item Terminal (console)
   \begin{itemize}
-    \item When we delete link, nothing happens, when target, non-working link remains
+    \item Originally machine used for connection to remote server
+    \item System uses old fashioned terminal for inner purposes
+    \begin{itemize}
+      \item From GUI available using \texttt{Ctrl+Alt+F1} to \texttt{F12}
+      \item Changing terminals using \texttt{Alt+F1} to \texttt{F12}
+      \item Return back to GUI using \texttt{Alt+F7}
+      \item Some are used for log outputs etc.
+    \end{itemize}
+    \item Nowadays used ``indirectly'' with special applications (``emulators'')
+  \end{itemize}
+  \item Terminal emulator
+  \begin{itemize}
+    \item Application used to get the ``terminal'' and work in command line
+    \item Every GUI has some -- Konsole, Yakuake, XTerm, Gnome Terminal, Guake, LxTerminal,~\ldots
+    \item Commonly allow appearance customization -- font, colors, background, style of notifications,~\ldots
+    \item Launch as many copies as you need (some allow tabs for easier work)
   \end{itemize}
 \end{itemize}
-  \begin{bashcode}
-    ls -l bin/cinema5
-    lrwxrwxrwx 1 vojta users 42 5. dub 2014 cinema5 -> # "l" marks link
-      /home/vojta/bin/cinema5-0.2.1-beta/cinema5* # "->" points to target
-  \end{bashcode}
+\end{frame}
+
+\begin{frame}{BASH and others}
 \begin{itemize}
-  \item Hard links -- only second name for file already presented on the disk (available only for files): \texttt{ln source target}
-\end{itemize}
-  \begin{bashcode}
-    ln .bashrc .bashrcX
-    ls -l .bash* # Numbers in first column show links pointing to it
-                 # For directories - number of items, for files = 1
-    -rw------- 1 vojta users 27298 21. led 16.43 .bash_history # One link
-    -rw-r--r-- 2 vojta users  2707 29. lis 16.21 .bashrc # Same file as below
-    -rw-r--r-- 2 vojta users  2707 29. lis 16.21 .bashrcX # Two links
-  \end{bashcode}
-\end{frame}
-
-\begin{frame}{Places to store BASH settings}
+  \item Shell (sh) -- feature rich scripting programming language -- general specification, several variants
+  \item So called POSIX shell -- Portable Operating System Interface -- transferable among hardware platforms (and UNIX variants)
+  \item \textbf{Interpreter of our commands inserted into command line}
+  \item \textbf{BASH} -- Bourne again shell
   \begin{itemize}
-    \item \texttt{$\sim$/.bashrc} -- File is loaded each time user creates new session (typically opens new terminal window)
-    \item \texttt{$\sim$/.bash\_profile} -- Used specifically (not in every system) when user is using remote connection (SSH)
-    \item \texttt{/etc/bash.bashrc} -- System wide BASH settings -- can be overridden by user's configuration
-    \item \texttt{$\sim$/.profile} -- Settings loaded when user logs-in (mainly for language settings), sometimes used by remote connections
-    \item \texttt{/etc/profile} -- System wide profile file -- can be overridden by user's configuration
-    \item \alert{Note:} BASH scripts are non-interactive shells -- they do not read settings above -- there are no aliases,~\ldots{ }but they inherit some settings (PATH, language,~\ldots)
+    \item Probably the most common shell, based on original sh, respecting original specification, adding new features
+    \item We will use it
   \end{itemize}
+  \item Other variants: \textbf{csh} (syntax influenced by C), \textbf{ksh} (younger, backward compatible with bash), \textbf{zsh} (extended bash), \textbf{ash} (mainly in BSD)
+  \item There are subtle differences in syntax and features
+  \item Language suitable for easy scripting and system tasks, not for ``big'' programming, neither for graphical applications
+\end{itemize}
 \end{frame}
 
-\section{Command line}
+\begin{frame}{Nice BASH features for easier work (selection)}
+\begin{itemize}
+  \item Arrows up and down list in the history of commands
+  \item List whole history by command \texttt{history}
+  \item \texttt{Ctrl+R} -- reverse search in history -- type to search last command containing typed characters
+  \item \texttt{TAB} -- list command and files starting by typed characters
+  \item \texttt{Home}/\texttt{End} -- go to beginning/end of the line
+  \item \texttt{Ctrl+L} -- clear screen (like \texttt{clear} command)
+  \item \texttt{Ctrl+Shift+C}/\texttt{V} -- copy/paste the text
+  \item \texttt{Ctrl+C} -- cancel running task
+  \item \texttt{Ctrl+D} -- log out (like commands \texttt{exit} or \texttt{logout})
+  \item \texttt{Ctrl+U} -- move text before cursor into clipboard
+  \item \texttt{Ctrl+K} -- move text after cursor into clipboard
+  \item \texttt{Ctrl+left/right arrow} -- skip words
+  \item \texttt{Ctrl+T} -- flip current and left character
+  \item \texttt{Ctrl+X+E} -- start text editor in current directory
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Login to remote server}
+\begin{multicols}{2}
+  \vfill
+  SSH -- secure shell -- encrypted connection
+  \vfill
+  \begin{bashcode}
+    ssh remoteUser@remote.server.cz
+    # When logging first time, check
+    # and confirm fingerprint key
+    yes # And press Enter
+    # Type remote user's password
+    # (nothing is shown when typing)
+    # Confirm by Enter
+  \end{bashcode}
+  \vfill
+  Our toy server: user names from \texttt{u01} to \texttt{u30}, password: \texttt{Cuser1}
+  \vfill
+  \bash/ssh uXY@vyuka.natur.cuni.cz/
+  \vfill
+  If fingerprint key changes, ssh complains a lot -- possible \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{man in the middle attack}
+  \vfill
+  \begin{center}
+    \includegraphics[height=6.5cm]{putty.png}
+  \end{center}
+\end{multicols}
+\end{frame}
 
 \begin{frame}{Launching commands and scripts}
 \begin{itemize}
