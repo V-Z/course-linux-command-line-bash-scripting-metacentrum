@@ -452,11 +452,32 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Mounting and unmounting disks and removable media}
+  \begin{itemize}
+    \item Mounting and unmounting of devices require root privileges
+    \item In Linux, physical disks are named from \texttt{sda} to \texttt{sdz}, each disk has partitions (at least one) numbered from \texttt{1}, e.g. \texttt{sda1}, \texttt{sda2}, \texttt{sdb1},~\ldots{ }-- all are accessible in \texttt{/dev} directory (\texttt{/dev/sdc3},~\ldots)
+    \item Target mount point must exist before mounting
+  \end{itemize}
+  \begin{bashcode}
+    eject # Open CD/DVD drive
+    mount # Which FS (disk partitions) are mounted
+    findmnt # See mounted devices in tree-like structure
+    mkdir /mnt/point # Directory must exist prior mounting into it
+    # mount usually recognize FS of mounted device, if not, us -t FS_type
+    mount /dev/sdXY /mount/directory # Mount disk sdXY to /mount/directory
+    umount /dev/sdXY # Unmount disk sdXY
+    umount /mount/directory # Unmount disk from /mount/directory
+    dmesg | grep sd | tail # Get information about recently plugged media
+    # Mount CD/DVD ISO image file into directory /mnt/iso
+    mount -t iso9660 -o loop file.iso /mnt/iso # See CD/DVD image content
+  \end{bashcode}
+\end{frame}
+
 \subsection{Files and directories}
 
 \begin{frame}[fragile]{File names}
   \begin{itemize}
-    \item Linux allow \alert{any} character in file name, except \alert{slash} (\texttt{/}), so including anything on keyboard as well as line break (!). Be conservative\ldots
+    \item Linux allow \alert{any} character in file name, except \alert{slash} (\texttt{/}), so including anything on keyboard as well as line break (\alert{!}) -- be conservative\ldots
   \end{itemize}
   \begin{bashcode}
     mkdir My New Directory # Produces THREE directories (mkdir creates
@@ -474,8 +495,8 @@
   \end{itemize}
   \begin{bashcode}
     touch .hiddenfile # Let's make empty text file hidden by default
-    ls # We will not see it (ls lists only "visible" directories)
-    ls -a # We will see it ("-a" to see all - also hidden - files)
+    ls # We will not see it (ls lists only "visible" files/directories)
+    ls -a # We will see it ("-a" to see all - also hidden - files/dirs)
   \end{bashcode}
 \end{frame}
 
@@ -602,10 +623,11 @@
   \begin{itemize}
     \item \texttt{rwxr-wr--} -- 3*3 characters for permissions for owner of the file/directory, group it is belonging to, and other users (\texttt{d} on beginning marks directories, \texttt{l} links, \texttt{+} ACL, slide \ref{acl})
     \item \texttt{764} -- same as above --- numbers for each role are summed -- first one is for owner, second for group and last for others
+    \item Executable scripts and binaries \textbf{require} executable permission (\texttt{x})
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Permission examples}
+\begin{frame}[fragile]{Permissions examples}
   \begin{bashcode}
     ls -l # Shows permissions, links, owner, group, size, date, name
     # Only owner can read and write the file; 600
@@ -674,13 +696,17 @@
 \begin{frame}{Set default permissions for new files}
   \begin{itemize}
     \item \texttt{umask} sets implicit permissions for newly created files for user
-    \item syntax is similar to \texttt{chmod}, but reverse (e.g. \texttt{027} keeps all rights for owner, for group only reading and nothing for others)
+    \item Syntax is similar to \texttt{chmod}, but reverse (e.g. \texttt{027} keeps all rights for owner, for group only reading and nothing for others)
     \begin{itemize}
       \item \texttt{umask} number \textbf{removes} certain permissions
     \end{itemize}
     \item \texttt{umask 027} (or other number) is typically set in file \texttt{$\sim$/.bashrc}
+    \begin{itemize}
+      \item \texttt{$\sim$} means user's home directory
+      \item \texttt{.bashrc} is user's configuration for BASH
+    \end{itemize}
     \item Typically used in network environment
-    \item Set with care -- new permissions will have plenty of consequences (different are typically needed for web pages, private files, shared files etc.)
+    \item Set with care -- new permissions will have plenty of consequences -- different are typically needed for web pages, private files, shared files,~\ldots
     \item \texttt{umask} work recursively for all new files in user home directory -- it is not possible to set new implicit rules for particular directory
   \end{itemize}
 \end{frame}
@@ -725,60 +751,60 @@
 \end{frame}
 
 \begin{frame}[label=editors]{Importance of good text editor}{Can your text editor\ldots ?}
-\begin{multicols}{2}
-  \begin{itemize}
-    \item Show syntax highlight
-    \item Show line numbers
-    \item Show space between brackets
-    \item Open any encoding and EOL
-    \item Fold source code
-    \item Show line breaks
-    \item Mark lines
-    \item Open multiple files
-    \item Advanced search and replace
-    \item Use regular expressions
-    \item Make projects
-    \item Add notes
-    \item Use command line
-    \item Debug source code
-  \end{itemize}
-\end{multicols}
-\begin{multicols}{4}
-  \begin{itemize}
-    \item \href{http://kate-editor.org/}{Kate}
-    \item \href{https://www.kde.org/applications/utilities/kwrite/}{KWrite}
-    \item \href{http://www.vim.org/}{Vim}
-    \item \href{https://en.wikipedia.org/wiki/Emacs}{GNU Emacs}
-    \item \href{http://www.geany.org/}{Geany}
-    \item \href{http://bluefish.openoffice.nl/index.html}{Bluefish}
-    \item \href{https://wiki.gnome.org/Apps/Gedit}{Gedit}
-    \item \href{https://notepad-plus-plus.org/}{Notepad++}
-    \item \href{https://www.sublimetext.com/}{Sublime}
-    \item \href{https://atom.io/}{Atom}
-    \item \href{http://www.nano-editor.org/}{Nano}
-    \item And \href{http://texteditors.org/cgi-bin/wiki.pl?PickingATextEditor}{more}\ldots
-  \end{itemize}
-\end{multicols}
+  \begin{multicols}{2}
+    \begin{itemize}
+      \item Show syntax highlight
+      \item Show line numbers
+      \item Show space between brackets
+      \item Open any encoding and EOL
+      \item Fold source code
+      \item Show line breaks
+      \item Mark lines
+      \item Open multiple files
+      \item Advanced search and replace
+      \item Use regular expressions
+      \item Make projects, add notes
+      \item Use command line
+      \item Check spelling
+      \item Debug source code
+    \end{itemize}
+  \end{multicols}
+  \begin{multicols}{4}
+    \begin{itemize}
+      \item \href{http://kate-editor.org/}{Kate}
+      \item \href{https://www.kde.org/applications/utilities/kwrite/}{KWrite}
+      \item \href{http://www.vim.org/}{Vim}
+      \item \href{https://en.wikipedia.org/wiki/Emacs}{GNU Emacs}
+      \item \href{https://www.geany.org/}{Geany}
+      \item \href{http://bluefish.openoffice.nl/index.html}{Bluefish}
+      \item \href{https://wiki.gnome.org/Apps/Gedit}{Gedit}
+      \item \href{https://notepad-plus-plus.org/}{Notepad++}
+      \item \href{https://www.sublimetext.com/}{Sublime}
+      \item \href{https://atom.io/}{Atom}
+      \item \href{https://www.nano-editor.org/}{Nano}
+      \item And \href{https://en.wikipedia.org/wiki/List_of_text_editors}{more}\ldots
+    \end{itemize}
+  \end{multicols}
 \end{frame}
 
 \begin{frame}{Text and text -- differences among operating systems}
-\begin{itemize}
-  \item Windows and UNIX have different internal symbol for end of line (new line) -- EOL
   \begin{itemize}
-    \item UNIX: LF (\texttt{\textbackslash n})
-    \item Windows/DOS: CR+LF (\texttt{\textbackslash r\textbackslash n})
-    \item Older Mac: CR (\texttt{\textbackslash r}) (Mac up to 9 wasn't UN*X, since OS~X is)
+    \item Windows and UNIX have different internal symbol for end of line (new line) -- EOL
+    \begin{itemize}
+      \item UNIX: LF (\texttt{\textbackslash n})
+      \item Windows/DOS: CR+LF (\texttt{\textbackslash r\textbackslash n})
+      \item Mac v. < 9: CR (\texttt{\textbackslash r}) (Mac up to 9 wasn't UN*X, since OS~X it is)
+    \end{itemize}
+    \item Good text editor can open correctly any EOL, but for example execution of script written in Windows will probably fail on Linux
+    \item Different systems use different encoding
+    \begin{itemize}
+      \item UNIX: mainly UTF-8 (unicode, universal)
+      \item Windows: win-cp-125X (variants according to region)
+      \item Older UNIX: ISO-8859-X (variants according to region)
+      \item Other much less common types
+    \end{itemize}
+    \item Text editors can usually open any encoding, but auto detection commonly fails -- set it manually
   \end{itemize}
-  \item Good text editor can open correctly any EOL, but for example execution of script written in Windows will probably fail on Linux
-  \item Different systems use different encoding
-  \begin{itemize}
-    \item UNIX: mainly UTF-8 (unicode, universal)
-    \item Windows: win-cp-125X (variants according to region)
-    \item Older UNIX: ISO-8859-X (variants according to region)
-    \item Other much less common types
-  \end{itemize}
-  \item Text editors can usually open any encoding, but auto detection commonly fails -- set it manually
-\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Converting the text}{Prevent bad display and weird errors when launching scripts}
@@ -799,28 +825,28 @@
   \end{bashcode}
   \begin{itemize}
     \item Mac OS~X mostly uses same encoding and EOL as Linux (and rest of UNIX world), so there are no problems with compatibility
-    \item Launching of bash script written on Windows on Linux will probably fail (because of different EOL)
+    \item Launching of bash script written on Windows on Linux/Mac OS~X will probably fail (because of different EOL)
   \end{itemize}
 \end{frame}
 
 \subsection{Variables}
 
 \begin{frame}{Variables}
-\begin{itemize}
-  \item Variables contain various information (where to look for the executable programs, name of the computer, user settings,~\ldots)
-  \item Can be local (within a script for some temporal purpose) or global -- available for all processes
-  \item Commonly written in CAPITALS (just a costume)
-  \item Popular and useful variables
   \begin{itemize}
-    \item \texttt{HOME} -- location of user's home directory
-    \item \texttt{HOSTNAME} -- network name of the computer
-    \item \texttt{LANG} -- language settings, encoding, similarly variables\texttt{ LC\_*}
-    \item \texttt{PATH} -- paths where to look for applications -- all applications have to be in \texttt{PATH} or called directly
-    \item \texttt{SHELL} -- shell in use (bash or something else)
-    \item \texttt{USER} -- user name
-    \item And many more, commonly specific for particular server
+    \item Variables contain various information (where to look for the executable programs, name of the computer, user settings,~\ldots)
+    \item Can be local (within a script for some temporal purpose) or global -- available for all processes
+    \item Names commonly written in CAPITALS (just a costume)
+    \item Popular and useful variables
+    \begin{itemize}
+      \item \texttt{HOME} -- location of user's home directory
+      \item \texttt{HOSTNAME} -- network name of the computer
+      \item \texttt{LANG} -- language settings, encoding, similarly variables \texttt{LC\_*}
+      \item \texttt{PATH} -- paths where to look for applications -- all applications have to be in \texttt{PATH} or called directly
+      \item \texttt{SHELL} -- shell in use (bash or something else)
+      \item \texttt{USER} -- user name
+      \item And many more, commonly specific for particular server
+    \end{itemize}
   \end{itemize}
-\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Work with variables}
@@ -838,11 +864,11 @@
     export GREP_OPTIONS='--color=auto' # Coloured grep
     unset VARIABLENAME # Drop variable and its value
   \end{bashcode}
-\begin{itemize}
-  \item Exported variables will be lost when logging off
-  \item To make variables permanent, add \texttt{export} commands into \texttt{$\sim$/.profile} or \texttt{$\sim$/.bash\_profile}, or \texttt{$\sim$/.bashrc} (according to shell and its settings)
-  \item ``\texttt{$\sim$}'' means home directory
-\end{itemize}
+  \begin{itemize}
+    \item Exported variables will be lost when logging off
+    \item To make variables permanent, add \texttt{export} commands into \texttt{$\sim$/.profile} or \texttt{$\sim$/.bash\_profile}, or \texttt{$\sim$/.bashrc} (according to shell and its settings)
+    \item ``\texttt{$\sim$}'' means home directory
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{The PATH variable}
@@ -863,201 +889,96 @@
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Reading variables from command line}
+\begin{frame}[fragile]{Reading variables from command line and as output of another commands}{This is especially useful in scripting to read input from users or from another commands}
   \begin{bashcode}
-    read X # We will read new variable from input (no need to use "$" here)
+    # Reading variable from user's input from command line
+    # (some interactive script interacting with the user)
+    read X # We will read new variable from input (do not use "$" here)
     10 # Type any value and press Enter
     echo $X # Get value of the variable
     10 # It works
-    unset X # Destroy this variable
-    # Following two commands are very similar and can lead to same result
+    # Following two commands are same and lead to same result
     X=`command` # Set as variable output of command
-    X=$(cat somefile) # Read into variable from file
-    echo $X # X will contain content of somefile
+    X=$(command) # Set as variable output of command
+    echo $X # X will contain output of command
+    # "command" from previous lines can be e.g.
+    cat somefile.txt # Read content of somefile.txt
+    expr 1 + $X # Sum of 1 and variable $X
+    WORKDIR=`pwd`# Save current directory into variable
+    ls -1 | head -n 1 # First file/directory in the current directory
+    unset X # Destroy this variable
   \end{bashcode}
-\begin{itemize}
-  \item This is especially useful in scripting to read input from users or from another commands
-\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Expressions}
+\begin{frame}[fragile]{Variables and quotes and more}
   \begin{bashcode}
-    # Many operands have special meaning in BASH - must be escaped
-    echo `expr 1 '<' 2` # Is 1 smaller than 2? TRUE
-    echo `expr 1 '>' 2` # Is 2 smaller than 1? FALSE
-    echo `expr 5 '%' 2` # What remains after aritmetic division
-    echo `expr 1 '&' 0` # If both arguments non-empty and not 0, then 1
-    x=`expr 1 '+' 6` # Result will be in $x
-    echo $x
-    x=1 # Set x to 1
-    y=$x+1 # Will this add 1? Why?
-    echo $y # See result
-    y=`expr $x + 1` # This will work - note ` and space around +
-    echo $y # Result
-    echo `expr length "MetaCentrum and Linux"` # Get length of chain
-    # String of 10 characters starting at position 12 of the text
-    echo `expr substr "MetaCentrum and Linux" 12 10`
-    # Does 1st chain contain 2nd chain? Get position of first hit
-    echo `expr index "GNU Linux" "Linux"` # If no overlap, return value is 0
-  \end{bashcode}
-\begin{itemize}
-  \item \texttt{expr} works with various operands (see \texttt{man expr})
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Exemplar quotes and more}
-  \begin{bashcode}
-    a=abcdef # Set new variable
+    A=abcdef # Set new variable (no special characters allowed)
     echo $A # See variable's content
-    abcdef
+    abcdef # It works
     echo '$A' # Single quotes preserve literal value
-    $A
+    $A # We see variable's name, not its content
     echo "$A" # Double quotes preserve literal value, except $, `, \
-    abcdef
+    abcdef # This also works
     echo `$A` # Text between back ticks is evaluated and launched
     abcdef: command not found # There is no command "abcdef"...
-    WORKDIR=`pwd` && echo $WORKDIR # Common use of `...` and $
     echo "Hi, dear $USER" # Compare this and following command...
     echo 'Hi, dear $USER' # Single quotes do not evaluate variables
   \end{bashcode}
-\begin{itemize}
-  \item \alert{\texttt{\textdollar}} marks variables
-  \item \alert{\texttt{\textbackslash}} escapes following character -- it will not have its special meaning (space to separate arguments,~\ldots)
-  \item \alert{\texttt{*}} replaces any characters (\texttt{ls a*} lists all files starting with ``a'')
-  \item \alert{\texttt{?}} replaces one single character
-\end{itemize}
+  \begin{itemize}
+    \item \alert{\texttt{\textdollar}} marks variables
+    \item \alert{\texttt{\textbackslash}} escapes following character -- it will not have its special meaning (space to separate arguments,~\ldots)
+    \item If variable is going to contain any special character (\texttt{?}, \texttt{.}, \texttt{*},~\ldots), the value must be quoted -- \texttt{"\ldots"} allow escaping of special character or inclusion of another variables, \texttt{'\ldots'} keeps absolutely literal value
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{How quotes influence reading of variable content}
+  \begin{bashcode}
+    A=abcde # OK
+    echo $A # abcde
+    B=abcd$e # The content will be "abcde + $e" or "abcd" (if $e is missing)
+    echo $B # abcd
+    C=abcd\$e # \ escapes next character - it is loosing its special meaning
+    echo $C # abcd$e
+    D='abcd$e' # '...' keep literal value of the content
+    echo $D # abcd$e
+    # Next command breaks shell - incomplete quotes " - pres then Ctrl+C
+    E=ab"cde # The variable should contain incomplete quotes ", it fails
+    echo $E # Nothing - empty
+    F=ab\"cde # \ escapes next character - it is loosing its special meaning
+    echo $F # ab"cde
+    G='ab"cde' # '...' keep literal value of the content
+    echo $G # ab"cde
+    H=abc`echo $USER`de # See $USER to see what will be inserted into `...`
+    echo $H # abcvojtade # To add output of command into the variable
+    I='...' # Needed if $I should contain spaces, quotes, `, $, ...
+  \end{bashcode}
 \end{frame}
 
 \section{Command line}
 
-\begin{frame}{Places to store BASH settings}
+\begin{frame}{Launching commands and scripts}
   \begin{itemize}
-    \item \texttt{$\sim$/.bashrc} -- File is loaded each time user creates new session (typically opens new terminal window)
-    \item \texttt{$\sim$/.bash\_profile} -- Used specifically (not in every system) when user is using remote connection (SSH)
-    \item \texttt{/etc/bash.bashrc} -- System wide BASH settings -- can be overridden by user's configuration
-    \item \texttt{$\sim$/.profile} -- Settings loaded when user logs-in (mainly for language settings), sometimes used by remote connections
-    \item \texttt{/etc/profile} -- System wide profile file -- can be overridden by user's configuration
-    \item \alert{Note:} BASH scripts are non-interactive shells -- they do not read settings above -- there are no aliases,~\ldots{ }but they inherit some settings (PATH, language,~\ldots)
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Aliases and BASH settings -- became lazy}
-Alias is short cut -- instead of very long command write short alias
-  \begin{bashcode}
-    # Define new alias
-    alias ll="ls -l"
-    # Since now, instead of "ls -l" we can use just "ll"
-    # To make the change above permanent, write it into ~/.profile or
-    # ~/.bash_profile or ~/.bashrc and the launch
-    source ~/.bashrc # to reload BASH settings
-    # or "source" the file you modified
-    # Popular aliases
-    alias ls="ls --color=auto" # Make output of ls colored
-    alias l="ls -la" # Long list (add details) with hidden files
-    # Popular settings in ~/.bashrc (influencing bash, not other shells)
-    test -s ~/.alias && . ~/.alias || true # Check for extra alias file
-    eval "`dircolors -b`" # More colors for outputs
-    HISTCONTROL='ignoreboth' # Ignore repeated entries in bash history
-    HISTFILESIZE='100000' # Length of bash history
-  \end{bashcode}
-\end{frame}
-
-\begin{frame}{BASH globbing and wildcards}
-\begin{itemize}
-  \item BASH itself doesn't recognize regular expressions -- it's wildcards have some of functions of regular expressions and can look similarly, but behave differently!
-  \item \texttt{?} -- Any single character
-  \item \texttt{*} -- Any number of characters
-  \item \texttt{[]} -- Range or a list -- \texttt{[abcdef]} and \texttt{[a-f]} are same
-  \item \texttt{[!\ldots]} -- Reverse previous case (\texttt{!}) -- any character except those listed
-  \item \texttt{\{\}} -- Expansion (terms inside are separated by commas \texttt{,}) -- all possible combinations (see next slide for examples)
-  \item \texttt{\textbackslash} -- Escapes following character and it doesn't have its special meaning (e.g. \texttt{\textbackslash *} means asterisk \texttt{*} and not ``any number of characters'')
-  \item For details see \texttt{man 7 glob} and \texttt{man 7 regex}
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Brace expansion and quotes}
-  \begin{bashcode}
-    echo a{p,c,d,b}e # ape ace ade abe - all combinations
-    echo {a,b,c}{d,e,f} # ad ae af bd be bf cd ce cf - all combinations
-    ls *.{jpg,jpeg,png} # expansion to *.jpg *.jpeg *.png, same as
-    ls *.jpg *.jpeg *.png
-  \end{bashcode}
-\begin{itemize}
-  \item Text in single quotes (\texttt{'\ldots'}) preserves the literal value of each character within the quotes
-  \item Tex tin double quotes (\texttt{"\ldots"}) preserves the literal value of all characters within the quotes, with the exception of dollar (\texttt{\textdollar}), back tick (\texttt{\textasciigrave}) and back slash (\texttt{\textbackslash})
-  \item A double quote may be quoted within double quotes by preceding it with a backslash
-  \item Text between back ticks (\texttt{\textasciigrave\ldots\textasciigrave}) will be evaluated and then used as command or argument
-\end{itemize}
-\end{frame}
-
-\subsection{BASH and others}
-
-\begin{frame}{The shell}
-\begin{itemize}
-  \item Many names, many ways how to get it, still the same thing
-  \item Fish -- friendly interactive shell -- the command line interface
-  \item Terminal (console)
-  \begin{itemize}
-    \item Originally machine used for connection to remote server
-    \item System uses old fashioned terminal for inner purposes
+    \item Parameters of commands are separated by space and preceded by one or two minus(es)
+    \item Parameter \texttt{-h} or \texttt{--help} usually gives help for particular command
+    \item Getting help with \texttt{man} command
     \begin{itemize}
-      \item From GUI available using \texttt{Ctrl+Alt+F1} to \texttt{F12}
-      \item Changing terminals using \texttt{Alt+F1} to \texttt{F12}
-      \item Return back to GUI using \texttt{Alt+F7}
-      \item Some are used for log outputs etc.
+      \item \texttt{man somecommand}
+      \item Arrows to list up and down, \texttt{q} to quit
+      \item Type \texttt{/} and type text and hit Enter to search -- next hit by \texttt{n}, quit search by ESC (twice)
+      \item Command \texttt{info} more advanced -- type \texttt{?} for help
     \end{itemize}
-    \item Nowadays used ``indirectly'' with special applications (``emulators'')
+    \item Parameters can be combined, order doesn't matter (same variants: \texttt{ls -la}; \texttt{ls -al}; \texttt{ls -a -l}; \texttt{ls -l -a})
+    \item ``Long'' parameters (\texttt{--XXX}) must stay separated
+    \item Commands must be in PATH -- actual directory isn't in PATH
+    \begin{itemize}
+      \item If the script is is current directory, use \texttt{./script.sh} or full path
+    \end{itemize}
+    \item Custom scripts must have execute permission (\texttt{chmod +x script.sh})
   \end{itemize}
-  \item Terminal emulator
-  \begin{itemize}
-    \item Application used to get the ``terminal'' and work in command line
-    \item Every GUI has some -- Konsole, Yakuake, XTerm, Gnome Terminal, Guake, LxTerminal,~\ldots
-    \item Commonly allow appearance customization -- font, colors, background, style of notifications,~\ldots
-    \item Launch as many copies as you need (some allow tabs for easier work)
-  \end{itemize}
-\end{itemize}
 \end{frame}
 
-\begin{frame}{BASH and others}
-\begin{itemize}
-  \item Shell (sh) -- feature rich scripting programming language -- general specification, several variants
-  \item So called POSIX shell -- Portable Operating System Interface -- transferable among hardware platforms (and UNIX variants)
-  \item \textbf{Interpreter of our commands inserted into command line}
-  \item \textbf{BASH} -- Bourne again shell
-  \begin{itemize}
-    \item Probably the most common shell, based on original sh, respecting original specification, adding new features
-    \item We will use it
-  \end{itemize}
-  \item Other variants: \textbf{csh} (syntax influenced by C), \textbf{ksh} (younger, backward compatible with bash), \textbf{zsh} (extended bash), \textbf{ash} (mainly in BSD)
-  \item There are subtle differences in syntax and features
-  \item Language suitable for easy scripting and system tasks, not for ``big'' programming, neither for graphical applications
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Nice BASH features for easier work (selection)}
-\begin{itemize}
-  \item Arrows up and down list in the history of commands
-  \item List whole history by command \texttt{history}
-  \item \texttt{Ctrl+R} -- reverse search in history -- type to search last command containing typed characters
-  \item \texttt{TAB} -- list command and files starting by typed characters
-  \item \texttt{Home}/\texttt{End} -- go to beginning/end of the line
-  \item \texttt{Ctrl+L} -- clear screen (like \texttt{clear} command)
-  \item \texttt{Ctrl+Shift+C}/\texttt{V} -- copy/paste the text
-  \item \texttt{Ctrl+C} -- cancel running task
-  \item \texttt{Ctrl+D} -- log out (like commands \texttt{exit} or \texttt{logout})
-  \item \texttt{Ctrl+U} -- move text before cursor into clipboard
-  \item \texttt{Ctrl+K} -- move text after cursor into clipboard
-  \item \texttt{Ctrl+left/right arrow} -- skip words
-  \item \texttt{Ctrl+T} -- flip current and left character
-  \item \texttt{Ctrl+X+E} -- start text editor in current directory
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Login to remote server}
+\begin{frame}[fragile]{Login to remote server}{SSH -- secure shell -- encrypted connection}
 \begin{multicols}{2}
-  \vfill
-  SSH -- secure shell -- encrypted connection
-  \vfill
   \begin{bashcode}
     ssh remoteUser@remote.server.cz
     # When logging first time, check
@@ -1067,109 +988,234 @@ Alias is short cut -- instead of very long command write short alias
     # (nothing is shown when typing)
     # Confirm by Enter
   \end{bashcode}
-  \vfill
-  Our toy server: user names from \texttt{u01} to \texttt{u30}, password: \texttt{Cuser1}
-  \vfill
-  \bash/ssh uXY@vyuka.natur.cuni.cz/
-  \vfill
-  If fingerprint key changes, ssh complains a lot -- possible \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{man in the middle attack}
-  \vfill
+  \begin{itemize}
+    \item Our toy server: user names from \texttt{u01} to \texttt{u30}
+    \item \bash/ssh uXY@vyuka.natur.cuni.cz/
+    \item If fingerprint key changes, ssh complains a lot -- possible \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{man in the middle attack}
+    \item From Windows use \href{http://www.putty.org/}{Putty}
+  \end{itemize}
   \begin{center}
-    \includegraphics[height=6.5cm]{putty.png}
+    \includegraphics[height=6cm]{putty.png}
   \end{center}
 \end{multicols}
 \end{frame}
 
-\begin{frame}{Launching commands and scripts}
-\begin{itemize}
-  \item Parameters of commands are separated by space and preceded by one or two minus(es)
-  \item Parameter \texttt{-h} or \texttt{--help} usually gives help for particular command
-  \item Getting help with \texttt{man} command
-  \begin{itemize}
-    \item \texttt{man somecommand}
-    \item Arrows to list up and down, \texttt{q} to quit
-    \item Type \texttt{/} and type text and hit Enter to search -- next hit by \texttt{n}, quit search by ESC (twice)
-    \item Command \texttt{info} more advanced -- type \texttt{?} for help
-  \end{itemize}
-  \item Parameters can be combined, order doesn't matter (same variants: \texttt{ls -la}; \texttt{ls -al}; \texttt{ls -a -l}; \texttt{ls -l -a})
-  \item ``Long'' parameters (\texttt{{-}-XXX}) must stay separated
-  \item Commands must be in PATH -- actual directory isn't in PATH
-  \begin{itemize}
-    \item If the script is is current directory, use \texttt{./script.sh} or full path
-  \end{itemize}
-  \item Custom scripts must have execute permission (\texttt{chmod +x script.sh})
-\end{itemize}
-\end{frame}
-
 \begin{frame}{Screen}{Split terminal or keep task running after logging off}
-\begin{itemize}
-  \item When you log off or network connection is broken, running tasks for particular terminal usually crash
-  \item Sometimes number of connections is limited
-  \item \texttt{screen} is solution -- virtual terminals
-  \item Launch \texttt{screen} to start new screen terminal, read some info, confirm by \textbf{Space key} or \textbf{Enter}
-  \item To detach from the screen press \texttt{Ctrl+A, D} -- screen is still running in background -- you can even log off
-  \item To return back to running screen use \texttt{screen -r} -- if only one screen is running, you get back to it
-  \item If more screens are running, use \texttt{screen -r 1234} (the number is seen from \texttt{screen -r})
-  \item To cancel running screen press \texttt{Ctrl+D} (or type \texttt{exit} or \texttt{logout})
-\end{itemize}
+  \begin{itemize}
+    \item When you log off or network connection is broken, running tasks for particular terminal usually crash
+    \item Sometimes number of connections is limited
+    \item \texttt{screen} is solution -- virtual terminals
+    \item Launch \texttt{screen} to start new screen terminal, read some info, confirm by \textbf{Space key} or \textbf{Enter}
+    \item To detach from the screen press \texttt{Ctrl+A, D} -- screen is still running in background -- you can even log off
+    \item To return back to running screen use \texttt{screen -r} -- if only one screen is running, you get back to it
+    \item If more screens are running, use \texttt{screen -r 1234} (the number is seen from \texttt{screen -r})
+    \item To cancel running screen press \texttt{Ctrl+D} (or type \texttt{exit} or \texttt{logout})
+  \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Automated launching of tasks}
-\begin{itemize}
-  \item \texttt{at} can run command at certain time (atd daemon must be running)
-\end{itemize}
+\subsection{BASH and others}
+
+\begin{frame}{The shell}
+  \begin{itemize}
+    \item Many names, many ways how to get it, still the same thing
+    \item Fish -- friendly interactive shell -- the command line interface
+    \item Terminal (console)
+    \begin{itemize}
+      \item Originally machine used for connection to remote server
+      \item System uses old fashioned terminal for inner purposes
+      \begin{itemize}
+	\item From GUI available using \texttt{Ctrl+Alt+F1} to \texttt{F12}
+	\item Changing terminals using \texttt{Alt+F1} to \texttt{F12}
+	\item Return back to GUI using \texttt{Alt+F7}
+	\item Some are used for log outputs etc.
+      \end{itemize}
+      \item Nowadays used ``indirectly'' with special applications (``emulators'')
+    \end{itemize}
+    \item Terminal emulator
+    \begin{itemize}
+      \item Application used to get the ``terminal'' and work in command line
+      \item Every GUI has some -- \href{https://konsole.kde.org/}{Konsole}, \href{https://yakuake.kde.org/}{Yakuake}, \href{http://invisible-island.net/xterm/}{XTerm}, \href{https://wiki.gnome.org/Apps/Terminal}{Gnome Terminal}, \href{http://guake.org/}{Guake}, \href{http://docs.xfce.org/apps/terminal/start}{XFCE Terminal}, \href{https://wiki.lxde.org/en/LXTerminal}{LxTerminal},~\ldots
+      \item Commonly allow appearance customization -- font, colors, background, style of notifications,~\ldots
+      \item Launch as many copies as you need (usually allow tabs for easier work)
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{BASH and others}
+  \begin{itemize}
+    \item Shell (sh) -- feature rich scripting programming language -- general specification, several variants
+    \item So called POSIX shell -- Portable Operating System Interface -- transferable among hardware platforms (and UNIX variants)
+    \item \textbf{Interpreter of our commands inserted into command line}
+    \item \textbf{BASH} -- Bourne again shell
+    \begin{itemize}
+      \item Probably the most common shell, based on original sh, respecting original specification, adding new features
+      \item We will use it
+    \end{itemize}
+    \item Other variants: \textbf{csh} (syntax influenced by C), \textbf{ksh} (younger, backward compatible with bash), \textbf{zsh} (extended bash), \textbf{ash} (mainly in BSD)
+    \item There are some differences in syntax and features
+    \item Language suitable for easy scripting and system tasks, not for ``big'' programming, neither for graphical applications
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Nice BASH features for easier work (selection)}
+  \begin{itemize}
+    \item Arrows up and down list in the history of commands
+    \item List whole history by command \texttt{history}
+    \item \texttt{Ctrl+R} -- reverse search in history -- type to search last command containing typed characters
+    \item \texttt{TAB} -- list command and files starting by typed characters
+    \item \texttt{Home}/\texttt{End} -- go to beginning/end of the line
+    \item \texttt{Ctrl+L} -- clear screen (like \texttt{clear} command)
+    \item \texttt{Ctrl+Shift+C}/\texttt{V} -- copy/paste the text
+    \item \texttt{Ctrl+C} -- cancel running task
+    \item \texttt{Ctrl+D} -- log out (like commands \texttt{exit} or \texttt{logout})
+    \item \texttt{Ctrl+U} -- move text before cursor into clipboard
+    \item \texttt{Ctrl+K} -- move text after cursor into clipboard
+    \item \texttt{Ctrl+left/right arrow} -- skip words
+    \item \texttt{Ctrl+T} -- flip current and left character
+    \item \texttt{Ctrl+X+E} -- start text editor in current directory
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Places to store BASH settings}
+  \begin{itemize}
+    \item \texttt{/etc/bash.bashrc} -- System wide BASH settings -- can be overridden by user's configuration
+    \item \texttt{$\sim$/.bashrc} -- File is loaded each time user creates new session (typically opens new terminal window)
+    \item \texttt{$\sim$/.bash\_profile} -- Used specifically (not in every system) when user is using remote connection (SSH)
+    \item \texttt{/etc/profile} -- System wide profile file -- can be overridden by user's configuration
+    \item \texttt{$\sim$/.profile} -- Settings loaded when user logs-in (mainly for language settings), sometimes used by remote connections
+    \item \alert{Note:} BASH scripts are non-interactive shells -- they do not read settings above -- there are no aliases,~\ldots{ }but they inherit some settings (PATH, language,~\ldots) and they can read global variables
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{BASH settings}{Write them into BASH configuration file}
+  \begin{itemize}
+    \item In any text editor open \texttt{$\sim$/.bashrc} and edit it
+    \item Behavior of BASH can be set to fit user's needs
+    \item Terminal emulators allow to set custom fonts and colors,~\ldots
+  \end{itemize}
   \begin{bashcode}
-    systemctl status/start/stop atd.service # Check/start/stop if atd runs
-    at HHMM # Run commands at certain time check "man at" for time settings
-    at> command1 # Add as many commands as you wish (separate by Enter)
-    # When done, press Ctrl+D to cancel giving commands to at
-    at HHMM <<< 'cat somescript.sh' # Run script at certain time
+    # More colors for outputs
+    eval "`dircolors -b`"
+    # Ignore repeated entries in bash history (stored in ~/.bash_history)
+    HISTCONTROL='ignoreboth'
+    # Maximal length (number of lines) of bash history (~/.bash_history)
+    HISTFILESIZE='100000'
+    # Following two settings save history from multiple terminals
+    # Normally, only history from last time opened terminal is kept
+    shopt -s histappend # Append to history, don't overwrite it
+    # Save and reload the history after each command finishes
+    export PROMPT_COMMAND="history -a; history -c; history -r;
+      $PROMPT_COMMAND" # Note recursive behaviour of $PROMPT_COMMAND
   \end{bashcode}
-\begin{itemize}
-  \item \texttt{cron} runs tasks repeatedly (cron daemon must be running)
-\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Aliases and BASH settings}{Alias is short cut -- instead of very long command write short alias}
   \begin{bashcode}
-    systemctl status/start/stop cron.service # Check/start/stop if cron runs
-    crontab -l # List cron tasks
-    crontab -e # Edit cron tasks:
-    # Minute, Hour, Day in month, Month, Day in week, Command (absolute path)
-    # 0-59    0-23  1-31          1-12   0-6 starting with Sunday (WTF?)
-      *       *     *             *      *            /usr/bin/command
-      10      22    1             *      *        # 1st day in month, 23:11
-      0       */3   *             *      *        # Every 3 hours
-    # root can copy scripts into directories /etc/cron.*/
+    # Define new alias
+    alias ll="ls -l"
+    # Since now, instead of "ls -l" we can write just "ll"
+    # To make the change above permanent, write it into ~/.profile or
+    # ~/.bash_profile or ~/.bashrc and reload the configuration
+    source ~/.bashrc # to reload BASH settings
+                     # or "source" the file you modified
+    # If there are many aliases, they can be stored e.g. in ~/.alias
+    test -s ~/.alias && . ~/.alias || true # Check for extra alias file
+    # Popular aliases
+    alias ls="ls --color=auto" # Make output of ls colored
+    alias l="ls -la" # Long list (add details) with hidden files
+    # Popular settings in ~/.bashrc (influencing bash, not other shells)
+    alias grep='grep --colour=always' # Enable color in grep
+    # Always human readable output of df (disk free)
+    alias df='df -h'
+    # Add aliases pointing to software installed outside PATH, ...
   \end{bashcode}
+\end{frame}
+
+\begin{frame}{BASH globbing and wildcards}
+  \label{globbing}
+  \begin{itemize}
+    \item BASH itself doesn't recognize regular expressions -- it's wildcards have some of functions of regular expressions and can look similarly, but behave differently! Do not confuse!
+    \item \texttt{?} -- Replaces any single character
+    \item \texttt{*} -- Replaces any number of any characters (\texttt{ls a*} lists all files starting with ``a'')
+    \item \texttt{[]} -- Range or a list -- \texttt{[abcdef]} and \texttt{[a-f]} are same
+    \item \texttt{[!\ldots]} -- Reverse previous case (\texttt{!}) -- any character except those listed
+    \item \texttt{\{\}} -- Expansion (terms inside are separated by commas \texttt{,}) -- all possible combinations (see next slide for examples)
+    \item \texttt{\textbackslash} -- Escapes following character and it doesn't have its special meaning (e.g. \texttt{\textbackslash *} means asterisk \texttt{*} and not ``any number of characters'')
+    \item For details see \texttt{man 7 glob} and \texttt{man 7 regex}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Brace expansion and quotes}
+  \begin{bashcode}
+    echo a{p,c,d,b}e # ape ace ade abe - all combinations
+    echo {a,b,c}{d,e,f} # ad ae af bd be bf cd ce cf - all combinations
+    ls *.{jpg,jpeg,png} # expansion to *.jpg *.jpeg *.png, same as
+    ls *.jpg *.jpeg *.png
+  \end{bashcode}
+  \begin{itemize}
+    \item Text in single quotes (\texttt{'\ldots'}) preserves the literal value of each character within the quotes
+    \item Tex tin double quotes (\texttt{"\ldots"}) preserves the literal value of all characters within the quotes, with the exception of dollar (\texttt{\textdollar}), back tick (\texttt{\textasciigrave}) and back slash (\texttt{\textbackslash})
+    \item A double quote may be quoted within double quotes by preceding it with a backslash
+    \item Text between back ticks (\texttt{\textasciigrave\ldots\textasciigrave}) will be evaluated and then used as command or argument
+  \end{itemize}
 \end{frame}
 
 \subsection{Chaining}
 
 \begin{frame}{Chaining commands}
-\begin{itemize}
-  \item \alert{\texttt{\&}} -- command will be launched in background, terminal is available for next typing: \texttt{firefox \&} (when launching graphical application, hit \textbf{Enter} afterward if there is no active command line prompt)
-  \item \alert{\texttt{\&\&}} -- second command is launched only when first command exits without error (exits with status \texttt{0}): \texttt{mkdir NewDir \&\& cd NewDir}
-  \item \alert{\texttt{;}} -- second command is launched regardless exit status of the first one: \texttt{kshfskcbd; hostname}
-  \item \alert{\texttt{\textbraceleft\ldots\textbraceright}} -- commands within curl brackets are launched as one block
-  \item \alert{\texttt{||}} -- second command is launched when first command fails (has non zero exit status):\\\texttt{cd newdir || \textbraceleft~mkdir newdir \&\& cd newdir; \textbraceright}
-  \item Behavior in shells other than bash might be little bit different
-  \item \alert{\texttt{|}} -- pipe -- redirects standard output of one command into standard input of second command: \texttt{ps aux | sort}
-\end{itemize}
+  \begin{itemize}
+    \item \alert{\texttt{\&}} -- command will be launched in background, terminal is available for next typing: \texttt{firefox \&} (when launching graphical application, hit \textbf{Enter} afterward if there is no active command line prompt)
+    \item \alert{\texttt{\&\&}} -- second command is launched only when first command exits without error (exits with status \texttt{0}): \texttt{mkdir NewDir \&\& cd NewDir}
+    \item \alert{\texttt{;}} -- second command is launched regardless exit status of the first one: \texttt{kshfskcbd; hostname}
+    \item \alert{\texttt{\textbraceleft\ldots\textbraceright}} -- commands within curl brackets are launched as one block
+    \item \alert{\texttt{||}} -- second command is launched when first command fails (has non zero exit status):\\\texttt{cd newdir || \textbraceleft~mkdir newdir \&\& cd newdir; \textbraceright}
+    \item \alert{\texttt{|}} -- pipe -- redirects standard output of one command into standard input of second command: compare \texttt{mount} and \texttt{mount | column -t}
+    \item Behavior in shells other than bash might be little bit different
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Redirects and pipes}
+  \label{pipe}
+  \begin{itemize}
+    \item \texttt{/dev/null} -- ``black hole''
+    \begin{itemize}
+      \item Can discards anything
+      \item Discard only errors (note``2''): \texttt{command 2\textgreater~/dev/null}
+    \end{itemize}
+    \item \texttt{/dev/stdin} -- standard input
+    \begin{itemize}
+      \item Typically keyboard
+      \item In case application reads files, not from standard input: \texttt{echo "Žluťoučký kůň úpěl" | iconv -f utf-8 -t cp1250 /dev/stdin}
+    \end{itemize}
+    \item \texttt{/dev/stdout} -- standard output
+    \begin{itemize}
+      \item Typically screen, commonly redirected into file
+      \item We wish to see errors which would be discarded otherwise: \texttt{command 2\textgreater~/dev/stdout}
+    \end{itemize}
+    \item \texttt{/dev/stderr} -- standard error output
+    \begin{itemize}
+      \item Typically screen or log file
+      \item Right place to send errors to: \texttt{echo "error" > /dev/stderr}
+    \end{itemize}
+    \item \texttt{|} -- pipe -- basic redirecting method -- standard output of one command to standard input of another command
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Standard input and output and redirects}
-\begin{itemize}
-  \item Standard input (\texttt{stdin}) is standard place where software takes input (keyboard and terminal) and writes results to standard output (\texttt{stdout}) -- typically monitor
-  \item Standard error output (\texttt{stderr}) is target of error messages -- typically also monitor (but can be log file or so)
-  \item \alert{\texttt{\textgreater}} redirects output into new place (file, device, another command,~\ldots)
-\end{itemize}
+  \begin{itemize}
+    \item Standard input (\texttt{stdin}) is standard place where software takes input (keyboard and terminal) and writes results to standard output (\texttt{stdout}) -- typically monitor
+    \item Standard error output (\texttt{stderr}) is target of error messages -- typically also monitor (but can be log file or so)
+    \item \alert{\texttt{\textgreater}} redirects output into new place (file, device, another command,~\ldots)
+  \end{itemize}
   \begin{bashcode}
     cat /etc/group # Print whole file /etc/group
     grep users /etc/group > users # Extract from /etc/group lines containing
                                   # "users" and write output into new file
     cat users # See result
   \end{bashcode}
-\begin{itemize}
-  \item \alert{\texttt{\textgreater\textgreater}} adds output to the end of the file (\texttt{\textgreater} rewrites target file)
-\end{itemize}
+  \begin{itemize}
+    \item \alert{\texttt{\textgreater\textgreater}} adds output to the end of the file (\texttt{\textgreater} rewrites target file)
+  \end{itemize}
   \begin{bashcode}
     grep root /etc/group >> users # Add new information into existing file
     cat users # See result
@@ -1178,31 +1224,29 @@ Alias is short cut -- instead of very long command write short alias
 
 \begin{frame}[fragile]{Redirects of standard input and output}
   \begin{bashcode}
-    # Write directory content into text file
+    # Write directory listing into text file
     # If file directory_listing.txt exists, will be overwritten
     ls -la > directory_listing.txt
-    # If file directory_listing.txt exists, new content will be added to
-    # the end
+    cat directory_listing.txt # See result (same as running "ls -la")
+    # If file directory_listing.txt exists, new content will be appended
     ls -la >> directory_listing.txt
-  \end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile, label=pipe]{Redirects and pipes}
-  \begin{bashcode}
+    cat directory_listing.txt # See result
     # Add error output to the end of standard output file
-    command >> outputfile 2>&1
+    # Note: In the examples below command "commandX" does not exist -
+    # it produces error "command not found" to be recorded by the log
+    # and because of redirect, the error is not shown in the terminal.
+    command >> outputfile.log 2>&1 # Example:
+    { commandX; ls; } >> outputfile 2>&1
+    cat outputfile # See result
     # Add error output to the error log text file
-    command >> outputfile 2>error.log
+    command >> outputfile.log 2>error.log # Example:
+    { commandX; ls; } >> outputfile.txt 2>error.log
+    cat outputfile.txt # See results
+    cat error.log # See results
   \end{bashcode}
-\begin{itemize}
-  \item \texttt{/dev/null} -- ``black hole'' -- discards everything (don't care about errors?): \texttt{command 2\textgreater~/dev/null}
-  \item \texttt{/dev/stdin} -- standard input (in case application reads files, not from standard input): \texttt{echo "Žluťoučký kůň" | iconv -f utf-8 -t cp1250 /dev/stdin}
-  \item \texttt{/dev/stdout} -- standard output (we wish to see errors which would be discarded otherwise): \texttt{command 2\textgreater~/dev/stdout}
-  \item \texttt{/dev/stderr} -- standard error output (right place to send errors to): \texttt{echo "error" > /dev/stderr}
-\end{itemize}
 \end{frame}
 
-\subsection{Information and management}
+\subsection{Information and processes}
 
 \begin{frame}[fragile]{Which system are we using?}
   \begin{bashcode}
@@ -1222,12 +1266,12 @@ Alias is short cut -- instead of very long command write short alias
     lsmod # List loaded kernel modules
     uptime # How long is the system running, number of users, average load
     date # Date and time - plenty of options for formatting
-    mount | column -t # Information about mounted file systems
+    mount # Information about mounted file systems
     findmnt # Display mounted devices in tree structure
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Processes -- every running program has its own process}
+\begin{frame}[fragile]{Processes -- every running program has its own process ID}
   \begin{bashcode}
     htop # Nice listing of processes (better version of top), quit using "q"
     pstree # See running processes with child processes, recursively
@@ -1239,7 +1283,7 @@ Alias is short cut -- instead of very long command write short alias
     ps aux | grep geany # Find which PID has application to terminate
     # This is the application - its PID we need
     vojta 14639 9.3 0.8 2828512 134816 ?   Sl 16:12 0:01 /usr/bin/geany
-    # This is previous "ps aux | grep geany" command (last column)
+    # This is the previous "ps aux | grep geany" command (last column)
     vojta 14769 0.0 0.0   9440  1628 pts/0 S+ 16:12 0:00 grep geany
     kill -SIGTERM 14639 # SIGTERM is "nice" termination, SIGKILL "brutal"
     killall -SIGTERM geany # Select by name (more processes with same name)
@@ -1301,43 +1345,43 @@ Alias is short cut -- instead of very long command write short alias
 \end{frame}
 
 \begin{frame}{Midnight Commander}
-\begin{multicols}{2}
-\begin{itemize}
-  \item \texttt{mc} to launch MC
-  \item Move, copy, delete, files/directories, connect to SSH/(S)FTP,~\ldots
-  \item Can be used with mouse
-  \item Edit text files (\texttt{F4})
-  \item \texttt{F2} for quick menu
-  \item \texttt{F9} for top menu with many functions
-  \item And much more\ldots
-  \item Not possible to live without it :-)
-\end{itemize}
-\includegraphics[height=6.5cm]{mc.png}
-\end{multicols}
+  \begin{multicols}{2}
+    \begin{itemize}
+      \item \texttt{mc} to launch MC
+      \item Move, copy, delete, files/directories, connect to SSH/(S)FTP,~\ldots
+      \item Can be used with mouse
+      \item Edit text files (\texttt{F4})
+      \item \texttt{F2} for quick menu
+      \item \texttt{F9} for top menu with many functions
+      \item And much more\ldots
+      \item Not possible to live without it :-)
+    \end{itemize}
+    \includegraphics[height=6.5cm]{mc.png}
+  \end{multicols}
 \end{frame}
 
 \subsection{Archives}
 
 \begin{frame}{Compressing files into archives}
-\begin{center}
-\begin{tabular}{llll}
-\textbf{Archive} & \textbf{Compressing command}\\
-*.tar & tar cvf archive.tar file1 file2\\
-*.tar.gz\alert{/}*.tgz & tar czvf archive.tar.gz\alert{/}.tgz file1 file2\\
-*.tar.bz\alert{/}*.tbz\alert{/}*.tar.bz2 & tar cjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2 file1 file2\\
-*.tar.xz & tar cvf - file1 file2 | lzma > archive.tar.xz\\
-*.gz & gzip file\\
-*.bz2 & bzip2 file\\
-*.xz & lzma file\\
-*.zip & zip -r archive.zip file1 file2\\
-*.rar & rar a archive.rar file1 file2\\
-\end{tabular}
-\end{center}
-\begin{itemize}
-  \item \texttt{gzip}, \texttt{bzip2} and \texttt{lzma} are able to pack only one file -- use them together with \texttt{tar} to pack multiple files
-  \item \texttt{gzip}, \texttt{bzip2} and \texttt{lzma} when used \textbf{without} \texttt{tar} \alert{move} file into archive
-  \item \texttt{lzma} has excellent compression, but sometimes is very slow
-\end{itemize}
+  \begin{center}
+    \begin{tabular}{llll}
+      \textbf{Archive} & \textbf{Compressing command}\\
+      *.tar & tar cvf archive.tar file1 file2\\
+      *.tar.gz\alert{/}*.tgz & tar czvf archive.tar.gz\alert{/}.tgz file1 file2\\
+      *.tar.bz\alert{/}*.tbz\alert{/}*.tar.bz2 & tar cjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2 file1 file2\\
+      *.tar.xz & tar cvf - file1 file2 | lzma > archive.tar.xz\\
+      *.gz & gzip file\\
+      *.bz2 & bzip2 file\\
+      *.xz & lzma file\\
+      *.zip & zip -r archive.zip file1 file2\\
+      *.rar & rar a archive.rar file1 file2
+    \end{tabular}
+  \end{center}
+  \begin{itemize}
+    \item \texttt{gzip}, \texttt{bzip2} and \texttt{lzma} are able to pack only one file -- use them together with \texttt{tar} to pack multiple files
+    \item \texttt{gzip}, \texttt{bzip2} and \texttt{lzma} when used \textbf{without} \texttt{tar} \alert{move} file into archive
+    \item \texttt{lzma} has excellent compression, but can be very slow
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Compressing and decompressing archives}
@@ -1352,48 +1396,50 @@ Alias is short cut -- instead of very long command write short alias
       *.bz2 & bunzip2 archive.bz2\\
       *.xz & unlzma archive.xz\\
       *.zip & unzip archive.zip\\
-      *.rar & unrar x archive.rar\\
+      *.rar & unrar x archive.rar
     \end{tabular}
+    \includegraphics[height=2cm]{tar.png}
+    \hfill
+    \url{https://xkcd.com/1168/}
   \end{center}
-  \includegraphics[height=2cm]{tar.png}
-  \hfill
-  \url{https://xkcd.com/1168/}
 \end{frame}
 
 \subsection{Searching}
 
-\begin{frame}[fragile]{Looking for files}
+\begin{frame}[fragile]{Looking for files and applications}
   \begin{bashcode}
-    locate somename # Searches for files/directories in local database
     updatedb # Must be regularly launched to get "locate" to work
+             # It is usually regularly launched by cron task (see further)
+    locate somename # Searches for files/directories in local database
     which # Full path to application (shell command)
     whereis # Path to source code, executable and man pages for the command
     # Test if executable command exists (good for scripts)
     # If "Application" is missing, script ends with error
     command -v Application >/dev/null 2>&1 || { echo >&2 "Application is
-      required but not installed. Aborting." }
+      required but not installed. Aborting."; exit 1; }
     command -v find # Behaves like which, but reliable in scripts
     type Application >/dev/null 2>&1 || { echo >&2 "Application is
-      required but not installed. Aborting."; }
+      required but not installed. Aborting."; exit 1; }
     hash Application 2>/dev/null || { echo >&2 "Application is required
-      but not installed. Aborting."; }
-    exit 1; # It can be added before the end of the bracket to send
-            # term signal 1 - for better handling of various errors
+      but not installed. Aborting."; exit 1; }
+    exit 1 # Use to be added (with various numbers) after any error to
+           # send term signal 1 - for better handling of various errors.
+           # Every termination has exit status number - 0 is normal exit.
+           # Exit status 1 is general error.
   \end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Find}
   \begin{bashcode}
-    find # The most powerful searching tool, many parameters (man find):
-    find <where> -type d/f -name XXX -print
-    find photos/ -name *.jpg -exec mogrify -resize 1000x1000 '{}' \;
+    find <where> <what> <what to do> # The most powerful searching tool:
+    find /.. -type d/f -name XXX -print # Most common usage
   \end{bashcode}
   \begin{itemize}
     \item First \texttt{find}'s parameter is location to search -- absolute or relative, ``\texttt{.}'' means current directory (the only compulsory parameter)
-    \item \texttt{-type} for only directories or only files (without this parameter, files as well as directories are looked for)
-    \item \texttt{-name} supports wildcarts (\texttt{*}, \texttt{?} and \texttt{[\ldots]})
+    \item \texttt{-type} for only directories \texttt{d} or only files \texttt{f} (without this parameter, files as well as directories are looked for)
+    \item \texttt{-name} of the searched files/directories supports wildcarts (\texttt{*}, \texttt{?} and \texttt{[\ldots]}), see globbing (slide~\ref{globbing})
     \item \texttt{-print} is default action -- prints list of results
-    \item \texttt{-exec} runs some command with results (e.g. find all images and resize them)
+    \item \texttt{-exec} runs some command with results (some operation, not just listing)
     \begin{itemize}
       \item All following arguments are argument of the command until ``\texttt{;}'' is encountered
       \item \texttt{\{\}} is replaced by the current file name being processed
@@ -1402,9 +1448,32 @@ Alias is short cut -- instead of very long command write short alias
   \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Find examples}
+  \begin{bashcode}
+    # Find in photos subdir all JPG files and resize them to 1000x1000 px
+    find photos/ -name *.jpg -exec mogrify -resize 1000x1000 '{}' \;
+    # Another possibility with xargs (it chains commands - reads input from
+    # stdin and execute command with given arguments, using all CPU threads)
+    # Note in the example below -print is not needed as it is default action
+    find photos/ -name *.jpg | xargs mogrify -resize 1000x1000
+    # Find all R scripts in ~/Documents and find in them lines with "DNA"
+    find ~/Documents -name *.r -print | grep -nH DNA # Two possibilities
+    find ~/Documents -name *.r -exec grep -nH DNA '{}' \;
+    # How many directories are there in the books directory
+    find books/ -type d -print | wc -l # wc -l calculate lines
+    # Find in /home/$USER/photos all JPG files containing string "trip"
+    find /home/$USER/photos -name *trip*.jpg -print
+    # Change permissions of all files within "files" directory to 777
+    find files/ -type f -exec chmod 777 '{}' \;
+    # Find all executable files within current directory and list them
+    find . -executable -type f -print
+    man find # See another options
+  \end{bashcode}
+\end{frame}
+
 \subsection{Network}
 
-\begin{frame}{Network protocols}
+\begin{frame}[allowframebreaks]{Network protocols}
   \begin{itemize}
     \item SSH -- secure shell -- command-line connection to remote server to work there (port 22)
     \item Telnet -- old deprecated insecure version of SSH, never ever use it (port 23)
@@ -1412,34 +1481,19 @@ Alias is short cut -- instead of very long command write short alias
     \item FTPS -- FTP with added connection encryption for higher security (port 21)
     \item SFTP -- FTP over SSH -- common, secure (port 22)
     \item SCP -- secure copy -- uses SSH, but has restricted possibilities, common, secure (port 22)
-    \item NFS -- network file share/server -- very common in UNIX world, commonly used to permanently connect to network server, share directories, etc. (port 2049)
+    \item NFS -- network file share/server -- very common in UNIX world, commonly used to permanently connect to network server, share directories, etc. (port 20049)
     \item webDAV -- file transfer over web (using WWW server) -- not so common, but good (port 80 or 443 -- same as WWW)
+    \begin{itemize}
+      \item Accompanied by calDav and cardDav to share calendars and address books over the network
+    \end{itemize}
+    \item SAMBA -- UNIX connection to Microsoft network shares (port 5445)
+    \item web -- ``The Internet'' for most of users (port 80 or encrypted 443)
+    \item IMAP (port 143 or 993) and SMTP (port 25 or 465) to connect to e-mail server and send mails
+    \item Messaging protocols like XMPP (Jabber and derived services like Google Talk or Facebook Messenger), IRC, ICQ, Skype,~\ldots
+    \item And much more\ldots
+    \item Port number can be changed in configuration of respective server service
+    \item All firewalls on the way must allow communication on given port
   \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Connect to SSH with key}
-  \begin{itemize}
-    \item No need to remember password for every server\ldots
-  \end{itemize}
-  \begin{bashcode}
-    # Create the key
-    ssh-keygen -t rsa -b 4096 # Good security, portable
-    # ECC gives better security, but not all servers/applications support it
-    ssh-keygen -t ecdsa -b 521 # Higher security
-    ssh-keygen -t ed25519 # Same security as ecdsa, higher performance
-    # Empty (no) passphrase will connect to server without password
-    # Copy public key to remote server (private key must be kept locally)
-    ssh-copy-id user@remote.server.cz # or
-    cat ~/.ssh/XXX.pub | ssh user@remote.server.cz \
-      "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
-    # Now, public key is on the server and private key in local computer is
-    # unlocking the connection
-    # Unlock the key (no need in some distributions or if there is no
-    # passphrase) - must be done only once per user session
-    ssh-add
-    # Connect as usually
-    ssh user@remote.server.cz
-  \end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Basic network information and testing}
@@ -1459,9 +1513,33 @@ Alias is short cut -- instead of very long command write short alias
     netstat -ntplu # Show open TCP/UDP ports
     netstat -anp # Show active connections
     netstat -h # See for explanation of 3 above examples
+    # If using nmap at faculty, firewall disconnects you for 10 minutes!
     nmap -r someserver # Scan someserver for opened ports
-                       # If using at faculty, firewall disconnects you!
     nmap botany.natur.cuni.cz --script ssh-hostkey # See SSH key
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Connecting file systems on remote servers}
+  \begin{itemize}
+    \item Mounting and unmounting of remote servers require root privileges
+    \item Target mount point must exist before mounting
+    \item Servers can be accessed by IP address or hostname
+  \end{itemize}
+  \begin{bashcode}
+    # Mount Windows server (requires package samba)
+    mount.cifs //windows.server.cz/Some/Directory /mnt/win -o \
+      credentials=/path/to/password.file,uid=USER,gid=GROUP
+    # "password.file" contains login credentials to Windows server:
+    username=user.name
+    password=TopSecretPassword1
+    domain=DOMAINNAME
+    man mount.cifs # See for other connection options
+    # Mounting remote server over SSH (sshfs package must be installed)
+    sshfs user@vyuka.natur.cuni.cz:/some/dir /local/mount/point
+    # Mount NFS share (NFS is common protocol in UNIX world)
+    mount -t nfs some.server.cz:/shared/directory /local/directory
+    # Mount webDAV folder (requires package davfs2 to be installed)
+    mount -t davfs https://owncloud.cesnet.cz/directory /local/directory
   \end{bashcode}
 \end{frame}
 
@@ -1483,7 +1561,7 @@ Alias is short cut -- instead of very long command write short alias
     # scp behaves like cp, but works over SSH
   \end{bashcode}
   \begin{itemize}
-    \item \texttt{rsync} is synchronization tool (commonly used for backups) able to co connect to remote server (next slide)
+    \item \texttt{rsync} is synchronization tool (commonly used for backups) able to connect to remote server (next slide)
   \end{itemize}
 \end{frame}
 
@@ -1506,48 +1584,46 @@ Alias is short cut -- instead of very long command write short alias
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Connecting file systems on remote servers}
-  \begin{itemize}
-    \item Mounting and unmounting of remote servers require root privileges
-    \item Target mount point must exist before mounting
-    \item Servers can be accessed by IP address or hostname
-  \end{itemize}
+\begin{frame}[fragile]{Connect to SSH with key}{No need to remember password for every server\ldots}
   \begin{bashcode}
-    # Mount Windows server
-    mount.cifs //windows.server.cz/Some/Directory /mnt/win -o \
-      credentials=/path/to/password.file,uid=USER,gid=GROUP
-    # "password.file" contains login credentials to Windows server:
-    username=user.name
-    password=TopSecretPassword1
-    domain=DOMAINNAME
-    man mount.cifs # See for other connection options
-    # Mounting remote server over SSH (sshfs package must be installed)
-    sshfs user@vyuka.natur.cuni.cz:/some/dir /local/mount/point
-    # Mount NFS share (NFS is common protocol in UNIX world)
-    mount -t nfs some.server.cz:/shared/directory /local/directory
-    # Mount webDAV folder (requires package davfs2 to be installed)
-    mount -t davfs https://owncloud.cesnet.cz/directory /local/directory
+    # Create the key
+    ssh-keygen -t rsa -b 4096 # Good security, portable
+    # ECC gives better security, but not all servers/applications support it
+    ssh-keygen -t ecdsa -b 521 # Higher security
+    ssh-keygen -t ed25519 # Same security as ecdsa, higher performance
+    # Empty (no) passphrase will connect to server without password
+    # Copy public key to remote server (private key must be kept locally)
+    ssh-copy-id user@remote.server.cz # or
+    cat ~/.ssh/XXX.pub | ssh user@remote.server.cz \
+      "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+    # Now, public key is on the server and private key in local computer is
+    # unlocking the connection
+    # Unlock the key (no need in some distributions or if there is no
+    # passphrase) - must be done only once per user session
+    ssh-add
+    # Connect as usually
+    ssh user@remote.server.cz
   \end{bashcode}
 \end{frame}
 
 \subsection{Parallelisation}
 
 \begin{frame}{Parallelisation with GNU Parallel}
-\begin{itemize}
-  \item \href{https://www.gnu.org/software/parallel/}{GNU Parallel} can distribute task among CPU threads of one computer, or even among different computers in network
-  \item It is not effective for short/small tasks
-  \item Important operands (for more see \texttt{man parallel})
   \begin{itemize}
-    \item \texttt{\{\}} -- input line -- whole line read from input source (typically standard input)
-    \item \texttt{\{.\}} -- input line without extension
-    \item \texttt{\{/\}} -- base name of input line -- only file name (without path)
-    \item \texttt{\{//\}} -- dirname from input line (filename is removed)
-    \item \texttt{\{/.\}} -- base name of input line without extension
-    \item \texttt{:::} -- use arguments from command line instead of stdin (::: is placed after the command and before the argument)
-    \item \texttt{::::} -- read from argument files
-    \item \texttt{-j} -- number of jobs -- if not provide, \texttt{parallel} will use all available CPU threads
+    \item \href{https://www.gnu.org/software/parallel/}{GNU Parallel} can distribute task among CPU threads of one computer, or even among different computers in network
+    \item It is not effective for short/small tasks
+    \item Important operands (for more see \texttt{man parallel})
+    \begin{itemize}
+      \item \texttt{\{\}} -- input line -- whole line read from input source (typically standard input)
+      \item \texttt{\{.\}} -- input line without extension
+      \item \texttt{\{/\}} -- base name of input line -- only file name (without path)
+      \item \texttt{\{//\}} -- dirname from input line (filename is removed)
+      \item \texttt{\{/.\}} -- base name of input line without extension
+      \item \texttt{:::} -- use arguments from command line instead of stdin (::: is placed after the command and before the argument)
+      \item \texttt{::::} -- read from argument files
+      \item \texttt{-j} -- number of jobs -- if not provide, \texttt{parallel} will use all available CPU threads
+    \end{itemize}
   \end{itemize}
-\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{GNU Parallel examples I}
@@ -1596,27 +1672,6 @@ Alias is short cut -- instead of very long command write short alias
 
 \subsection{Other}
 
-\begin{frame}[fragile]{Removable media}
-  \begin{itemize}
-    \item Mounting and unmounting of devices require root privileges
-    \item In Linux, physical disks are named from \texttt{sda} to \texttt{sdz}, each disk has partitions (at least one) numbered from \texttt{1}, e.g. \texttt{sda1}, \texttt{sda2}, \texttt{sdb1},~\ldots{ }-- all are accessible in \texttt{/dev} directory (\texttt{/dev/sdc3},~\ldots)
-    \item Target mount point must exist before mounting
-  \end{itemize}
-  \begin{bashcode}
-    eject # Open CD/DVD drive
-    mount # Which FS (disk partitions) are mounted
-    findmnt # See mounted devices in tree-like structure
-    # mount usually recognize FS of mounted device, if not, us -t FS_type
-    mount /dev/sdXY /mount/directory # Mount disk sdXY to /mount/directory
-    umount /dev/sdXY # Unmount disk sdXY
-    umount /mount/directory # Unmount disk from /mount/directory
-    dmesg | grep sd | tail # Get information about recently plugged media
-    mkdir /mnt/iso # Directory must exist prior mounting into it
-    # Mount CD/DVD ISO image file into directory /mnt/iso
-    mount -t iso9660 -o loop file.iso /mnt/iso # See CD/DVD image content
-  \end{bashcode}
-\end{frame}
-
 \begin{frame}[fragile]{Other commands}
   \begin{bashcode}
     touch filename # Creates empty text file
@@ -1630,6 +1685,33 @@ Alias is short cut -- instead of very long command write short alias
     apropos keyword # Searches for command descriptions containing keyword
     dmesg # Recent entries in main system log - filter with grep, tail, ...
     lnav # Comfortably browse recent logs, quit by "q"
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Automated launching of tasks}
+  \begin{itemize}
+    \item \texttt{at} can run command at certain time (atd daemon must be running)
+  \end{itemize}
+  \begin{bashcode}
+    systemctl status/start/stop atd.service # Check/start/stop if atd runs
+    at HHMM # Run commands at certain time check "man at" for time settings
+    at> command1 # Add as many commands as you wish (separate by Enter)
+    # When done, press Ctrl+D to cancel giving commands to at
+    at HHMM <<< 'cat somescript.sh' # Run script at certain time
+  \end{bashcode}
+  \begin{itemize}
+    \item \texttt{cron} runs tasks repeatedly (cron daemon must be running)
+  \end{itemize}
+  \begin{bashcode}
+    systemctl status/start/stop cron.service # Check/start/stop if cron runs
+    crontab -l # List cron tasks
+    crontab -e # Edit cron tasks:
+    # Minute, Hour, Day in month, Month, Day in week, Command (absolute path)
+    # 0-59    0-23  1-31          1-12   0-6 starting with Sunday (WTF?)
+      *       *     *             *      *            /usr/bin/command
+      10      22    1             *      *        # 1st day in month, 23:11
+      0       */3   *             *      *        # Every 3 hours
+    # root can copy scripts into directories /etc/cron.*/
   \end{bashcode}
 \end{frame}
 
@@ -1947,6 +2029,31 @@ Grep supports regular expressions, slide \ref{regexp}.
 \end{frame}
 
 \section{Scripting}
+
+\begin{frame}[fragile]{Expressions}
+  \begin{bashcode}
+    # Many operands have special meaning in BASH - must be escaped
+    echo `expr 1 '<' 2` # Is 1 smaller than 2? TRUE
+    echo `expr 1 '>' 2` # Is 2 smaller than 1? FALSE
+    echo `expr 5 '%' 2` # What remains after aritmetic division
+    echo `expr 1 '&' 0` # If both arguments non-empty and not 0, then 1
+    x=`expr 1 '+' 6` # Result will be in $x
+    echo $x
+    x=1 # Set x to 1
+    y=$x+1 # Will this add 1? Why?
+    echo $y # See result
+    y=`expr $x + 1` # This will work - note ` and space around +
+    echo $y # Result
+    echo `expr length "MetaCentrum and Linux"` # Get length of chain
+    # String of 10 characters starting at position 12 of the text
+    echo `expr substr "MetaCentrum and Linux" 12 10`
+    # Does 1st chain contain 2nd chain? Get position of first hit
+    echo `expr index "GNU Linux" "Linux"` # If no overlap, return value is 0
+  \end{bashcode}
+  \begin{itemize}
+    \item \texttt{expr} works with various operands (see \texttt{man expr})
+  \end{itemize}
+\end{frame}
 
 \subsection{Basic skeleton}
 
