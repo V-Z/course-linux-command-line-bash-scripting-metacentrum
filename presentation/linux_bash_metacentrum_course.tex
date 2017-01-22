@@ -113,7 +113,7 @@
     \item Download the presentation from \url{https://soubory.trapa.cz//linuxcourse/linux_bash_metacentrum_course.pdf}
     \item Download the scripts and toy data from \url{https://soubory.trapa.cz//linuxcourse/scripts.zip}
     \begin{itemize}
-      \item \alert{Note:} Open the scripts in some \alert{good} \href{http://texteditors.org/cgi-bin/wiki.pl?PickingATextEditor}{text editor} -- showing syntax highlight, line numbers, etc. (\alert{NO} Windows notepad); the files are in UTF-8 encoding and with UNIX end of lines (so that too silly programs like Windows notepad won't be able to open them correctly)
+      \item \alert{Note:} Open the scripts in some \alert{good} text editor (slide~\ref{editors}) -- showing syntax highlight, line numbers, etc. (\alert{NO} Windows notepad); the files are in UTF-8 encoding and with UNIX end of lines (so that too silly programs like Windows notepad won't be able to open them correctly)
       \item \alert{Never ever} open any script file in software like MS~Word -- they destroy quotation marks and other things by ``typographical enhancements'' making the script unusable
     \end{itemize}
   \end{itemize}
@@ -403,7 +403,7 @@
   \end{bashcode}
 \end{frame}
 
-\subsection{Disks}
+\subsection{Disks and filesystems}
 
 \begin{frame}{Short overview of hard disk layout}
   \begin{itemize}
@@ -418,6 +418,7 @@
 \end{frame}
 
 \begin{frame}{Put together more disks}{Extend space and get higher data security}
+  \label{LVMRAID}
   \begin{itemize}
     \item \href{https://en.wikipedia.org/wiki/RAID}{RAID} -- Redundant Array of Inexpensive/Independent Disks
     \item RAID~0 -- stripping, no redundancy, no security, speed up (two or more disks joined into one, files divided among disks)
@@ -452,6 +453,54 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}[allowframebreaks]{Creation and control of FS}
+  \begin{itemize}
+    \item All commands require root privileges
+    \item \texttt{fdisk -l} lists disks and partitions
+    \item To manage disk partitioning use \texttt{fdisk /dev/sdX} (doesn't support GPT very well yet) or \texttt{gdisk /dev/sdX}
+    \item When hard drive is partitioned, partitions must be formatted
+    \item Commands \texttt{mkfs.*} create various FS, common syntax is \texttt{mkfs.XXX -parameters /dev/sdXY}, where sdXY is particular disk partition
+    \item Parameters can set label and various settings of behavior of the disk partition, check \texttt{man mkfs.XXX}
+    \item To check FS for errors use \texttt{fsck.XXX /dev/sdXY} (according to respective FS)
+    \begin{itemize}
+      \item The filesystem must be unmounted when checking it
+      \item XFS uses \texttt{xfs\_repair /dev/sdXY}
+      \item Btrfs uses \texttt{btrfs check /dev/sdXY}, if it is unmountable, \texttt{btrfs-zero-log /dev/XY} use to help, last instance is \texttt{btrfs check --repair /dev/sdXY} (dangerous operation)
+      \item If Btrfs is mountable, but there are various FS errors and/or performance issues, \texttt{btrfs scrub start -Bdf /mount/point}, \texttt{btrfs filesystem defragment -r -v /mount/point} and \texttt{btrfs balance start -v /mount/point} -- manual running can take long time and strongly slow down the computer
+    \end{itemize}
+    \item \texttt{tune2fs -parameters /dev/sdXY} can set various parameters to influence behavior of disk partition
+    \item \texttt{hdparm -parameters /dev/sdX} can set advanced hardware parameters of hard drive
+    \item The most convenient is using graphical tools available in all distributions\ldots
+    \begin{itemize}
+      \item In \href{https://doc.opensuse.org/documentation/leap/reference/html/book.opensuse.reference/cha.advdisk.html}{openSUSE there is YaST} administrative module -- from command line launch \texttt{yast --qt disk} for graphical or \texttt{yast disk} for text-based version
+      \item All distributions have graphical tools like \href{http://gparted.org/}{GParted} where it is possible to comfortable manage disks
+    \end{itemize}
+    \item \texttt{df -h} shows available/occupied space on disks/partitions, but because of special features of Btrfs it doesn't show every time correct values for this FS -- it is better to use \texttt{btrfs filesystem df /mount/point} (\texttt{/mount/point} use to be the most commonly \texttt{/})
+    \item On UNIX FS, defragmentation and another maintenance tasks use to be done in background when computer is idling -- unless there is at least $\sim$20\% of free space on the device, this is not any problem and there are no performance issues
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Another manipulations and information}
+  \begin{itemize}
+    \item \texttt{dd} is powerful, but potentially dangerous tool used to backup or write disks or partitions (commonly to create bootable USB media)
+    \item If writing disk image to the disk (\texttt{sdX}), disk's partition table is discarded and the disk is covered by whatever is the ISO image
+  \end{itemize}
+  \begin{bashcode}
+    dmesg # Recent entries in main system log - filter with grep, tail, ...
+    dmesg | grep sd | tail # Get information about recently plugged media
+    # dd produces physical copy of whole device - including empty space
+    dd if=/dev/sdXY of=image.iso # Backups disk sdXY to imago.iso
+    dd if=image.iso of=/dev/sdX # Used to write e.g. image of Linux live
+                                # media to USB flash disk (Check sdXY!)
+    lnav # Comfortably browse recent logs, quit by "q"
+  \end{bashcode}
+  \begin{itemize}
+    \item If there are encrypted partitions, they can be accessed \texttt{/dev/mapper/\ldots}
+    \item If LVM (slide~\ref{LVMRAID}) is used, see \texttt{lvscan} and \texttt{pvscan} to find correct location in \texttt{/dev/}
+    \item Disks are also accessible through \texttt{/dev/disk/by-*}
+  \end{itemize}
+\end{frame}
+
 \begin{frame}[fragile]{Mounting and unmounting disks and removable media}
   \begin{itemize}
     \item Mounting and unmounting of devices require root privileges
@@ -467,7 +516,6 @@
     mount /dev/sdXY /mount/directory # Mount disk sdXY to /mount/directory
     umount /dev/sdXY # Unmount disk sdXY
     umount /mount/directory # Unmount disk from /mount/directory
-    dmesg | grep sd | tail # Get information about recently plugged media
     # Mount CD/DVD ISO image file into directory /mnt/iso
     mount -t iso9660 -o loop file.iso /mnt/iso # See CD/DVD image content
   \end{bashcode}
@@ -676,7 +724,8 @@
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile, label=acl]{Extending permissions -- ACL}{Access control list}
+\begin{frame}[fragile]{Extending permissions -- ACL}{Access control list}
+  \label{acl}
   \begin{itemize}
     \item By default, it is not possible to give specific permission to the user who is not owner, nor member of group owning the file
     \item In ext4 FS it has to be turned on manually (usually it is by default), it is part of XFS and Btrfs
@@ -750,7 +799,8 @@
   \end{flushright}
 \end{frame}
 
-\begin{frame}[label=editors]{Importance of good text editor}{Can your text editor\ldots ?}
+\begin{frame}{Importance of good text editor}{Can your text editor\ldots ?}
+  \label{editors}
   \begin{multicols}{2}
     \begin{itemize}
       \item Show syntax highlight
@@ -1043,7 +1093,7 @@
 
 \begin{frame}{BASH and others}
   \begin{itemize}
-    \item Shell (sh) -- feature rich scripting programming language -- general specification, several variants
+    \item Shell (\textbf{sh}) -- feature rich scripting programming language -- general specification, several variants
     \item So called POSIX shell -- Portable Operating System Interface -- transferable among hardware platforms (and UNIX variants)
     \item \textbf{Interpreter of our commands inserted into command line}
     \item \textbf{BASH} -- Bourne again shell
@@ -1134,7 +1184,7 @@
 \begin{frame}{BASH globbing and wildcards}
   \label{globbing}
   \begin{itemize}
-    \item BASH itself doesn't recognize regular expressions -- it's wildcards have some of functions of regular expressions and can look similarly, but behave differently! Do not confuse!
+    \item BASH itself doesn't recognize regular expressions -- it's wildcards have some of functions of regular expressions (from slide~\ref{regexp}) and can look similarly, but behave differently! Do not confuse!
     \item \texttt{?} -- Replaces any single character
     \item \texttt{*} -- Replaces any number of any characters (\texttt{ls a*} lists all files starting with ``a'')
     \item \texttt{[]} -- Range or a list -- \texttt{[abcdef]} and \texttt{[a-f]} are same
@@ -1179,7 +1229,7 @@
   \begin{itemize}
     \item \texttt{/dev/null} -- ``black hole''
     \begin{itemize}
-      \item Can discards anything
+      \item Can discard anything
       \item Discard only errors (note``2''): \texttt{command 2\textgreater~/dev/null}
     \end{itemize}
     \item \texttt{/dev/stdin} -- standard input
@@ -1408,6 +1458,7 @@
 
 \begin{frame}[fragile]{Looking for files and applications}
   \begin{bashcode}
+    apropos keyword # Searches for command descriptions containing keyword
     updatedb # Must be regularly launched to get "locate" to work
              # It is usually regularly launched by cron task (see further)
     locate somename # Searches for files/directories in local database
@@ -1425,7 +1476,7 @@
     exit 1 # Use to be added (with various numbers) after any error to
            # send term signal 1 - for better handling of various errors.
            # Every termination has exit status number - 0 is normal exit.
-           # Exit status 1 is general error.
+           # Exit status 1 and higher number is various error.
   \end{bashcode}
 \end{frame}
 
@@ -1514,14 +1565,13 @@
     netstat -anp # Show active connections
     netstat -h # See for explanation of 3 above examples
     # If using nmap at faculty, firewall disconnects you for 10 minutes!
-    nmap -r someserver # Scan someserver for opened ports
+    nmap -r someserver.cz # Scan someserver.cz for opened ports
     nmap botany.natur.cuni.cz --script ssh-hostkey # See SSH key
   \end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Connecting file systems on remote servers}
   \begin{itemize}
-    \item Mounting and unmounting of remote servers require root privileges
     \item Target mount point must exist before mounting
     \item Servers can be accessed by IP address or hostname
   \end{itemize}
@@ -1554,14 +1604,15 @@
     # curl is predecessor of wget, without parameter "-o" it prints remote
     # content to standard output (typically screen)
     curl http://some.server.cz/some/files -o localfilename
-    # Copy files (-r for recursive) over SSH from local computer to
-    # remote server or vice versa (just flip arguments)
+    # Copy files (-r for recursive) over SSH from local computer
+    # to remote server or vice versa (just flip arguments)
     scp -r localfiles remoteuser@remote.server.cz:/remote/path/
     scp -r remoteuser@remote.server.cz:/remote/files /local/directory/
     # scp behaves like cp, but works over SSH
   \end{bashcode}
   \begin{itemize}
     \item \texttt{rsync} is synchronization tool (commonly used for backups) able to connect to remote server (next slide)
+    \item On server side, same files can be accessible (shared) by more methods
   \end{itemize}
 \end{frame}
 
@@ -1606,6 +1657,20 @@
   \end{bashcode}
 \end{frame}
 
+\begin{frame}{Faculty web server}
+  \begin{itemize}
+    \item Login requires same credentials as to \href{https://cas.cuni.cz/}{CAS} (login name, no ISIC number)
+    \item Faculty information are \href{https://www.natur.cuni.cz/fakulta/cit/web-aplikace/webhosting}{only in Czech}
+    \item It is Linux server running Debian
+    \item Connect with SSH/SFTP/SCP to \texttt{web.natur.cuni.cz}
+    \item Mainly used for webhosting, user's address will have form \texttt{https://web.natur.cuni.cz/$\sim$loginname/}, user can \href{https://helpdesk.natur.cuni.cz/servlet/HelpdeskDynamic?eid=Rozcestnik}{apply} for another URL
+    \item Every department also has dedicated space there, it can be used for various web projects, address can be discussed with \href{https://www.natur.cuni.cz/fakulta/cit/lide}{IT department}
+    \item Personal web can be placed in \texttt{public\_html} within home folder
+    \item Users can \href{https://helpdesk.natur.cuni.cz/servlet/HelpdeskDynamic?eid=Rozcestnik}{apply} for MySQL database or special settings
+    \item \href{https://www.natur.cuni.cz/biology/botany/working-information/servers-webs-computers/}{Department of Botany} (and some other departments) have their own web and file servers
+  \end{itemize}
+\end{frame}
+
 \subsection{Parallelisation}
 
 \begin{frame}{Parallelisation with GNU Parallel}
@@ -1621,7 +1686,7 @@
       \item \texttt{\{/.\}} -- base name of input line without extension
       \item \texttt{:::} -- use arguments from command line instead of stdin (::: is placed after the command and before the argument)
       \item \texttt{::::} -- read from argument files
-      \item \texttt{-j} -- number of jobs -- if not provide, \texttt{parallel} will use all available CPU threads
+      \item \texttt{-j} -- number of jobs -- if not provided, \texttt{parallel} will use all available CPU threads
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -1631,9 +1696,9 @@
     # Convert all images from JPG to PNG
     ls -1 *.jpg | parallel --bar convert '{}' '{.}.png'
     # Resize all images ("\" marks that command continue on next line)
-    find . -name '*.jpg' -print | parallel convert -resize 1000x1000 \
+    find . -name '*.jpg' -print | parallel convert -resize 500x500 \
       -quality 75 '{}' '{.}-small.jpg' # or
-    parallel convert -resize 1000x1000 '{}' '{.}-small.jpg' ::: *.jpg
+    parallel convert -resize 25% '{}' '{.}-small.jpg' ::: *.jpg
     # Find WORD in huge text file (named "longfile" here) - this works
     # but it is not possible to get line number (file is red in blocks)
     parallel --pipe --block 10M -- grep --color=always WORD < longfile
@@ -1644,6 +1709,8 @@
     # "--" stops reading parameters for parallel
     nl longfile | parallel -qk --pipe --block 20M -- grep "WORD TEXT" # or
     nl longfile | parallel -k --pipe --block 20M -- grep '"WORD TEXT"'
+    # Convert all WAV files into OGG
+    parallel -X oggenc ::: *.wav # -X parse as many parameters as possible
   \end{bashcode}
 \end{frame}
 
@@ -1658,64 +1725,75 @@
     ls -1 *.txt | parallel 'sed -i "s/XXX/YYY/g" {}'
     # Launch MrBayes for multiple nexus files and create log file with
     # starting and ending date and time
-    ls -1 *.nexus | parallel 'echo Start > {}.log && date >> {}.log && \
-      mrbayes {} | tee -a {}.log && echo End: >> {}.log && date >> {}.log'
+    ls -1 *.nexus | parallel 'echo -e "Start: `date`\n" > {}.log && mb {} |
+      tee -a {}.log && echo "End: `date`" >> {}.log'
     # tee (-a for append to existing file) records output of MrBayes
     command | tee record.txt # tee will record whole output of command
     tee record.txt | command # tee will record user input
     # If software reads commands from user, we can reuse record next time:
     command < record.txt # Empty lines are interpreted as Enter key
                          # Each line is used whenever command waits for new
-                         # input (instead of user typing, record.txt is used)
+                         # input (instead of typing, record.txt is used)
   \end{bashcode}
 \end{frame}
 
-\subsection{Other}
+\subsection{Timing}
 
-\begin{frame}[fragile]{Other commands}
+\begin{frame}[fragile]{Launching of tasks at certain time}
+  \begin{itemize}
+    \item \texttt{at} can run command at certain time (atd daemon must be running)
+    \item Tasks are running in background, outputs are mailed (e.g. to \texttt{/var/spool/mail/\$USER})
+  \end{itemize}
   \begin{bashcode}
-    touch filename # Creates empty text file
-    echo # Write empty line of text
-    echo $USER # Write value of variable $USER
-    echo "Some text" # Write text in quotes
-    # dd produces physical copy of whole device - including empty space
-    dd if=/dev/sdXY of=image.iso # Backups disk sdXY to imago.iso
-    dd if=image.iso of=/dev/sdXY # Used to write image of Linux live
-                                 # media to USB flash disk
-    apropos keyword # Searches for command descriptions containing keyword
-    dmesg # Recent entries in main system log - filter with grep, tail, ...
-    lnav # Comfortably browse recent logs, quit by "q"
+    # Check status of atd daemon (it must run), start/stop/enable/disable it
+    systemctl status/start/stop/enable/disable atd.service
+    man at # Check for various possibilities of time settings
+    at HH:MM # Run commands at certain time (hour:minutes)
+    at> command1 # Add as many commands as you wish (separate by Enter)
+    at> # When done, press Ctrl+D to cancel giving commands to at
+    # Instead of manual typing of tasks, run script at certain time
+    at HH:MM -f somescript.sh # Run somescript.sh at certain time
+    at -l # List of scheduled tasks (alias is atq)
+    at -r <number> # Cancel scheduled task (according to number from at -l)
+    atrm # Alias for previous command
+    batch # Commands will be executed when system loads drops below 0.8 or
+          # other value specified in configuration or startup of atd
   \end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Automated launching of tasks}
   \begin{itemize}
-    \item \texttt{at} can run command at certain time (atd daemon must be running)
-  \end{itemize}
-  \begin{bashcode}
-    systemctl status/start/stop atd.service # Check/start/stop if atd runs
-    at HHMM # Run commands at certain time check "man at" for time settings
-    at> command1 # Add as many commands as you wish (separate by Enter)
-    # When done, press Ctrl+D to cancel giving commands to at
-    at HHMM <<< 'cat somescript.sh' # Run script at certain time
-  \end{bashcode}
-  \begin{itemize}
     \item \texttt{cron} runs tasks repeatedly (cron daemon must be running)
+    \item Scripts for tasks running hourly/daily/weekly/monthly can be copied into respective \texttt{/etc/cron.*/} directories
   \end{itemize}
   \begin{bashcode}
-    systemctl status/start/stop cron.service # Check/start/stop if cron runs
-    crontab -l # List cron tasks
-    crontab -e # Edit cron tasks:
+    # Check status of cron daemon (it must run), start/stop/enable/disable
+    systemctl status/start/stop/enable/disable cron.service
+    crontab -l # List user's cron tasks
+    crontab -e # Edit user's cron tasks:
     # Minute, Hour, Day in month, Month, Day in week, Command (absolute path)
     # 0-59    0-23  1-31          1-12   0-6 starting with Sunday (WTF?)
       *       *     *             *      *            /usr/bin/command
       10      22    1             *      *        # 1st day in month, 23:11
       0       */3   *             *      *        # Every 3 hours
-    # root can copy scripts into directories /etc/cron.*/
+      0       11    *             *      6        # Every Sunday, 12:00
+      30      3     */2           *      *        # Every even day, 4:31
+      */15    *     *             *      0,4   # At Sun and Fri every 15 min
+    # Columns are separated by any number of spaces
   \end{bashcode}
 \end{frame}
 
 \section{Text}
+
+\begin{frame}{Everything is (text) file}
+  \begin{itemize}
+    \item As UNIX configuration and outputs (logs,~\ldots) are mostly saved as relatively simple text files, manipulations of any type with text files is one of the most common tasks
+    \item One of the most powerful features of BASH
+    \item Some operations are complicated (e.g. complex manipulations with columns, various calculations) it is necessary to use AWK or Perl (probably the most advanced language working with text)
+    \item Text-manipulating tools have very rich implementation of regular expressions (slide~\ref{regexp})
+    \item Most of the operations are done in stream -- per line -- everything is very fast
+  \end{itemize}
+\end{frame}
 
 \subsection{Reading}
 
@@ -1724,7 +1802,7 @@
     cat # Read or join files (-n adds line numbers, -v prints non-printable
         # characters like EOL)
     cat textfile # Print content of text file
-    cat textfile1 >> textfile2 # Add textfile1 to the end of textfile2
+    cat textfile1 >> textfile2 # Append textfile1 to the end of textfile2
     nl textfile # Like cat -n, prints textfile with line numbers
     tac textfile # Like cat, but prints lines in reverse order
     more textfile # When textfile is long, prints screen by screen (space
@@ -1732,7 +1810,7 @@
     less textfile # Better version of more - you can scroll up and down by
                   # PgUp, PgDown, arrows, searching by / (type searched
                   # string, hit Enter, n for next, twice ESC to quit),
-                  # q to quit viewing
+                  # q to quit viewing (also used by man)
     most textfile # Better version of less
     fmt textfile # Basic formatting of text - joining of commented lines,
                  # line breaks to break too long lines, ...
@@ -1744,7 +1822,7 @@
 
 \subsection{Extractions}
 
-\begin{frame}[fragile]{Get part of text file}
+\begin{frame}[fragile]{Get part of text file (by lines)}
   \begin{bashcode}
     head -n N textfile # Print first N lines from textfile
     tail -n N textfile # Print last N lines from textfile
@@ -1764,10 +1842,16 @@
     grep -ls user /etc/* # -l print files with pattern, -s suppresse errors
     grep "longer text" textfile # Extract whole phrase
   \end{bashcode}
-Grep supports regular expressions, slide \ref{regexp}.
+  \begin{itemize}
+    \item Grep supports regular expressions, slide \ref{regexp}
+  \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Get a column -- cut, awk}
+\begin{frame}[fragile]{Work with columns}
+  \begin{itemize}
+    \item \texttt{cut} extracts columns, \texttt{paste} joins, \texttt{column} reformates
+    \item BASH can not select column according to its name (Perl can do that)
+  \end{itemize}
   \begin{bashcode}
     cut column/delimiter+field textfile
     cut -c 1 /etc/group # Get first character
@@ -1776,7 +1860,29 @@ Grep supports regular expressions, slide \ref{regexp}.
     cut -c 2,5,7 /etc/group # Get characters 2, 5 and 7
     cut -d ':' -f 1 /etc/group # Select 1st field separated by ":"
     cut -d ':' -f 2-4 /etc/group # Select fields 2-4 separated by ":"
-    cut -d ':' -f 1,3 /etc/group # Select fields 1 and 3 separated by ":"
+    cut -f 1,2 cut_awk_test_file.tsv # get columns 1 and 2 separated by TABs
+    # Add second file as second column
+    paste file1 file2 > outputfile
+    # Output will be two columns (from file1 and file2) separated by TAB
+    paste -d "|" diff_test_file_1.txt diff_test_file_2.txt # -d for delimiter
+    # Swapping columns is not very comfortable...
+    paste <(cut -f2 cut_awk_test_file.tsv) <(cut -f1 cut_awk_test_file.tsv)
+    ls -l | column -t # Reformate input as table (compare with ls -l)
+  \end{bashcode}
+  \vfill
+\end{frame}
+
+\subsection{AWK}
+
+\begin{frame}[fragile]{Get a column with awk}
+  \begin{itemize}
+    \item AWK is scripting language mainly for text manipulations
+    \item AWK can not select column according to its name (Perl can do that)
+    \item AWK can do things other BASH tools can not do (easily) -- better manipulation with columns, calculations,~\ldots
+    \item AWK has complicated syntax, it is hard to read, it is not similar to other tools -- Perl can do more and is more common\ldots
+    \item Only basic examples here\ldots
+  \end{itemize}
+  \begin{bashcode}
     awk 'regexp { commands parameters }' file
     awk '{print $NF}' textfile # Select last column (separated by tab)
     awk '{print $2}' textfile # Select 2nd column (separated by tab)
@@ -1786,32 +1892,29 @@ Grep supports regular expressions, slide \ref{regexp}.
     ls -l | awk '/^d/ { print $8 "\t" $3 }' # Separate columns by TAB
                # /^d/ for lines starting with "d" (only directories)
   \end{bashcode}
-  \begin{itemize}
-    \item For regular expressions, see slide \ref{regexp}
-    \item BASH can not select column according to its name (Perl can do that)
-  \end{itemize}
+  \vfill
 \end{frame}
 
 \begin{frame}[fragile]{More about AWK}
-  \begin{itemize}
-    \item AWK is scripting language for text manipulations
-    \item Only basic examples here\ldots
-  \end{itemize}
   \begin{bashcode}
-    # Print on each line ">", field 1, make new line (\n) and print field 2
-    awk '{print ">"$1"\n"$2}' textfile
+    # Print on even lines ">", former column 1, new line, former column 2
+    awk '{print ">"$1"\n"$2}' awk_test_file.tab # 2 columns into 2 lines
     # Print field 1, TAB (\t), length of field 2, TAB and field 2
     awk '{print $1"\t"length($2)"\t"$2}' textfile
-    # If field 1=0, print whole line
+    # If field 1=1, print whole line
     awk '{if($1==1){print $0}}' textfile
     # Field 1 is numeric (less then 5 digits) - add leading zeroes
     awk '{printf "%05d\n", $1;}' textfile
     # As above, but add leading zeroes to field 1 and print whole line
     awk '{$1=sprintf("%05d", $1); print $0}' textfile
-    # Field 1 is numeric, select lines where field 1 is higher than 100
-    awk '$1>100' textfile
-    # Print field 4 (fields are separated by "_" or TAB)
-    awk -F '[_\t]' '{print $4}'
+    # Field 6 is numeric, select lines where field 6 is higher than 100
+    awk -F '\t' '$6>100' cut_awk_test_file.tsv # Separated by TABs (\t)
+    # Print fields 4 and 5 (fields are separated by "_" or TAB)
+    awk -F '[_\t]' '{print $4, $5}' awk_test_file.tab
+    # Precede each line by its line number for all files together, with TAB
+    awk '{print NR "\t" $0}' diff_test_file_*
+    # substitute "foo" with "bar" ONLY for lines which contain "baz"
+    awk '/baz/{gsub(/foo/, "bar")}; 1'
   \end{bashcode}
 \end{frame}
 
@@ -1827,7 +1930,7 @@ Grep supports regular expressions, slide \ref{regexp}.
     sort -m textfile1 textfile2 # Merge already sorted text files
     sort -u textfile # Print only first of multiple entries
     sort -b textfile # Ignore leading blanks (space on beginning of line)
-    # Sorting is influenced by locale setting (e.g. Czech ``ch'')
+    # Sorting is influenced by locale setting (e.g. Czech "ch")
     # To force use of English locale use
     LC_ALL=C sort ... # Set for this command language variable to English
     uniq textfile # Filters following identical lines - only unique
@@ -1857,9 +1960,9 @@ Grep supports regular expressions, slide \ref{regexp}.
     tr "[A-Z]" "[a-z]" < inputtextfile > outputtextfile
     # Alternative (easier reading) of previous command:
     cat inputtextfile | tr "[A-Z]" "[a-z]" > outputtextfile
-    # Alternative solution using sed (next slide)
-    sed 's/[A-Z]/\L&/g' inputtextfile > outputtextfile # Vice versa:
-    sed 's/[a-z]/\U&/g' inputtextfile > outputtextfile
+    # Replace all new lines (line breaks) by TABs
+    cat inputtextfile | tr "\n" "\t"  > outputtextfile
+    tr --help # See another possibilities for pattern to find/replace
   \end{bashcode}
 \end{frame}
 
@@ -1888,6 +1991,9 @@ Grep supports regular expressions, slide \ref{regexp}.
 
 \begin{frame}[fragile]{Replacements -- sed II}
   \begin{bashcode}
+    # Alternative solution using sed (next slide)
+    sed 's/[A-Z]/\L&/g' inputtextfile > outputtextfile # Vice versa:
+    sed 's/[a-z]/\U&/g' inputtextfile > outputtextfile
     # Groups to remember work in same way in sed, grep as well as vim
     \(ToRemember\) # Remember expression in brackets
     \Number # Use remembered expression (numbered from one)
@@ -1929,10 +2035,6 @@ Grep supports regular expressions, slide \ref{regexp}.
     join textfile1 textfile2
     # Add file to the end of another text file
     cat file1 >> file2 # file2 will contain both files, file1 is unchanged
-    # Add second file as second column
-    paste file1 file2 > outputfile
-    # Output will contain two columns (consisting of file1 and file2)
-    # separated by TAB
   \end{bashcode}
 \end{frame}
 
@@ -2437,7 +2539,7 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
   \end{bashcode}
 \end{frame}
 
-% \begin{frame}{Launching of Windows and DOS applications in Linux} % TODO
+% \begin{frame}{Launching of Windows and DOS applications in Linux} % TODO Wine
 %   \begin{itemize}
 %     \item 
 %   \end{itemize}
@@ -2678,28 +2780,7 @@ Ends on following slide\ldots
 
 \section{Administration}
 
-\subsection{File systems}
-
-\begin{frame}[allowframebreaks]{Creation and control of FS}
-\begin{itemize}
-  \item \texttt{fdisk -l} lists disks and partitions
-  \item To manage disk partitioning use \texttt{fdisk /dev/sdX} (doesn't support GPT very well yet) or \texttt{gdisk /dev/sdX}
-  \item When hard drive is partitioned, partitions must be formatted
-  \item Commands \texttt{mkfs.*} create various FS, common syntax is \texttt{mkfs.XXX -parameters /dev/sdXY}, where sdXY is particular disk partition
-  \item Parameters can set label and various settings of behavior of the disk partition, check \texttt{man mkfs.XXX}
-  \item To check FS for errors use \texttt{fsck.XXX /dev/sdXY} (according to respective FS)
-  \item \texttt{tune2fs -parameters /dev/sdXY} can set various parameters to influence behavior of disk partition
-  \item \texttt{hdparm -parameters /dev/sdX} can set advanced hardware parameters of hard drive
-  \item The most convenient is using graphical tools available in all distributions\ldots
-  \begin{itemize}
-    \item in openSUSE there is YaST administrative module -- from command line launch \texttt{yast --qt disk} for graphical or \texttt{yast disk} for text-based version
-    \item All distributions have graphical tools like \href{http://gparted.org/}{GParted} where it is possible to comfortable manage disks
-  \end{itemize}
-  \item \texttt{df -h} shows available/occupied space on disks/partitions, but because of special features of Btrfs it doesn't show every time correct values for this FS -- it is better to use \texttt{btrfs fi df /mount/point} (\texttt{/mount/point} use to be the most commonly \texttt{/})
-\end{itemize}
-\end{frame}
-
-% \begin{frame}{Btrfs and Snapper} % TODO
+% \begin{frame}{Btrfs and Snapper} % TODO Btrfs, Snapper
 %   \begin{itemize}
 %     \item 
 %   \end{itemize}
@@ -2747,7 +2828,7 @@ Ends on following slide\ldots
   \end{bashcode}
 \end{frame}
 
-% \section{Git} % TODO
+% \section{Git} % TODO Git
 
 % \begin{frame}[fragile]{Git and GitHub}
 %   \begin{bashcode}
@@ -2757,7 +2838,7 @@ Ends on following slide\ldots
 
 \section{The end}
 
-% \subsection{Switching to Linux} % TODO
+% \subsection{Switching to Linux} % TODO Switching
 
 % \begin{frame}{Brief list of applications to help to switch to Linux}
 % \begin{itemize}
@@ -2765,7 +2846,7 @@ Ends on following slide\ldots
 % \end{itemize}
 % \end{frame}
 
-% \subsection{Resources} % TODO
+% \subsection{Resources} % TODO Resources
 
 % \begin{frame}{}
 % \begin{itemize}
@@ -2796,7 +2877,6 @@ Ends on following slide\ldots
 \end{document}
 
 % TODO Missing topics
-% * How to break system :-)
 % * Security, antiviruses
 % * More examples about software on MetaCentrum, scripts (on MetaCentrum)
 % * More about regular expressions
