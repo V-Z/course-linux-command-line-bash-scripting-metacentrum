@@ -1788,6 +1788,9 @@
 \begin{frame}{Everything is (text) file}
   \begin{itemize}
     \item As UNIX configuration and outputs (logs,~\ldots) are mostly saved as relatively simple text files, manipulations of any type with text files is one of the most common tasks
+    \begin{itemize}
+      \item Similar situation is for molecular data -- input/output data use to be text files with simple structure
+    \end{itemize}
     \item One of the most powerful features of BASH
     \item Some operations are complicated (e.g. complex manipulations with columns, various calculations) it is necessary to use AWK or Perl (probably the most advanced language working with text)
     \item Text-manipulating tools have very rich implementation of regular expressions (slide~\ref{regexp})
@@ -1836,7 +1839,7 @@
     grep user /etc/passwd # Write all lines in passwd containing user
     cat /etc/passwd | grep user # Same as above
     grep -v user /etc/passwd # Write all lines in passwd NOT containing user
-    grep -c user /etc/passwd # get number of lines in passwd containing user
+    grep -c user /etc/passwd # Get number of lines in passwd containing user
     grep -i USER /etc/passwd # -i isn't case sensitive
     grep -q ... # quiet - no output - good for testing in scripts
     grep -ls user /etc/* # -l print files with pattern, -s suppresse errors
@@ -1848,6 +1851,7 @@
 \end{frame}
 
 \begin{frame}[fragile]{Work with columns}
+  \label{cutpaste}
   \begin{itemize}
     \item \texttt{cut} extracts columns, \texttt{paste} joins, \texttt{column} reformates
     \item BASH can not select column according to its name (Perl can do that)
@@ -1877,10 +1881,10 @@
 \begin{frame}[fragile]{Get a column with awk}
   \begin{itemize}
     \item AWK is scripting language mainly for text manipulations
-    \item AWK can not select column according to its name (Perl can do that)
-    \item AWK can do things other BASH tools can not do (easily) -- better manipulation with columns, calculations,~\ldots
-    \item AWK has complicated syntax, it is hard to read, it is not similar to other tools -- Perl can do more and is more common\ldots
-    \item Only basic examples here\ldots
+    \item Can not select column according to its name (Perl can do that)
+    \item Can do things other BASH tools can not do (easily) -- better manipulation with columns, calculations,~\ldots
+    \item Has complicated syntax, it is hard to read, it is not similar to other tools -- Perl can do more and is more common (learn it instead)\ldots
+    \item Supports regular expressions, slide \ref{regexp}
   \end{itemize}
   \begin{bashcode}
     awk 'regexp { commands parameters }' file
@@ -1895,7 +1899,7 @@
   \vfill
 \end{frame}
 
-\begin{frame}[fragile]{More about AWK}
+\begin{frame}[fragile]{More AWK examples}
   \begin{bashcode}
     # Print on even lines ">", former column 1, new line, former column 2
     awk '{print ">"$1"\n"$2}' awk_test_file.tab # 2 columns into 2 lines
@@ -1931,8 +1935,8 @@
     sort -u textfile # Print only first of multiple entries
     sort -b textfile # Ignore leading blanks (space on beginning of line)
     # Sorting is influenced by locale setting (e.g. Czech "ch")
-    # To force use of English locale use
-    LC_ALL=C sort ... # Set for this command language variable to English
+    LC_ALL=C sort ... # To force use of English locale use
+    sort -k 2 -n textfile # Sort according to 2nd field (numerically)
     uniq textfile # Filters following identical lines - only unique
                   # are printed (to get unique lines from whole file,
                   # sort it first)
@@ -1946,7 +1950,7 @@
 
 \begin{frame}[fragile]{Replacements -- tr}
   \begin{itemize}
-    \item \texttt{tr} replaces or deletes characters from standard input and writes result to standard output -- use pipes and/or redirects:
+    \item \texttt{tr} replaces or deletes characters from standard input and writes result to standard output -- use pipes and/or redirects
   \end{itemize}
   \begin{bashcode}
     # Replace space by TAB in inputtextfile, save result as outputtextfile
@@ -1955,57 +1959,108 @@
     cat inputtextfile | tr -d "text"
     # Replace every occurrence of A, B, C or D by a new line (\n)
     cat inputtextfile | tr "[ABCD]" "\n" > outputtextfile
-    tr --help # See possible replacement patterns
     # Replace capital letters by small ones
     tr "[A-Z]" "[a-z]" < inputtextfile > outputtextfile
     # Alternative (easier reading) of previous command:
-    cat inputtextfile | tr "[A-Z]" "[a-z]" > outputtextfile
+    cat inputtextfile | tr "[:upper:]" "[:lower:]" > outputtextfile
     # Replace all new lines (line breaks) by TABs
     cat inputtextfile | tr "\n" "\t"  > outputtextfile
+    # Discard all new lines - output will be one line
+    tr -d "\n" < textfile > /dev/stdout # stdout is typically screen
     tr --help # See another possibilities for pattern to find/replace
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Replacements -- sed I}
+\begin{frame}[fragile]{Replacements with sed}
+  \begin{itemize}
+    \item \texttt{sed} supports regular expressions, see slide \ref{regexp} (same as in \texttt{grep} and \texttt{vim}), with parameter \texttt{-r} can use extended regular expressions (do not confuse -- the syntax is slightly different, richer)
+    \item Output is written to standard output -- use pipes, redirects or \texttt{-i} to modify the file in place (without printing of output)
+    \item Mac OS~X has old outdated versions of \texttt{grep}, \texttt{sed} and other tools (richness of regular expressions is poor) -- use versions from \href{http://brew.sh/}{Homebrew} or search documentation how to modify the patterns\ldots
+    \item Option \texttt{-s} separates multiple files (otherwise lines in multiple files are calculated as one stream)
+    \item Option \texttt{-n} use to be used when deleting lines or printing only specific lines to suppress other lines (see examples)
+    \item Various parameters, modificators, operators can be combined\ldots
+  \end{itemize}
   \begin{bashcode}
-    sed 's/FindToReplace/Replace/modificator' textfile > newtextfile
+    sed 'operator/FindToReplace/Replace/modificator' textfile > newtextfile
+  \end{bashcode}
+  \vfill
+\end{frame}
+
+\begin{frame}[fragile]{Sed examples I}
+  \label{sedex}
+  \begin{bashcode}
     # Search and replace ("s") all occurrences ("g") of "find" by "replace"
     sed 's/find/replace/g' textfile
     # Replace third occurrence of pattern on every line
-    sed 's/pattern/ToReplace/3'
-    # To work only on particular line, place number or range (e.g. 1,7)
-    # right before "s" (sed '1,7s/...')
+    sed 's/pattern/Replace/3' # 's/.../.../' replace only first occurrence
+    sed '1,7s/...' # To work only on particular line, place single number or
+    sed '5s/...'   # range (e.g. 1,7) right before "s" ("$" for last line)
     sed '1~2n;s/F/R/g' # Work on every second line, starting by line 1
-    sed -n -e '2~10p' # Print every 10th line, starting with line 2
-    seq 1 100 | sed -n -e '2~10p' # Example of above pattern
+    sed -n '2~10p' # Print every 10th line, starting with line 2
+    seq 1 100 | sed -n '2~10p' # Example of above pattern (see seq 1 100)
     # Replace first TAB (\t) on each line by new line (\n)
     sed 's/\t/\n/' textfile
     sed 's/find/replace/g' somedirectory/* # Work on all files in directory
-    sed -i ... # Modify processed file - otherwise output is printed on
-               # standard output (screen - can be piped into text file, ...)
-  \end{bashcode}
-  \begin{itemize}
-    \item \texttt{sed} supports regular expressions, see slide \ref{regexp} (same as in \texttt{grep} and \texttt{vim}), with parameter \texttt{-e} can use extended regular expressions (Do not confuse!)
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Replacements -- sed II}
-  \begin{bashcode}
-    # Alternative solution using sed (next slide)
-    sed 's/[A-Z]/\L&/g' inputtextfile > outputtextfile # Vice versa:
+    # Convert all capital letters into lower
+    sed 's/[A-Z]/\L&/g' inputtextfile > outputtextfile # And vice versa:
     sed 's/[a-z]/\U&/g' inputtextfile > outputtextfile
     # Groups to remember work in same way in sed, grep as well as vim
-    \(ToRemember\) # Remember expression in brackets
-    \Number # Use remembered expression (numbered from one)
-    # Take output of ls -l and replace # "users" by "users-RULEZZZ"
-    ls -l | sed 's/\(users\)/\1-RULEZZZ/g'
-    # Add "size:TAB" before file size column (we suppose it has 3-8 digits)
-    ls -l | sed 's/\([0-9]\{3,8\}\)/size:\t\1/g'
+    \(ToRemember\) # Remember expression in brackets (example at next slide)
+    \Number # Use remembered expression (numbered from one: \1, \2, \3, ...)
   \end{bashcode}
 \end{frame}
+
+\begin{frame}[fragile]{Sed examples II}
+  \begin{bashcode}
+    # Take output of ls -l and replace value of $USER by "$USER-RULEZZZ"
+    ls -l | sed "s/\($USER\)/\1-RULEZZZ/g" # Note " to use variable
+    # Replace size column (2nd numeric) by "size:TAB<file size>b"
+    # Second sed replaces any white spaces by single TAB
+    ls -l | sed 's/\([0-9]\+\)/size:\t\1b/2' | sed 's/[[:blank:]]\+/\t/g'
+    sed '/^$/d' # Delete blank lines ('8d' line 8, 's/ *$//' spaces on EOL)
+    sed '/GUI/d' # Delete all lines containing "GUI" ('s/GUI//g' only "GUI")
+    sed '5 i\Linux is great.' # Insert to 5th line ('4 a\' after 4th line)
+    # Insert text to the beginning of the 3rd line (compare with previous)
+    sed '3s/^/INSERT/' # ^ is beginning of line, $ end ('$/...' last line)
+    # From ls -l keep number of links (1st numeric column after permissions)
+    # and then flip user and group and print it as "group:user"
+    ls -l | sed 's/ \([[:digit:]]\+\) \([[:alnum:]]\+\) \([[:alnum:]]\+\) /
+      \1 \3:\2 /g' # Note separating spaces (previous line ends with space)
+    # Escaping - replace dot by comma (dot means any single character)
+    sed 's/\./,/g' # \ escapes following character (compare with 's/./,/g')
+    # Replace any of characters within [...] by some pattern
+    sed 's/[abcd]/X/g' # Compare with reverse case 's/[^abcd]/X/g'
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Joining}
+  \begin{itemize}
+    \item Generally, most of tools work per-line, \texttt{paste} appends columns (slide~\ref{cutpaste})
+    \item Join compares every matching lines (by default 1$^{st}$ field) and creates all combinations - ensure to have sorted input files with unique text
+    \begin{itemize}
+      \item E.g. if 1$^{st}$ file contains \texttt{A B} and \texttt{A C} and 2$^{nd}$ file \texttt{A D} and \texttt{A E}, the result will be \texttt{A B D}, \texttt{A B E}, \texttt{A C D} and \texttt{A C E}
+    \end{itemize}
+  \end{itemize}
+  \begin{bashcode}
+    # Add file to the end of another text file
+    cat file1 >> file2 # file2 will contain both files, file1 is unchanged
+    # Compare two sorted text files and write shared lines
+    # (duplicitous lines are shown just once)
+    join textfile1 textfile2 > outputfile
+    # If used on wrong files, it can create huge file
+    seq -f "1 %g" 100 > aaa && less aaa
+    seq -f "1 %g" 100 > bbb && less bbb
+    join aaa bbb | wc -l
+    join --help # See more options...
+  \end{bashcode}
+  \vfill
+\end{frame}
+
+\subsection{Comparisons}
 
 \begin{frame}[fragile]{Comparisons}
   \begin{bashcode}
+    cat diff_test_file_1.txt diff_test_file_2.txt # See and use examples
     # Compare two sorted columns
     comm textfile1 textfile2
       # 1st column - lines only in textfile1
@@ -2026,48 +2081,56 @@
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Joining}
-  \begin{bashcode}
-    # Join compares every lines and creates all combinations -
-    # ensure to have sorted input files with unique text
-    # Compare two sorted text files and write shared lines
-    # (duplicitous lines are shown just once)
-    join textfile1 textfile2
-    # Add file to the end of another text file
-    cat file1 >> file2 # file2 will contain both files, file1 is unchanged
-  \end{bashcode}
-\end{frame}
-
 \subsection{Editors} 
 
-\begin{frame}[fragile]{Editors}
-\begin{itemize}
- \item \texttt{nano}, \texttt{pico} and \texttt{mc} are very simple, just for very basic text editing in command line or until you learn \texttt{vim} (graphical version is \textbf{gVim}) or \texttt{emacs} (graphical version is also available, just search for \textbf{Emacs} in your distribution software manager)
- \item You can work most of the time in graphical editors (slide \ref{editors})
- \item Emacs and Vim are extremely rich, but having completely different approach -- when you get use to one, you can't use the another
-\end{itemize}
+\begin{frame}[fragile]{Command line text editors}
+  \begin{itemize}
+    \item \texttt{nano}, \texttt{pico} and \texttt{mc} are very simple, just for very basic text editing in command line or until you learn \texttt{vim} (graphical version is \textbf{gVim}) or \texttt{emacs} (graphical version is also available, just search for \textbf{Emacs} in your distribution software manager)
+    \item You can work most of the time in graphical editors (slide \ref{editors})
+    \item Emacs and Vim are extremely rich, but having completely different approach -- when you get use to one, you can't use the another
+  \end{itemize}
   \begin{bashcode}
-    nano textfile # Basic simple text editor
-    pico textfile # Clone of nano, same basic thing
-    mc # Use its internal editor, just very basic
+    nano textfile # Enhanced clone of pico, basic simple text editor
+    pico textfile # Basic simple text editor
+    mc # Use its internal editor, just very basic (press F4 on the file)
     emacs textfile # Extremely feature rich (including file browser
                    # and many tools), Exit by Ctrl+X and Ctrl+C
-    vim textfile # Probably the most common, as rich as Emacs
+    vim textfile # Probably the most common, as rich as Emacs (see further)
     vimtutor # Launch tutorial to learn Vim (in various languages)
    \end{bashcode}
 \end{frame}
 
-\begin{frame}{Vim}
-\begin{itemize}
- \item Modes of \texttt{vim}:
+\begin{frame}{The editors and their usage}
+  \begin{itemize}
+    \item In \texttt{nano} and \texttt{pico} see bottom line for commands
+    \begin{itemize}
+      \item \texttt{Ctrl+O} to write the file, \texttt{Ctrl+X} to quit the editor, \texttt{Ctrl+G} for help (\texttt{\textasciicircum}~stands for \texttt{Ctrl} key)
+    \end{itemize}
+    \item In \texttt{mc} highlight the file to edit and press \texttt{F4}
+    \begin{itemize}
+      \item \texttt{F2} to save, \texttt{F10} to quit, \texttt{F1} to help, \texttt{F9} for top menu (navigate with arrows, cancel with double \texttt{Esc}), it is possible to use mouse
+    \end{itemize}
+    \item \textbf{Emacs} use huge number of commands with \texttt{Ctrl} key
+    \begin{itemize}
+      \item See \url{https://www.gnu.org/software/emacs/tour/}, \url{http://tuhdo.github.io/emacs-tutor.html} and \url{http://www.jesshamrick.com/2012/09/10/absolute-beginners-guide-to-emacs/}
+    \end{itemize}
+    \item The most common is \textbf{Vim} (next slide)
+    \begin{itemize}
+      \item See \url{http://vim-adventures.com/} to play a game and learn Vim
+    \end{itemize}
+    \item \textbf{Emacs} and \textbf{Vim} have huge number of possibilities and support for plugins and scripts, but completely different usage style -- one person can really learn only one\ldots
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Vim}{Vim has three different working modes}
   \begin{enumerate}
-   \item ``Normal'' -- nothing is displayed in bottom left corner, every key has some meaning (\texttt{dd} to cut current line, \texttt{r} to replace character below cursor, \texttt{v} for selection of text, \texttt{y} to copy, \texttt{x} to cut, \texttt{p} to paste, \texttt{i} or \texttt{Insert} key to enter insert mode, \texttt{:} to enter command mode, number to get to line of particular line number, \texttt{u} to undo last change(s),~\ldots)
-   \item Insert -- in bottom left corner ``\texttt{-- INSERT --}'' is displayed -- the most familiar mode -- normal typing etc., exit to normal mode by \texttt{ESC} key
-   \item Command -- in bottom left corner \texttt{:} is displayed -- awaits commands, e.g. \texttt{w} to write file, \texttt{q} to quit, \texttt{q!} to quit and discard changes, \%s/... to search and replace as in \texttt{sed}, \texttt{syntax on/off} to turn syntax highlight on/off, \texttt{/} to search,~\ldots{ }Exit to command mode by \texttt{Backspace} key (delete ``\texttt{:}'').
+    \item \textbf{``Normal''} -- nothing is displayed in bottom left corner, every key has some meaning (\texttt{dd} to cut current line, \texttt{r} to replace character below cursor, \texttt{v} for selection of text, \texttt{y} to copy, \texttt{x} to cut, \texttt{p} to paste, \texttt{i} or \texttt{Insert} key to enter insert mode, \texttt{:} to enter command mode, number to get to line of particular line number, \texttt{u} to undo last change(s),~\ldots)
+    \item \textbf{Insert} -- in bottom left corner ``\texttt{-- INSERT --}'' is displayed -- the most familiar mode -- normal typing etc., exit to normal mode by \texttt{ESC} key
+    \item \textbf{Command} -- in bottom left corner \texttt{:} is displayed -- awaits commands, e.g. \texttt{w} to write file, \texttt{q} to quit, \texttt{q!} to quit and discard changes, \texttt{\%s/\ldots} to search and replace as in \texttt{sed}, \texttt{syntax on/off} to turn syntax highlight on/off, \texttt{/ToSearch} to search (\texttt{Enter}, \texttt{n} for next occurrence, quit with \texttt{Esc}),~\ldots{ }Exit to command mode by \texttt{Backspace} key (delete ``\texttt{:}'').
   \end{enumerate}
-  \item For more information see \url{http://www.vim.org/} and \url{http://vim.wikia.com/wiki/Vim_Tips_Wiki}
-  \item In Czech \url{http://www.nti.tul.cz/~satrapa/docs/vim/}
-\end{itemize}
+  \begin{itemize}
+    \item See \url{http://vim.wikia.com/}, \url{http://www.vim.org/docs.php}; česky \url{http://www.nti.tul.cz/~satrapa/docs/vim/}
+  \end{itemize}
 \end{frame}
 
 \subsection{Regular expressions}
@@ -2082,6 +2145,7 @@
       \item Find text according to a~pattern
       \item Manipulate the text -- flip, reformat, replace,~\ldots
       \item Syntax is variable among programming languages and applications
+      \item There are commonly more solutions for one task
       \item Probably the most advanced is Perl
     \end{itemize}
     \vfill
@@ -2090,53 +2154,54 @@
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Regular expressions}
-\label{regexp}
-\begin{itemize}
-  \item \alert{.} -- any single character
-  \item \alert{*} -- any number of characters/occurrences of pattern (including 0)
-  \item \alert{+} -- one or more occurrences of the preceding reg exp
-  \item \alert{?} -- zero or one occurrences of the preceding reg exp
-  \item \alert{[\ldots]} -- any character in the brackets
-  \item \alert{[\textasciicircum\ldots]} -- reverse case -- all characters except newline and those listed in brackets
-  \item \alert{\textasciicircum} -- first character of reg exp -- beginning of the line
-  \item \alert{\$} -- last character of reg exp -- end of the line
-  \item \alert{\textbackslash\{n,m\textbackslash\}} -- range of occurrences of single character
-  \item \alert{\textbackslash\{n\textbackslash\}} -- exactly \textit{n} occurrences
-  \item \alert{\textbackslash\{n,\textbackslash\}} -- at least \textit{n} occurrences
-  \item \alert{\textbackslash} -- escape following special character
-  \item \alert{|} -- either the preceding or following reg exp can be matched (alternation)
-  \item \alert{\textbackslash(\ldots\textbackslash)} -- group reg exp (numbered, starting with 1) -- can be called by \alert{\textbackslash\textit{n}}, where \textit{n} is number of the group (starting with 1)
-  \item \alert{\textbackslash$<$ \textbackslash$>$} -- word boundary
-  \item \alert{[[:alnum:]]} -- alphanumerical characters (includes white space), same like \alert{[a-zA-Z0-9]}
-  \item \alert{[[:alpha:]]} -- alphabetic characters, like \alert{[a-zA-Z]}
-  \item \alert{[[:blank:]]} -- space and TAB
-  \item \alert{[[:cntrl:]]} -- control characters
-  \item \alert{[[:digit:]]} -- numeric characters, like \alert{[0-9]}
-  \item \alert{[[:graph:]]} -- printable and visible (non-space) characters
-  \item \alert{[[:lower:]]} -- lowercase characters, like \alert{[a-z]}
-  \item \alert{[[:print:]]} -- printable characters (includes white space)
-  \item \alert{[[:punct:]]} -- punctuation characters
-  \item \alert{[[:space:]]} -- white space characters
-  \item \alert{[[:upper:]]} -- uppercase characters, like \alert{[A-Z]}
-  \item \alert{[[:xdigit:]]} -- hexadecimal digits
-  \item \alert{\textasciicircum\$} -- blank line
-  \item \alert{\textasciicircum.*\$} -- entire line whatever it is
-  \item \alert{ *} -- one or more spaces (there is space before asterisk)
-  \item \alert{\&} -- content of pattern that was matched
-  \item Implementation in \texttt{vim}, \texttt{sed}, \texttt{grep}, \texttt{awk} and \texttt{perl} and among various UNIX systems is almost same, but not identical\ldots
-  \item \textbf{grep}, \textbf{sed} and \textbf{vim} require escaping of \alert{+}, \alert{?}, \alert{\{}, \alert{\}}, \alert{(} and \alert{)} -- \textbf{egrep} (extended version, launched as \texttt{grep -E \ldots} or \texttt{egrep \ldots}) and \textbf{perl} not
-  \item Read \url{http://www.regular-expressions.info/}, in Czech \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{http://www.root.cz/serialy/regularni-vyrazy/} and \url{http://www.regularnivyrazy.info/}, and manuals for Grep, Vim, Sed, Awk, Perl,~\ldots
-  \item Mac OS~X has by default very outdated version of \texttt{sed} and another tools -- it does not have all advanced features -- users need to install e.g. \texttt{gnu-sed} formulae from \href{http://brew.sh/}{Homebrew}
-\end{itemize}
+  \label{regexp}
+  \begin{itemize}
+    \item \alert{\texttt{.}} -- any single character
+    \item \alert{\texttt{*}} -- any number of characters/occurrences of pattern (including 0)
+    \item \alert{\texttt{+}} -- one or more occurrences of the preceding reg exp
+    \item \alert{\texttt{?}} -- zero or one occurrences of the preceding reg exp
+    \item \alert{\texttt{[\ldots]}} -- any character in the brackets
+    \item \alert{\texttt{[\textasciicircum\ldots]}} -- reverse case -- all characters except newline and those listed in brackets
+    \item \alert{\texttt{\textasciicircum}} -- first character of reg exp -- beginning of the line
+    \item \alert{\texttt{\$}} -- last character of reg exp -- end of the line
+    \item \alert{\texttt{\textbackslash\{n,m\textbackslash\}}} -- range of occurrences of single character
+    \item \alert{\texttt{\textbackslash\{n\textbackslash\}}} -- exactly \textit{n} occurrences
+    \item \alert{\texttt{\textbackslash\{n,\textbackslash\}}} -- at least \textit{n} occurrences
+    \item \alert{\texttt{\textbackslash}} -- escape following special character
+    \item \alert{\texttt{|}} -- either the preceding or following reg exp can be matched (alternation)
+    \item \alert{\texttt{\textbackslash(\ldots\textbackslash)}} -- group reg exp (numbered, starting with 1) -- can be called by \alert{\textbackslash\textit{n}}, where \textit{n} is number of the group (starting with 1)
+    \item \alert{\texttt{\textbackslash$<$}}, \alert{\texttt{\textbackslash$>$}} -- word boundaries
+    \item \alert{\texttt{[[:alnum:]]}} -- alphanumerical characters (includes white space), same like \alert{\texttt{[a-zA-Z0-9]}}
+    \item \alert{\texttt{[[:alpha:]]}} -- alphabetic characters, like \alert{\texttt{[a-zA-Z]}}
+    \item \alert{\texttt{[[:blank:]]}} -- space and TAB
+    \item \alert{\texttt{[[:cntrl:]]}} -- control characters
+    \item \alert{\texttt{[[:digit:]]}} -- numeric characters, like \alert{\texttt{[0-9]}}
+    \item \alert{\texttt{[[:graph:]]}} -- printable and visible (non-space) characters
+    \item \alert{\texttt{[[:lower:]]}} -- lowercase characters, like \alert{\texttt{[a-z]}}
+    \item \alert{\texttt{[[:print:]]}} -- printable characters (includes white space)
+    \item \alert{\texttt{[[:punct:]]}} -- punctuation characters
+    \item \alert{\texttt{[[:space:]]}} -- white space characters
+    \item \alert{\texttt{[[:upper:]]}} -- uppercase characters, like \alert{\texttt{[A-Z]}}
+    \item \alert{\texttt{[[:xdigit:]]}} -- hexadecimal digits
+    \item \alert{\texttt{\textasciicircum\$}} -- blank line
+    \item \alert{\texttt{\textasciicircum.*\$}} -- entire line whatever it is
+    \item \alert{\texttt{ *}} -- one or more spaces (there is space before asterisk)
+    \item \alert{\texttt{\&}} -- content of pattern that was matched
+    \item Implementation in \texttt{vim}, \texttt{sed}, \texttt{grep}, \texttt{awk} and \texttt{perl} and among various UNIX systems is almost same, but not identical\ldots
+    \item \textbf{grep}, \textbf{sed} and \textbf{vim} \alert{require escaping} of \alert{\texttt{+}}, \alert{\texttt{?}}, \alert{\texttt{\{}}, \alert{\texttt{\}}}, \alert{\texttt{(}} and \alert{\texttt{)}} by backslash \alert{\texttt{\textbackslash}} -- \textbf{egrep} (extended version, launched as \texttt{grep -E \ldots} or \texttt{egrep \ldots}), \textbf{sed} with extended reg exp (\texttt{sed -r}) and \textbf{perl} \alert{not}
+    \item Read \url{http://www.regular-expressions.info/}; česky \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{http://www.root.cz/serialy/regularni-vyrazy/} and \url{http://www.regularnivyrazy.info/}, and manuals for Grep, Vim, Sed, Awk, Perl,~\ldots
+    \item See sed examples, slide~\ref{sedex}
+    \item Mac OS~X has by default very outdated version of \texttt{sed} and another tools -- it does not have all advanced features -- users need to install e.g. \texttt{gnu-sed} formulae from \href{http://brew.sh/}{Homebrew}
+  \end{itemize}
 \end{frame}
 
 \section{Scripting}
 
-\begin{frame}[fragile]{Expressions}
+\begin{frame}[fragile]{Expressions} % TODO Move somewhere else
   \begin{bashcode}
     # Many operands have special meaning in BASH - must be escaped
-    echo `expr 1 '<' 2` # Is 1 smaller than 2? TRUE
-    echo `expr 1 '>' 2` # Is 2 smaller than 1? FALSE
+    echo `expr 1 '<' 2` # Is 1 smaller than 2? TRUE (1)
+    echo `expr 1 '>' 2` # Is 2 smaller than 1? FALSE (0)
     echo `expr 5 '%' 2` # What remains after aritmetic division
     echo `expr 1 '&' 0` # If both arguments non-empty and not 0, then 1
     x=`expr 1 '+' 6` # Result will be in $x
@@ -2147,9 +2212,9 @@
     y=`expr $x + 1` # This will work - note ` and space around +
     echo $y # Result
     echo `expr length "MetaCentrum and Linux"` # Get length of chain
-    # String of 10 characters starting at position 12 of the text
-    echo `expr substr "MetaCentrum and Linux" 12 10`
-    # Does 1st chain contain 2nd chain? Get position of first hit
+    # String of 5 characters starting at position 10 of the text
+    echo `expr substr "MetaCentrum and Linux" 10 5`
+    # Does 1st chain contain 2nd chain (how long)? Get position of first hit
     echo `expr index "GNU Linux" "Linux"` # If no overlap, return value is 0
   \end{bashcode}
   \begin{itemize}
@@ -2160,13 +2225,14 @@
 \subsection{Basic skeleton}
 
 \begin{frame}[fragile]{Basic script}
-\begin{itemize}
- \item Every script begins with \texttt{\#!/bin/bash} (or alternative for another shells, Perl,~\ldots)
- \item Add any commands you like\ldots
- \item Every script should end with \texttt{exit} (but it is not necessary)
- \item After writing the script, add execution permission (\texttt{chmod o+x noninteractive.sh} or \texttt{chmod +x noninteractive.sh})
- \item The most simple script:
-\end{itemize}
+  \begin{itemize}
+    \item Every script begins with \texttt{\#!/bin/bash} (or alternative for another shells, Perl,~\ldots)
+    \item Add any commands you like\ldots
+    \item Every script should end with \texttt{exit} (but it is not necessary)
+    \item After writing the script, add execution permission (\texttt{chmod +x noninteractive.sh})
+    \item Launch with \texttt{./noninteractive.sh}
+    \item The most simple script:
+  \end{itemize}
   \begin{bashcode}
     #!/bin/bash
     # Simple non-interactive script - no communication with user
@@ -2177,20 +2243,35 @@
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Functions in BASH}
+\subsection{BASH variables}
+
+\begin{frame}{Special variables available in the script (selection)}
   \begin{itemize}
-    \item Pieces of code, which can be used repeatedly
+    \item \alert{\texttt{\$1}},~\ldots~(number from \texttt{1} up to number of parameters) -- individual positional parameters (see next slide for example)
+    \item \alert{\texttt{\$0}} -- path of the starting script
+    \item \alert{\texttt{\$\#}} -- number of command-line arguments
+    \item \alert{\texttt{\$*}} -- all of the positional parameters, seen as a single word, must be quoted
+    \item \alert{\texttt{\$@}} -- same as \texttt{\$*}, but each parameter is a quoted string -- the parameters are passed on intact, without interpretation or expansion, each parameter in the argument list is seen as a separate word, should be quoted (i.e. something like \texttt{"\$@"})
+    \item \alert{\texttt{\$\$}} -- process ID (PID) of the script itself
+    \item \alert{\texttt{\$?}} -- Exit status of a command, function, or the script itself
+    \item \href{http://www.tldp.org/LDP/abs/html/internalvariables.html}{See more variables\ldots}
   \end{itemize}
+\end{frame}
+
+\subsection{Functions}
+
+\begin{frame}[fragile]{Functions in BASH}{Pieces of code, which can be used repeatedly}
   \begin{bashcode}
     # Declare new function
     function MyNewFunction1 {
       echo "Hello, $USER on $HOSTNAME!"
       }
-    # Use it in a script as any other command:
+    # Use it in a script as any other command
     ...
     MyNewFunction1
     ...
-    # Use with variables (same as in previous cases)
+    # Use with variables - provide parameters for the function
+    # See following script examples for another input - same as in scripts
     function MyNewFunction2 {
       echo "The sum is `expr $1 + $2`."
       }
@@ -2203,6 +2284,25 @@
 
 \subsection{Reading variables}
 
+\begin{frame}{It is important to check user input\ldots}
+  \begin{center}
+    \includegraphics[width=7.5cm]{exploits_of_a_mom.png}
+  \end{center}
+  \begin{flushright}
+    \url{https://xkcd.com/327/}
+  \end{flushright}
+  \begin{itemize}
+    \item By accident or purpose (attack), user can enter unexpected value
+    \begin{itemize}
+      \item In the ``best'' case, the script ``just'' crashes
+      \item Script can behave unexpectedly, returning very weird results
+      \item Internal functions/commands can return error messages, which are hard to understand
+      \item Attacker can e.g. modify web content (\href{https://en.wikipedia.org/wiki/Cross-site_scripting}{XSS},~\ldots), obtain private data, root privileges,~\ldots
+    \end{itemize}
+    \item Programmer should always check if user input is correct, filter it
+  \end{itemize}
+\end{frame}
+
 \begin{frame}[fragile]{Script reading two variables}
   \begin{bashcode}
     #!/bin/bash
@@ -2214,21 +2314,23 @@
     echo "Number of parameters is $#."
     # "$*" is available every time and contains all supplied parameters
     echo "Those parameters were supplied: $*."
-    #  "$0" is available every time and contains script path
+    # "$0" is available every time and contains script path
     echo "Path to the scrip is: \"$0\"."
     echo
     exit
   \end{bashcode}
-\vfil
-When done, do:
-\vfil
+  \vfill
+  When done, do:
+  \vfill
   \begin{bashcode}
     chmod +x interactive1.sh
     ./interactive1.sh 8 9 # Or select any other two numbers
   \end{bashcode}
+  \vfill
   \begin{itemize}
     \item There is no checking of input values, nothing advanced,~\ldots
   \end{itemize}
+  \vfill
 \end{frame}
 
 \begin{frame}[fragile]{Variables will be interactively provided by the user}
@@ -2243,18 +2345,42 @@ When done, do:
     echo
     exit
   \end{bashcode}
-\vfil
-When done, do:
-\vfil
+  \vfill
+  When done, do:
+  \vfill
   \begin{bashcode}
     chmod +x interactive2.sh
-    ./interactive1.sh # Values will be provided when script asks
+    ./interactive2.sh # Values will be provided when script asks
   \end{bashcode}
   \begin{itemize}
     \item There is no checking of input values, nothing advanced,~\ldots
+    \item See next slide to read the variable in \texttt{while} cycles to ensure it is correctly entered
   \end{itemize}
   \begin{bashcode}
     $(expr $1 + $2) # Alternative - $(...) is same as `...`
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Ensuring user interactively provides correct input}
+  \begin{itemize}
+    \item Detailed explanations of all features used here are in various following slides\ldots{ }See scripts \texttt{interactive2\{whiles,functions\}.sh}
+  \end{itemize}
+  \begin{bashcode}
+    ... # Following code replace lines 3 and 4 from previous script
+    NUMBER='^[0-9]+$'
+    echo "Please, provide a number as input value:"
+    while : # Start of while cycles - run until correct input is provided
+      do # Star of the body of the cycles
+      read INPUT # Here the input from keyboard is received
+      if [[ $INPUT =~ $NUMBER ]]; then # Test if INPUT is a number
+        echo "OK, input value is $INPUT."
+        break # We have correct value, we can break the cyclus and continue
+        else # What to do if the user did not provided correct value
+          echo "Error! You provided wrong value!" # Tell the user
+          echo "Try again (the number):" # Ask user for new input value
+        fi # End of the conditional evaluation
+      done # End of the while cycles
+    ... # The code continues...
   \end{bashcode}
 \end{frame}
 
@@ -2283,23 +2409,24 @@ When done, do:
 \end{frame}
 
 \begin{frame}{Notes to previous script}
-\begin{itemize}
- \item First make \texttt{interactive3.sh} executable and launch it via e.g. \texttt{./interactive3.sh -d} or \texttt{./interactive3.sh --uptime} or so
- \item Function \texttt{case} has basic checking of input available -- as last parameter use \texttt{*)} -- any other input except those defined above will produce some warning message, error or so
- \item In same way can be added more parameters (by multiple use of \texttt{case}), but order of parameters must be kept and all parameters are compulsory
- \item \texttt{case} can evaluate simple regular expressions, e.g. \texttt{--[Uu]ptime)}, \texttt{-d*},~\ldots
-\end{itemize}
+  \begin{itemize}
+    \item First make \texttt{interactive3.sh} executable and launch it via e.g. \texttt{./interactive3.sh -d} or \texttt{./interactive3.sh --uptime} or so
+    \item Function \texttt{case} has basic checking of input available -- as last parameter use \texttt{*)} -- any other input except those defined above will produce some warning message, error or so
+    \item In same way can be added more parameters (by multiple use of \texttt{case}), but order of parameters must be kept and all parameters are compulsory
+    \item \texttt{case} can evaluate simple regular expressions, e.g. \texttt{--[Uu]ptime)}, \texttt{-d*},~\ldots
+    \item This is the most simple usage, more complex possibilities are ahead
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Provide parameters, verify them and behave accordingly I}
   \begin{bashcode}
     #!/bin/bash
-    NUMBER='^[0-9]+$' # From beginning (^) to the end ($) only number(s)
+    NUMBER='^[0-9]+$' # From beginning (^) to the end ($) only number(s) (+)
     function usagehelp { # Function to print help
       echo "Usage: number1 plus/minus/product/quotient number2"
       echo "Use plus for sum, minus for difference, product"
       echo "for multiplication or quotient for quotient."
-      exit 1
+      exit 1 # End up with an error
       }
     if [ "$#" -ne "3" ]; then # Do we have 3 parameters provided?
         echo "Error! Requiring 3 parameters! Received $# ($*)."
@@ -2310,11 +2437,14 @@ When done, do:
         usagehelp # The function to print help
       fi
   \end{bashcode}
-Continues on next slide\ldots
+  \vfill
+  Continues on next slide\ldots
+  \vfill
 \end{frame}
 
 \begin{frame}[fragile]{Provide parameters, verify them and behave accordingly II}
-Remaining part from previous slide\ldots
+  Remaining part from previous slide\ldots
+  \vfill
   \begin{bashcode}
     if [[ ! $3 =~ $NUMBER ]]; then # Is parameter 3 number?
         echo "Parameter 3 is not an integer!"
@@ -2331,8 +2461,84 @@ Remaining part from previous slide\ldots
     esac
     exit
   \end{bashcode}
-\vfil
-\texttt{chmod +x interactive4.sh \&\& ./interactive4.sh 7 plus 5} (for example)
+  \vfill
+  \hrule
+  \vfill
+  \begin{bashcode}
+    chmod +x interactive4.sh && ./interactive4.sh 7 plus 5 # For example
+  \end{bashcode}
+  \vfill
+\end{frame}
+
+\begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) I}
+  \begin{itemize}
+    \item Following code use to be near beginning of the script to evaluate input
+    \item See \texttt{interactive5.sh} for complete example
+    \item \texttt{getopts} reads short (one-letter) parameters, they can have input value (marked by \texttt{:})
+  \end{itemize}
+  \begin{bashcode}
+    ... # All provided values are evaluated in while cycles...
+    while getopts "hvi:o:a:" INITARGS; do
+      case "$INITARGS" in # $INITARGS contains the parameters to evaluate
+        h|v) # Accept parameters "-h" or "-v" for help
+          echo "Usage options..." # What will be done it this is selected...
+          exit # Terminate after providing help
+          ;; # End of this option
+        i) # Parameter "-i" accepts some value (e.g. "-i inputfile.txt")
+          ... # Do some checking etc...
+          INPUTFILE="$OPTARG" # $OPTARG always contains value of parameter
+          ;;
+        # Continues on following slide...
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) II}
+  \begin{bashcode}
+    # ...starts on previous slide...
+        o) # Parameter "-o" accepts some value (e.g. "-o outputfile.txt")
+          ... # Do some checking etc...
+          OUTPUTFILE="$OPTARG" # $OPTARG always contains value of parameter
+          ;;
+        a) # Parameter "-a" accepts some value (e.g. "-a X" for number)
+          # Check if provided value makes sense (integer between 10 and 300)
+          if [[ "$OPTARG" =~ ^[0-9]+$ ]] && [ "$OPTARG" -ge 10 -a 
+            "$OPTARG" -le 300 ]; then # The condition is long...
+            VALUE="$OPTARG" # $OPTARG always contains value of parameter
+            echo "Value is OK: $VALUE"
+            else
+              echo "Error! For parameter \"-a\" you did not provide an 
+                integer ranging from 10 to 300!"
+              exit 1
+            fi
+          ;;
+    # ...ends on following slide...
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) III}
+  \begin{bashcode}
+    # ...continuing from previous slide...
+        ?)
+         echo "Invalid option(s)!"
+         echo "See \"$0 -h\" for usage options."
+         exit 1
+         ;;
+      esac
+    done # ...the end.
+    ... # Following code...
+  \end{bashcode}
+  \vfill
+  \begin{itemize}
+    \item Script \texttt{interactive5.sh} contains complete example
+  \end{itemize}
+  \vfill
+  \begin{bashcode}
+    # Start with displaying help
+    ./interactive5.sh -h # Or ./interactive5.sh -v
+    # Try it as common command line tool
+    ./interactive5.sh -i input.txt -o output.txt -a 50
+    ./interactive5.sh -o output.txt -a 50 -i input.txt # Order doesn't matter
+  \end{bashcode}
 \end{frame}
 
 \subsection{Branching the code}

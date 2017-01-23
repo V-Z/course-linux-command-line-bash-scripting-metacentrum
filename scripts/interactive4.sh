@@ -10,7 +10,7 @@ function usagehelp {
   echo "Usage: number1 plus/minus/product/quotient number2"
   echo "Use plus for sum, minus for difference, product"
   echo "for multiplication or quotient for quotient."
-  exit 1
+  exit 1 # End up with an error
   }
 
 # Do we have 3 parameters provided?
