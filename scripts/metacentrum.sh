@@ -3,8 +3,8 @@
 # Modify the script according to your needs!
 
 # Set data directories
-WORKDIR="bayes_batch"
-DATADIR="/storage/praha1/home/$LOGNAME"
+WORKDIR="bayes_batch" # Or something else
+DATADIR="/storage/praha1/home/$LOGNAME" # Or other storage
 
 # So there is directory /storage/praha1/home/gunnera/bayes_batch (in this case) containing all the data needed for calculations
 
@@ -13,7 +13,7 @@ trap 'clean_scratch' TERM EXIT
 trap 'cp -ar $SCRATCHDIR $DATADIR/ && clean_scratch' TERM
 
 # Prepare the task - copy all needed files from working directory into particular computer which will finally do the calculations
-cp -ar $DATADIR/$WORKDIR/* $SCRATCHDIR/  || exit 1
+cp -ar $DATADIR/$WORKDIR/* $SCRATCHDIR/  || exit 1 # If it fails, exit script
 
 # Change working directory - script goes to the directory where calculations are done
 cd $SCRATCHDIR/ || exit 2 # If it fails, exit script
@@ -24,7 +24,7 @@ cd $SCRATCHDIR/ || exit 2 # If it fails, exit script
 . /packages/run/modules-2.0/init/sh
 # In this case GNU Parallel and MrBayes
 module add parallel
-module add mrbayes-3.2.4
+module add mrbayes-3.2.6
 
 # Launch the analysis - calculate MrBayes for multiple files
 # Note Parallel will distribute task among 8 CPU threads (-j 8), so that qsub must in this case contain nodes=1:ppn=8

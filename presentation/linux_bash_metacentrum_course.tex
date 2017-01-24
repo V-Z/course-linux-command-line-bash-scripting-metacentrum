@@ -131,6 +131,23 @@
   \end{multicols}
 \end{frame}
 
+\begin{frame}{VirtualBox shared folder I}{VirtualBox can be configured to share folder with host operating system}
+  \begin{center}
+    \includegraphics[width=\textwidth-2cm]{virtualbox_shared_folder_1.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{VirtualBox shared folder II}{Go to menu ``Devices | Shared Folders'' and set pair of folders}
+  \begin{bashcode}
+    sudo mount -t vboxsf -o uid=$UID,gid=$(id -g) shared /mnt
+  \end{bashcode}
+  \vfil
+  \begin{center}
+    \includegraphics[width=\textwidth-1cm]{virtualbox_shared_folder_2.png}
+  \end{center}
+  \vfill
+\end{frame}
+
 \begin{frame}[allowframebreaks]{What it is UNIX, Linux and GNU}
   \begin{itemize}
     \item \href{https://en.wikipedia.org/wiki/Unix}{UNIX}
@@ -1210,6 +1227,31 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Expressions}
+  \begin{bashcode}
+    # Many operands have special meaning in BASH - must be escaped
+    echo `expr 1 '<' 2` # Is 1 smaller than 2? TRUE (1)
+    echo `expr 1 '>' 2` # Is 2 smaller than 1? FALSE (0)
+    echo `expr 5 '%' 2` # What remains after aritmetic division
+    echo `expr 1 '&' 0` # If both arguments non-empty and not 0, then 1
+    x=`expr 1 '+' 6` # Result will be in $x
+    echo $x
+    x=1 # Set x to 1
+    y=$x+1 # Will this add 1? Why?
+    echo $y # See result
+    y=`expr $x + 1` # This will work - note ` and space around +
+    echo $y # Result
+    echo `expr length "MetaCentrum and Linux"` # Get length of chain
+    # String of 5 characters starting at position 10 of the text
+    echo `expr substr "MetaCentrum and Linux" 10 5`
+    # Does 1st chain contain 2nd chain (how long)? Get position of first hit
+    echo `expr index "GNU Linux" "Linux"` # If no overlap, return value is 0
+  \end{bashcode}
+  \begin{itemize}
+    \item \texttt{expr} works with various operands (see \texttt{man expr})
+  \end{itemize}
+\end{frame}
+
 \subsection{Chaining}
 
 \begin{frame}{Chaining commands}
@@ -2197,31 +2239,6 @@
 
 \section{Scripting}
 
-\begin{frame}[fragile]{Expressions} % TODO Move somewhere else
-  \begin{bashcode}
-    # Many operands have special meaning in BASH - must be escaped
-    echo `expr 1 '<' 2` # Is 1 smaller than 2? TRUE (1)
-    echo `expr 1 '>' 2` # Is 2 smaller than 1? FALSE (0)
-    echo `expr 5 '%' 2` # What remains after aritmetic division
-    echo `expr 1 '&' 0` # If both arguments non-empty and not 0, then 1
-    x=`expr 1 '+' 6` # Result will be in $x
-    echo $x
-    x=1 # Set x to 1
-    y=$x+1 # Will this add 1? Why?
-    echo $y # See result
-    y=`expr $x + 1` # This will work - note ` and space around +
-    echo $y # Result
-    echo `expr length "MetaCentrum and Linux"` # Get length of chain
-    # String of 5 characters starting at position 10 of the text
-    echo `expr substr "MetaCentrum and Linux" 10 5`
-    # Does 1st chain contain 2nd chain (how long)? Get position of first hit
-    echo `expr index "GNU Linux" "Linux"` # If no overlap, return value is 0
-  \end{bashcode}
-  \begin{itemize}
-    \item \texttt{expr} works with various operands (see \texttt{man expr})
-  \end{itemize}
-\end{frame}
-
 \subsection{Basic skeleton}
 
 \begin{frame}[fragile]{Basic script}
@@ -2568,51 +2585,69 @@
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Evaluation of conditions}
-\begin{itemize}
-  \item ``\texttt{[} \ldots~\texttt{]}'' (always keep space around it -- inside) is function to evaluate expressions (alternatively use command \texttt{test})
   \begin{itemize}
-    \item \texttt{if [ "\$VAR" -eq 25 ]} or \texttt{test \$VAR -eq 25}
-    \item \texttt{if [ "\$VAR" == "value" ]; \ldots}
+    \item ``\texttt{[} \ldots~\texttt{]}'' (always keep space around it -- inside) is function to evaluate expressions (alternatively use command \texttt{test})
     \begin{itemize}
-      \item Escaping variables and values by double quotes (\texttt{"}\ldots\texttt{"}) is recommended (to be sure), but not strictly required all the time
+      \item \texttt{if [ "\$VAR" -eq 25 ]} or \texttt{test \$VAR -eq 25}
+      \item \texttt{if [ "\$VAR" == "value" ]; \ldots}
+      \begin{itemize}
+	\item Escaping variables and values by double quotes (\texttt{"}\ldots\texttt{"}) is recommended (to be sure), but not strictly required all the time
+      \end{itemize}
+      \item \texttt{if [ ! -f regularfile ]; \ldots} -- reverted condition (\texttt{!})
+      \item Single-bracket conditions -- file, string, or arithmetic conditions
+      \item Double-bracket syntax -- enhanced
+      \begin{itemize}
+	\item Allow usage of regular expressions and globbing patterns
+	\item Word splitting is prevented -- \texttt{\$STRINGVAR} can contain spaces
+	\item Expanding file names -- \texttt{if [[ -a *.sh ]]} (variant with only one bracket doesn't work when there are multiple sh files)
+	\item Allows more detailed test, e.g. \texttt{if [[ \$num -eq 3 \&\& "\$STRINGVAR" == XXX ]] \ldots}
+      \end{itemize}
     \end{itemize}
-    \item \texttt{if [ ! -f regularfile ]; \ldots} -- reverted condition (\texttt{!})
-    \item Single-bracket conditions -- file, string, or arithmetic conditions
-    \item Double-bracket syntax -- enhanced
+    \item \texttt{-eq} -- Equal to
+    \item \texttt{-lt} -- Less than
+    \item \texttt{-gt} -- Greater than
+    \item \texttt{-ge} -- Greater than or equal to
+    \item \texttt{-le} -- Less than or equal to
+    \item \texttt{-f \$FILE} -- True if \texttt{\$FILE} exists and is a regular file
+    \item \texttt{-r \$FILE} -- True if \texttt{\$FILE} exists and is readable
+    \item \texttt{-w \$FILE} -- True if \texttt{\$FILE} exists and is writable
+    \item \texttt{-x \$FILE} -- True if \texttt{\$FILE} exists and is executable
+    \item \texttt{-d \$FILE} -- True if \texttt{\$FILE} exists and is a directory
+    \item \texttt{-s \$FILE} -- True if \texttt{\$FILE} exists and has a size greater than zero
+    \item \texttt{-n \$STR} -- True if string \texttt{\$STR} is not a null string
+    \item \texttt{-z \$STR} -- True if string \texttt{\$STR} is a null string
+    \item \texttt{\$STR1 == \$STR2} -- True if both strings are equal
+    \item \texttt{\$STR} -- True if string \texttt{\$STR} is assigned a value and is not null
+    \item \texttt{\$STR1 != \$STR2} -- True if both strings are unequal
+    \item \texttt{-a} -- Performs the \texttt{AND} function
+    \item \texttt{-o} -- Performs the \texttt{OR} function
+    \item Do not confuse globbing patterns and regular expressions when using \texttt{[[ \ldots~]]}
     \begin{itemize}
-      \item Allow usage of regular expressions and globbing patterns
-      \item Word splitting is prevented -- \texttt{\$STRINGVAR} can contain spaces
-      \item Expanding file names -- \texttt{if [[ -a *.sh ]]} (variant with only one bracket doesn't work when there are multiple sh files)
-      \item Allows more detailed test, e.g. \texttt{if [[ \$num -eq 3 \&\& "\$STRINGVAR" == XXX ]] \ldots}
+      \item Shell globbing: \texttt{if [[ "\$STRINGVAR" == ?[sS]tring* ]]; then} -- \texttt{?} represents single character \texttt{[]} any character inside and \texttt{*} zero or more characters
+      \item Regular expressions: \texttt{if [[ "\$STRINGVAR" =$\sim$ .[sS]tring.* ]]; then} -- \texttt{.} represents single character (\texttt{?} would be zero or one occurrence of preceding expression), \texttt{[]} any character inside and \texttt{.*} zero or more occurrences of any single characters
     \end{itemize}
   \end{itemize}
-  \item \texttt{-eq} -- Equal to
-  \item \texttt{-lt} -- Less than
-  \item \texttt{-gt} -- Greater than
-  \item \texttt{-ge} -- Greater than or equal to
-  \item \texttt{-le} -- Less than or equal to
-  \item \texttt{-f \$FILE} -- True if \texttt{\$FILE} exists and is a regular file
-  \item \texttt{-r \$FILE} -- True if \texttt{\$FILE} exists and is readable
-  \item \texttt{-w \$FILE} -- True if \texttt{\$FILE} exists and is writable
-  \item \texttt{-x \$FILE} -- True if \texttt{\$FILE} exists and is executable
-  \item \texttt{-d \$FILE} -- True if \texttt{\$FILE} exists and is a directory
-  \item \texttt{-s \$FILE} -- True if \texttt{\$FILE} exists and has a size greater than zero
-  \item \texttt{-n \$STR} -- True if string \texttt{\$STR} is not a null string
-  \item \texttt{-z \$STR} -- True if string \texttt{\$STR} is a null string
-  \item \texttt{\$STR1 == \$STR2} -- True if both strings are equal
-  \item \texttt{\$STR} -- True if string \texttt{\$STR} is assigned a value and is not null
-  \item \texttt{\$STR1 != \$STR2} -- True if both strings are unequal
-  \item \texttt{-a} -- Performs the \texttt{AND} function
-  \item \texttt{-o} -- Performs the \texttt{OR} function
-  \item Do not confuse globbing patterns and regular expressions when using \texttt{[[ \ldots~]]}
-  \begin{itemize}
-    \item Shell globbing: \texttt{if [[ "\$STRINGVAR" == ?[sS]tring* ]]; then} -- \texttt{?} represents single character \texttt{[]} any character inside and \texttt{*} zero or more characters
-    \item Regular expressions: \texttt{if [[ "\$STRINGVAR" =$\sim$ .[sS]tring.* ]]; then} -- \texttt{.} represents single character (\texttt{?} would be zero or one occurrence of preceding expression), \texttt{[]} any character inside and \texttt{.*} zero or more occurrences of any single characters
-  \end{itemize}
-\end{itemize}
 \end{frame}
 
-\subsection{Loops}
+% \begin{frame}[fragile]{Selecting version of RAxML according the CPU type} % TODO RAxML branching - CPU type
+%   \begin{itemize}
+%     \item 
+%   \end{itemize}
+%   \begin{bashcode}
+%     #
+%   \end{bashcode}
+% \end{frame}
+
+% \begin{frame}[fragile]{Multiple branching in one step} % TODO Multiple branching with case
+%   \begin{itemize}
+%     \item 
+%   \end{itemize}
+%   \begin{bashcode}
+%     #
+%   \end{bashcode}
+% \end{frame}
+
+\subsection{Loops} % TODO More examples, break, ...
 
 \begin{frame}[fragile]{For, while and until cycles}
   \begin{bashcode}
@@ -2639,6 +2674,8 @@
 
 \section{Software}
 
+\subsection{Packages}
+
 \begin{frame}[allowframebreaks]{Package management}{Installation of software}
   \begin{itemize}
     \item Package -- an application or its part (documentation, plug-ins, translations,~\ldots)
@@ -2652,84 +2689,151 @@
     \item The most different task among distributions
     \item Packages have dependencies -- required shared libraries and so on -- use package manager and try to avoid downloading packages from the internet
     \item \alert{Read manual for your distribution!}
-    \item Package is basically an archive and system has configured directories where to unpack it -- binaries are commonly in \texttt{/usr/bin/}, shared libraries in \texttt{/lib} and \texttt{/lib64} and rest in \texttt{/var}
+    \item Package is basically an archive and system has configured directories where to unpack it -- binaries are commonly in \texttt{/usr/bin/}, shared libraries in \texttt{/usr/lib} and \texttt{/sr/lib64}, data in \texttt{/var},~\ldots
     \item User should not care where parts of packages go to -- system is taking the care -- user can only damage it
     \item Shared libraries are installed automatically whenever some application needs them
     \item As all files are placed in standard defined directories, it is very simple to use them also for another applications
-    \item Applications not available in repositories, neither as distributional package should be installed into \texttt{$\sim$/bin} for current user or \texttt{/usr/local} for all users (binaries then go into \texttt{bin} and so on)
+    \item Applications not available in repositories, neither as distributional package should be installed into \texttt{$\sim$/bin} for current user or \texttt{/usr/local} for all users (binaries then go into \texttt{/usr/local/bin} and so on)
+    \item Common distributions use to provide convenient graphical tool to manage software
+    \begin{itemize}
+      \item Ubuntu Software Center
+      \item Aptitude -- feature rich, advanced, for any DEB distribution
+      \item YaST Software for openSUSE
+      \item And many more\ldots
+    \end{itemize}
+    \item Distributions use to provide convenient simple update applet notifying about awaiting updates
+    \item There use to be web services to look for packages, also from other sources -- \href{https://software.opensuse.org/}{openSUSE}, \href{https://www.debian.org/distrib/packages\#search_packages}{Debian}, \href{http://packages.ubuntu.com/}{Ubuntu} (+ \href{https://launchpad.net/ubuntu/+search}{Launchpad} and \href{https://launchpad.net/ubuntu/+ppas}{PPAs}), \href{https://admin.fedoraproject.org/pkgdb/}{Fedora},~\ldots
+    \item The task is always same, the exact work-flow and commands more or less differ among distributions\ldots
+    \item Tools like Android Google Play and Apple Store inspired from Linux\ldots
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Package management in command line in openSUSE and Debian/Ubuntu}
-Root password is required: use \texttt{sudo \ldots} or \texttt{su -}
-\begin{center}
-\begin{tabular}{lll}
-\textbf{Task} & \textbf{openSUSE} & \textbf{Debian/Ubuntu}\\
-Package name & *.rpm & *.deb\\
-Install & zypper in \textit{package} & apt-get install \textit{package}\\
-Remove & zypper rm \textit{package} & apt-get remove \textit{package}\\
-Refresh repositories & zypper ref & apt-get update\\
-Update & zypper up & apt-get update\\
-Upgrade & zypper dup & apt-get dist-upgrade\\
-Search & zypper se \textit{term} & apt-cache search \textit{term}\\
-Clear packages & rpmorphan & apt-get autoremove\\
-Interactive manager & yast sw\_single & aptitude\\
-Add repository & zypper ar \textit{repository} & nano /etc/apt/sources.list\\
-Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
-\end{tabular}
-\end{center}
+\begin{frame}{Package management in command line in openSUSE and Debian/Ubuntu (basic commands)}
+  Root password is required: use \texttt{sudo\ldots} or \texttt{su -}
+  \begin{center}
+    \begin{footnotesize}
+      \begin{tabular}{lll}
+	\textbf{Task} & \textbf{openSUSE} & \textbf{Debian/Ubuntu}\\
+	Package name & *.rpm & *.deb\\
+	Install & \texttt{zypper in \textit{package}} & \texttt{apt-get install \textit{package}}\\
+	Remove & \texttt{zypper rm \textit{package}} & \texttt{apt-get remove \textit{package}}\\
+	Refresh repositories & \texttt{zypper ref} & \texttt{apt-get update}\\
+	Update & \texttt{zypper up} & \texttt{apt-get upgrade}\\
+	Upgrade & \texttt{zypper dup} & \texttt{apt-get dist-upgrade}\\
+	Search & \texttt{zypper se \textit{term}} & \texttt{apt-cache search \textit{term}}\\
+	Clear packages & \texttt{rpmorphan} & \texttt{apt-get autoremove}\\
+	Interactive manager & \texttt{yast sw\_single} & \texttt{aptitude}\\
+	List repositories & \texttt{zypper lr} & \texttt{cat /etc/apt/sources.list}\\
+	Add repository & \texttt{zypper ar \textit{repository}} & \texttt{nano /etc/apt/sources.list}\\
+	Remove repository & \texttt{zypper rm \textit{repository}} & \texttt{nano /etc/apt/sources.list}\\
+	For other tasks\ldots & \texttt{rpm*} commands & \texttt{dpkg-*}, \texttt{apt-*} commands
+      \end{tabular}
+    \end{footnotesize}
+  \end{center}
 \end{frame}
 
+\begin{frame}{Graphical package managers I}{Ubuntu Software, and Synaptic and text-based Aptitude for all DEB-based distributions}
+  \includegraphics[width=\textwidth]{software_managers_ubuntu_deb.png}
+\end{frame}
+
+\begin{frame}{Graphical package managers II}{GNOME Software in Fedora and YaST in openSUSE}
+  \includegraphics[width=\textwidth]{software_managers_fedora_suse.png}
+  \begin{itemize}
+    \item Practically every common general distribution has some graphical tool\ldots
+  \end{itemize}
+\end{frame}
+
+\subsection{Compilation}
+
 \begin{frame}[fragile]{Basics of compilation}
-\begin{itemize}
-  \item Some software is distributed only as source code written in languages like C or C++ -- user has to compile it to get binary executable
-  \item Compilation creates binary specific for particular operating system and hardware platform -- can be tuned for optimal performance
-  \item Interpreted languages like Bash, Perl, Python or Java don't have to be compiled (but it is possible) -- they need their interpreter to run, relative easily portable among hardware platforms and OS
-  \item Applications requiring compilation usually have good instructions
-\end{itemize}
+  \begin{itemize}
+    \item Some software is distributed only as source code written in languages like C or C++ -- user has to compile it to get binary executable
+    \item Compilation creates binary specific for particular operating system and hardware platform -- can be tuned for optimal performance
+    \item Interpreted languages like Bash, Perl, Python or Java don't have to be compiled (but it is possible) -- they need their interpreter to run, relative easily portable among hardware platforms and OS
+    \item Applications requiring compilation usually have good instructions
+    \item If you don't have to do it, don't do it. Solving problems can be complicated -- contact someone skilled or author of the application\ldots
+  \end{itemize}
   \begin{bashcode}
-    # General schema:
+    # General schema within application directory with the source code:
     configure # Many possible parameters, settings for compilation
               # Not required in every time
     make # Basic building command, sometimes only this is required
     make install # Final creation of binary, sometimes required
   \end{bashcode}
-\begin{itemize}
-  \item If you don't have to do it, don't do it. Solving problems can be complicated -- contact someone skilled or author of the application\ldots
-\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Compilation of RAxML}
-\begin{footnotesize}
-  Available from \url{https://github.com/stamatak/standard-RAxML} (cite \href{https://bioinformatics.oxfordjournals.org/content/30/9/1312.abstract}{Stamakis 2014}).
-\end{footnotesize}
+\begin{frame}[fragile]{Install tools needed for compilation}
+  \begin{itemize}
+    \item You need to install compilation tools for your distribution and programming languages you are going to use
+    \item Commonly, extra dependencies are required to compile the application
+    \begin{itemize}
+      \item Packages for compilation use to end with \texttt{-dev} or \texttt{-devel} (e.g. if the software requires package \texttt{zlib} to run, install also its developmental version \texttt{zlib-dev(el)} to be able to compile it)
+      \item All requirements should be listed in README or INSTALL documents of particular package -- user must install them manually\ldots
+    \end{itemize}
+  \end{itemize}
   \begin{bashcode}
-    # Create working directory
-    mkdir raxml
-    # Go there
-    cd raxml/
-    # Get source code from GitHub (svn downloads only changed files)
-    svn co https://github.com/stamatak/standard-RAxML/tags/v8.2.4
-    # Go to newly created directory
-    cd v8.2.4/
-    ls # List files
-    # No need of Windows version - delete it
-    rm -rf Windows*
-    # Compile standard version (other versions are available for better CPU)
-    make -f Makefile.gcc
-    # Remove unneeded files
-    rm *.o
-    # Launch it - see RAxML help
-    ./raxmlHPC -h
+    # openSUSE and SUSE Linux Enterprise
+    zypper in -t pattern devel_basis devel_C_C++
+    # Debian, Ubuntu and derivatives like Linux Mint and others
+    apt-get install build-essential # Or "aptitude install build-essential"
+    # Red Hat, CENTOS, Scientific Linux, Older Fedora and derivatives
+    yum groupinstall "Development Tools" "C Development Tools and Libraries"
+    # Fedora since version 22
+    dnf group install "Development Tools" "C Development Tools and Libraries"
   \end{bashcode}
 \end{frame}
 
+\begin{frame}[fragile]{Compilation of RAxML}
+  \begin{itemize}
+    \item Available from \url{https://github.com/stamatak/standard-RAxML} (cite \href{https://bioinformatics.oxfordjournals.org/content/30/9/1312.abstract}{Stamakis 2014})
+    \item Before compilation check \href{https://github.com/stamatak/standard-RAxML/blob/master/README}{README}
+    \item This example does not require to run \texttt{make install}, it does not have extra dependencies for compilation, it requires specifying of particular source file by \texttt{make -f} (there are multiple \texttt{GCC} files, no one main)
+  \end{itemize}
+  \begin{bashcode}
+    mkdir raxml # Create working directory
+    cd raxml/ # Go there
+    # Get source code from GitHub (svn downloads only changed files)
+    svn co https://github.com/stamatak/standard-RAxML/tags/v8.2.9
+    cd v8.2.9/ # Go to newly created directory
+    ls # List files
+    rm -rf Windows* # No need of Windows version - delete it
+    # Compile standard version (other versions are available for better CPU)
+    make -f Makefile.gcc
+    rm *.o # Remove unneeded files (temporal for compilation)
+    ./raxmlHPC -h # Launch it - see RAxML help
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Compilation of SAMtools}
+  \begin{itemize}
+    \item See \url{http://www.htslib.org/download/}
+    \item Ensure packages \texttt{zlib} and \texttt{zlib-dev(el)} are installed -- required for running and compilation, see \href{https://github.com/samtools/samtools/blob/1.3.1/INSTALL}{INSTALL} and \href{https://github.com/samtools/samtools/blob/1.3.1/README}{README}
+  \end{itemize}
+  \begin{bashcode}
+    wget https://github.com/samtools/samtools/releases/download/1.3.1/
+      samtools-1.3.1.tar.bz2 # Download SAMtools
+    tar xjvf samtools-1.3.1.tar.bz2 # Unpack the archive
+    cd samtools-1.3.1/ # Go to the unpacked directory
+    ./configure # Configure settings for compilation
+    ./configure --help # See various configuring options
+    ./configure --without-curses # Compile without ncurses support
+    make # Compile the software - check if there is error
+         # Ensure developmental files for zlib (and ncurses) are available
+    make install # Copy products into final location - default /usr/local
+    make prefix=/where/to/install install # Install into custom location
+    make prefix=/home/$USER/bin install # Binary is in /home/$USER/bin/bin
+    make clean # Cleanup - final files are already in the destination
+  \end{bashcode}
+\end{frame}
+
+\subsection{Java}
+
 \begin{frame}[fragile]{Launching Java applications}
-\begin{itemize}
-  \item \href{https://www.java.com/}{Java} is probably the most portable language working on any operating system -- the only condition is to install \href{https://en.wikipedia.org/wiki/Java_virtual_machine}{Java virtual machine (JVM)}
-  \item Linux usually use \href{http://openjdk.java.net/}{OpenJDK} -- search for packages named \texttt{*openjdk*}
-  \item Let's download e.g. \href{http://tree.bio.ed.ac.uk/software/figtree/}{FigTree} from \url{http://tree.bio.ed.ac.uk/download.php?id=90&num=3}
-\end{itemize}
+  \begin{itemize}
+    \item \href{https://www.java.com/}{Java} is probably the most portable language working on any operating system -- the only condition is to install \href{https://en.wikipedia.org/wiki/Java_virtual_machine}{Java virtual machine (JVM)}
+    \item Linux usually use \href{http://openjdk.java.net/}{OpenJDK} -- search for packages named \texttt{*openjdk*}
+    \item Let's download e.g. \href{http://tree.bio.ed.ac.uk/software/figtree/}{FigTree} from \url{http://tree.bio.ed.ac.uk/download.php?id=90&num=3}
+  \end{itemize}
   \begin{bashcode}
     # Go to directory where you downloaded it
     cd directory/with/downloaded/figtree
@@ -2745,7 +2849,9 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
   \end{bashcode}
 \end{frame}
 
-% \begin{frame}{Launching of Windows and DOS applications in Linux} % TODO Wine
+% \subsection{Windows applications} % TODO Wine
+
+% \begin{frame}{Launching of Windows and DOS applications in Linux}
 %   \begin{itemize}
 %     \item 
 %   \end{itemize}
@@ -2756,61 +2862,66 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
 \subsection{Information}
 
 \begin{frame}[allowframebreaks]{CESNET and MetaCentrum}
-\begin{itemize}
-  \item \href{https://www.cesnet.cz/?lang=en}{CESNET} is organization of Czech universities, Academy of Science and other organizations taking care about Czech backbone Internet, one of world leading institutions of this type
-  \item CESNET provides various \href{https://www.cesnet.cz/services/?lang=en}{services}
   \begin{itemize}
-    \item Massive computations -- \href{https://www.cesnet.cz/services/massive-computations-metacentrum/?lang=en}{MetaCentrum}
-    \item Practically unlimited \href{https://www.cesnet.cz/services/data-storage/?lang=en}{data storage}
-    \item \href{https://www.cesnet.cz/services/filesender/?lang=en}{FileSender} to be able to send up to 500~GB file
-    \item \href{https://www.cesnet.cz/services/owncloud/?lang=en}{ownCloud} to backup and/or sync data across devices (default capacity is 100~GB)
+    \item \href{https://www.cesnet.cz/?lang=en}{CESNET} is organization of Czech universities, Academy of Science and other organizations taking care about Czech backbone Internet, one of world leading institutions of this type
+    \item CESNET provides various \href{https://www.cesnet.cz/services/?lang=en}{services}
     \begin{itemize}
-      \item It is possible to connect by webDAV to ownCloud (slide \ref{transfers}) -- many applications support it
+      \item Massive computations -- \href{https://www.cesnet.cz/services/massive-computations-metacentrum/?lang=en}{MetaCentrum}
+      \item Practically unlimited \href{https://www.cesnet.cz/services/data-storage/?lang=en}{data storage}
+      \item \href{https://www.cesnet.cz/services/filesender/?lang=en}{FileSender} to be able to send up to 500~GB file
+      \item \href{https://www.metacentrum.cz/en/Sluzby/MetaCloud/}{MetaCloud} -- computing (HPC) cloud similar to e.g. Amazon Elastic Compute Cloud (EC2) or Google Compute Engine
+      \item \href{https://www.cesnet.cz/services/owncloud/?lang=en}{ownCloud} to backup and/or sync data across devices (default capacity is 100~GB, user may ask for more)
+      \begin{itemize}
+	\item It is possible to connect by webDAV to ownCloud (slide \ref{transfers}) -- many applications support it
+	\item It is possible to share calendars and/or address books via claDAV and cardDAV among devices and/or people
+      \end{itemize}
     \end{itemize}
-    \item And \href{https://www.cesnet.cz/services/?lang=en}{more\ldots}
+    \item Services accessible without registration
+    \begin{itemize}
+      \item ownCloud \url{https://owncloud.cesnet.cz/}
+      \item FileSender \url{https://filesender.cesnet.cz/}
+      \item Go to web and log in with your institutional password
+    \end{itemize}
+    \item Services requiring registration (and approval)
+    \begin{itemize}
+      \item To use MetaCentrum fill registration form \url{https://metavo.metacentrum.cz/en/application/form}
+      \item To use data storage fill registration form \url{https://einfra.cesnet.cz/perun-registrar-fed/?vo=storage&locale=en}
+      \item After registration for MetaCentrum, user can join MetaCloud via \url{https://perun.metacentrum.cz/fed/registrar/?vo=meta&group=metacloud}
+      \item Users not having access to \href{https://www.eduid.cz/en/index}{EduID} have to register first at HostelID \url{https://hostel.eduid.cz/en/index.html}
+      \item Note some browser do not have required certificate and registration pages do not work correctly. \href{https://www.mozilla.org/firefox/}{Mozilla Firefox} should be safe choice every time.
+    \end{itemize}
+    \item Information about data storage \url{https://du.cesnet.cz/en/start} contains detailed usage instructions
+    \item Information about MetaCentrum \url{https://www.metacentrum.cz/en/}
+    \item Information about MetaCloud \url{https://wiki.metacentrum.cz/wiki/Kategorie:Clouds}
+    \item Most of practical information for users are at wiki \url{https://wiki.metacentrum.cz/w/index.php?&setlang=en}
   \end{itemize}
-  \item Services accessible without registration
-  \begin{itemize}
-    \item ownCloud \url{https://owncloud.cesnet.cz/}
-    \item FileSender \url{https://filesender.cesnet.cz/}
-    \item Go to web and log in with your institutional password
-  \end{itemize}
-  \item Services requiring registration (and approval)
-  \begin{itemize}
-    \item To use MetaCentrum fill registration form \url{https://metavo.metacentrum.cz/en/application/form}
-    \item To use data storage fill registration form \url{https://einfra.cesnet.cz/perun-registrar-fed/?vo=storage&locale=en}
-    \item Users not having access to \href{https://www.eduid.cz/en/index}{EduID} have to register first at HostelID \url{https://hostel.eduid.cz/en/index.html}
-    \item Note some browser do not have required certificate and registration pages do not work correctly. \href{https://www.mozilla.org/firefox/}{Mozilla Firefox} should be safe choice every time.
-  \end{itemize}
-  \item Information about data storage \url{https://du.cesnet.cz/en/start} contains detailed usage instructions
-  \item Information about MetaCentrum \url{https://www.metacentrum.cz/en/}
-  \item Most of practical information for users are at wiki \url{https://wiki.metacentrum.cz/w/index.php?&setlang=en}
-\end{itemize}
 \end{frame}
 
 \begin{frame}{MetaCentrum}
-\begin{itemize}
-  \item Also available is Galaxy \url{https://galaxy.metacentrum.cz/galaxy/} (same login as to MetaCentrum) -- web based bioinformatics framework (more information at \href{https://wiki.metacentrum.cz/wiki/Galaxy_application}{wiki})
-  \item Current state and usage as available at \url{https://metavo.metacentrum.cz/en/}
-  \item Manage your user account at \url{http://metavo.metacentrum.cz/en/myaccount/index.html}
-  \item Personal view on actual resources and running tasks is at \url{https://metavo.metacentrum.cz/pbsmon2/person}
-  \item List of available applications \url{https://wiki.metacentrum.cz/wiki/Kategorie:Applications}
-  \item It has 8 front ends where users log and thousands of computers doing the calculations -- they are not accessed directly
-  \item Most of computers are running \href{https://www.debian.org/}{Debian GNU/Linux}
-\end{itemize}
+  \begin{itemize}
+    \item Also available is Galaxy \url{https://galaxy.metacentrum.cz/galaxy/} (same login as to MetaCentrum) -- web based bioinformatics framework (more information at \href{https://wiki.metacentrum.cz/wiki/Galaxy_application}{wiki})
+    \item Current state and usage as available at \url{https://metavo.metacentrum.cz/en/}
+    \item Manage your user account at \url{http://metavo.metacentrum.cz/en/myaccount/index.html}
+    \item Personal view on actual resources and running tasks is at \url{https://metavo.metacentrum.cz/pbsmon2/person}
+    \item List of available applications \url{https://wiki.metacentrum.cz/wiki/Kategorie:Applications}
+    \item It has 8 front ends where users log and thousands of computers doing the calculations -- they are not accessed directly
+    \item Most of computers are running \href{https://www.debian.org/}{Debian GNU/Linux}
+  \end{itemize}
 \end{frame}
 
 \subsection{Usage}
 
 \begin{frame}[fragile]{MetaCentrum usage}
   \begin{itemize}
-    \item User can transfer data on one of \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontends} by \texttt{scp} or for example \href{https://winscp.net/}{WinSCP} from Windows
+    \item User can transfer data on one of \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontends} by e.g. \texttt{scp} or \href{https://winscp.net/}{WinSCP} from Windows
     \item Same credentials are used for all front ends, for SSH login as well as file transmissions
   \end{itemize}
   \begin{bashcode}
     # Login to selected server (tarkil is located in Prague)
-    ssh -X USER@tarkil.cesnet.cz
+    ssh USER@tarkil.metacentrum.cz
+    module add torque-client # Switch job scheduler to PBS Torque on tarkil
     # Continue as in any other command line...
+    qsub ... # Submit the job (see later)
   \end{bashcode}
   \begin{itemize}
     \item In home directory on the server prepare all needed data and non-interactive script (interactive are more complicated) which will do the calculations
@@ -2821,8 +2932,8 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
 \begin{frame}{File transfers to MetaCentrum}
   \begin{itemize}
     \item Graphical applications: \href{http://gftp.org/}{gFTP}, \href{https://filezilla-project.org/}{FileZilla} or from most of file managers
-    \item Protocol is SSH/SSH2/SFTP/SCP, port 22, server is selected \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontend's} address (e.g. \texttt{tarkil.cesnet.cz}) -- it is recommendable to use all the time same frontend
-    \item All servers are accessible under domain \texttt{*.metacentrum.cz}: \texttt{skirit}, \texttt{perian}, \texttt{onyx}, \texttt{zuphux} (located in Brno), \texttt{nympha}, \texttt{minos} (in Pilsen), \texttt{hermes} (in České Budějovice) and \texttt{tarkil} (in Prague) -- so that e.g. \texttt{tarkil.cesnet.cz} is synonymous to \texttt{tarkil.metacentrum.cz}
+    \item Protocol is SSH/SSH2/SFTP/SCP, port 22, server is selected \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontend's} address (e.g. \texttt{tarkil.metacentrum.cz}) -- it is recommendable to use all the time same frontend
+    \item All servers are accessible under domain \texttt{*.metacentrum.cz}: \texttt{skirit}, \texttt{perian}, \texttt{onyx}, \texttt{zuphux} (located in Brno), \texttt{nympha}, \texttt{minos} (in Pilsen), and \texttt{tarkil} (in Prague) -- so that e.g. \texttt{tarkil.grid.cesnet.cz} is synonymous to \texttt{tarkil.metacentrum.cz}
     \item See slide \ref{transfers} and following to command-line transfers of files
   \end{itemize}
   \includegraphics[width=\textwidth]{gftp.png}
@@ -2835,8 +2946,8 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
     #!/bin/bash
     # Modify the script according to your needs!
     # Set data directories
-    WORKDIR="bayes_batch"
-    DATADIR="/storage/praha1/home/$LOGNAME"
+    WORKDIR="bayes_batch" # Or something else
+    DATADIR="/storage/praha1/home/$LOGNAME" # Or other storage
     # So there is directory /storage/praha1/home/gunnera/bayes_batch
     # (in this case) containing all the data needed for calculations
     # Clean-up of SCRATCH (it is temporal directory created by server) -
@@ -2850,19 +2961,21 @@ Remove repository & zypper rm \textit{repository} & nano /etc/apt/sources.list
     # calculations are done
     cd $SCRATCHDIR/ || exit 2 # If it fails, exit script
   \end{bashcode}
-Ends on following slide\ldots
+  \vfill
+  Ends on following slide\ldots
+  \vfill
 \end{frame}
 
 \begin{frame}[fragile]{Basic skeleton of script running tasks II}
-\ldots begins on previous slide.
-\vfil
+  \ldots begins on previous slide\ldots
+  \vfill
   \begin{bashcode}
     # Prepare calculations - load required application modules
     # See https://wiki.metacentrum.cz/wiki/Kategorie:Applications
     # Every application module is loaded by "module add XXX"
     . /packages/run/modules-2.0/init/sh
     module add parallel # In this case GNU Parallel and MrBayes
-    module add mrbayes-3.2.4
+    module add mrbayes-3.2.6
     # Launch the analysis - calculate MrBayes for multiple files
     # Note Parallel will distribute task among 8 CPU threads (-j 8),
     # so that qsub must in this case contain nodes=1:ppn=8 (see further)
@@ -2876,13 +2989,14 @@ Ends on following slide\ldots
     \item Make \texttt{metacentrum.sh} executable and modify it to fit your needs\ldots
     \item If it was written on Windows, convert EOL (and encoding)\ldots
   \end{itemize}
+  \vfill
 \end{frame}
 
 \begin{frame}[fragile]{Launching of tasks}
-\begin{itemize}
-  \item \url{https://wiki.metacentrum.cz/wiki/Running_jobs_in_scheduler}
-  \item Personal view \url{https://metavo.metacentrum.cz/pbsmon2/person} has nice overview of available resources and tasks and allows comfortable construction of submission command
-\end{itemize}
+  \begin{itemize}
+    \item \url{https://wiki.metacentrum.cz/wiki/Running_jobs_in_scheduler}
+    \item Personal view \url{https://metavo.metacentrum.cz/pbsmon2/person} has nice overview of available resources and tasks and allows comfortable construction of submission command
+  \end{itemize}
   \begin{bashcode}
     # We will run up to 5 days, require 4 GB of RAM, 5 GB of disk space, one
     # physical computer with 8 CPU threads and we get all information mails
@@ -2896,6 +3010,37 @@ Ends on following slide\ldots
     qdel 123456789 # Terminate scheduled or running task
     qfree # List available resources
   \end{bashcode}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Scheduling details}
+  \begin{itemize}
+    \item \texttt{tarkil} is currently testing new scheduler \href{https://wiki.metacentrum.cz/wiki/PBS_Professional}{PBS Professional}
+    \begin{itemize}
+      \item It is using only limited number of machines, the syntax is slightly different from version described here
+      \item Rather use for now another frontend or switch to old scheduler by \texttt{module add torque-client} and continue as usual (\texttt{qsub\ldots})
+    \end{itemize}
+    \item Specify needed time (up to 4 weeks; day, hours): \texttt{-l walltime=3w:4d:6h}, \texttt{-l walltime=6d:18h},~\ldots
+    \begin{itemize}
+      \item User \href{mailto:meta@cesnet.cz}{can ask} to prolonge the walltime
+    \end{itemize}
+    \item Ask for as much RAM as you need (e.g. \texttt{-l mem=8gb})
+    \begin{itemize}
+      \item If the task is going to require more, than allowed, system kills it\ldots
+      \item If user doesn't use all required RAM, the system temporarily lowers priority for future tasks
+      \item It can be hard to estimate\ldots
+    \end{itemize}
+    \item Disk space is relatively free resource, user can ask more to have some reserve (e.g. \texttt{-l scratch=10gb})
+    \item Specify how many physical computer you are going to use (e.g. \texttt{-l nodes=1} for one machine) and number of CPU threads on each machine (e.g. \texttt{-l nodes=1:ppn=8} for 1~machine with 8~cores or \texttt{-l nodes=2:ppn=4} for 2~machines, each with 4~CPU threads)
+    \begin{itemize}
+      \item It use to be necessary to specify correct number of threads for the application (e.g. \texttt{parallel -j 4}) -- the application sees all CPUs on the machine, but can't use them
+      \item If the application consumes less than required, the system temporarily lowers priority for future tasks, if it try to use more, it will be very slowed down
+      \item If using more physical machines, ensure correct settings of e.g. MPI
+    \end{itemize}
+    \item If requesting e-mails (e.g. \texttt{-m abe} to get mail about submission, starting and termination of the task) and submitting plenty of tasks by some script, it can result in hundreds of mails -- mail servers don't like it\ldots
+    \item Every user has certain \href{https://metavo.metacentrum.cz/pbsmon2/users/}{priority} highered by acknowledgments in publications to MetaCentrum and lowered by intensive usage of the service (the usage is calculated from past month)
+    \item After submission of the task, check in \href{https://metavo.metacentrum.cz/pbsmon2/queues/jobsQueued}{the queue} in which state it is -- sometimes it can't start because of impossible combination of resources or so
+    \item User can \href{https://metavo.metacentrum.cz/pbsmon2/nodes/physical}{check load of machines}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Common problems with launching the tasks}
@@ -2919,12 +3064,12 @@ Ends on following slide\ldots
 \end{frame}
 
 \begin{frame}[fragile]{Get to task's working directory}
-\begin{itemize}
-  \item Go to \url{https://metavo.metacentrum.cz/pbsmon2/person} and click to list of your tasks and click to selected task
-  \item Search for information \textbf{exec\_host} (address of node doing the task) and \textbf{SCRATCHDIR} (temporal directory for all data and results)
-  \item Sometimes one needs to monitor task progress or influence it
-  \item It is not possible to directly modify running task, but at least check (and possibly modify) input data and see outputs
-\end{itemize}
+  \begin{itemize}
+    \item Go to \url{https://metavo.metacentrum.cz/pbsmon2/person} and click to list of your tasks and click to selected task
+    \item Search for information \textbf{exec\_host} (address of node doing the task) and \textbf{SCRATCHDIR} (temporal directory for all data and results)
+    \item Sometimes one needs to monitor task progress or influence it
+    \item It is not possible to directly modify running task, but at least check (and possibly modify) input data and see outputs
+  \end{itemize}
   \begin{bashcode}
     # From MetaCentrum frontend login to respective node running the task
     ssh exec_host # No need to specify user name
@@ -2935,9 +3080,9 @@ Ends on following slide\ldots
 \end{frame}
 
 \begin{frame}[fragile]{Interactive tasks}
-\begin{itemize}
-  \item See information at \url{https://wiki.metacentrum.cz/wiki/Interactive_job}
-\end{itemize}
+  \begin{itemize}
+    \item See information at \url{https://wiki.metacentrum.cz/wiki/Interactive_job}
+  \end{itemize}
   \begin{bashcode}
     # Again launch qsub according to actual needs
     # Note "-I" for interactive session and missing script name
@@ -2949,18 +3094,18 @@ Ends on following slide\ldots
                              # Server address is output from "hostname"
     screen # Secure we can log off in the meantime
   \end{bashcode}
-\begin{itemize}
-  \item Work as on normal Linux server\ldots
-  \item With \texttt{screen} we can disconnect as usually and let tasks run in background
-\end{itemize}
+  \begin{itemize}
+    \item Work as on normal Linux server\ldots
+    \item With \texttt{screen} we can disconnect as usually and let tasks run in background
+  \end{itemize}
 \end{frame}
 
 \subsection{Graphical connection}
 
 \begin{frame}[fragile]{Graphical interactive task}
-\begin{itemize}
-  \item See information at \url{https://wiki.metacentrum.cz/wiki/Remote_desktop}
-\end{itemize}
+  \begin{itemize}
+    \item See information at \url{https://wiki.metacentrum.cz/wiki/Remote_desktop}
+  \end{itemize}
   \begin{bashcode}
     # Again launch qsub according to actual needs
     # Note "-I" for interactive session and missing script name
@@ -2973,15 +3118,15 @@ Ends on following slide\ldots
     gui info -p # Print information about running VNC sessions
                 # Including address, port and password to connect
   \end{bashcode}
-\begin{itemize}
-  \item Launch your favorite VNC client (\href{https://www.kde.org/applications/internet/krdc/}{KRDC}, \href{http://www.tightvnc.com/}{TightVNC},~\ldots) and use credentials from above output to connect
-  \item Work as on normal Linux desktop\ldots
-  \item With \texttt{screen} we can disconnect as usually
-\end{itemize}
+  \begin{itemize}
+    \item Launch your favorite VNC client (\href{https://www.kde.org/applications/internet/krdc/}{KRDC}, \href{http://www.tightvnc.com/}{TightVNC},~\ldots) and use credentials from above output to connect
+    \item Work as on normal Linux desktop\ldots
+    \item With \texttt{screen} we can disconnect as usually
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Running VNC}
-\includegraphics[width=\textwidth]{vnc.png}
+  \includegraphics[width=\textwidth]{vnc.png}
 \end{frame}
 
 \section{Administration}
@@ -2995,13 +3140,14 @@ Ends on following slide\ldots
 \subsection{System services}
 
 \begin{frame}[fragile]{Managing system services}
-\begin{itemize}
-  \item Different among distributions -- several main methods
-  \item Most common is \href{https://wiki.freedesktop.org/www/Software/systemd/}{SystemD}, less common older init scripts and RC scripts
-  \item Used to manage services like web server, database,~\ldots
-  \item \alert{Read documentation for your distribution!}
-  \item All actions require root authentication
-\end{itemize}
+  \begin{itemize}
+    \item Different among distributions -- several main methods
+    \item In Linux, most common is \href{https://wiki.freedesktop.org/www/Software/systemd/}{SystemD}, less common older init scripts and RC scripts
+    \item Mac OS~X and various BSD and other systems have different methods
+    \item Used to manage system services like networking, cron, web server, database,~\ldots
+    \item \alert{Read documentation for your distribution!}
+    \item Most of actions require root authentication
+  \end{itemize}
   \begin{bashcode}
     # SystemD - huge amount of possibilities
     systemctl enable/disable/status/start/stop servicename # TAB helps
@@ -3016,8 +3162,8 @@ Ends on following slide\ldots
   \begin{bashcode}
     # List installed services and their status
     systemctl list-units --type service
-    # Enable/disable/see status/start/stop service
-    systemctl enable/disable/status/start/stop servicename # TAB helps
+    # Enable/disable/see status/start/stop/restart/... service
+    systemctl enable/disable/status/start/stop/restart servicename # TAB...
     # Show overriden config files
     systemd-delta
     # Analyze boot time (how long does each service take to start)
@@ -3037,6 +3183,10 @@ Ends on following slide\ldots
 % \section{Git} % TODO Git
 
 % \begin{frame}[fragile]{Git and GitHub}
+%   \begin{itemize}
+%     \item \href{https://github.com/}{GitHub} is currently probably the most popular platform to host development of open-source projects
+%     \item \href{https://git-scm.com/}{Git} is version controlling system -- it traces changes among all versions -- absolutely crucial for any software development	
+%   \end{itemize}
 %   \begin{bashcode}
 %     #
 %   \end{bashcode}
@@ -3047,37 +3197,141 @@ Ends on following slide\ldots
 % \subsection{Switching to Linux} % TODO Switching
 
 % \begin{frame}{Brief list of applications to help to switch to Linux}
-% \begin{itemize}
-%   \item 
-% \end{itemize}
+%   \begin{itemize}
+%     \item 
+%   \end{itemize}
 % \end{frame}
 
-% \subsection{Resources} % TODO Resources
+\subsection{Resources}
 
-% \begin{frame}{}
-% \begin{itemize}
-%   \item 
-% \end{itemize}
-% \end{frame}
+\begin{frame}[allowframebreaks]{Resources to learn to work in the terminal}
+  \begin{itemize}
+    \item openSUSE (general handbook) \url{https://doc.opensuse.org/documentation/leap/startup/html/book.opensuse.startup/part.bash.html}
+    \item Ubuntu (general handbook) \url{https://help.ubuntu.com/community/UsingTheTerminal}
+    \item BASH full reference manual \url{https://www.gnu.org/software/bash/manual/} (advanced)
+    \item Debian (general handbook) \url{https://www.debian.org/doc/manuals/debian-reference/ch01.en.html}
+    \item Guide to Unix \url{https://en.wikibooks.org/wiki/Guide_to_Unix}
+    \item BASH for beginners \url{http://tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html} (the site has plenty of good resources)
+    \item BASH Guide for Beginners \url{http://linuxcourse.rutgers.edu/documents/Bash-Beginners-Guide/}
+    \item Linux tutorial \url{http://ryanstutorials.net/linuxtutorial/}
+    \item Getting Started with BASH \url{http://www.hypexr.org/bash_tutorial.php}
+    \item Bash Guide \url{http://mywiki.wooledge.org/BashGuide}
+    \item Učebnice Linuxu \url{https://www.abclinuxu.cz/ucebnice}
+  \end{itemize}
+\end{frame}
 
-% \subsection{The very end}
+\begin{frame}{Manuals for package management}
+  \begin{itemize}
+    \item openSUSE AND SUSE Linux Enterprise: \url{https://doc.opensuse.org/documentation/leap/startup/html/book.opensuse.startup/part.reference.software.html} and \url{https://en.opensuse.org/Zypper}
+    \item Red Hat, Fedora, CENTOS, Scientific Linux and others: \url{http://yum.baseurl.org/}
+    \item Debian (and derivatives): \url{https://www.debian.org/doc/manuals/debian-reference/ch02.en.html} and \url{https://wiki.debian.org/PackageManagement}
+    \item Ubuntu (and derivatives): \url{https://help.ubuntu.com/stable/ubuntu-help/addremove.html} and \url{https://help.ubuntu.com/community/AptGet/Howto}
+    \item And another distributions\ldots
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{How to ask for help}
+  \label{howtoask}
+  \begin{itemize}
+    \item \alert{Never ever} ask simple silly lazy questions you can quickly find in manual or web
+    \item People on mailing lists and forums respond volunteerly in their spare free time -- do not waste it -- be polite, brief and informative
+    \item Be as specific and exact as possible
+    \begin{itemize}
+      \item Write \alert{exactly} what you did (``It doesn't work!'' is useless\ldots)
+      \item Copy/paste your commands and their output, especially error messages -- they are keys to solve the problem
+      \item Try to search web for the error messages (or their parts)
+      \item Try to provide minimal working example -- add at least part of your data (if applicable) so that the problem is reproducible
+      \item Specify name version(s) of distribution ans problematic software
+    \end{itemize}
+    \item \textbf{OSS is free as freedom of speech -- not as free beer!}
+    \begin{itemize}
+      \item As soon as you don't pay for support, you can't blame anyone for lack of responses
+      \item There are plenty of reasons some software doesn't work -- usage/data author didn't expect, unsupported version of operating system, author's mistake, user's mistake,~\ldots
+      \item Authors wish their software to be useful -- constructive feedback, reporting bugs and wishes is welcomed, but it must be provided in the way useful for the developer
+    \end{itemize}
+    \item Imagine you should answer -- which information do you need?
+    \item Try to find the best place to ask your question -- specific forum for particular distribution or software use to be the best option
+    \item Learning command line is like learning foreign language\ldots
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Main general fora}
+  \begin{itemize}
+    \item Probably the best are fora from StackExchange \url{https://stackexchange.com/sites}
+    \item General forum for programmers \url{https://stackoverflow.com/}
+    \item UNIX forum \url{https://unix.stackexchange.com/}
+    \item Forum for administrators \url{https://superuser.com/}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{openSUSE}
+  \begin{itemize}
+    \item Homepage \url{https://www.opensuse.org/}
+    \item Wiki \url{https://en.opensuse.org/Main_Page}, documentation \url{https://doc.opensuse.org/}
+    \item News \url{https://news.opensuse.org/}, developers' blogs \url{https://lizards.opensuse.org/}, blogs \url{http://planet.opensuse.org/}
+    \item Forums \url{https://forums.opensuse.org/}, mailing lists \url{https://lists.opensuse.org/}
+    \item Community \url{http://opensuse-community.org/}, guide \url{http://opensuse-guide.org/}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Debian, Ubuntu, Linux Mint and derivatives}
+  \begin{itemize}
+    \item Debian \url{https://www.debian.org/}
+    \item Ubuntu \url{https://www.ubuntu.com/}, support \url{https://www.ubuntu.com/support}, Ask ubuntu \url{https://askubuntu.com/}
+    \item Kubuntu \url{http://www.kubuntu.org/}, forum \url{https://www.kubuntuforums.net/}
+    \item Xubuntu \url{http://xubuntu.org/}, Lubuntu \url{http://lubuntu.net/}
+    \item Linux Mint \url{https://www.linuxmint.com/}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Fedora}
+  \begin{itemize}
+    \item Homepage \url{https://getfedora.org/}
+    \item Official forum \url{https://ask.fedoraproject.org/}
+    \item Documentation \url{https://docs.fedoraproject.org/}
+    \item Community forum \url{http://fedoraforum.org/}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{KDE and LibreOffice}
+  \begin{itemize}
+    \item LibreOffice \url{https://www.libreoffice.org/}, Document Foundation \url{https://www.documentfoundation.org/}
+    \item KDE \url{https://www.kde.org/}, forum \url{https://forum.kde.org/}, application store \url{https://store.kde.org/}, KDE for education \url{https://edu.kde.org/}, blogs \url{https://planetkde.org/}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{České weby -- zdroje informací a fóra}
+  \begin{itemize}
+    \item ABC Linuxu \url{https://www.abclinuxu.cz/}
+    \item Root \url{https://www.root.cz/}
+    \item LinuxExpres \url{https://www.linuxexpres.cz/}
+    \item LinuxDays (největší konference) \url{https://www.linuxdays.cz/}
+    \item OpenOffice/LibreOffice \url{https://www.openoffice.cz/} a~\url{https://www.knihaoffice.cz/}
+    \item Ubuntu \url{http://www.ubuntu.cz/}, wiki \url{http://wiki.ubuntu.cz/}, fórum \url{http://forum.ubuntu.cz/}, Kubuntu \url{http://www.kubuntu.cz/}, Lubuntu \url{http://www.lubuntu.cz/}, Xubuntu \url{http://www.xubuntu.cz/}
+    \item Fedora \url{https://mojefedora.cz/}, příručka \url{https://wiki.mojefedora.cz/doku.php?id=navody:prirucka:obsah}
+    \item openSUSE \url{http://www.opensuse.cz/}
+    \item Linux Mint \url{https://www.linux-mint-czech.cz/}
+  \end{itemize}
+\end{frame}
+
+\subsection{The very end}
 
 \begin{frame}{The end}{Our course is over\ldots}
-\begin{center}
-  \ldots I hope it was helpful for You\ldots\\
-  \vfill
-  \ldots any feedback is welcomed\ldots
-  \vfill
-  \ldots happy Linux hacking\ldots
-  \vfill
-  \ldots any final questions?
-  \vfill
-\end{center}
-\begin{flushright}
-  \begin{tiny}
-   \href{https://en.wikipedia.org/wiki/XeTeX}{Typesetting} using \XeLaTeX~on \href{https://www.opensuse.org/}{openSUSE} \href{https://en.wikipedia.org/wiki/GNU}{GNU}/\href{https://en.wikipedia.org/wiki/Linux}{Linux} \today
-  \end{tiny}
-\end{flushright}
+  \begin{center}
+    \ldots I hope it was helpful for You\ldots
+    \vfill
+    \ldots any feedback is welcomed\ldots
+    \vfill
+    \ldots happy Linux hacking\ldots
+    \vfill
+    \ldots any final questions?
+    \vfill
+  \end{center}
+  \begin{flushright}
+    \begin{tiny}
+    \href{https://en.wikipedia.org/wiki/XeTeX}{Typesetting} using \XeLaTeX~on \href{https://www.opensuse.org/}{openSUSE} \href{https://en.wikipedia.org/wiki/GNU}{GNU}/\href{https://en.wikipedia.org/wiki/Linux}{Linux} \today
+    \end{tiny}
+  \end{flushright}
 \end{frame}
 
 \end{document}
@@ -3086,5 +3340,3 @@ Ends on following slide\ldots
 % * Security, antiviruses
 % * More examples about software on MetaCentrum, scripts (on MetaCentrum)
 % * More about regular expressions
-% * VirtualBox shared folders
-% * Filtering of user inputs
