@@ -1560,7 +1560,8 @@
     find files/ -type f -exec chmod 777 '{}' \;
     # Find all executable files within current directory and list them
     find . -executable -type f -print
-    man find # See another options
+    find doc/ -type d -empty -execdir rmdir {} \; # Delete empty directories
+    man find # See another options. Much more...
   \end{bashcode}
 \end{frame}
 
@@ -2629,36 +2630,77 @@
   \end{itemize}
 \end{frame}
 
-% \begin{frame}[fragile]{Selecting version of RAxML according the CPU type} % TODO RAxML branching - CPU type
-%   \begin{itemize}
-%     \item 
-%   \end{itemize}
-%   \begin{bashcode}
-%     #
-%   \end{bashcode}
-% \end{frame}
-
-% \begin{frame}[fragile]{Multiple branching in one step} % TODO Multiple branching with case
-%   \begin{itemize}
-%     \item 
-%   \end{itemize}
-%   \begin{bashcode}
-%     #
-%   \end{bashcode}
-% \end{frame}
-
-\subsection{Loops} % TODO More examples, break, ...
-
-\begin{frame}[fragile]{For, while and until cycles}
+\begin{frame}[fragile]{Selecting version of RAxML according the CPU type I}
+  \begin{itemize}
+    \item \href{https://github.com/stamatak/standard-RAxML}{RAxML} can take advantage of modern CPUs to highly speed up calculations, with or without parallelization -- every version has separated binary, user must select, see \href{https://github.com/stamatak/standard-RAxML/blob/master/README}{README}
+    \item After compilation, the script can select e.g. on remote server
+    \item RAxML binaries must be in \texttt{\$PATH}
+    \item See \texttt{raxml\_if.sh} for whole script
+  \end{itemize}
   \begin{bashcode}
-    # One line for cycle for resizing of images
-    for file in *.jpg; do convert $file -resize 100x100 thumbs-$file; done
+    if grep -iq avx2 /proc/cpuinfo; then # Does the CPU support AVX2?
+      RAXML='raxmlHPC-AVX2' # Select appropriate binary
+      elif grep -iq avx /proc/cpuinfo; then # Does the CPU support AVX?
+        RAXML='raxmlHPC-AVX' # Select appropriate binary
+        elif grep -iq sse3 /proc/cpuinfo; then # Does the CPU support SSE3?
+          RAXML='raxmlHPC-SSE3' # Select appropriate binary
+          else # The very last option
+            RAXML='raxmlHPC' # Slowest oldest CPU...
+      fi # End of branching
+    $RAXML -s $INPUT ... # All the parameters as usually...
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Selecting version of RAxML according the CPU type II}{Multiple branching in one step}
+  \begin{itemize}
+    \item Same task as on previous slide, but instead of it-then branching it is using \texttt{case}
+    \item See \texttt{raxml\_case.sh} for whole script
+  \end{itemize}
+  \begin{bashcode}
+    # Determine which CPU is available and which binary use then
+    CPUFLAGS=$(grep -i flags /proc/cpuinfo | uniq)
+    case "$CPUFLAGS" in
+      *avx2*|*AVX2*) # Does the CPU support AVX2?
+        RAXML='raxmlHPC-AVX2';; # Select appropriate binary
+      *avx*|*AVX*) # Does the CPU support AVX?
+        RAXML='raxmlHPC-AVX';; # Select appropriate binary
+      *sse3*|*SSE3*) # Does the CPU support SSE3?
+        RAXML='raxmlHPC-SSE3';; # Select appropriate binary
+      *) # The very last option
+        RAXML='raxmlHPC';; # Slowest oldest CPU...
+      esac # End of branching
+    $RAXML -s $INPUT # All the parameters as usually...
+  \end{bashcode}
+\end{frame}
+
+\subsection{Loops}
+
+\begin{frame}[fragile]{For cycles}
+  \begin{bashcode}
+    # Ways how to declare number of repetitions
+    for I in `seq 1 10`; do echo $I; done # "seq" is outdated
+    for I in 1 2 3 4 5 6 7 8 9 10; do echo $I; done
+    for I in {1..10}; do echo $I; done
+    for (( I=1; I<=10; I++ )); do echo $I; done
+    # One line for cycle for resizing of images (another option, as above)
+    for JPGF in *.jpg; do convert $JPGF -resize 100x100 thumbs-$JPGF; done
     # More commands in a block
-    for file in `ls -1 *.jpg`; do
-      echo "Processing file $file"
-      convert $file -resize 100x100 thumbs-$file
-      echo thumbs-$file created
+    for JPGF in `ls -1 *.jpg`; do
+      echo "Processing JPGF $JPGF"
+      convert $JPGF -resize 100x100 thumbs-$JPGF
+      echo "File thumbs-$file created"
       done
+    for ...; do # Start cyclus as you need
+      command1 # command1 will be executed in any cas
+      if (condition); then # Set some condition to skip command2
+        continue; fi # Go to next iteration of the loop and skip command2
+      command2
+      done
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{While and until cycles}
+  \begin{bashcode}
     # while cycle is evaluating expression and if it is equal to 0
     # the cycle body is launched, repeatedly while the condition is met
     while expression
@@ -2669,6 +2711,15 @@
     until expression; do
       commands
       done
+    while ...; do # Start cyclus as you need
+      commands...
+      if [condition]; then # If something happens
+	break; fi # End up the cyclus and continue by following commands
+    while read TEXTLINE; do # Run cyclus on text file
+      commands...
+      done < text_file_to_process.txt
+    while :; do echo "Press CTRL+C to exit..."; done # Infinite loop
+    for (( ; ; )) ; do echo "Press CTRL+C to exit..."; done # Infinite loop
   \end{bashcode}
 \end{frame}
 
@@ -2849,13 +2900,42 @@
   \end{bashcode}
 \end{frame}
 
-% \subsection{Windows applications} % TODO Wine
+\subsection{Windows applications}
 
-% \begin{frame}{Launching of Windows and DOS applications in Linux}
-%   \begin{itemize}
-%     \item 
-%   \end{itemize}
-% \end{frame}
+\begin{frame}[allowframebreaks]{Windows applications on Linux}
+  \begin{itemize}
+    \item Applications written for one operating system do not work on the other systems\ldots
+    \begin{itemize}
+      \item They must be written in portable language like Java or script like Perl, Python or BASH
+      \item Otherwise we need an emulator -- not everything works
+    \end{itemize}
+    \item Windows 10 has \href{https://blogs.windows.com/buildingapps/2016/07/22/fun-with-the-windows-subsystem-for-linux/}{possibility to run Linux applications}, other option (for more Windows versions) is \href{https://www.cygwin.com/}{Cygwin} (application must be specially compiled to support Cygwin)
+    \item To run Windows applications on Linux use \href{https://www.winehq.org/}{Wine}
+    \begin{itemize}
+      \item Search for packages named \texttt{wine} and install it
+      \item Sometimes, extra functionality is in extra packages -- check \texttt{wine-*}
+    \end{itemize}
+    \item To run DOS application on Linux use \href{http://www.dosbox.com/}{dosbox} (package \texttt{dosbox})
+    \item As soon as Wine is installed, just click to Windows \texttt{*.exe} file\ldots
+    \item Windows applications are installed into \texttt{$\sim$/.wine/} where Windows directory structure is created, launchers use to be placed to standard application menu into \textbf{Wine} section
+    \item Use \texttt{winecfg} to change settings (e.g. version of Windows -- can be different for each application, custom DLL library,~\ldots)
+    \item \texttt{winefile} starts Windows file browser, \texttt{notepad} Notepad, \texttt{winemine} Mines
+    \item To install some extra parts required by some applications use \texttt{winetricks}
+    \begin{itemize}
+      \item Usage use to differ according to distribution and GUI
+      \item Browsing and selecting items to install can be bit messy\ldots
+      \item It can be hard to check application requirements -- if it fails, check if it is listed at \url{https://appdb.winehq.org/} and/or run it from command line like \texttt{wine application.exe} and inspect errors in output
+    \end{itemize}
+    \item Before installing Windows application under Wine, check if there is some native Linux application to fit your needs\ldots
+    \begin{itemize}
+      \item Plenty of applications are available for more operating systems
+      \item Linux distributions use to have external contributor's sites to provide more packages
+      \item For many Windows-only applications there are fully comparable alternatives
+    \end{itemize}
+    \item Some applications do not work under Wine (from various reasons), some complex packages are \href{https://www.codeweavers.com/}{supported commercially} (I have no experience with it)
+    \item Wine is well compatible with rest of the Linux hosting system, it is considerable to install Windows in e.g. WirtualBox (or another virtualization platform), if needed
+  \end{itemize}
+\end{frame}
 
 \section{MetaCentrum}
 
@@ -3180,19 +3260,119 @@
   \end{bashcode}
 \end{frame}
 
-% \section{Git} % TODO Git
+\section{Git}
 
-% \begin{frame}[fragile]{Git and GitHub}
-%   \begin{itemize}
-%     \item \href{https://github.com/}{GitHub} is currently probably the most popular platform to host development of open-source projects
-%     \item \href{https://git-scm.com/}{Git} is version controlling system -- it traces changes among all versions -- absolutely crucial for any software development	
-%   \end{itemize}
-%   \begin{bashcode}
-%     #
-%   \end{bashcode}
-% \end{frame}
+\begin{frame}[fragile]{Git and GitHub}
+  \begin{itemize}
+    \item \href{https://git-scm.com/}{Git} is \href{https://en.wikipedia.org/wiki/Version_control}{version controlling} system -- it traces changes among all versions -- absolutely crucial for any software development
+    \item \href{https://github.com/}{GitHub} is currently probably the most popular platform to host development of open-source projects, see \href{https://help.github.com/}{documentation}
+    \item Older (nowadays not so common) version controlling systems is Subversion (SVN), there are many more
+    \item Probably the best textbook for Git is \href{https://git-scm.com/book/en/v2}{Chacon's Pro Git}
+    \begin{itemize}
+      \item Dostupná i~\href{https://git-scm.com/book/cs/v2}{česky} (včetně \href{https://knihy.nic.cz/}{prvního vydání})
+    \end{itemize}
+    \item Changes and their history is stored in repository (local or network, shared or private) -- it is possible to view any historical state and differences between any versions
+    \item It is possible to trace who and when did what
+    \item Branching and merging of branches helps with making of big changes
+  \end{itemize}
+\end{frame}
 
-\section{The end}
+\begin{frame}[fragile]{Git principles}
+  \begin{multicols}{2}
+    \begin{itemize}
+      \item Three main areas
+      \begin{enumerate}
+	\item Working directory
+	\item Staging (changes awaiting to be pushed to the repository)
+	\item Git repository (remote/local)
+      \end{enumerate}
+      \item Everyone has whole repository and history -- very robust
+      \item Flexible branches
+      \begin{itemize}
+	\item Very convenient
+	\item Keeping work structured
+	\item Separation of tasks
+	\item Keeping more versions of the project in parallel
+      \end{itemize}
+    \end{itemize}
+    \begin{center}
+      \includegraphics[height=5.75cm]{git.png}
+    \end{center}
+    \begin{flushright}
+      \begin{footnotesize}
+	\href{https://git-scm.com/book/en/v2/Getting-Started-Git-Basics}{https://git-scm.com/}, \href{http://nvie.com/posts/a-successful-git-branching-model/}{http://nvie.com/}
+      \end{footnotesize}
+    \end{flushright}
+  \end{multicols}
+\end{frame}
+
+\begin{frame}[fragile]{Working with Git -- start and sending changes}
+  \begin{bashcode}
+    # Create a new repository for new project
+    git init # No need when cloning from existing repository
+    # Or checkout (make a copy) for another local or remote repository
+    git clone /path/to/local/repository # Locally mounted repository
+    git clone username@host:/path/to/remote/repository # Over SSH
+    git clone https://github.com/V-Z/course-linux-command-line-bash-
+      scripting-metacentrum.git # Clone from web, e.g. GitHub
+    # Add files to trace with Git
+    # Ignored files (or patterns) can be listed in .gitignore file
+    git add <files> # Or "git add *"
+    # Commit changes to prepare then to send to repository
+    git commit -m "Message..."
+    # If you did not start by cloning, add connection to server
+    git remote add origin <location> # Do only once on the beginning
+    # <location> can be remote server or local path
+    git remote add origin . # For repository within working directory
+    # Push changes into the (regardless where it is) repository
+    git push origin master # See further for selection of branches
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Working with Git -- branching and getting changes}
+  \begin{bashcode}
+    # Making new branch and switching to it
+    git checkout -b NewFeature # Now we are in branch NewFeature
+    # Switch back to branch master
+    git checkout master # Generally, "git checkout <branch>"
+    # Delete the branch (changes there are lost, must be in another branch)
+    git branch -d NewFeature # Delete local branch, to delete remote do:
+    git push origin --delete <branch>
+    # Branch must be also pushed to the remote server
+    git push origin <branch>
+    # List branches (current is marked by asterisk on the beginning)
+    git branch
+    # Update local repository to the newest version from central repository
+    git pull # Fetch and merge remote changes
+    # Merge another branch into the current one
+    git merge <branch>
+    # In case of conflict, git shows editor and user must fix it manually
+    git add <file with conflict> # Needed to re-add conflicting file
+    # To see changes before merging
+    git diff <source_branch> <target_branch>
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Working with Git -- tags, logs and settings}
+  \begin{bashcode}
+    # Tagging e.g. milestones, released versions of software, etc.
+    git tag <name> <commit id> # <name> can be custom, <commit id> from log:
+    git log # Newest is on top, see also "git log --help"
+    git log --graph --oneline --decorate --all # Full long log
+    # Discard local changes for particular file
+    git checkout -- <file>
+    # Discard all local changes
+    git fetch origin # Overwrite local changes
+    git reset --hard origin/master # If local repository is broken...
+    gitk # Graphical interface
+    git config color.ui true # Set output to be colored
+    git config format.pretty oneline # Nicer log output
+    ~/.git # Contains user's settings, .git in every repository contains
+           # data and settings for particular repository
+  \end{bashcode}
+\end{frame}
+
+\section{The End}
 
 % \subsection{Switching to Linux} % TODO Switching
 
