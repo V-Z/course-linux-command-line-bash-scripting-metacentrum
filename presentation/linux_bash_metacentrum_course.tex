@@ -111,7 +111,7 @@
 \begin{frame}{Materials to help you\ldots}
   \begin{itemize}
     \item Download the presentation from \url{https://soubory.trapa.cz//linuxcourse/linux_bash_metacentrum_course.pdf}
-    \item Download the scripts and toy data from \url{https://soubory.trapa.cz//linuxcourse/scripts.zip}
+    \item Download the scripts and toy data from \url{https://soubory.trapa.cz/linuxcourse/scripts.zip}
     \begin{itemize}
       \item \alert{Note:} Open the scripts in some \alert{good} text editor (slide~\ref{editors}) -- showing syntax highlight, line numbers, etc. (\alert{NO} Windows notepad); the files are in UTF-8 encoding and with UNIX end of lines (so that too silly programs like Windows notepad won't be able to open them correctly)
       \item \alert{Never ever} open any script file in software like MS~Word -- they destroy quotation marks and other things by ``typographical enhancements'' making the script unusable
@@ -1819,7 +1819,7 @@
       *       *     *             *      *            /usr/bin/command
       10      22    1             *      *        # 1st day in month, 23:11
       0       */3   *             *      *        # Every 3 hours
-      0       11    *             *      6        # Every Sunday, 12:00
+      0       11    *             *      0        # Every Sunday, 12:00
       30      3     */2           *      *        # Every even day, 4:31
       */15    *     *             *      0,4   # At Sun and Fri every 15 min
     # Columns are separated by any number of spaces
@@ -2040,7 +2040,7 @@
     sed '5s/...'   # range (e.g. 1,7) right before "s" ("$" for last line)
     sed '1~2n;s/F/R/g' # Work on every second line, starting by line 1
     sed -n '2~10p' # Print every 10th line, starting with line 2
-    seq 1 100 | sed -n '2~10p' # Example of above pattern (see seq 1 100)
+    seq 1 100 | sed -n '2~10p' # Example of above pattern (see "seq 1 100")
     # Replace first TAB (\t) on each line by new line (\n)
     sed 's/\t/\n/' textfile
     sed 's/find/replace/g' somedirectory/* # Work on all files in directory
@@ -2714,7 +2714,7 @@
     while ...; do # Start cyclus as you need
       commands...
       if [condition]; then # If something happens
-	break; fi # End up the cyclus and continue by following commands
+        break; fi # End up the cyclus and continue by following commands
     while read TEXTLINE; do # Run cyclus on text file
       commands...
       done < text_file_to_process.txt

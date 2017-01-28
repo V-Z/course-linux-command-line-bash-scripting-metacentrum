@@ -27,7 +27,7 @@ while getopts "hvi:o:a:" INITARGS; do
 				echo "OK, Name for output file was provided: \"$OPTARG\". Proceeding..."
 				OUTPUTFILE="$OPTARG" # $OPTARG always contains value of parameter
 				else
-					echo "Error! File \"$OPTARG\" doesn't exist or isn't readable!"
+					echo "Error! No output file name provided!"
 					echo
 					exit 1
 				fi
