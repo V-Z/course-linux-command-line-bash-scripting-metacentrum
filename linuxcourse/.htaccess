@@ -1,7 +1,7 @@
 # No directory browsing
 Options -Indexes
 
-# Error 404 Not Found
+# Error 404 Not Found - go to index with links
 ErrorDocument 404 /linuxcourse/index.html
 
 # Directory index only index.html
