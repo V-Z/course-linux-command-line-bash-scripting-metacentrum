@@ -55,7 +55,7 @@
 % Syntax higlight
 \usepackage{minted}
 \usemintedstyle{vim} % Styles are listed by pygmentize -L styles; languages are listed by pygmentize -L lexers
-\newminted{bash}{linenos, fontsize=\footnotesize, bgcolor=Beige, fontfamily=tt, gobble=4, numbersep=-3pt}
+\newminted{bash}{linenos, fontsize=\footnotesize, bgcolor=Beige, fontfamily=tt, gobble=4, numbersep=-6pt}
 % Change line number style
 \renewcommand{\theFancyVerbLine}{
   \sffamily
@@ -66,8 +66,18 @@
       }
     }
   }
-% Inline source code
-\newmint{bash}{fontsize=\footnotesize, bgcolor=Beige}
+
+% Fixing space before and after block of code higlight
+\BeforeBeginEnvironment{bashcode}{\vspace{-1em}}
+\AfterEndEnvironment{bashcode}{\par\vspace{-1em}}
+
+% Fixing space before and after multicols region
+\BeforeBeginEnvironment{multicols}{\vspace{-0.5em}}
+\AfterEndEnvironment{multicols}{\par\vspace{-0.5em}}
+
+% Fixing space before and after itemize region
+\BeforeBeginEnvironment{itemize}{\vspace{-0.25em}}
+\AfterEndEnvironment{itemize}{\vspace{-0.25em}}
 
 % Default language
 \usepackage{polyglossia}
@@ -614,9 +624,11 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Types of files}
+\begin{frame}[fragile]{Types of files}
+  \begin{bashcode}
+    ls -la ~
+  \end{bashcode}
   \begin{itemize}
-    \item \bash/ls -la ~/
     \item Regular file -- ordinary file, marked by \texttt{-}
     \item Directory -- in UNIX special type of file, marked by \texttt{d}
     \item Symbolic link (symlink, ``soft link'') -- points to another place, marked by \texttt{l}, slide \ref{links}
@@ -1057,7 +1069,11 @@
   \end{bashcode}
   \begin{itemize}
     \item Our toy server: user names from \texttt{u01} to \texttt{u30}
-    \item \bash/ssh uXY@vyuka.natur.cuni.cz/
+  \end{itemize}
+  \begin{bashcode}
+    ssh uXY@vyuka.natur.cuni.cz
+  \end{bashcode}
+  \begin{itemize}
     \item If fingerprint key changes, ssh complains a lot -- possible \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{man in the middle attack}
     \item From Windows use \href{http://www.putty.org/}{Putty}
   \end{itemize}
