@@ -17,10 +17,6 @@ presentation/*.snm
 presentation/*.vrb
 # hyperref
 presentation/*.brf
-# knitr
-presentation/*-concordance.tex
-presentation/*.tikz
-presentation/*-tikzDictionary
 # listings
 presentation/*.lol
 # makeidx
@@ -33,7 +29,7 @@ presentation/*.maf
 presentation/*.mtc
 presentation/*.mtc0
 # minted
-presentation/_minted*
+presentation/*minted*
 presentation/*.pyg
 # nomencl
 presentation/*.nlo
