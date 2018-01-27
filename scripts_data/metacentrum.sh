@@ -2,11 +2,15 @@
 
 # Modify the script according to your needs!
 
+# Submit the script to the queueu by
+# qsub -l walltime=72:0:0 -l select=1:ncpus=8:mem=24gb:scratch_local=10gb -m abe metacentrum.sh
+# In this case, maximal running time is 72 hours (72:0:0), it will run on one computer (select=1), use 8 CPU threads (ncpus=8), up to 24 GB of RAM (mem=24gb) and send email when it aborts, begins and completes/ends
+
 # Set data directories
-WORKDIR="bayes_batch" # Or something else
+WORKDIR="my_data_dir" # Or something else
 DATADIR="/storage/praha1/home/$LOGNAME" # Or other storage
 
-# So there is directory /storage/praha1/home/gunnera/bayes_batch (in this case) containing all the data needed for calculations
+# There is directory /storage/praha1/home/$LOGNAME/my_data_dir (in this case) containing all the data needed for calculations
 
 # Clean-up of SCRATCH (it is temporal directory created by server) - the commands will be launched on the end when the job is done
 trap 'clean_scratch' TERM EXIT
@@ -22,7 +26,7 @@ cd $SCRATCHDIR/ || exit 2 # If it fails, exit script
 # See https://wiki.metacentrum.cz/wiki/Kategorie:Applications
 # Every application module is loaded by "module add XXX"
 . /packages/run/modules-2.0/init/sh
-# In this case GNU Parallel and MrBayes
+# In this case (for example) GNU Parallel and MrBayes
 module add parallel
 module add mrbayes-3.2.6
 

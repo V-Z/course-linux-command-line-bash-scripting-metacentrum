@@ -2,11 +2,11 @@
 
 # Arguments are read from user input (script asks for them)
 
-echo "Please, input first value to sum and press Enter"
+echo "Please, input first value to sum and press 'Enter'"
 
 read V1
 
-echo "Please, input second value to sum and press Enter"
+echo "Please, input second value to sum and press 'Enter'"
 
 read V2
 

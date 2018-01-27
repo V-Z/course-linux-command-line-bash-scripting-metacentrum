@@ -26,8 +26,7 @@ presentation/*.ind
 presentation/*.ist
 # minitoc
 presentation/*.maf
-presentation/*.mtc
-presentation/*.mtc0
+presentation/*.mtc*
 # minted
 presentation/*minted*
 presentation/*.pyg

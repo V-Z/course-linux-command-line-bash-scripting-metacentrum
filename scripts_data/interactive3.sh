@@ -5,11 +5,11 @@
 
 case "$1" in
 	# "|" means alternatives - more possible inputs
-	-d|--disk)
+	d|disk)
 		echo "Your disk usage is:"
 		df -h
 		;;
-	-u|--uptime)
+	u|uptime)
 		echo "Your computer is running:"
 		uptime
 		;;
@@ -17,8 +17,7 @@ case "$1" in
 	# User is then notified he entered nonsense and gets some help
 	*) # Any other input
 		echo "Wrong option!"
-		echo "Usage: -d or --disk for available disk space or"
-		echo "-u or --uptime for computer uptime"
+		echo "Usage: 'd' or 'disk' for available disk space or 'u' or 'uptime' for computer uptime"
 		# In this case, exit with error code 1
 		exit 1
 		;;

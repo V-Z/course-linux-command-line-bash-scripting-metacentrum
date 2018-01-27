@@ -1,15 +1,13 @@
 #!/bin/bash
 
 # Regular expression explanation:
-# From the beginning of the line (^) there is number ([0-9])
-# at least one time (+) up to the end of the line ($)
+# From the beginning of the line (^) there is number ([0-9]) at least one time (+) up to the end of the line ($)
 NUMBER='^[0-9]+$'
 
 # Function to print help - we will use it twice
 function usagehelp {
 	echo "Usage: number1 plus/minus/product/quotient number2"
-	echo "Use plus for sum, minus for difference, product"
-	echo "for multiplication or quotient for quotient."
+	echo "Use plus for sum, minus for difference, product for multiplication or quotient for quotient."
 	exit 1 # End up with an error
 	}
 
