@@ -116,7 +116,7 @@
     \item Subject in SIS: \url{https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=MB120C17}
     \begin{itemize}
       \item Česky: \url{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=MB120C17}
-      \item For students having subscribed the subject, active participation and presence whole course is required
+      \item Requirements for students are on next slide
     \end{itemize}
     \item Working version is available at \url{https://github.com/V-Z/course-linux-command-line-bash-scripting-metacentrum} --- feel free to contribute, request new parts or report bugs
   \end{itemize}
@@ -126,14 +126,14 @@
   \begin{enumerate}
     \item Be present whole course.
     \item Be active --- ask and answer questions.
-    \item Process some data. This will be very variable and individual. Everyone should be able take some data (according to her/his interest) and do several simple analysis (according to her/his interest). Students can of course use manual, internet, discuss with anyone. The aim is to repeat part the most interesting/important for the student and edit introduced commands to fit her/his needs. Students can thus bring their data (if they are not too large), download any data from the internet or I~can give them some toy data.
-    \item Write at least one page (can be split into multiple articles) on Wikipedia about any method or related topic discussed during the course. Again, this is very open, students can write about any topic they like. I~prefer native language of the student (typically to make larger non-English Wikipedia).
+    \item Write short script solving any task the student is (going to be) solving. E.g. prepare script to process student's data on MetaCentrum. Or short script to do anything the student needs to do. This will be very individual. According to topics and interests of every student. Students can of course discuss with anyone, use Internet, manuals, etc. The aim is learn how to solve real problem the student has/is going to have.
+    \item Write at least one page (can be split into multiple articles) on Wikipedia about any topic discussed during the course. Again, this is very open, students can write about any topic they like. I~prefer native language of the student (typically to make larger non-English Wikipedia).
   \end{enumerate}
 \end{frame}
 
 \begin{frame}{Materials to help you\ldots}
   \begin{itemize}
-    \item Download the presentation from \url{https://soubory.trapa.cz//linuxcourse/linux_bash_metacentrum_course.pdf}
+    \item Download the presentation from \url{https://soubory.trapa.cz/linuxcourse/linux_bash_metacentrum_course.pdf}
     \item Download the scripts and toy data from \url{https://soubory.trapa.cz/linuxcourse/scripts_data.zip}
     \begin{itemize}
       \item \alert{Note:} Open the scripts in some \alert{good} text editor (slide~\ref{editors}) --- showing syntax highlight, line numbers, etc. (\alert{NO} Windows notepad); the files are in UTF-8 encoding and with UNIX end of lines (so that too silly programs like Windows notepad won't be able to open them correctly)
@@ -284,7 +284,7 @@
       \item Somehow assemble Linux kernel, basic tools and some applications
       \item Optionally add some patches and extra tools and gadgets
       \item Make your own design! (very important)
-      \item If lazy, remake existing distribution (using e.g. \href{https://susestudio.com/}{web service})
+      \item If lazy, remake existing distribution (using e.g. \href{http://openbuildservice.org/}{web service})
       \item Still surprised there are hundreds of them?
       \item It is like Lego --- pieces are more or less same across distributions, but result is very variable
       \item From ``general'' for daily use (pick up whatever you like) to very specialized --- special hardware devices, network services, rescue,~\ldots
@@ -310,20 +310,20 @@
 
 \begin{frame}{Most common Linux distributions}
   \begin{itemize}
-    \item \href{http://distrowatch.com/search.php?package=DEB}{Debian (DEB) based}
+    \item \href{https://distrowatch.com/search.php?package=DEB}{Debian (DEB) based}
     \begin{itemize}
       \item \href{https://www.debian.org/}{Debian} --- one of oldest and most common, especially on servers
       \item \href{http://www.ubuntu.com/}{Ubuntu} (nowadays probably the most popular on PCs and notebooks) and derivatives --- \href{https://www.kubuntu.org/}{Kubuntu}, \href{https://xubuntu.org/}{Xubuntu}, \href{http://lubuntu.net/}{Lubuntu},~\ldots~(according to GUI used --- most of the system is same)
-      \item \href{http://linuxmint.com/}{Mint} --- Based on Ubuntu as well as Debian, very user-friendly
+      \item \href{https://linuxmint.com/}{Mint} --- Based on Ubuntu as well as Debian, very user-friendly
       \item \href{https://www.kali.org/}{Kali}, \href{http://knopper.net/knoppix/index-en.html}{KNOPPIX}, \href{https://elementary.io/}{elementaryOS},~\ldots
     \end{itemize}
-    \item \href{http://distrowatch.com/search.php?package=RPM}{Red Hat (RPM) based}
+    \item \href{https://distrowatch.com/search.php?package=RPM}{Red Hat (RPM) based}
     \begin{itemize}
       \item \href{https://www.redhat.com/}{Red Hat} --- probably the most common commercial
       \item \href{https://getfedora.org/}{Fedora} --- ``playground'' for Red Hat --- very experimental
       \item \href{https://www.centos.org/}{Centos} --- Clone of Red Hat
       \item \href{https://www.opensuse.org/}{openSUSE} --- SUSE is second largest Linux company, openSUSE is community distribution (free) companion of SUSE Linux Enterprise
-      \item \href{https://www.scientificlinux.org/}{Scientific Linux}, \href{https://www.mageia.org/}{Mageia}, \href{http://www.pclinuxos.com/}{PCLinuxOS},~\ldots
+      \item \href{https://www.scientificlinux.org/}{Scientific Linux}, \href{https://www.mageia.org/}{Mageia}, \href{https://www.pclinuxos.com/}{PCLinuxOS},~\ldots
     \end{itemize}
     \item Android
     \item For experienced users: Arch, Slackware, Gentoo,~\ldots
@@ -333,11 +333,11 @@
 \begin{frame}{Graphical User Interfaces (GUI)}{More like ``Mac-style'', ``Windows-style'' or something else? Feature rich or minimalistic?}
   \begin{itemize}
     \item Most of GUIs are available for most of common distributions --- one is picked as default and ``only'' color style is different
-    \item \href{https://unity.ubuntu.com/}{Unity} --- developed by Ubuntu, relatively specific (not common outside Ubuntu), ``Mac-style''
+    \item \href{https://code.launchpad.net/unity}{Unity} --- originally developed by Ubuntu (discontinued, now community based), ``Mac-style''
     \item \href{https://www.kde.org/}{KDE} --- one of the most common, feature extremely rich, basically ``Windows-like'' (can be changed)
     \item \href{https://www.gnome.org/}{GNOME} --- one of the most common, relatively simplistic interface, but still feature rich, ``Mac-like''
     \item \href{http://xfce.org/}{XFCE} --- lightweight version of older GNOME --- for older computers or users not willing to be disturbed by graphical effects, basically ``Mac-like'' looking, but panels can be moved to ``Windows style''
-    \item \href{http://cinnamon.linuxmint.com/}{Cinnamon} --- remake of GNOME to look more like Windows\ldots
+    \item \href{http://developer.linuxmint.com/projects/cinnamon-projects.html}{Cinnamon} --- remake of GNOME to look more like Windows\ldots
     \item And much more\ldots
     \item Choose what you like --- doesn't matter much which one\ldots
   \end{itemize}
@@ -404,7 +404,7 @@
     \item You can change GUI (or its design) without change of distribution (it use to be highly configurable)
     \item Applications are still same --- no difference in Firefox across distributions --- keep your settings when changing distribution
     \item Everyone using Android is using Linux
-    \item Special use --- \href{http://www.freenas.org/}{FreeNAS} for home as well as business file servers, \href{https://partedmagic.com/}{Parted Magic} and/or \href{https://www.system-rescue-cd.org/SystemRescueCd_Homepage}{SystemRescueCD} to repair broken system (disk failure) and save data,~\ldots
+    \item Special use --- \href{https://www.freenas.org/}{FreeNAS} for home as well as business file servers, \href{https://partedmagic.com/}{Parted Magic} and/or \href{https://www.system-rescue-cd.org/}{SystemRescueCD} to repair broken system (disk failure) and save data,~\ldots
   \end{itemize}
 \end{frame}
 
@@ -460,7 +460,7 @@
     \item GPT --- newer, no relevant limits, requires UEFI (replacement of BIOS --- responsible for computer to start --- in newer computers)
     \item If unsure what to do, high probability to break it\ldots
     \item Blank new partition has to be formatted to desired file system according to use and target operating system
-    \item Linux distributions have easy graphical tools to manage disk partitions (e.g. \href{http://gparted.org/}{GParted})
+    \item Linux distributions have easy graphical tools to manage disk partitions (e.g. \href{https://gparted.org/}{GParted})
     \item Always have backup before such management!
   \end{itemize}
 \end{frame}
@@ -521,7 +521,7 @@
     \item The most convenient is using graphical tools available in all distributions\ldots
     \begin{itemize}
       \item In \href{https://doc.opensuse.org/documentation/leap/reference/html/book.opensuse.reference/cha.advdisk.html}{openSUSE there is YaST} administrative module --- from command line launch \texttt{yast --qt disk} for graphical or \texttt{yast disk} for text-based version
-      \item All distributions have graphical tools like \href{http://gparted.org/}{GParted} where it is possible to comfortable manage disks
+      \item All distributions have graphical tools like \href{https://gparted.org/}{GParted} where it is possible to comfortable manage disks
     \end{itemize}
     \item \texttt{df -h} shows available/occupied space on disks/partitions, but because of special features of Btrfs it doesn't show every time correct values for this FS --- it is better to use \texttt{btrfs filesystem df /mount/point} (\texttt{/mount/point} use to be the most commonly \texttt{/})
     \item On UNIX FS, defragmentation and another maintenance tasks use to be done in background when computer is idling --- unless there is at least $\sim$20\% of free space on the device, this is not any problem and there are no performance issues
@@ -871,12 +871,12 @@
   \end{multicols}
   \begin{multicols}{4}
     \begin{itemize}
-      \item \href{http://kate-editor.org/}{Kate}
+      \item \href{https://kate-editor.org/}{Kate}
       \item \href{https://www.kde.org/applications/utilities/kwrite/}{KWrite}
       \item \href{http://www.vim.org/}{Vim}
       \item \href{https://en.wikipedia.org/wiki/Emacs}{GNU Emacs}
       \item \href{https://www.geany.org/}{Geany}
-      \item \href{http://bluefish.openoffice.nl/index.html}{Bluefish}
+      \item \href{http://bluefish.openoffice.nl/}{Bluefish}
       \item \href{https://wiki.gnome.org/Apps/Gedit}{Gedit}
       \item \href{https://notepad-plus-plus.org/}{Notepad++}
       \item \href{https://www.sublimetext.com/}{Sublime}
@@ -1100,7 +1100,7 @@
   \end{bashcode}
   \begin{itemize}
     \item If fingerprint key changes, ssh complains a lot --- possible \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{man in the middle attack}
-    \item From Windows use \href{http://www.putty.org/}{Putty}
+    \item From Windows use \href{https://www.putty.org/}{Putty}
   \end{itemize}
   \begin{center}
     \includegraphics[height=6cm]{putty.png}
@@ -1142,7 +1142,7 @@
     \item Terminal emulator
     \begin{itemize}
       \item Application used to get the ``terminal'' and work in command line
-      \item Every GUI has some --- \href{https://konsole.kde.org/}{Konsole}, \href{https://yakuake.kde.org/}{Yakuake}, \href{http://invisible-island.net/xterm/}{XTerm}, \href{https://wiki.gnome.org/Apps/Terminal}{Gnome Terminal}, \href{http://guake.org/}{Guake}, \href{http://docs.xfce.org/apps/terminal/start}{XFCE Terminal}, \href{https://wiki.lxde.org/en/LXTerminal}{LxTerminal},~\ldots
+      \item Every GUI has some --- \href{https://konsole.kde.org/}{Konsole}, \href{https://yakuake.kde.org/}{Yakuake}, \href{https://invisible-island.net/xterm/}{XTerm}, \href{https://wiki.gnome.org/Apps/Terminal}{Gnome Terminal}, \href{http://guake.org/}{Guake}, \href{https://docs.xfce.org/apps/terminal/start}{XFCE Terminal}, \href{https://wiki.lxde.org/en/LXTerminal}{LxTerminal},~\ldots
       \item Commonly allow appearance customization --- font, colors, background, style of notifications,~\ldots
       \item Launch as many copies as you need (usually allow tabs for easier work)
     \end{itemize}
@@ -2204,7 +2204,7 @@
     \end{itemize}
     \item The most common is \textbf{Vim} (next slide)
     \begin{itemize}
-      \item See \url{http://vim-adventures.com/} to play a game and learn Vim
+      \item See \url{https://vim-adventures.com/} to play a game and learn Vim
     \end{itemize}
     \item \textbf{Emacs} and \textbf{Vim} have huge number of possibilities and support for plugins and scripts, but completely different usage style --- one person can really learn only one\ldots
   \end{itemize}
@@ -2213,8 +2213,8 @@
 \begin{frame}{Vim}{Vim has three different working modes}
   \begin{enumerate}
     \item \textbf{``Normal''} --- nothing is displayed in bottom left corner, every key has some meaning (\texttt{dd} to cut current line, \texttt{r} to replace character below cursor, \texttt{v} for selection of text, \texttt{y} to copy, \texttt{x} to cut, \texttt{p} to paste, \texttt{i} or \texttt{Insert} key to enter insert mode, \texttt{:} to enter command mode, number to get to line of particular line number, \texttt{u} to undo last change(s),~\ldots)
-    \item \textbf{Insert} --- in bottom left corner ``\texttt{-- INSERT --}'' is displayed --- the most familiar mode --- normal typing etc., exit to normal mode by \texttt{ESC} key
-    \item \textbf{Command} --- in bottom left corner \texttt{:} is displayed --- awaits commands, e.g. \texttt{w} to write file, \texttt{q} to quit, \texttt{q!} to quit and discard changes, \texttt{\%s/\ldots} to search and replace as in \texttt{sed}, \texttt{syntax on/off} to turn syntax highlight on/off, \texttt{/ToSearch} to search (\texttt{Enter}, \texttt{n} for next occurrence, quit with \texttt{Esc}),~\ldots{ }Exit to command mode by \texttt{Backspace} key (delete ``\texttt{:}'').
+    \item \textbf{Insert} --- in bottom left corner ``\texttt{-- INSERT --}'' is displayed, the most familiar mode, normal typing etc., exit to normal mode by \texttt{ESC} key
+    \item \textbf{Command} --- in bottom left corner \texttt{:} is displayed, awaits commands, e.g. \texttt{w} to write file, \texttt{q} to quit, \texttt{q!} to quit and discard changes, \texttt{\%s/\ldots} to search and replace as in \texttt{sed}, \texttt{syntax on/off} to turn syntax highlight on/off, \texttt{/ToSearch} to search (\texttt{Enter}, \texttt{n} for next occurrence, quit with \texttt{Esc}),~\ldots{ }Exit to normal mode by \texttt{Backspace} key (delete ``\texttt{:}'').
   \end{enumerate}
   \begin{itemize}
     \item See \url{http://vim.wikia.com/}, \url{http://www.vim.org/docs.php}; česky \url{http://www.nti.tul.cz/~satrapa/docs/vim/}
@@ -2277,9 +2277,9 @@
     \item \alert{\texttt{\&}} --- content of pattern that was matched
     \item Implementation in \texttt{vim}, \texttt{sed}, \texttt{grep}, \texttt{awk} and \texttt{perl} and among various UNIX systems is almost same, but not identical\ldots
     \item \textbf{grep}, \textbf{sed} and \textbf{vim} \alert{require escaping} of \alert{\texttt{+}}, \alert{\texttt{?}}, \alert{\texttt{\{}}, \alert{\texttt{\}}}, \alert{\texttt{(}} and \alert{\texttt{)}} by backslash \alert{\texttt{\textbackslash}} --- \textbf{egrep} (extended version, launched as \texttt{grep -E \ldots} or \texttt{egrep \ldots}), \textbf{sed} with extended reg exp (\texttt{sed -r}) and \textbf{perl} \alert{not}
-    \item Read \url{http://www.regular-expressions.info/}; česky \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{http://www.root.cz/serialy/regularni-vyrazy/} and \url{http://www.regularnivyrazy.info/}, and manuals for Grep, Vim, Sed, Awk, Perl,~\ldots
+    \item Read \url{https://www.regular-expressions.info/}; česky \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{https://www.root.cz/serialy/regularni-vyrazy/} and \url{https://www.regularnivyrazy.info/}, and manuals for Grep, Vim, Sed, Awk, Perl,~\ldots
     \item See sed examples, slide~\ref{sedex}
-    \item Mac OS~X has by default very outdated version of \texttt{sed} and another tools --- it does not have all advanced features --- users need to install e.g. \texttt{gnu-sed} formulae from \href{http://brew.sh/}{Homebrew}
+    \item Mac OS~X has by default very outdated version of \texttt{sed} and another tools --- it does not have all advanced features --- users need to install e.g. \texttt{gnu-sed} formulae from \href{https://brew.sh/}{Homebrew}
   \end{itemize}
 \end{frame}
 
@@ -2321,7 +2321,7 @@
     \item \alert{\texttt{\$@}} --- same as \texttt{\$*}, but each parameter is a quoted string --- the parameters are passed on intact, without interpretation or expansion, each parameter in the argument list is seen as a separate word, should be quoted (i.e. something like \texttt{"\$@"})
     \item \alert{\texttt{\$\$}} --- process ID (PID) of the script itself
     \item \alert{\texttt{\$?}} --- Exit status of a command, function, or the script itself
-    \item \href{http://www.tldp.org/LDP/abs/html/internalvariables.html}{See more variables\ldots}
+    \item \href{https://www.tldp.org/LDP/abs/html/internalvariables.html}{See more variables\ldots}
   \end{itemize}
 \end{frame}
 
@@ -2806,7 +2806,7 @@
       \item And many more\ldots
     \end{itemize}
     \item Distributions use to provide convenient simple update applet notifying about awaiting updates
-    \item There use to be web services to look for packages, also from other sources --- \href{https://software.opensuse.org/}{openSUSE}, \href{https://www.debian.org/distrib/packages\#search_packages}{Debian}, \href{http://packages.ubuntu.com/}{Ubuntu} (+ \href{https://launchpad.net/ubuntu/+search}{Launchpad} and \href{https://launchpad.net/ubuntu/+ppas}{PPAs}), \href{https://admin.fedoraproject.org/pkgdb/}{Fedora},~\ldots
+    \item There use to be web services to look for packages, also from other sources --- \href{https://software.opensuse.org/search}{openSUSE}, \href{https://www.debian.org/distrib/packages\#search_packages}{Debian}, \href{https://packages.ubuntu.com/}{Ubuntu} (+ \href{https://launchpad.net/ubuntu/+search}{Launchpad} and \href{https://launchpad.net/ubuntu/+ppas}{PPAs}), \href{https://apps.fedoraproject.org/packages/}{Fedora},~\ldots
     \item The task is always same, the exact work-flow and commands more or less differ among distributions\ldots
     \item Tools like Android Google Play and Apple Store inspired from Linux\ldots
   \end{itemize}
@@ -2889,7 +2889,7 @@
 
 \begin{frame}[fragile]{Compilation of RAxML}
   \begin{itemize}
-    \item Available from \url{https://github.com/stamatak/standard-RAxML} (cite \href{https://bioinformatics.oxfordjournals.org/content/30/9/1312.abstract}{Stamakis 2014})
+    \item Available from \url{https://github.com/stamatak/standard-RAxML} (cite \href{https://academic.oup.com/bioinformatics/article/30/9/1312/238053}{Stamakis 2014})
     \item Before compilation check \href{https://github.com/stamatak/standard-RAxML/blob/master/README}{README}
     \item This example does not require to run \texttt{make install}, it does not have extra dependencies for compilation, it requires specifying of particular source file by \texttt{make -f} (there are multiple \texttt{GCC} files, no one main)
   \end{itemize}
@@ -2911,7 +2911,7 @@
 \begin{frame}[fragile]{Compilation of SAMtools}
   \begin{itemize}
     \item See \url{http://www.htslib.org/download/}
-    \item Ensure packages \texttt{zlib} and \texttt{zlib-dev(el)} are installed --- required for running and compilation, see \href{https://github.com/samtools/samtools/blob/1.3.1/INSTALL}{INSTALL} and \href{https://github.com/samtools/samtools/blob/1.3.1/README}{README}
+    \item Ensure packages \texttt{zlib} and \texttt{zlib-dev(el)} are installed --- required for running and compilation, see \href{https://github.com/samtools/samtools/blob/master/INSTALL}{INSTALL} and \href{https://github.com/samtools/samtools/blob/master/README}{README}
   \end{itemize}
   \begin{bashcode}
     wget https://github.com/samtools/samtools/releases/download/1.3.1/
@@ -2942,9 +2942,9 @@
     # Go to directory where you downloaded it
     cd directory/with/downloaded/figtree
     # Decompress downloaded archive
-    tar zxvf FigTree_v1.4.2.tgz
+    tar zxvf FigTree_v1.4.3.tgz
     # Go to created directory
-    cd FigTree_v1.4.2/
+    cd FigTree_v1.4.3/
     ls * # List files, also in subdirectories
     # Launch it (command java launches *.jar files)
     java -jar lib/figtree.jar
@@ -2962,13 +2962,13 @@
       \item They must be written in portable language like Java or script like Perl, Python or BASH
       \item Otherwise we need an emulator --- not everything works
     \end{itemize}
-    \item Windows 10 has \href{https://blogs.windows.com/buildingapps/2016/07/22/fun-with-the-windows-subsystem-for-linux/}{possibility to run Linux applications}, other option (for more Windows versions) is \href{https://www.cygwin.com/}{Cygwin} (application must be specially compiled to support Cygwin)
+    \item Windows 10 has \href{https://docs.microsoft.com/windows/wsl/install-win10}{possibility to run Linux applications}, other option (for more Windows versions) is \href{https://www.cygwin.com/}{Cygwin} (application must be specially compiled to support Cygwin)
     \item To run Windows applications on Linux use \href{https://www.winehq.org/}{Wine}
     \begin{itemize}
       \item Search for packages named \texttt{wine} and install it
       \item Sometimes, extra functionality is in extra packages --- check \texttt{wine-*}
     \end{itemize}
-    \item To run DOS application on Linux use \href{http://www.dosbox.com/}{dosbox} (package \texttt{dosbox})
+    \item To run DOS application on Linux use \href{https://www.dosbox.com/}{dosbox} (package \texttt{dosbox})
     \item As soon as Wine is installed, just click to Windows \texttt{*.exe} file\ldots
     \item Windows applications are installed into \texttt{$\sim$/.wine/} where Windows directory structure is created, launchers use to be placed to standard application menu into \textbf{Wine} section
     \item Use \texttt{winecfg} to change settings (e.g. version of Windows --- can be different for each application, custom DLL library,~\ldots)
@@ -3004,7 +3004,7 @@
     \item CESNET provides various \href{https://www.cesnet.cz/services/?lang=en}{services}
     \begin{itemize}
       \item Massive computations --- \href{https://www.cesnet.cz/services/massive-computations-metacentrum/?lang=en}{MetaCentrum}
-      \item Practically unlimited \href{https://www.cesnet.cz/services/data-storage/?lang=en}{data storage}
+      \item Large \href{https://www.cesnet.cz/services/data-storage/?lang=en}{data storage}
       \item \href{https://www.cesnet.cz/services/filesender/?lang=en}{FileSender} to be able to send up to 500~GB file
       \item \href{https://www.metacentrum.cz/en/Sluzby/MetaCloud/}{MetaCloud} --- computing (HPC) cloud similar to e.g. Amazon Elastic Compute Cloud (EC2) or Google Compute Engine
       \item \href{https://www.cesnet.cz/services/owncloud/?lang=en}{ownCloud} to backup and/or sync data across devices (default capacity is 100~GB, user may ask for more)
@@ -3024,7 +3024,7 @@
       \item To use MetaCentrum fill registration form \url{https://metavo.metacentrum.cz/en/application/form}
       \item To use data storage fill registration form \url{https://einfra.cesnet.cz/perun-registrar-fed/?vo=storage&locale=en}
       \item After registration for MetaCentrum, user can join MetaCloud via \url{https://perun.metacentrum.cz/fed/registrar/?vo=meta&group=metacloud}
-      \item Users not having access to \href{https://www.eduid.cz/en/index}{EduID} have to register first at HostelID \url{https://hostel.eduid.cz/en/index.html}
+      \item Users not having access to \href{https://www.eduid.cz/en/index}{EduID} have to register first at HostelID \url{https://hostel.eduid.cz/en/}
       \item Note some browser do not have required certificate and registration pages do not work correctly. \href{https://www.mozilla.org/firefox/}{Mozilla Firefox} should be safe choice every time.
     \end{itemize}
     \item Information about data storage \url{https://du.cesnet.cz/en/start} contains detailed usage instructions
@@ -3036,9 +3036,9 @@
 
 \begin{frame}{MetaCentrum}
   \begin{itemize}
-    \item Also available is Galaxy \url{https://galaxy.metacentrum.cz/galaxy/} (same login as to MetaCentrum) --- web based bioinformatics framework (more information at \href{https://wiki.metacentrum.cz/wiki/Galaxy_application}{wiki})
+    \item Also available is Galaxy \url{https://galaxy.metacentrum.cz/galaxy/} (same login as to MetaCentrum) --- web based bioinformatics framework (more information at \href{https://wiki.metacentrum.cz/wiki/Galaxy}{wiki})
     \item Current state and usage as available at \url{https://metavo.metacentrum.cz/en/}
-    \item Manage your user account at \url{http://metavo.metacentrum.cz/en/myaccount/index.html}
+    \item Manage your user account at \url{http://metavo.metacentrum.cz/en/myaccount/}
     \item Personal view on actual resources and running tasks is at \url{https://metavo.metacentrum.cz/pbsmon2/person}
     \item List of available applications \url{https://wiki.metacentrum.cz/wiki/Kategorie:Applications}
     \item It has 8 front ends where users log and thousands of computers doing the calculations --- they are not accessed directly
@@ -3068,7 +3068,7 @@
 
 \begin{frame}{File transfers to MetaCentrum}
   \begin{itemize}
-    \item Graphical applications: \href{http://gftp.org/}{gFTP}, \href{https://filezilla-project.org/}{FileZilla} or from most of file managers
+    \item Graphical applications: \href{https://www.gftp.org/}{gFTP}, \href{https://filezilla-project.org/}{FileZilla} or from most of file managers
     \item Protocol is SSH/SSH2/SFTP/SCP, port 22, server is selected \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontend's} address (e.g. \texttt{tarkil.metacentrum.cz}) --- it is recommendable to use all the time same frontend
     \item All servers are accessible under domain \texttt{*.metacentrum.cz}: \texttt{skirit}, \texttt{perian}, \texttt{onyx}, \texttt{zuphux} (located in Brno), \texttt{nympha}, \texttt{minos} (in Pilsen), and \texttt{tarkil} (in Prague) --- so that e.g. \texttt{tarkil.grid.cesnet.cz} is synonymous to \texttt{tarkil.metacentrum.cz}
     \item See slide \ref{transfers} and following to command-line transfers of files
@@ -3131,7 +3131,7 @@
 
 \begin{frame}[fragile]{Launching of tasks}
   \begin{itemize}
-    \item \url{https://wiki.metacentrum.cz/wiki/Running_jobs_in_scheduler}
+    \item \url{https://wiki.metacentrum.cz/wiki/How_to_compute/Requesting_resources}
     \item Personal view \url{https://metavo.metacentrum.cz/pbsmon2/person} has nice overview of available resources and tasks and allows comfortable construction of submission command
   \end{itemize}
   \begin{bashcode}
@@ -3218,7 +3218,7 @@
 
 \begin{frame}[fragile]{Interactive tasks}
   \begin{itemize}
-    \item See information at \url{https://wiki.metacentrum.cz/wiki/Interactive_job}
+    \item See information at \url{https://wiki.metacentrum.cz/wiki/How_to_compute/Interactive_jobs}
   \end{itemize}
   \begin{bashcode}
     # Again launch qsub according to actual needs
@@ -3256,7 +3256,7 @@
                 # Including address, port and password to connect
   \end{bashcode}
   \begin{itemize}
-    \item Launch your favorite VNC client (\href{https://www.kde.org/applications/internet/krdc/}{KRDC}, \href{http://www.tightvnc.com/}{TightVNC},~\ldots) and use credentials from above output to connect
+    \item Launch your favorite VNC client (\href{https://www.kde.org/applications/internet/krdc/}{KRDC}, \href{https://www.tightvnc.com/}{TightVNC},~\ldots) and use credentials from above output to connect
     \item Work as on normal Linux desktop\ldots
     \item With \texttt{screen} we can disconnect as usually
   \end{itemize}
@@ -3460,19 +3460,19 @@
     \item BASH full reference manual \url{https://www.gnu.org/software/bash/manual/} (advanced)
     \item Debian (general handbook) \url{https://www.debian.org/doc/manuals/debian-reference/ch01.en.html}
     \item Guide to Unix \url{https://en.wikibooks.org/wiki/Guide_to_Unix}
-    \item BASH for beginners \url{http://tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html} (the site has plenty of good resources)
+    \item BASH for beginners \url{https://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html} (the site has plenty of good resources)
     \item BASH Guide for Beginners \url{http://linuxcourse.rutgers.edu/documents/Bash-Beginners-Guide/}
-    \item Linux tutorial \url{http://ryanstutorials.net/linuxtutorial/}
+    \item Linux tutorial \url{https://ryanstutorials.net/linuxtutorial/}
     \item Getting Started with BASH \url{http://www.hypexr.org/bash_tutorial.php}
-    \item Bash Guide \url{http://mywiki.wooledge.org/BashGuide}
+    \item Bash Guide \url{https://mywiki.wooledge.org/BashGuide}
     \item Učebnice Linuxu \url{https://www.abclinuxu.cz/ucebnice}
   \end{itemize}
 \end{frame}
 
 \begin{frame}{Manuals for package management}
   \begin{itemize}
-    \item openSUSE AND SUSE Linux Enterprise: \url{https://doc.opensuse.org/documentation/leap/startup/html/book.opensuse.startup/part.reference.software.html} and \url{https://en.opensuse.org/Zypper}
-    \item Red Hat, Fedora, CENTOS, Scientific Linux and others: \url{http://yum.baseurl.org/}
+    \item openSUSE AND SUSE Linux Enterprise: \url{https://doc.opensuse.org/documentation/leap/startup/html/book.opensuse.startup/part.reference.software.html} and \url{https://en.opensuse.org/Portal:Zypper}
+    \item Red Hat, Fedora, CENTOS, Scientific Linux and others: \url{http://yum.baseurl.org/} and newer \url{https://fedoraproject.org/wiki/DNF}
     \item Debian (and derivatives): \url{https://www.debian.org/doc/manuals/debian-reference/ch02.en.html} and \url{https://wiki.debian.org/PackageManagement}
     \item Ubuntu (and derivatives): \url{https://help.ubuntu.com/stable/ubuntu-help/addremove.html} and \url{https://help.ubuntu.com/community/AptGet/Howto}
     \item And another distributions\ldots
@@ -3510,6 +3510,7 @@
     \item General forum for programmers \url{https://stackoverflow.com/}
     \item UNIX forum \url{https://unix.stackexchange.com/}
     \item Forum for administrators \url{https://superuser.com/}
+    \item Questions mainly (not only) related to servers \url{https://serverfault.com/}
   \end{itemize}
 \end{frame}
 
@@ -3517,9 +3518,9 @@
   \begin{itemize}
     \item Homepage \url{https://www.opensuse.org/}
     \item Wiki \url{https://en.opensuse.org/Main_Page}, documentation \url{https://doc.opensuse.org/}
-    \item News \url{https://news.opensuse.org/}, developers' blogs \url{https://lizards.opensuse.org/}, blogs \url{http://planet.opensuse.org/}
+    \item News \url{https://news.opensuse.org/}, developers' blogs \url{https://lizards.opensuse.org/}, blogs \url{https://planet.opensuse.org/}
     \item Forums \url{https://forums.opensuse.org/}, mailing lists \url{https://lists.opensuse.org/}
-    \item Community \url{http://opensuse-community.org/}, guide \url{http://opensuse-guide.org/}
+    \item Community \url{https://opensuse-community.org/}, guide \url{http://opensuse-guide.org/}
   \end{itemize}
 \end{frame}
 
@@ -3527,8 +3528,8 @@
   \begin{itemize}
     \item Debian \url{https://www.debian.org/}
     \item Ubuntu \url{https://www.ubuntu.com/}, support \url{https://www.ubuntu.com/support}, Ask ubuntu \url{https://askubuntu.com/}
-    \item Kubuntu \url{http://www.kubuntu.org/}, forum \url{https://www.kubuntuforums.net/}
-    \item Xubuntu \url{http://xubuntu.org/}, Lubuntu \url{http://lubuntu.net/}
+    \item Kubuntu \url{https://www.kubuntu.org/}, forum \url{https://www.kubuntuforums.net/}
+    \item Xubuntu \url{https://xubuntu.org/}, Lubuntu \url{https://lubuntu.net/}
     \item Linux Mint \url{https://www.linuxmint.com/}
   \end{itemize}
 \end{frame}
@@ -3538,14 +3539,14 @@
     \item Homepage \url{https://getfedora.org/}
     \item Official forum \url{https://ask.fedoraproject.org/}
     \item Documentation \url{https://docs.fedoraproject.org/}
-    \item Community forum \url{http://fedoraforum.org/}
+    \item Community forum \url{https://fedoraforum.org/}
   \end{itemize}
 \end{frame}
 
 \begin{frame}{KDE and LibreOffice}
   \begin{itemize}
     \item LibreOffice \url{https://www.libreoffice.org/}, Document Foundation \url{https://www.documentfoundation.org/}
-    \item KDE \url{https://www.kde.org/}, forum \url{https://forum.kde.org/}, application store \url{https://store.kde.org/}, KDE for education \url{https://edu.kde.org/}, blogs \url{https://planetkde.org/}
+    \item KDE \url{https://www.kde.org/}, forum \url{https://forum.kde.org/}, application store \url{https://store.kde.org/}, KDE for education \url{https://edu.kde.org/}, blogs \url{https://planet.kde.org/}
   \end{itemize}
 \end{frame}
 
@@ -3556,7 +3557,7 @@
     \item LinuxExpres \url{https://www.linuxexpres.cz/}
     \item LinuxDays (největší konference) \url{https://www.linuxdays.cz/}
     \item OpenOffice/LibreOffice \url{https://www.openoffice.cz/} a~\url{https://www.knihaoffice.cz/}
-    \item Ubuntu \url{http://www.ubuntu.cz/}, wiki \url{http://wiki.ubuntu.cz/}, fórum \url{http://forum.ubuntu.cz/}, Kubuntu \url{http://www.kubuntu.cz/}, Lubuntu \url{http://www.lubuntu.cz/}, Xubuntu \url{http://www.xubuntu.cz/}
+    \item Ubuntu \url{https://www.ubuntu.cz/}, wiki \url{http://wiki.ubuntu.cz/}, fórum \url{http://forum.ubuntu.cz/}, Kubuntu \url{http://www.kubuntu.cz/}, Lubuntu \url{http://www.lubuntu.cz/}, Xubuntu \url{http://www.xubuntu.cz/}
     \item Fedora \url{https://mojefedora.cz/}, příručka \url{https://wiki.mojefedora.cz/doku.php?id=navody:prirucka:obsah}
     \item openSUSE \url{http://www.opensuse.cz/}
     \item Linux Mint \url{https://www.linux-mint-czech.cz/}
