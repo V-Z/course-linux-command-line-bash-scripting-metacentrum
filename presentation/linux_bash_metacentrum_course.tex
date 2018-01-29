@@ -116,7 +116,7 @@
     \item Subject in SIS: \url{https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=MB120C17}
     \begin{itemize}
       \item Česky: \url{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=MB120C17}
-      \item Requirements for students are on next slide
+      \item For students having subscribed the subject, requirements are on next slide
     \end{itemize}
     \item Working version is available at \url{https://github.com/V-Z/course-linux-command-line-bash-scripting-metacentrum} --- feel free to contribute, request new parts or report bugs
   \end{itemize}
@@ -142,17 +142,21 @@
   \end{itemize}
 \end{frame}
 
+\subsection{Learning machine}
+
 \begin{frame}{Virtual machine for learning}
   \label{VBox}
   \begin{multicols}{2}
     \begin{itemize}
       \item If you do not have Linux installed, download and install VirtualBox from \url{https://www.virtualbox.org/}
-      \item Download openSUSE Leap 42.2 Linux distribution for this course from \url{ftp://botany.natur.cuni.cz/openSUSE_Leap_Linux_course.ova} (3.7~GB)
+      \item Download openSUSE Leap 42.3 Linux distribution for this course from \url{ftp://botany.natur.cuni.cz/openSUSE_Leap_Linux_course.ova} (3.7~GB)
       \item Launch VirtualBox and go to menu \textbf{File | Import appliance\ldots} to import it. When do, launch it (\textbf{Start})
     \end{itemize}
     \includegraphics[height=6cm]{virtualbox.png}
   \end{multicols}
 \end{frame}
+
+% TODO More about usage of VB appliance
 
 \begin{frame}{VirtualBox shared folder I}{VirtualBox can be configured to share folder with host operating system}
   \begin{center}
@@ -170,6 +174,8 @@
   \end{center}
   \vfill
 \end{frame}
+
+\subsection{What it is a ``UNIX''}
 
 \begin{frame}[allowframebreaks]{What it is UNIX, Linux and GNU}
   \begin{itemize}
@@ -213,6 +219,8 @@
   \end{center}
 \end{frame}
 
+% TODO Other common UNIX systems (BSD, Solaris, Mac OS X, ...)
+
 \subsection{Licenses and money}
 
 \begin{frame}{Cathedral vs. market place}{What is principal difference between free open-source and commercial software}
@@ -237,15 +245,21 @@
   \begin{itemize}
     \item \textbf{Free like freedom of speech, \alert{not} like free beer!}
     \item Not every OSS (generally less strict conditions) has to be \textbf{F}OSS (you can do with it (almost) whatever you like) --- source code might be available under some circumstance (only to look), but modification and/or reuse of the code prohibited (and then it is not \textbf{free})
-    \item Open-source --- source code can be seen by the holder of the license --- many variants of exact conditions
+    \item Open-source --- source code can be seen by the holder of the license
     \item GNU GPL (``\href{https://www.gnu.org/copyleft/}{copyleft}'') --- probably most common OSS license, strict, viral --- derived code has to keep the license --- surprisingly not fully ``free'' as it doesn't allow changes of license
     \item LGPL --- Lesser GPL --- more permissive
-    \item BSD license --- permissive --- allow derived code to became closed-source (commonly used by Apple Mac OS~X, Safari browser,~\ldots)
-    \item Apache license, Mozilla license, etc. --- many variants for specific use in particular software
-    \item Creative Commons (CC) --- software licenses above not suitable for multimedia, text, etc. --- CC has many options (including denial of reuse of the product), see \url{https://creativecommons.org/}
-    \item And many more\ldots
-    \item Orientation might be tricky, but practical output for users is more or less same --- the software can be independently checked for bugs, backdoors, malware, can be improved and under some circumstances, new software can be derived, and usually, it is available for free
-    \item Aim is to ``liberate'' software to keep open sharing of ideas, mutual improve and security control --- although the point is clear, there are debates how to reach it\ldots
+    \item BSD license --- permissive --- allow derived code to became closed-source (commonly used by e.g. Apple Mac OS~X, Safari browser,~\ldots)
+    \item Apache or Mozilla license etc. --- specific use in particular software
+    \item Creative Commons (CC) --- software licenses are not suitable for multimedia, text, etc. --- CC has many options (including denial of reuse of the product), see \url{https://creativecommons.org/}
+  \end{itemize}
+  \begin{block}{Spirit of FOSS}
+    \begin{itemize}
+      \item Orientation might be tricky, but practical output for users is same --- \textbf{the software can be independently checked for bugs, backdoors, malware, can be improved and under some circumstances, new software can be derived, and usually, it is available for free}
+      \item \alert{Aim is to ``liberate'' software to keep open sharing of ideas, mutual improve and security control} --- although the point is clear, there are debates how to reach it\ldots
+    \end{itemize}
+  \end{block}
+  \begin{itemize}
+    \item And \href{https://en.wikipedia.org/wiki/Comparison_of_free_and_open-source_software_licenses}{many} \href{https://opensource.org/licenses}{more} licenses\ldots
   \end{itemize}
 \end{frame}
 
@@ -283,7 +297,7 @@
     \begin{itemize}
       \item Somehow assemble Linux kernel, basic tools and some applications
       \item Optionally add some patches and extra tools and gadgets
-      \item Make your own design! (very important)
+      \item Make your own design! (very important;)
       \item If lazy, remake existing distribution (using e.g. \href{http://openbuildservice.org/}{web service})
       \item Still surprised there are hundreds of them?
       \item It is like Lego --- pieces are more or less same across distributions, but result is very variable
@@ -302,7 +316,7 @@
 \begin{frame}{Extremely simplified adaptive radiation of Linux distributions}
   \includegraphics[width=\textwidth]{linux_fylogen_2.png}
   \vfil
-  \url{https://en.wikipedia.org/wiki/List_of_Linux_distributions} and \url{https://distrowatch.com/} ($\sim$800 distributions, $\sim$260 active)
+  \url{https://en.wikipedia.org/wiki/List_of_Linux_distributions} and \url{https://distrowatch.com/} ($\sim$830 distributions, $\sim$280 active)
   \vfill
 \end{frame}
 
@@ -343,37 +357,43 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Ubuntu with Unity}
+\begin{frame}{Ubuntu with Unity} % TODO Update prin screen, add more
   \begin{center}
     \includegraphics[height=7cm]{ubuntu.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{openSUSE with KDE --- Kubuntu is same, but blue\ldots}
+\begin{frame}{openSUSE with KDE --- Kubuntu is same, but blue\ldots} % TODO Update prin screen, add more
   \begin{center}
     \includegraphics[height=7cm]{opensuse.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{Fedora with GNOME --- GNOME is always almost same}
+\begin{frame}{Fedora with GNOME --- GNOME is always almost same} % TODO Update prin screen, add more
   \begin{center}
     \includegraphics[height=7cm]{fedora.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{Linux Mint with Cinnamon}
+\begin{frame}{Linux Mint with Cinnamon} % TODO Update prin screen, add more
   \begin{center}
     \includegraphics[height=7cm]{mint.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{Debian with XFCE --- Xubuntu has more ``modern'' design}
+\begin{frame}{Debian with XFCE --- Xubuntu has more ``modern'' design} % TODO Update prin screen, add more
   \begin{center}
     \includegraphics[height=7cm]{debian.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{How to try it?}
+% TODO More about GUI usage:
+% * Filemanagers
+% * Editing DE settings
+% * Managing global settings and applications
+% * What is stored where
+
+\begin{frame}[allowframebreaks]{How to try it?} % TODO Add Windows 10 Linux subsystem and Cygwin
   \begin{itemize}
     \item Install it on some computer together with or instead of Windows
     \begin{itemize}
@@ -398,7 +418,7 @@
 \begin{frame}{The Linux diversity\ldots}
   \begin{itemize}
     \item Try several distributions and just choose one you like\ldots
-    \item Unless selecting among the most common, it doesn't matter much which one you pick up
+    \item If selecting among the most common, it doesn't matter much which one you pick up
     \item Which design do you like?
     \item Which distribution is your friend or colleague using? To have someone to ask for help\ldots
     \item You can change GUI (or its design) without change of distribution (it use to be highly configurable)
@@ -416,7 +436,7 @@
     \item Default settings (not much)
     \item Package management --- especially in command line
     \item Development model --- conservative or experimental, fast or slow
-    \item Management of system services (how to start/stop certain services like database or web) --- not important for daily usage for most of users
+    \item Management of system services (how to start/stop certain services like database or web server) --- not important for daily usage for most of users
     \item Sometimes in location of some system files --- also not important in daily usage of most of users
     \item Kernel is almost same, applications are same and used in same way
     \item Command line is almost same across Linux, and almost same as in other UNIX systems
@@ -425,30 +445,8 @@
 
 \section{UN*X}
 
-\begin{frame}{UN*X}
+\begin{frame}{UN*X}{Theory and principles of UNIX-based operating systems}
   \tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
-\end{frame}
-
-\begin{frame}[fragile]{Root vs. ``normal'' user}
-  \begin{itemize}
-    \item Root is administrator --- more than God --- can do anything
-    \item Other users have limited permissions
-    \begin{itemize}
-      \item System users providing particular service (web server, database, networking service) are as restricted as possible to do the task --- security
-      \item ``Human'' users don't have access to system files (at least not for modification), homes of users are separated
-    \end{itemize}
-  \end{itemize}
-  \begin{bashcode}
-    # Gain root privileges
-    su # Requires root password (stay in current directory)
-    su - # Requires root password (go to /root)
-    su -c "some command" # Launch one command with root permissions
-    su USER # Became USER (his password is required)
-    sudo -i # For trusted users, became root (asks for user's password)
-            # User has to be listed in /etc/sudoers
-    sudo somecommand # Launch somecommand with root's privileges
-                     # Can be restricted for particular commands
-  \end{bashcode}
 \end{frame}
 
 \subsection{Disks and filesystems}
@@ -457,7 +455,7 @@
   \begin{itemize}
     \item Physical disk (piece of hardware) has at least 1 partition --- division seen in Windows as ``disks'' (\texttt{C}, \texttt{D},~\ldots) and mounted directory in UNIX
     \item MBR --- older description of disk division, up to 4 primary partitions (OS typically requires at leas one to run), one can be extended and contain more partitions, disks up to 2 TB
-    \item GPT --- newer, no relevant limits, requires UEFI (replacement of BIOS --- responsible for computer to start --- in newer computers)
+    \item GPT --- newer, no relevant limits, requires UEFI (replacement of BIOS --- responsible for computer to start in newer computers)
     \item If unsure what to do, high probability to break it\ldots
     \item Blank new partition has to be formatted to desired file system according to use and target operating system
     \item Linux distributions have easy graphical tools to manage disk partitions (e.g. \href{https://gparted.org/}{GParted})
@@ -465,20 +463,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Put together more disks}{Extend space and get higher data security}
-  \label{LVMRAID}
-  \begin{itemize}
-    \item \href{https://en.wikipedia.org/wiki/RAID}{RAID} --- Redundant Array of Inexpensive/Independent Disks
-    \item RAID~0 --- stripping, no redundancy, no security, speed up (two or more disks joined into one, files divided among disks)
-    \item RAID~1 --- mirroring --- even number of disks of same size --- resulting capacity is half, very fast, secure
-    \item RAID~5 --- at least three disks, one is used for parity control, little bit slower
-    \item Combinations (RAID~10,~\ldots)
-    \item \href{https://en.wikipedia.org/wiki/Logical_volume_management}{LVM} --- Logical Volume Management --- built over several partitions/disks --- seen by OS as one continuous space, can be dynamically managed
-    \item Functionality of RAID and LVM (and more) is more or less covered by XFS and Btrfs (next slide)
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{File systems}
+\begin{frame}{File systems} % TODO add ZFS
   \begin{center}
     \begin{footnotesize}
       \begin{tabular}{ccccccc}
@@ -505,8 +490,8 @@
   \begin{itemize}
     \item All commands require root privileges
     \item \texttt{fdisk -l} lists disks and partitions
-    \item To manage disk partitioning use \texttt{fdisk /dev/sdX} (doesn't support GPT very well yet) or \texttt{gdisk /dev/sdX}
-    \item When hard drive is partitioned, partitions must be formatted
+    \item To manage disk partitioning use \texttt{fdisk /dev/sdX} or \texttt{gdisk /dev/sdX}
+    \item When hard drive is partitioned, partitions must be formatted in next step
     \item Commands \texttt{mkfs.*} create various FS, common syntax is \texttt{mkfs.XXX -parameters /dev/sdXY}, where sdXY is particular disk partition
     \item Parameters can set label and various settings of behavior of the disk partition, check \texttt{man mkfs.XXX}
     \item To check FS for errors use \texttt{fsck.XXX /dev/sdXY} (according to respective FS)
@@ -520,11 +505,12 @@
     \item \texttt{hdparm -parameters /dev/sdX} can set advanced hardware parameters of hard drive
     \item The most convenient is using graphical tools available in all distributions\ldots
     \begin{itemize}
-      \item In \href{https://doc.opensuse.org/documentation/leap/reference/html/book.opensuse.reference/cha.advdisk.html}{openSUSE there is YaST} administrative module --- from command line launch \texttt{yast --qt disk} for graphical or \texttt{yast disk} for text-based version
+      \item In \href{https://doc.opensuse.org/documentation/leap/reference/html/book.opensuse.reference/cha.advdisk.html}{openSUSE there is YaST} administrative module --- from command line launch \texttt{yast --qt partitioner} for graphical or \texttt{yast disk} for text-based version
       \item All distributions have graphical tools like \href{https://gparted.org/}{GParted} where it is possible to comfortable manage disks
     \end{itemize}
     \item \texttt{df -h} shows available/occupied space on disks/partitions, but because of special features of Btrfs it doesn't show every time correct values for this FS --- it is better to use \texttt{btrfs filesystem df /mount/point} (\texttt{/mount/point} use to be the most commonly \texttt{/})
     \item On UNIX FS, defragmentation and another maintenance tasks use to be done in background when computer is idling --- unless there is at least $\sim$20\% of free space on the device, this is not any problem and there are no performance issues
+    \item Users must be sure what is doing, otherwise system can be damaged
   \end{itemize}
 \end{frame}
 
@@ -569,9 +555,48 @@
   \end{bashcode}
 \end{frame}
 
+\begin{frame}{Put together more disks}{Extend space and get higher data security}
+  \label{LVMRAID}
+  \begin{itemize}
+    \item \href{https://en.wikipedia.org/wiki/RAID}{RAID} --- Redundant Array of Inexpensive/Independent Disks
+    \item RAID~0 --- stripping, no redundancy, no security, speed up (two or more disks joined into one, files divided among disks)
+    \item RAID~1 --- mirroring --- even number of disks of same size --- resulting capacity is half, very fast, secure
+    \item RAID~5 --- at least three disks, one is used for parity control, little bit slower
+    \item Combinations (RAID~10,~\ldots)
+    \item \href{https://en.wikipedia.org/wiki/Logical_volume_management}{LVM} --- Logical Volume Management --- built over several partitions/disks --- seen by OS as one continuous space, can be dynamically managed
+    \item Functionality of RAID and LVM (and more) is more or less covered by XFS and Btrfs (next slide)
+  \end{itemize}
+\end{frame}
+
+\subsection{Types of users}
+
+\begin{frame}[fragile]{Root vs. ``normal'' user} % TODO Add XKCD cartoon
+  \begin{itemize}
+    \item Root is administrator --- more than God --- can do anything
+    \item Other users have limited permissions
+    \begin{itemize}
+      \item System users providing particular service (web server, database, networking service) are as restricted as possible to do the task --- security
+      \item ``Human'' users don't have access to system files (at least not for modification), homes of users are separated
+    \end{itemize}
+  \end{itemize}
+  \begin{bashcode}
+    # Gain root privileges
+    su # Requires root password (stay in current directory)
+    su - # Requires root password (go to /root)
+    su -c "some command" # Launch one command with root permissions
+    su USER # Became USER (his password is required)
+    sudo -i # For trusted users, became root (asks for user's password)
+            # User has to be listed in /etc/sudoers
+    sudo somecommand # Launch somecommand with root's privileges
+                     # Can be restricted for particular commands
+  \end{bashcode}
+\end{frame}
+
 \subsection{Files and directories}
 
-\begin{frame}[fragile]{File names}
+% TODO Everything is file
+
+\begin{frame}[fragile]{File names} % TODO limits of names, limits of FAT32
   \begin{itemize}
     \item Linux allow \alert{any} character in file name, except \alert{slash} (\texttt{/}), so including anything on keyboard as well as line break (\alert{!}) --- be conservative\ldots
   \end{itemize}
@@ -628,7 +653,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Configuration in /etc (examples)}
+\begin{frame}{Configuration in /etc (examples)} % TODO Add example of configuration file
   \begin{itemize}
     \item Configuration of system services (servers,~\ldots) and behavior
     \begin{itemize}
@@ -696,7 +721,12 @@
     \item Commands \texttt{chown} requires root privileges
     \item Commands \texttt{chgrp} commonly requires root privileges --- user has to be member of particular group to be able to change ownership to it (if not, \texttt{root} most change group ownership)
     \item Information about users and groups and their IDs are in \texttt{/etc/group} and \texttt{/etc/passwd}
+    \item Ownership (and permissions, slide~\ref{permissions}) are important especially on servers with pleny of users
+    \item It is not possible to add particular permissions for particular user on one file --- there must be special group or ACL must be used (slide~\ref{acl})
   \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Change owner and/or group} % TODO Add more commands
   \begin{bashcode}
     ls -l # Shows also owner and group
     id # Display UID and GIDs of current user
@@ -707,6 +737,7 @@
 \end{frame}
 
 \begin{frame}{File and directory permissions}
+  \label{permissions}
   \begin{itemize}
     \item Combination of permissions to read/write/execute for user(owner)/group/others
   \end{itemize}
@@ -889,7 +920,7 @@
 
 \begin{frame}{Text and text --- differences among operating systems}
   \begin{itemize}
-    \item Windows and UNIX have different internal symbol for end of line (new line) --- EOL
+    \item Windows and UNIX have different internal symbol for end of line (\href{https://en.wikipedia.org/wiki/Newline}{new line}) --- EOL
     \begin{itemize}
       \item UNIX: LF (\texttt{\textbackslash n})
       \item Windows/DOS: CR+LF (\texttt{\textbackslash r\textbackslash n})
@@ -898,10 +929,11 @@
     \item Good text editor can open correctly any EOL, but for example execution of script written in Windows will probably fail on Linux
     \item Different systems use different encoding
     \begin{itemize}
-      \item UNIX: mainly UTF-8 (unicode, universal)
+      \item UNIX: mainly UTF-8 (unicode, universal), UTF-16 for Asian languages
       \item Windows: win-cp-125X (variants according to region)
       \item Older UNIX: ISO-8859-X (variants according to region)
       \item Other much less common types
+      \item Important mainly for accented characters
     \end{itemize}
     \item Text editors can usually open any encoding, but auto detection commonly fails --- set it manually
   \end{itemize}
@@ -924,134 +956,9 @@
     recode --help # More information about usage
   \end{bashcode}
   \begin{itemize}
-    \item Mac OS~X mostly uses same encoding and EOL as Linux (and rest of UNIX world), so there are no problems with compatibility
+    \item Mac OS~X uses same encoding and EOL as Linux (and rest of UNIX world), so there are no problems with compatibility
     \item Launching of bash script written on Windows on Linux/Mac OS~X will probably fail (because of different EOL)
   \end{itemize}
-\end{frame}
-
-\subsection{Variables}
-
-\begin{frame}{Variables}
-  \begin{itemize}
-    \item Variables contain various information (where to look for the executable programs, name of the computer, user settings,~\ldots)
-    \item Can be local (within a script for some temporal purpose) or global --- available for all processes
-    \item Names commonly written in CAPITALS (just a costume)
-    \item Popular and useful variables
-    \begin{itemize}
-      \item \texttt{HOME} --- location of user's home directory
-      \item \texttt{HOSTNAME} --- network name of the computer
-      \item \texttt{LANG} --- language settings, encoding, similarly variables \texttt{LC\_*}
-      \item \texttt{PATH} --- paths where to look for applications --- all applications have to be in \texttt{PATH} or called directly
-      \item \texttt{SHELL} --- shell in use (bash or something else)
-      \item \texttt{USER} --- user name
-      \item And many more, commonly specific for particular server
-    \end{itemize}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Work with variables}
-  \begin{bashcode}
-    printenv # Get all exported variables and their values
-    export -p # Get all exported variables and their values
-    echo $VARIABLENAME # Get value of particular variable
-    echo $PATH # Get path where to look for applications
-    VARIABLE='variablevalue' # Set new variable and its value
-                             # Or replace existing variable by new value
-    export EDITOR=/usr/bin/vim # Set new default text editor
-    export PATH=$PATH:~/bin # Extend PATH --- add /home/$USER/bin
-                            # Take existing PATH and add new values
-                            # separated by ":"
-    export GREP_OPTIONS='--color=auto' # Coloured grep
-    unset VARIABLENAME # Drop variable and its value
-  \end{bashcode}
-  \begin{itemize}
-    \item Exported variables will be lost when logging off
-    \item To make variables permanent, add \texttt{export} commands into \texttt{$\sim$/.profile} or \texttt{$\sim$/.bash\_profile}, or \texttt{$\sim$/.bashrc} (according to shell and its settings)
-    \item ``\texttt{$\sim$}'' means home directory
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{The PATH variable}
-  \begin{itemize}
-    \item Lists directories (separated by colon \texttt{:}) where the current shell searches for commands
-    \item If some software is installed outside standard locations, the user must specify the full path (or update the \texttt{\$PATH})
-    \item In case there are two commands with the same name (e.g. \texttt{/bin/somecommand} and \texttt{/usr/bin/somecommand}), the order of directories in \texttt{\$PATH} matters --- the first occurrence is used, any possible later ignored
-  \end{itemize}
-  \begin{bashcode}
-    # See the $PATH variable
-    echo $PATH # Sample output is on the next line:
-    /home/$USER/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin:/sbin:/usr/sbin
-    # Adding new directory to $PATH
-    export PATH=$PATH:/some/new/directory # Ensure to add original $PATH
-    # Do not do it in the following way - it would overwrite $PATH, and
-    #   there would be only the new directory (not the original content)!
-    export PATH=/some/new/directory # Wrong! Old $PATH is missing!
-  \end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Reading variables from command line and as output of another commands}{This is especially useful in scripting to read input from users or from another commands}
-  \begin{bashcode}
-    # Reading variable from user's input from command line
-    # (some interactive script interacting with the user)
-    read X # We will read new variable from input (do not use "$" here)
-    10 # Type any value and press Enter
-    echo $X # Get value of the variable
-    10 # It works
-    # Following two commands are same and lead to same result
-    X=`command` # Set as variable output of command
-    X=$(command) # Set as variable output of command
-    echo $X # X will contain output of command
-    # "command" from previous lines can be e.g.
-    cat somefile.txt # Read content of somefile.txt
-    expr 1 + $X # Sum of 1 and variable $X
-    WORKDIR=`pwd`# Save current directory into variable
-    ls -1 | head -n 1 # First file/directory in the current directory
-    unset X # Destroy this variable
-  \end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Variables and quotes and more}
-  \begin{bashcode}
-    A=abcdef # Set new variable (no special characters allowed)
-    echo $A # See variable's content
-    abcdef # It works
-    echo '$A' # Single quotes preserve literal value
-    $A # We see variable's name, not its content
-    echo "$A" # Double quotes preserve literal value, except $, `, \
-    abcdef # This also works
-    echo `$A` # Text between back ticks is evaluated and launched
-    abcdef: command not found # There is no command "abcdef"...
-    echo "Hi, dear $USER" # Compare this and following command...
-    echo 'Hi, dear $USER' # Single quotes do not evaluate variables
-  \end{bashcode}
-  \begin{itemize}
-    \item \alert{\texttt{\textdollar}} marks variables
-    \item \alert{\texttt{\textbackslash}} escapes following character --- it will not have its special meaning (space to separate arguments,~\ldots)
-    \item If variable is going to contain any special character (\texttt{?}, \texttt{.}, \texttt{*},~\ldots), the value must be quoted --- \texttt{"\ldots"} allow escaping of special character or inclusion of another variables, \texttt{'\ldots'} keeps absolutely literal value
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{How quotes influence reading of variable content}
-  \begin{bashcode}
-    A=abcde # OK
-    echo $A # abcde
-    B=abcd$e # The content will be "abcde + $e" or "abcd" (if $e is missing)
-    echo $B # abcd
-    C=abcd\$e # \ escapes next character - it is loosing its special meaning
-    echo $C # abcd$e
-    D='abcd$e' # '...' keep literal value of the content
-    echo $D # abcd$e
-    # Next command breaks shell - incomplete quotes " - pres then Ctrl+C
-    E=ab"cde # The variable should contain incomplete quotes ", it fails
-    echo $E # Nothing - empty
-    F=ab\"cde # \ escapes next character - it is loosing its special meaning
-    echo $F # ab"cde
-    G='ab"cde' # '...' keep literal value of the content
-    echo $G # ab"cde
-    H=abc`echo $USER`de # See $USER to see what will be inserted into `...`
-    echo $H # abcvojtade # To add output of command into the variable
-    I='...' # Needed if $I should contain spaces, quotes, `, $, ...
-  \end{bashcode}
 \end{frame}
 
 \section{Command line}
@@ -1080,6 +987,8 @@
     \item Custom scripts must have execute permission (\texttt{chmod +x script.sh})
   \end{itemize}
 \end{frame}
+
+\subsection[SSH]{SSH --- secure shell and screen} % TODO Add task to login to remote server
 
 \begin{frame}[fragile]{Login to remote server}{SSH --- secure shell --- encrypted connection}
 \begin{multicols}{2}
@@ -1121,9 +1030,9 @@
   \end{itemize}
 \end{frame}
 
-\subsection{BASH and others}
+\subsection[SH]{BASH and others}
 
-\begin{frame}{The shell}
+\begin{frame}{The shell} % TODO Add print screen
   \begin{itemize}
     \item Many names, many ways how to get it, still the same thing
     \item Fish --- friendly interactive shell --- the command line interface
@@ -1293,7 +1202,131 @@
   \end{itemize}
 \end{frame}
 
-\subsection{Chaining}
+\subsection{Variables}
+
+\begin{frame}{Variables}
+  \begin{itemize}
+    \item Variables contain various information (where to look for the executable programs, name of the computer, user settings,~\ldots)
+    \item Can be local (within a script for some temporal purpose) or global --- available for all processes (and users)
+    \item Names commonly written in CAPITALS (just a costume)
+    \item Popular and useful variables
+    \begin{itemize}
+      \item \texttt{HOME} --- location of user's home directory
+      \item \texttt{HOSTNAME} --- network name of the computer
+      \item \texttt{LANG} --- language settings, encoding, similarly variables \texttt{LC\_*}
+      \item \texttt{PATH} --- paths where to look for applications --- all applications have to be in \texttt{PATH} or called directly
+      \item \texttt{SHELL} --- shell in use (bash or something else)
+      \item \texttt{USER} --- user name
+      \item And many more, commonly specific for particular server
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Work with variables}
+  \begin{bashcode}
+    printenv # Get all exported variables and their values
+    export -p # Get all exported variables and their values
+    echo $VARIABLENAME # Get value of particular variable
+    echo $PATH # Get path where to look for applications
+    VARIABLE='variablevalue' # Set new variable and its value
+                             # Or replace existing variable by new value
+    export EDITOR=/usr/bin/vim # Set new default text editor
+    LISTFILES=`ls -1` # Get output of command 'ls -1' into the variable
+    echo $LISTFILES # See content of the variable $LISTFILES
+    export GREP_OPTIONS='--color=auto' # Coloured grep
+    unset VARIABLENAME # Drop variable and its value
+  \end{bashcode}
+  \begin{itemize}
+    \item Exported variables will be lost when logging off
+    \item To make variables permanent, add \texttt{export} commands into \texttt{$\sim$/.profile} or \texttt{$\sim$/.bash\_profile}, or \texttt{$\sim$/.bashrc} (according to shell and its settings)
+    \item ``\texttt{$\sim$}'' means home directory
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{The PATH variable}
+  \begin{itemize}
+    \item Lists directories (separated by colon \texttt{:}) where the current shell searches for commands
+    \item If some software is installed outside standard locations, the user must specify the full path (or update the \texttt{\$PATH})
+    \item In case there are two commands with the same name (e.g. \texttt{/bin/somecommand} and \texttt{/usr/bin/somecommand}), the order of directories in \texttt{\$PATH} matters --- the first occurrence is used, any possible later ignored
+  \end{itemize}
+  \begin{bashcode}
+    # See the $PATH variable
+    echo $PATH # Sample output is on the next line:
+    /home/$USER/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin:/sbin:/usr/sbin
+    # Adding new directory to $PATH
+    export PATH=$PATH:/some/new/directory # Ensure to add original $PATH
+    # Do not do it in the following way - it would overwrite $PATH, and
+    #   there would be only the new directory (not the original content)!
+    export PATH=/some/new/directory # Wrong! Old $PATH is missing!
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Reading variables from command line and as output of another commands}{This is especially useful in scripting to read input from users or from another commands}
+  \begin{bashcode}
+    # Reading variable from user's input from command line
+    # (some interactive script interacting with the user)
+    read X # We will read new variable from input (do not use "$" here)
+    10 # Type any value and press Enter
+    echo $X # Get value of the variable
+    10 # It works
+    # Following two commands are same and lead to same result
+    X=`command` # Set as variable output of command
+    X=$(command) # Set as variable output of command
+    echo $X # X will contain output of command
+    # "command" from previous lines can be e.g.
+    cat somefile.txt # Read content of somefile.txt
+    expr 1 + $X # Sum of 1 and variable $X
+    WORKDIR=`pwd`# Save current directory into variable
+    ls -1 | head -n 1 # First file/directory in the current directory
+    unset X # Destroy this variable
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Variables and quotes and more}
+  \begin{bashcode}
+    A=abcdef # Set new variable (no special characters allowed)
+    echo $A # See variable's content
+    abcdef # It works
+    echo '$A' # Single quotes preserve literal value
+    $A # We see variable's name, not its content
+    echo "$A" # Double quotes preserve literal value, except $, `, \
+    abcdef # This also works
+    echo `$A` # Text between back ticks is evaluated and launched
+    abcdef: command not found # There is no command "abcdef"...
+    echo "Hi, dear $USER" # Compare this and following command...
+    echo 'Hi, dear $USER' # Single quotes do not evaluate variables
+  \end{bashcode}
+  \begin{itemize}
+    \item \alert{\texttt{\textdollar}} marks variables
+    \item \alert{\texttt{\textbackslash}} escapes following character --- it will not have its special meaning (space to separate arguments,~\ldots)
+    \item If variable is going to contain any special character (\texttt{?}, \texttt{.}, \texttt{*},~\ldots), the value must be quoted --- \texttt{"\ldots"} allow escaping of special character or inclusion of another variables, \texttt{'\ldots'} keeps absolutely literal value
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{How quotes influence reading of variable content}
+  \begin{bashcode}
+    A=abcde # OK
+    echo $A # abcde
+    B=abcd$e # The content will be "abcde + $e" or "abcd" (if $e is missing)
+    echo $B # abcd
+    C=abcd\$e # \ escapes next character - it is loosing its special meaning
+    echo $C # abcd$e
+    D='abcd$e' # '...' keep literal value of the content
+    echo $D # abcd$e
+    # Next command breaks shell - incomplete quotes " - pres then Ctrl+C
+    E=ab"cde # The variable should contain incomplete quotes ", it fails
+    echo $E # Nothing - empty
+    F=ab\"cde # \ escapes next character - it is loosing its special meaning
+    echo $F # ab"cde
+    G='ab"cde' # '...' keep literal value of the content
+    echo $G # ab"cde
+    H=abc`echo $USER`de # See $USER to see what will be inserted into `...`
+    echo $H # abcvojtade # To add output of command into the variable
+    I='...' # Needed if $I should contain spaces, quotes, `, $, ...
+  \end{bashcode}
+\end{frame}
+
+\subsection[Chaining]{Input, output and their redirecting}
 
 \begin{frame}{Chaining commands}
   \begin{itemize}
@@ -1379,7 +1412,7 @@
   \end{bashcode}
 \end{frame}
 
-\subsection{Information and processes}
+\subsection[HW, sys and ps]{Information and processes}
 
 \begin{frame}[fragile]{Which system are we using?}
   \begin{bashcode}
@@ -1453,7 +1486,7 @@
 
 \subsection{Directories}
 
-\begin{frame}[fragile]{Directories}
+\begin{frame}[fragile]{Directories} % TODO Add some tasks
   \begin{bashcode}
     pwd # Print working directory - where we are right now
     cd # Change directory (just "cd" or "cd ~" goes to home directory)
@@ -1582,7 +1615,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Find examples}
+\begin{frame}[fragile]{Find examples} % TODO Examples with toy files
   \begin{bashcode}
     # Find in photos subdir all JPG files and resize them to 1000x1000 px
     find photos/ -name *.jpg -exec mogrify -resize 1000x1000 '{}' \;
@@ -1608,7 +1641,7 @@
 
 \subsection{Network}
 
-\begin{frame}[allowframebreaks]{Network protocols}
+\begin{frame}[allowframebreaks]{Network protocols} % TODO links to respective slides
   \begin{itemize}
     \item SSH --- secure shell --- command-line connection to remote server to work there (port 22)
     \item Telnet --- old deprecated insecure version of SSH, never ever use it (port 23)
@@ -1654,7 +1687,7 @@
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Connecting file systems on remote servers}
+\begin{frame}[fragile]{Connecting file systems on remote servers} % TODO Add task to use sshfs
   \begin{itemize}
     \item Target mount point must exist before mounting
     \item Servers can be accessed by IP address or hostname
@@ -1677,7 +1710,7 @@
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Transferring files from/to remote server}
+\begin{frame}[fragile]{Transferring files from/to remote server} % TODO Add task to get data from training server
   \label{transfers}
   \begin{itemize}
     \item \texttt{curlftpfs} allows mount FTP as local directory, but FTP is outdated, insecure and not constructed to that usage\ldots
@@ -1700,7 +1733,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Synchronization with rsync}
+\begin{frame}[fragile]{Synchronization with rsync} % TODO Add task to get data from training server
   \begin{itemize}
     \item \texttt{rsync} has huge amount of possibilities (see \texttt{man rsync} or \texttt{rsync -h})
     \item Works locally as well as over network
@@ -1755,7 +1788,7 @@
   \end{itemize}
 \end{frame}
 
-\subsection{Parallelisation}
+\subsection{Parallelisation} % TODO Examples with toy files
 
 \begin{frame}{Parallelisation with GNU Parallel}
   \begin{itemize}
@@ -1785,14 +1818,14 @@
     parallel convert -resize 25% '{}' '{.}-small.jpg' ::: *.jpg
     # Find WORD in huge text file (named "longfile" here) - this works
     # but it is not possible to get line number (file is red in blocks)
-    parallel --pipe --block 10M --- grep --color=always WORD < longfile
+    parallel --pipe --block 10M -- grep --color=always WORD < longfile
     # Same as above but add line numbers according to original file
-    nl longfile | parallel -k --pipe --block 20M --- grep WORD
+    nl longfile | parallel -k --pipe --block 20M -- grep WORD
     # When needed to get phrase or regular expression (use parameter
     # "-q" for escaping of shell special characters or extra quotes):
     # "--" stops reading parameters for parallel
-    nl longfile | parallel -qk --pipe --block 20M --- grep "WORD TEXT" # or
-    nl longfile | parallel -k --pipe --block 20M --- grep '"WORD TEXT"'
+    nl longfile | parallel -qk --pipe --block 20M -- grep "WORD TEXT" # or
+    nl longfile | parallel -k --pipe --block 20M -- grep '"WORD TEXT"'
     # Convert all WAV files into OGG
     parallel -X oggenc ::: *.wav # -X parse as many parameters as possible
   \end{bashcode}
@@ -1886,7 +1919,7 @@
   \end{itemize}
 \end{frame}
 
-\subsection{Reading}
+\subsection{Reading} % TODO Examples with toy files
 
 \begin{frame}[fragile]{Read text file}
   \begin{bashcode}
@@ -1911,7 +1944,7 @@
   \end{bashcode}
 \end{frame}
 
-\subsection{Extractions}
+\subsection{Extractions} % TODO Examples with toy files
 
 \begin{frame}[fragile]{Get part of text file (by lines)}
   \begin{bashcode}
@@ -1964,13 +1997,16 @@
   \vfill
 \end{frame}
 
-\subsection{AWK}
+\subsection{AWK} % TODO Examples with toy files, with FASTQ
+
+% AWK: https://www.gnu.org/software/gawk/manual/ http://www.grymoire.com/Unix/Awk.html https://en.wikibooks.org/wiki/An_Awk_Primer
+% gunzip -c XXX.fastq.gz | awk 'NR%4==2{ print length($0) }' | uniq -c
 
 \begin{frame}[fragile]{Get a column with awk}
   \begin{itemize}
     \item AWK is scripting language mainly for text manipulations
     \item Can not select column according to its name (Perl can do that)
-    \item Can do things other BASH tools can not do (easily) --- better manipulation with columns, calculations,~\ldots
+    \item Can do things other BASH tools can not (easily) do --- better manipulation with columns, calculations,~\ldots
     \item Has complicated syntax, it is hard to read, it is not similar to other tools --- Perl can do more and is more common (learn it instead)\ldots
     \item Supports regular expressions, slide \ref{regexp}
   \end{itemize}
@@ -2010,7 +2046,7 @@
   \end{bashcode}
 \end{frame}
 
-\subsection{Manipulations}
+\subsection{Manipulations} % TODO Examples with toy files
 
 \begin{frame}[fragile]{Sorting}
   \begin{bashcode}
@@ -2188,7 +2224,7 @@
    \end{bashcode}
 \end{frame}
 
-\begin{frame}{The editors and their usage}
+\begin{frame}{The editors and their usage} % TODO More about Emacs and Vim
   \begin{itemize}
     \item In \texttt{nano} and \texttt{pico} see bottom line for commands
     \begin{itemize}
@@ -2221,7 +2257,7 @@
   \end{itemize}
 \end{frame}
 
-\subsection{Regular expressions}
+\subsection{Regular expressions} % TODO Examples with toy files, more examples
 
 \begin{frame}{Regular expressions are useful\ldots}
   \begin{multicols}{2}
@@ -2283,7 +2319,7 @@
   \end{itemize}
 \end{frame}
 
-\section{Scripting}
+\section{Scripting} % TODO Update according to modified examples
 
 \begin{frame}{Scripting}
   \tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
@@ -2608,7 +2644,7 @@
   \end{bashcode}
 \end{frame}
 
-\subsection{Branching the code}
+\subsection{Branching the code} % TODO Add more examples
 
 \begin{frame}[fragile]{If branching}
   \begin{bashcode}
@@ -2722,7 +2758,7 @@
   \end{bashcode}
 \end{frame}
 
-\subsection{Loops}
+\subsection{Loops} % TODO Examples with toy files
 
 \begin{frame}[fragile]{For cycles}
   \begin{bashcode}
@@ -2812,7 +2848,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Package management in command line in openSUSE and Debian/Ubuntu (basic commands)}
+\begin{frame}{Package management in command line in openSUSE and Debian/Ubuntu (basic commands)} % TODO Add dnf/yum
   Root password is required: use \texttt{sudo\ldots} or \texttt{su -}
   \begin{center}
     \begin{footnotesize}
@@ -2846,6 +2882,8 @@
     \item Practically every common general distribution has some graphical tool\ldots
   \end{itemize}
 \end{frame}
+
+% TODO Add work with repositories
 
 \subsection{Compilation}
 
@@ -2953,7 +2991,7 @@
   \end{bashcode}
 \end{frame}
 
-\subsection{Windows applications}
+\subsection{Windows applications} % TODO Add some examples
 
 \begin{frame}[allowframebreaks]{Windows applications on Linux}
   \begin{itemize}
@@ -3046,7 +3084,7 @@
   \end{itemize}
 \end{frame}
 
-\subsection{Usage}
+\subsection{Usage} % TODO Update to PBS Pro
 
 \begin{frame}[fragile]{MetaCentrum usage}
   \begin{itemize}
@@ -3066,7 +3104,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{File transfers to MetaCentrum}
+\begin{frame}{File transfers to MetaCentrum} % TODO Update servers
   \begin{itemize}
     \item Graphical applications: \href{https://www.gftp.org/}{gFTP}, \href{https://filezilla-project.org/}{FileZilla} or from most of file managers
     \item Protocol is SSH/SSH2/SFTP/SCP, port 22, server is selected \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontend's} address (e.g. \texttt{tarkil.metacentrum.cz}) --- it is recommendable to use all the time same frontend
@@ -3078,7 +3116,7 @@
 
 \subsection{Tasks}
 
-\begin{frame}[fragile]{Basic skeleton of script running tasks I}
+\begin{frame}[fragile]{Basic skeleton of script running tasks I} % TODO Update according to new file version
   \begin{bashcode}
     #!/bin/bash
     # Modify the script according to your needs!
@@ -3129,7 +3167,7 @@
   \vfill
 \end{frame}
 
-\begin{frame}[fragile]{Launching of tasks}
+\begin{frame}[fragile]{Launching of tasks} % TODO Update to PBS Pro
   \begin{itemize}
     \item \url{https://wiki.metacentrum.cz/wiki/How_to_compute/Requesting_resources}
     \item Personal view \url{https://metavo.metacentrum.cz/pbsmon2/person} has nice overview of available resources and tasks and allows comfortable construction of submission command
@@ -3149,7 +3187,7 @@
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{Scheduling details}
+\begin{frame}[allowframebreaks]{Scheduling details} % TODO Update to PBS Pro
   \begin{itemize}
     \item \texttt{tarkil} is currently testing new scheduler \href{https://wiki.metacentrum.cz/wiki/PBS_Professional}{PBS Professional}
     \begin{itemize}
@@ -3184,7 +3222,7 @@
   \begin{itemize}
     \item Script fails because of wrong PATH or missing file --- ensure all needed files are transferred and applications receive correct paths
     \begin{itemize}
-      \item Do not use absolute paths (starting with \texttt{/}) --- only relative
+      \item Rather do not use absolute paths (starting with \texttt{/}) --- only relative
     \end{itemize}
     \item Not all required applications are correctly loaded
     \begin{itemize}
@@ -3199,6 +3237,8 @@
     \end{itemize}
   \end{itemize}
 \end{frame}
+
+% TODO More examples about software on MetaCentrum, scripts (on MetaCentrum)
 
 \begin{frame}[fragile]{Get to task's working directory}
   \begin{itemize}
@@ -3321,7 +3361,11 @@
   \end{bashcode}
 \end{frame}
 
+% TODO Security, antiviruses
+
 \section{Git}
+
+% TODO More general info about Git, separate GitHub to extra slide
 
 \begin{frame}{Git}
   \tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
@@ -3445,13 +3489,13 @@
 
 % \subsection{Switching to Linux} % TODO Switching
 
-% \begin{frame}{Brief list of applications to help to switch to Linux}
+% \begin{frame}[allowframebreaks]{Brief list of applications to help to switch to Linux}
 %   \begin{itemize}
 %     \item 
 %   \end{itemize}
 % \end{frame}
 
-\subsection{Resources}
+\subsection{Resources} % TODO Possibly add more resources
 
 \begin{frame}[allowframebreaks]{Resources to learn to work in the terminal}
   \begin{itemize}
@@ -3471,7 +3515,7 @@
 
 \begin{frame}{Manuals for package management}
   \begin{itemize}
-    \item openSUSE AND SUSE Linux Enterprise: \url{https://doc.opensuse.org/documentation/leap/startup/html/book.opensuse.startup/part.reference.software.html} and \url{https://en.opensuse.org/Portal:Zypper}
+    \item openSUSE and SUSE Linux Enterprise: \url{https://doc.opensuse.org/documentation/leap/startup/html/book.opensuse.startup/part.reference.software.html} and \url{https://en.opensuse.org/Portal:Zypper}
     \item Red Hat, Fedora, CENTOS, Scientific Linux and others: \url{http://yum.baseurl.org/} and newer \url{https://fedoraproject.org/wiki/DNF}
     \item Debian (and derivatives): \url{https://www.debian.org/doc/manuals/debian-reference/ch02.en.html} and \url{https://wiki.debian.org/PackageManagement}
     \item Ubuntu (and derivatives): \url{https://help.ubuntu.com/stable/ubuntu-help/addremove.html} and \url{https://help.ubuntu.com/community/AptGet/Howto}
@@ -3479,7 +3523,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{How to ask for help}
+\begin{frame}[allowframebreaks]{How to ask for help} % TODO Update, inspire in R
   \label{howtoask}
   \begin{itemize}
     \item \alert{Never ever} ask simple silly lazy questions you can quickly find in manual or web
@@ -3587,9 +3631,3 @@
 \end{document}
 
 % TODO Missing topics
-% * Security, antiviruses
-% * GUI
-% * More examples about software on MetaCentrum, scripts (on MetaCentrum)
-% * More about regular expressions
-% * AWK: https://www.gnu.org/software/gawk/manual/ http://www.grymoire.com/Unix/Awk.html https://en.wikibooks.org/wiki/An_Awk_Primer
-% * gunzip -c XXX.fastq.gz | awk 'NR%4==2{ print length($0) }' | uniq -c
