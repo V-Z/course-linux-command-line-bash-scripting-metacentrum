@@ -3592,3 +3592,4 @@
 % * More examples about software on MetaCentrum, scripts (on MetaCentrum)
 % * More about regular expressions
 % * AWK: https://www.gnu.org/software/gawk/manual/ http://www.grymoire.com/Unix/Awk.html https://en.wikibooks.org/wiki/An_Awk_Primer
+% * gunzip -c XXX.fastq.gz | awk 'NR%4==2{ print length($0) }' | uniq -c
