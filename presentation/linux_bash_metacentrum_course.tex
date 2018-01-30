@@ -186,7 +186,7 @@
       \item Main principles: simple, multitasking, hierarchical, network, for more users (takes cares about permissions etc.), configuration written in plain text files, important relationships among applications (generally one application = one task --- they are chained), work primarily with text, has kernel and API (interface to communicate with the rest of the system)
       \item \href{https://en.wikipedia.org/wiki/Unix-like}{UNIX-like} (UN*X, *nix)
       \begin{itemize}
-	\item Systems compatible with UNIX (Linux, BSD and its variants, Mac OS~X,~\ldots)
+	\item Systems compatible with UNIX (Linux, BSD and its variants, macOS,~\ldots)
 	\item Mainly open-source (UNIX is commonly commercial --- source code is not available for public, but its specification is)
 	\item Nowadays prevailing over ``old'' UNIX systems, used in many devices from tiny embedded toys to huge data centers
 	\item Try to provide same quality as paid systems, but (mostly) for free
@@ -219,7 +219,24 @@
   \end{center}
 \end{frame}
 
-% TODO Other common UNIX systems (BSD, Solaris, Mac OS X, ...)
+\begin{frame}{Most common UNIX-based systems (except Linux)}
+  \begin{itemize}
+    \item \href{https://en.wikipedia.org/wiki/MacOS}{macOS} (previously Mac OS~X) --- system kernel is based on older BSD and uses plenty of GNU tools
+    \item \href{https://en.wikipedia.org/wiki/Berkeley_Software_Distribution}{BSD} --- one of the oldest operating systems, still developed in \href{https://distrowatch.com/search.php?ostype=BSD}{many independent variants}
+    \begin{itemize}
+      \item Still very popular especially on servers, for special purposes, etc.
+      \item License allows closing of the code --- used by Apple macOS kernel, PlayStation firmware,~\ldots
+      \item Installation and management is for beginners usually harder than Linux, everything must be done manually, not so common as Linux anymore
+      \item E.g. \href{https://www.freebsd.org/}{FreeBSD}, \href{https://www.dragonflybsd.org/}{DragoFly BSD}, \href{https://www.openbsd.org/}{OpenBSD}, \href{http://www.freenas.org/}{FreeNAS} (for storage servers),~\ldots
+    \end{itemize}
+    \item \href{https://en.wikipedia.org/wiki/Solaris_(operating_system)}{Solaris} --- commercial, not very common
+    \begin{itemize}
+      \item Mainly special servers, paid
+      \item \href{https://distrowatch.com/search.php?ostype=Solaris}{Several community-based variants} freely available
+    \end{itemize}
+    \item Command line usage is nearly same across UN*X systems (all follow same standards)
+  \end{itemize}
+\end{frame}
 
 \subsection{Licenses and money}
 
@@ -248,7 +265,7 @@
     \item Open-source --- source code can be seen by the holder of the license
     \item GNU GPL (``\href{https://www.gnu.org/copyleft/}{copyleft}'') --- probably most common OSS license, strict, viral --- derived code has to keep the license --- surprisingly not fully ``free'' as it doesn't allow changes of license
     \item LGPL --- Lesser GPL --- more permissive
-    \item BSD license --- permissive --- allow derived code to became closed-source (commonly used by e.g. Apple Mac OS~X, Safari browser,~\ldots)
+    \item BSD license --- permissive --- allow derived code to became closed-source (commonly used by e.g. Apple macOS, Safari browser,~\ldots)
     \item Apache or Mozilla license etc. --- specific use in particular software
     \item Creative Commons (CC) --- software licenses are not suitable for multimedia, text, etc. --- CC has many options (including denial of reuse of the product), see \url{https://creativecommons.org/}
   \end{itemize}
@@ -279,7 +296,7 @@
 
 \section{Linux}
 
-\begin{frame}{Linux}
+\begin{frame}{Linux}{Generally about Linux}
   \tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
 \end{frame}
 
@@ -288,12 +305,12 @@
     \item Operating system respecting principles of UNIX
     \item Components
     \begin{itemize}
-      \item Linux kernel --- basic part of the system responsible for hardware and very basic low-level running of the system (``Linux \textit{sensu stricto}'')
+      \item Linux \textbf{kernel} --- basic part of the system responsible for hardware and very basic low-level running of the system (``\textbf{Linux \textit{sensu stricto}}'')
       \item GNU core utilities --- basic applications
       \item Graphical user environment (GUI) --- many choices
       \item Many other applications --- according to use --- whatever imaginable
     \end{itemize}
-    \item Linux distribution (``Linux \textit{senso lato}'')
+    \item Linux \textbf{distribution (``Linux \textit{senso lato}'')}
     \begin{itemize}
       \item Somehow assemble Linux kernel, basic tools and some applications
       \item Optionally add some patches and extra tools and gadgets
@@ -357,43 +374,44 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Ubuntu with Unity} % TODO Update prin screen, add more
+\begin{frame}{Ubuntu with Unity} % TODO Update print screen, add more
   \begin{center}
     \includegraphics[height=7cm]{ubuntu.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{openSUSE with KDE --- Kubuntu is same, but blue\ldots} % TODO Update prin screen, add more
+\begin{frame}{openSUSE with KDE --- Kubuntu is same, but blue\ldots} % TODO Update print screen, add more
   \begin{center}
     \includegraphics[height=7cm]{opensuse.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{Fedora with GNOME --- GNOME is always almost same} % TODO Update prin screen, add more
+\begin{frame}{Fedora with GNOME --- GNOME is always almost same} % TODO Update print screen, add more
   \begin{center}
     \includegraphics[height=7cm]{fedora.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{Linux Mint with Cinnamon} % TODO Update prin screen, add more
+\begin{frame}{Linux Mint with Cinnamon} % TODO Update print screen, add more
   \begin{center}
     \includegraphics[height=7cm]{mint.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{Debian with XFCE --- Xubuntu has more ``modern'' design} % TODO Update prin screen, add more
+\begin{frame}{Debian with XFCE --- Xubuntu has more ``modern'' design} % TODO Update print screen, add more
   \begin{center}
     \includegraphics[height=7cm]{debian.png}
   \end{center}
 \end{frame}
 
 % TODO More about GUI usage:
-% * Filemanagers
+% * Filemanagers (e.g. default vs. tunned Dolphin)
 % * Editing DE settings
 % * Managing global settings and applications
 % * What is stored where
+% * Compare XFCE in Debian, XFCE, openSUSE, Fedora?
 
-\begin{frame}[allowframebreaks]{How to try it?} % TODO Add Windows 10 Linux subsystem and Cygwin
+\begin{frame}[allowframebreaks]{How to try Linux?}
   \begin{itemize}
     \item Install it on some computer together with or instead of Windows
     \begin{itemize}
@@ -409,6 +427,19 @@
     \begin{itemize}
       \item Requires relatively powerful computer (preferable Intel i5 or i7 and over 4~GB of RAM)
       \item Install virtual machine (probably the most easy is \href{https://www.virtualbox.org/}{VirtualBox}) --- allows install and run another operating system inside host as an ordinary application --- very easy and comfortable
+    \end{itemize}
+    \item Linux subsystem in MS Windows 10 Store
+    \begin{itemize}
+      \item To install follow \url{https://docs.microsoft.com/windows/wsl/about}
+      \item So far only for command line (no GUI)
+    \end{itemize}
+    \item Cygwin
+    \begin{itemize}
+      \item Download and install from \url{https://www.cygwin.com/}
+      \item It is not native Linux, it is collection of GNU and open-source utilities compiled to work on Windows
+      \item Follows POSIX standards (i.e. it works like normal UNIX command line, with all features)
+      \item Every application must be specially compilled to be able to work under Cygwin (it is sometimes complicated)
+      \item Collection is large, include also GUI and DE, but not everything is easy working
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -463,32 +494,33 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{File systems} % TODO add ZFS
+\begin{frame}{Comparison of file systems (limits and compatibility)}
   \begin{center}
     \begin{footnotesize}
       \begin{tabular}{ccccccc}
-	\textbf{FS name} & \begin{tabular}[x]{@{}c@{}}\textbf{Name}\\\textbf{length}\end{tabular} & \begin{tabular}[x]{@{}c@{}}\textbf{Characters}\\\textbf{in file name}\end{tabular} & \begin{tabular}[x]{@{}c@{}}\textbf{Path}\\\textbf{length}\end{tabular} & \textbf{File size} & \begin{tabular}[x]{@{}c@{}}\textbf{Partition}\\\textbf{size}\end{tabular} & \textbf{Systems}\\
+	\begin{tabular}[x]{@{}c@{}}\textbf{FS}\\\textbf{name}\end{tabular} & \begin{tabular}[x]{@{}c@{}}\textbf{Name}\\\textbf{length}\end{tabular} & \begin{tabular}[x]{@{}c@{}}\textbf{Signs}\\\textbf{in name}\end{tabular} & \begin{tabular}[x]{@{}c@{}}\textbf{Path}\\\textbf{length}\end{tabular} & \begin{tabular}[x]{@{}c@{}}\textbf{File}\\\textbf{size}\end{tabular} & \begin{tabular}[x]{@{}c@{}}\textbf{Partition}\\\textbf{size}\end{tabular} & \begin{tabular}[x]{@{}c@{}}\textbf{Supported}\\\textbf{systems}\end{tabular}\\
 	FAT32 & 255 & Unicode & No limit & 4 GiB & 2 TiB & Any\\
 	exFAT & 255 & ? & No limit & 16 EiB & 64 ZiB & Any\\
-	NTFS & 255 & Variable & Variable & 16 TiB & 16 EiB & \begin{tabular}[x]{@{}c@{}}Windows,\\read-write\\in UN*X\end{tabular}\\
-	HFS+ & 255 & Unicode & ? & 8 EiB & 8 EiB & Mac OS\\
-	ext4 & 255 & Any, not / & No limit & 16 TiB & 1 EiB & UN*X\\
-	XFS & 255 & Any & No limit & 9 EiB & 9 EiB & UN*X\\
-	Btrfs & 255 & Any & ? & 16 EiB & 16 EiB & UN*X
+	NTFS & 255 & Variable & Variable & 16 TiB & 16 EiB & \begin{tabular}[x]{@{}c@{}}Windows\\(UN*X)\end{tabular}\\
+	HFS+ & 255 & Unicode & Unlimited & 8 EiB & 8 EiB & macOS\\
+	ext4 & 255 & Any, not / & No limit & 16 TiB & 1 EiB & Linux (UN*X)\\
+	XFS & 255 & Any & No limit & 9 EiB & 9 EiB & Linux (UN*X)\\
+	Btrfs & 255 & Any & No limit & 16 EiB & 16 EiB & Linux (only?)\\
+	ZFS & 255 & Unicode & No limit & 16 EiB & 256 ZiB & UN*X
       \end{tabular}
     \end{footnotesize}
   \end{center}
   \begin{itemize}
     \item FAT32 (including extensions) is old-fashioned and not reliable FS
-    \item NTFS, FAT do not support UNIX permissions, so they can't be used as system partition in Linux
-    \item ext4, XFS and Btrfs are not accessible in Windows
-    \item XFS and Btrfs are the most advanced FS in common use
+    \item NTFS, FAT do not support UNIX permissions, so they can't be used as system partition in Linux; see \href{https://en.wikipedia.org/wiki/Comparison_of_file_systems}{full comparison}
+    \item Btrfs, ext4, XFS and ZFS are not accessible from Windows
+    \item Btrfs, XFS and ZFS are the most advanced FS in common use
   \end{itemize}
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Creation and control of FS}
   \begin{itemize}
-    \item All commands require root privileges
+    \item All commands require root privileges (slide~\ref{root})
     \item \texttt{fdisk -l} lists disks and partitions
     \item To manage disk partitioning use \texttt{fdisk /dev/sdX} or \texttt{gdisk /dev/sdX}
     \item When hard drive is partitioned, partitions must be formatted in next step
@@ -510,7 +542,7 @@
     \end{itemize}
     \item \texttt{df -h} shows available/occupied space on disks/partitions, but because of special features of Btrfs it doesn't show every time correct values for this FS --- it is better to use \texttt{btrfs filesystem df /mount/point} (\texttt{/mount/point} use to be the most commonly \texttt{/})
     \item On UNIX FS, defragmentation and another maintenance tasks use to be done in background when computer is idling --- unless there is at least $\sim$20\% of free space on the device, this is not any problem and there are no performance issues
-    \item Users must be sure what is doing, otherwise system can be damaged
+    \item \alert{Users must be sure what is doing, otherwise system can be damaged}
   \end{itemize}
 \end{frame}
 
@@ -529,7 +561,7 @@
     lnav # Comfortably browse recent logs, quit by "q"
   \end{bashcode}
   \begin{itemize}
-    \item If there are encrypted partitions, they can be accessed \texttt{/dev/mapper/\ldots}
+    \item If there are encrypted partitions, they are in \texttt{/dev/mapper/\ldots}
     \item If LVM (slide~\ref{LVMRAID}) is used, see \texttt{lvscan} and \texttt{pvscan} to find correct location in \texttt{/dev/}
     \item Disks are also accessible through \texttt{/dev/disk/by-*}
   \end{itemize}
@@ -561,16 +593,17 @@
     \item \href{https://en.wikipedia.org/wiki/RAID}{RAID} --- Redundant Array of Inexpensive/Independent Disks
     \item RAID~0 --- stripping, no redundancy, no security, speed up (two or more disks joined into one, files divided among disks)
     \item RAID~1 --- mirroring --- even number of disks of same size --- resulting capacity is half, very fast, secure
-    \item RAID~5 --- at least three disks, one is used for parity control, little bit slower
+    \item RAID~5 --- at least three disks, one is used for parity control, little bit slower, popular in cheaper storage servers (NAS)
     \item Combinations (RAID~10,~\ldots)
     \item \href{https://en.wikipedia.org/wiki/Logical_volume_management}{LVM} --- Logical Volume Management --- built over several partitions/disks --- seen by OS as one continuous space, can be dynamically managed
-    \item Functionality of RAID and LVM (and more) is more or less covered by XFS and Btrfs (next slide)
+    \item Functionality of RAID and LVM (and more) is more or less covered by Btrfs, XFS and ZFS
   \end{itemize}
 \end{frame}
 
 \subsection{Types of users}
 
-\begin{frame}[fragile]{Root vs. ``normal'' user} % TODO Add XKCD cartoon
+\begin{frame}{Root vs. ``normal'' user}
+  \label{root}
   \begin{itemize}
     \item Root is administrator --- more than God --- can do anything
     \item Other users have limited permissions
@@ -578,6 +611,19 @@
       \item System users providing particular service (web server, database, networking service) are as restricted as possible to do the task --- security
       \item ``Human'' users don't have access to system files (at least not for modification), homes of users are separated
     \end{itemize}
+  \end{itemize}
+  \begin{center}
+    \includegraphics[height=3.25cm]{sandwich.png}
+  \end{center}
+  \begin{flushright}
+    \url{https://xkcd.com/149/}
+  \end{flushright}
+\end{frame}
+
+\begin{frame}[fragile]{Becoming root}
+  \begin{itemize}
+    \item Root privileges are required for any administrative task (install of software package, change of system settings,~\ldots)
+    \item Word ``root'' is used as name for system administrator user and also for top of filesystem directory hierarchy (\texttt{/})
   \end{itemize}
   \begin{bashcode}
     # Gain root privileges
@@ -589,14 +635,34 @@
             # User has to be listed in /etc/sudoers
     sudo somecommand # Launch somecommand with root's privileges
                      # Can be restricted for particular commands
+    cat /etc/passwd # See all users (including system users)
   \end{bashcode}
 \end{frame}
 
 \subsection{Files and directories}
 
-% TODO Everything is file
+\begin{frame}{Everything is (text) file}
+  \begin{itemize}
+    \item In UNIX specifications, everything is (text) file
+    \begin{itemize}
+      \item Technically, directory is ``just'' a file listing its content
+      \item Text files are easy to read, parse, manipulate
+      \begin{itemize}
+	\item Very easily editable (easy to change configuration)
+	\item Easy to transfer to another system
+	\item Easily comparable among users/versions/systems
+      \end{itemize}
+      \item UNIX command line tools are the most powerful when processing text files
+    \end{itemize}
+    \item When transfering to and from Windows, be awareof EOL and encoding!
+    \item FAT32 (commonly used for USB flash disks) has limits to maximal file size and range of characters allowed in file name is limited
+    \begin{itemize}
+      \item Avoid large single files and in file names keep only alphanumerical characters, dots and unerscores (omit spaces and accented characters)
+    \end{itemize}
+    \end{itemize}
+\end{frame}
 
-\begin{frame}[fragile]{File names} % TODO limits of names, limits of FAT32
+\begin{frame}[fragile]{File names}
   \begin{itemize}
     \item Linux allow \alert{any} character in file name, except \alert{slash} (\texttt{/}), so including anything on keyboard as well as line break (\alert{!}) --- be conservative\ldots
   \end{itemize}
@@ -956,8 +1022,8 @@
     recode --help # More information about usage
   \end{bashcode}
   \begin{itemize}
-    \item Mac OS~X uses same encoding and EOL as Linux (and rest of UNIX world), so there are no problems with compatibility
-    \item Launching of bash script written on Windows on Linux/Mac OS~X will probably fail (because of different EOL)
+    \item macOS uses same encoding and EOL as Linux (and rest of UNIX world), so there are no problems with compatibility
+    \item Launching of bash script written on Windows on Linux/macOS will probably fail (because of different EOL)
   \end{itemize}
 \end{frame}
 
@@ -2099,7 +2165,7 @@
   \begin{itemize}
     \item \texttt{sed} supports regular expressions, see slide \ref{regexp} (same as in \texttt{grep} and \texttt{vim}), with parameter \texttt{-r} can use extended regular expressions (do not confuse --- the syntax is slightly different, richer)
     \item Output is written to standard output --- use pipes, redirects or \texttt{-i} to modify the file in place (without printing of output)
-    \item Mac OS~X has old outdated versions of \texttt{grep}, \texttt{sed} and other tools (richness of regular expressions is poor) --- use versions from \href{http://brew.sh/}{Homebrew} or search documentation how to modify the patterns\ldots
+    \item macOS has old outdated versions of \texttt{grep}, \texttt{sed} and other tools (richness of regular expressions is poor) --- use versions from \href{http://brew.sh/}{Homebrew} or search documentation how to modify the patterns\ldots
     \item Option \texttt{-s} separates multiple files (otherwise lines in multiple files are calculated as one stream)
     \item Option \texttt{-n} use to be used when deleting lines or printing only specific lines to suppress other lines (see examples)
     \item Various parameters, modificators, operators can be combined\ldots
@@ -2315,7 +2381,7 @@
     \item \textbf{grep}, \textbf{sed} and \textbf{vim} \alert{require escaping} of \alert{\texttt{+}}, \alert{\texttt{?}}, \alert{\texttt{\{}}, \alert{\texttt{\}}}, \alert{\texttt{(}} and \alert{\texttt{)}} by backslash \alert{\texttt{\textbackslash}} --- \textbf{egrep} (extended version, launched as \texttt{grep -E \ldots} or \texttt{egrep \ldots}), \textbf{sed} with extended reg exp (\texttt{sed -r}) and \textbf{perl} \alert{not}
     \item Read \url{https://www.regular-expressions.info/}; česky \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{https://www.root.cz/serialy/regularni-vyrazy/} and \url{https://www.regularnivyrazy.info/}, and manuals for Grep, Vim, Sed, Awk, Perl,~\ldots
     \item See sed examples, slide~\ref{sedex}
-    \item Mac OS~X has by default very outdated version of \texttt{sed} and another tools --- it does not have all advanced features --- users need to install e.g. \texttt{gnu-sed} formulae from \href{https://brew.sh/}{Homebrew}
+    \item macOS has by default very outdated version of \texttt{sed} and another tools --- it does not have all advanced features --- users need to install e.g. \texttt{gnu-sed} formulae from \href{https://brew.sh/}{Homebrew}
   \end{itemize}
 \end{frame}
 
@@ -3324,7 +3390,7 @@
   \begin{itemize}
     \item Different among distributions --- several main methods
     \item In Linux, most common is \href{https://wiki.freedesktop.org/www/Software/systemd/}{SystemD}, less common older init scripts and RC scripts
-    \item Mac OS~X and various BSD and other systems have different methods
+    \item macOS and various BSD and other systems have different methods
     \item Used to manage system services like networking, cron, web server, database,~\ldots
     \item \alert{Read documentation for your distribution!}
     \item Most of actions require root authentication
