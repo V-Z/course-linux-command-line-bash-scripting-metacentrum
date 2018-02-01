@@ -108,6 +108,7 @@
 \end{frame}
 
 \begin{frame}{The course information}
+  \label{materials}
   \begin{itemize}
     \item The course page: \url{https://trapa.cz/en/course-linux-command-line-2018}
     \begin{itemize}
@@ -495,6 +496,7 @@
 \end{frame}
 
 \begin{frame}{Comparison of file systems (limits and compatibility)}
+  \label{fs}
   \begin{center}
     \begin{footnotesize}
       \begin{tabular}{ccccccc}
@@ -654,8 +656,8 @@
       \end{itemize}
       \item UNIX command line tools are the most powerful when processing text files
     \end{itemize}
-    \item When transfering to and from Windows, be awareof EOL and encoding!
-    \item FAT32 (commonly used for USB flash disks) has limits to maximal file size and range of characters allowed in file name is limited
+    \item When transfering to and from Windows, be awareof EOL and encoding (slide~\ref{eolenc})!
+    \item FAT32 (commonly used for USB flash disks) has limits to maximal file size and range of characters allowed in file name is limited (slide~\ref{fs})
     \begin{itemize}
       \item Avoid large single files and in file names keep only alphanumerical characters, dots and unerscores (omit spaces and accented characters)
     \end{itemize}
@@ -689,9 +691,9 @@
 
 \begin{frame}[allowframebreaks]{Directory structure in Linux}
   \begin{itemize}
-    \item Similar is also in another UN*X systems
+    \item It is similar also in another UN*X systems
     \item Top directory ``\texttt{/}'' --- ``root''
-    \item Everything else (including disks and network shares) are mounted in subdirectories (\texttt{/\ldots})
+    \item Everything else (including disks and network shares) are mounted in subdirectories (\texttt{/...})
     \item \texttt{/bin} --- very basic command line utilities
     \item \texttt{/boot} --- bootloader responsible for start of system
     \item \texttt{/dev} --- devices --- representations of disks, CD, RAM, USB devices,~\ldots
@@ -704,11 +706,12 @@
     \item \texttt{/opt} --- optional, usually locally compiled software
     \item \texttt{/proc} --- dynamic information about system processes
     \item \texttt{/root} --- root's (admin's) home
+    \item \texttt{/run} --- temporal ID files (locks) of running processes
     \item \texttt{/sbin} --- basic system utilities
     \item \texttt{/selinux} --- SELinux is security framework
     \item \texttt{/srv} --- FTP and WWW server data (can be in \texttt{/var/srv})
     \item \texttt{/sys} --- basic system
-    \item \texttt{/tmp} --- temporary files --- users have private dynamically created spaces there
+    \item \texttt{/tmp} --- temporary files --- users have private dynamically created spaces there, used automatically by applications according to need
     \item \texttt{/usr} --- binaries (executable applications) and libraries of installed applications
     \item \alert{\texttt{/var}} --- data of most of applications and services, including e.g. database data, system logs,~\ldots
     \item \alert{\texttt{/windows}} --- if on dual boot, Windows disks are commonly mounted here
@@ -719,7 +722,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Configuration in /etc (examples)} % TODO Add example of configuration file
+\begin{frame}{Configuration in /etc (examples)}
   \begin{itemize}
     \item Configuration of system services (servers,~\ldots) and behavior
     \begin{itemize}
@@ -732,8 +735,31 @@
     \item \texttt{resolv.conf} ---  DNS settings (part of basic networking)
     \item \texttt{shadow} --- users passwords in encrypted format
     \item \texttt{skel} --- basic directories and configuration for new users
-    \item Much more\ldots
+    \item Much more accroding to software installed\ldots
   \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Example of configuration in /etc/ssh/sshd\_config}
+  \begin{bashcode}
+    # This is the ssh client system-wide configuration file.  See
+    # ssh_config(5) for more information.  This file provides defaults for
+    # users, and the values can be changed in per-user configuration files
+    # or on the command line.
+    # Minimum accepted size of the DH parameter p. By default this is set to
+    # 1024 to maintain compatibility with RFC4419, but should be set higher.
+    # Upstream default is identical to setting this to 2048.
+    #KexDHMin 1024
+    Host *
+    # If you do not trust your remote host (or its administrator), you
+    # should not forward X11 connections to your local X11-display for
+    # security reasons: Someone stealing the authentification data on the
+    # remote side (the "spoofed" X-server by the remote sshd) can read your
+    # keystrokes as you type, just like any other X11 client could do.
+    # Set this to "no" here for global effect or in your own ~/.ssh/config
+    # file if you want to have the remote X11 authentification data to
+    # expire after twenty minutes after remote login.
+	ForwardX11Trusted yes
+  \end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Types of files}
@@ -766,6 +792,9 @@
   \end{bashcode}
   \begin{itemize}
     \item Hard links --- only second name for file already presented on the disk (available only for files): \texttt{ln source target}
+    \begin{itemize}
+      \item If any one of the two files is deleted, the secand remains to be fully working
+    \end{itemize}
   \end{itemize}
   \begin{bashcode}
     ln .bashrc .bashrcX
@@ -783,23 +812,36 @@
   \begin{itemize}
     \item Every file has an owner and group --- for finer setting of rights
     \item Group can have just one member --- the user
-    \item System usually shows names of groups and users, but important are IDs: GID and UID
-    \item Commands \texttt{chown} requires root privileges
-    \item Commands \texttt{chgrp} commonly requires root privileges --- user has to be member of particular group to be able to change ownership to it (if not, \texttt{root} most change group ownership)
+    \item System usually shows names of groups and users, but important are IDs (numbers): GID and UID
+    \item Commands \texttt{chown} to change owner requires root privileges
+    \item Commands \texttt{chgrp} to change group commonly requires root privileges --- user has to be member of particular group to be able to change ownership to it (if not, \texttt{root} must do it)
     \item Information about users and groups and their IDs are in \texttt{/etc/group} and \texttt{/etc/passwd}
     \item Ownership (and permissions, slide~\ref{permissions}) are important especially on servers with pleny of users
     \item It is not possible to add particular permissions for particular user on one file --- there must be special group or ACL must be used (slide~\ref{acl})
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Change owner and/or group} % TODO Add more commands
+\begin{frame}[fragile]{Change owner and/or group}
   \begin{bashcode}
-    ls -l # Shows also owner and group
+    ls -l # Shows also owner and group (columns 3 and 4):
+    drwxr-xr-x 1 vojta users    80  5. led 16.12 linuxcourse
+    drwxr-xr-x 1 vojta users  1648 31. led 10.15 presentation
+    -rw-r--r-- 1 vojta users  1944  5. led 15.18 README
+    drwxr-xr-x 1 vojta users   822 29. led 10.12 scripts_data
+    -rwxr-xr-x 1 vojta users  1126  5. led 15.22 web_update.sh
+    l # Common alias for 'ls -l' or 'ls-la' (according to distribution)
+    ll # Common alias for 'ls -l' or 'ls-la' (according to distribution)
     id # Display UID and GIDs of current user
+    # New owner or group can be defined as name or ID
     chown newowner:newgroup files # Change owner and group
     chown -R newowner files # Recursively (-R) change owner
     chgrp -R newgroup files # Recursively (-R) change group
+    chown --help # Or 'man chown' for more options
+    chgrp --help # Or 'man chgrp' for more options
   \end{bashcode}
+  \begin{itemize}
+    \item Equally important is to have correct permissions (especially on server) --- next slides
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{File and directory permissions}
@@ -825,21 +867,21 @@
 \begin{frame}[fragile]{Permissions examples}
   \begin{bashcode}
     ls -l # Shows permissions, links, owner, group, size, date, name
-    # Only owner can read and write the file; 600
+    # Only owner can read and write the file; 600:
     -rw-------   1 vojta users   38211 20. led 09.23 .bash_history
-    # Owner can write read and write the file, others read; 644
+    # Owner can write read and write the file, others read; 644:
     -rw-r--r--   1 vojta users    2707 29. lis 16.21 .bashrc
     # Owner can enter, read and write directory, others can read
-    # and enter it; 755
+    # and enter it; 755:
     drwxr-xr-x  41 vojta users    4096 27. pro 09.55 bin
     # Only owner can read, write and enter the directory,
-    # others nothing; 700
+    # others nothing; 700:
     drwx------  58 vojta users    4096 17. pro 15.45 .config
-    # Link, everyone can do everything; 777
+    # Link, everyone can do everything; 777:
     lrwxrwxrwx   1 vojta users      37 20. led 09.33 .lyxpipe.in ->
       /tmp/kde-vojta/kilemj7d3E/.lyxpipe.in
     # Executable (application) - everyone can launch it, but only
-    # owner can write into the file; 755
+    # owner can write into the file; 755:
     -rwxr-xr-x   1 vojta users    2187 27. lis 13.10 strap.sh*
   \end{bashcode}
   \vfil
@@ -852,8 +894,7 @@
   \begin{bashcode}
     ls -l # Long list - file names and attributes
     ls -a # All, including hidden files (starting with dot)
-    ls -F # Add on the end of name "/" for directories and "*"
-          # for executable
+    ls -F # Add on the end of name / for directories and * for execcutable
     ls -h # Human readable size units (use with -l or -s)
     ls --color ## Coloured output
     ls -laFh --color # Combine any parameters you like
@@ -866,24 +907,42 @@
     chmod 600 FILE1 FILE2 # Make both files readable and
                           # writable only by their owner
     chmod 000 FILE # No one can do anything - owner or root must add
-                   # some permissions before any manipulation...
+                   # some permissions before any other action...
     chmod 777 * # All permissions for everyone on everything (no recursive)
+    chmod --help # Or 'man chmod' for more options 
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Extending permissions --- ACL}{Access control list}
+\begin{frame}{Extending permissions --- ACL}{Access control list}
   \label{acl}
   \begin{itemize}
     \item By default, it is not possible to give specific permission to the user who is not owner, nor member of group owning the file
-    \item In ext4 FS it has to be turned on manually (usually it is by default), it is part of XFS and Btrfs
+    \item In ext4 FS it has to be turned on manually (usually it is by default), it is part of Btrfs, XFS and ZFS
     \item Command \texttt{getfacl} lists those extra permissions, \texttt{setfacl} sets
-    \item When in use, ``basic'' tools listing permissions (e.g. \texttt{ls -l}, ACL in use is marked by \texttt{+} on the beginning of the line) sometimes do not show correct result
+    \item \alert{When in use, ``basic'' tools listing permissions (e.g. \texttt{ls -l}, ACL in use is marked by \texttt{+} after permissions) sometimes do not show correct result and permissions may work unexpectedly}
     \item Important especially in network environment with many users
     \item If intensively used, \texttt{ls -l} sometimes doesn't show correct permissions
+    \item If not in use on server (like e.g. on CESNET data storage), relatively high number of groups is required to be able to correctly setup sharing permissions
   \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{ACL examples}
   \begin{bashcode}
-    getfacl FILE # get ACL for FILE
+    getfacl FILE # get ACL for FILE:
+    # file: dokumenty
+    # owner: zeisek # Correct
+    # group: zeisek # Correct
+    user::rwx       # Correct
+    user:nasik:r-x  # This is not seen from 'ls -l' output below!
+    group::r-x      # This group has only one memebr, this is fine
+    mask::r-x
+    other::---      # Correct
+    ls -l FILE # Compare this and previous output (This might be wrong!):
+    drwxr-x---+  2 zeisek zeisek     6 17. zář 20.40 dokumenty/
     setfacl -m u/g:USER/GROUP:r/w/x FILE # Add for USER/GROUP r/w/x right
+    # E.g. recursively add read permission to user 'arabidopsis_data' to
+    # folder 'dokumenty/arabidopsis' (no extra group is required)
+    setfacl -mR u:arabidopsis_data:r dokumenty/arabidopsis
     setfacl -R ... # Recursive (including subdirectories)
     setfacl -b FILE # Remove all ACL from FILE
   \end{bashcode}
@@ -964,6 +1023,7 @@
       \item Use command line
       \item Check spelling
       \item Debug source code
+      \item And more\ldots
     \end{itemize}
   \end{multicols}
   \begin{multicols}{4}
@@ -985,6 +1045,7 @@
 \end{frame}
 
 \begin{frame}{Text and text --- differences among operating systems}
+  \label{eolenc}
   \begin{itemize}
     \item Windows and UNIX have different internal symbol for end of line (\href{https://en.wikipedia.org/wiki/Newline}{new line}) --- EOL
     \begin{itemize}
@@ -998,10 +1059,10 @@
       \item UNIX: mainly UTF-8 (unicode, universal), UTF-16 for Asian languages
       \item Windows: win-cp-125X (variants according to region)
       \item Older UNIX: ISO-8859-X (variants according to region)
-      \item Other much less common types
+      \item Other much less common (historical) types
       \item Important mainly for accented characters
     \end{itemize}
-    \item Text editors can usually open any encoding, but auto detection commonly fails --- set it manually
+    \item Text editors can usually open any encoding, but automatic detection commonly fails --- set it manually
   \end{itemize}
 \end{frame}
 
@@ -1054,9 +1115,42 @@
   \end{itemize}
 \end{frame}
 
-\subsection[SSH]{SSH --- secure shell and screen} % TODO Add task to login to remote server
+\begin{frame}{macOS and Homebrew}
+  \begin{itemize}
+    \item macOS contains outdated versions of many command line utilities with limited functionality comparing to what we are going to use
+    \item Several projects provide Linux style way of installation and update of various (not only) command line tools, probably the best is \href{https://brew.sh/}{Homebrew}
+    \item Homebrew contains also plenty of scientific packages, there is also specialized similar \href{https://brewsci.github.io/homebrew-bio/}{source for bioinformatics}
+    \item Tools installed via Homebrew are installed into \texttt{/usr/local} not to interact with system packages
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Working with Homebrew}
+  \begin{bashcode}
+    # Install compilation tools
+    xcode-select --install
+    # Install Homebrew
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/
+      Homebrew/install/master/install)"
+    brew help # Basic help
+    # Install updated basic UNIX tools
+    brew install coreutils gnu-sed gawk grep bash gcc make wget dos2unix
+    brew list # List of installed packages (brew formulae)
+    brew info FORMULA # Information about particular formula
+    brew search KEYWORD # Search for applications
+    brew update # Update Homebrew
+    brew upgrade # Update all packages installed by Homebrew
+    brew uninstall FORMULA # Remove Homebrew package (formula)
+    brew cleanup # Cleaning after uninstallation
+    # Completely remove Homebrew (after uninstallation of all formulae)
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/
+      install/master/uninstall)"
+  \end{bashcode}
+\end{frame}
+
+\subsection[SSH]{SSH --- secure shell and screen}
 
 \begin{frame}[fragile]{Login to remote server}{SSH --- secure shell --- encrypted connection}
+  \label{ssh}
 \begin{multicols}{2}
   \begin{bashcode}
     ssh remoteUser@remote.server.cz
@@ -1068,7 +1162,7 @@
     # Confirm by Enter
   \end{bashcode}
   \begin{itemize}
-    \item Our toy server: user names from \texttt{u01} to \texttt{u30}
+    \item Our toy server: user names from \texttt{lu01} to \texttt{lu40}
   \end{itemize}
   \begin{bashcode}
     ssh uXY@vyuka.natur.cuni.cz
@@ -1096,9 +1190,25 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}{SSH and screen practice}
+  \begin{center}
+    \includegraphics[height=1.75cm]{sshterm.png}
+  \end{center}
+  \begin{block}{Tasks}
+    \begin{enumerate}
+      \item Login via SSH to \texttt{vyuka.natur.cuni.cz} and launch \texttt{screen}.
+      \item Run commands \texttt{pwd}, \texttt{whoami} and \texttt{ls -la}. What do they show?
+      \item Detach from screen and logout from the server.
+      \item Login again to the server.
+      \item Reatach to the screen --- same state as before logout from server.
+      \item Close screen session and logout from the server.
+    \end{enumerate}
+  \end{block}
+\end{frame}
+
 \subsection[SH]{BASH and others}
 
-\begin{frame}{The shell} % TODO Add print screen
+\begin{frame}{The shell} 
   \begin{itemize}
     \item Many names, many ways how to get it, still the same thing
     \item Fish --- friendly interactive shell --- the command line interface
@@ -1122,6 +1232,10 @@
       \item Launch as many copies as you need (usually allow tabs for easier work)
     \end{itemize}
   \end{itemize}
+\end{frame}
+
+\begin{frame}{The command line can has various look and feel\ldots}{Change colors, font size, etc. for your terminal to like it more and work comfortably}
+  \includegraphics[width=\textwidth]{terminals.png}
 \end{frame}
 
 \begin{frame}{BASH and others}
@@ -1163,14 +1277,14 @@
   \begin{itemize}
     \item \texttt{/etc/bash.bashrc} --- System wide BASH settings --- can be overridden by user's configuration
     \item \texttt{$\sim$/.bashrc} --- File is loaded each time user creates new session (typically opens new terminal window)
-    \item \texttt{$\sim$/.bash\_profile} --- Used specifically (not in every system) when user is using remote connection (SSH)
+    \item \texttt{$\sim$/.bash\_profile} --- Used specifically (not in every system) when user is using remote connection (e.g. SSH)
     \item \texttt{/etc/profile} --- System wide profile file --- can be overridden by user's configuration
     \item \texttt{$\sim$/.profile} --- Settings loaded when user logs-in (mainly for language settings), sometimes used by remote connections
     \item \alert{Note:} BASH scripts are non-interactive shells --- they do not read settings above --- there are no aliases,~\ldots{ }but they inherit some settings (PATH, language,~\ldots) and they can read global variables
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{BASH settings}{Write them into BASH configuration file}
+\begin{frame}[fragile]{BASH settings (popular examples)}{Write them into BASH configuration file}
   \begin{itemize}
     \item In any text editor open \texttt{$\sim$/.bashrc} and edit it
     \item Behavior of BASH can be set to fit user's needs
@@ -1198,9 +1312,8 @@
     alias ll="ls -l"
     # Since now, instead of "ls -l" we can write just "ll"
     # To make the change above permanent, write it into ~/.profile or
-    # ~/.bash_profile or ~/.bashrc and reload the configuration
+    # ~/.bash_profile or ~/.bashrc and reload the configuration by e.g.
     source ~/.bashrc # to reload BASH settings
-                     # or "source" the file you modified
     # If there are many aliases, they can be stored e.g. in ~/.alias
     test -s ~/.alias && . ~/.alias || true # Check for extra alias file
     # Popular aliases
@@ -1210,6 +1323,8 @@
     alias grep='grep --colour=always' # Enable color in grep
     # Always human readable output of df (disk free)
     alias df='df -h'
+    # Easier history listing
+    alias his="history | grep" # Use e.g. 'his ls' to list last 'ls' usage
     # Add aliases pointing to software installed outside PATH, ...
   \end{bashcode}
 \end{frame}
@@ -1223,7 +1338,7 @@
     \item \texttt{[]} --- Range or a list --- \texttt{[abcdef]} and \texttt{[a-f]} are same
     \item \texttt{[!\ldots]} --- Reverse previous case (\texttt{!}) --- any character except those listed
     \item \texttt{\{\}} --- Expansion (terms inside are separated by commas \texttt{,}) --- all possible combinations (see next slide for examples)
-    \item \texttt{\textbackslash} --- Escapes following character and it doesn't have its special meaning (e.g. \texttt{\textbackslash *} means asterisk \texttt{*} and not ``any number of characters'')
+    \item \texttt{\textbackslash} --- Escapes following character and it doesn't have its special meaning (e.g. \texttt{\textbackslash *} means literally asterisk \texttt{*} and not ``any number of any characters'' as usually)
     \item For details see \texttt{man 7 glob} and \texttt{man 7 regex}
   \end{itemize}
 \end{frame}
@@ -1238,8 +1353,8 @@
   \begin{itemize}
     \item Text in single quotes (\texttt{'\ldots'}) preserves the literal value of each character within the quotes
     \item Tex tin double quotes (\texttt{"\ldots"}) preserves the literal value of all characters within the quotes, with the exception of dollar (\texttt{\textdollar}), back tick (\texttt{\textasciigrave}) and back slash (\texttt{\textbackslash})
-    \item A double quote may be quoted within double quotes by preceding it with a backslash
-    \item Text between back ticks (\texttt{\textasciigrave\ldots\textasciigrave}) will be evaluated and then used as command or argument
+    \item A double quote may be quoted within double quotes by preceding it with a backslash (\texttt{\textbackslash"} means litterally ``double quote'')
+    \item Text between back ticks (\texttt{\textasciigrave\ldots\textasciigrave}) will be evaluated and then used as command or argument (see next slide for examples)
   \end{itemize}
 \end{frame}
 
@@ -1247,7 +1362,7 @@
   \begin{bashcode}
     # Many operands have special meaning in BASH - must be escaped
     echo `expr 1 '<' 2` # Is 1 smaller than 2? TRUE (1)
-    echo `expr 1 '>' 2` # Is 2 smaller than 1? FALSE (0)
+    echo `expr 1 '>' 2` # Is 1 greater than 2? FALSE (0)
     echo `expr 5 '%' 2` # What remains after aritmetic division
     echo `expr 1 '&' 0` # If both arguments non-empty and not 0, then 1
     x=`expr 1 '+' 6` # Result will be in $x
@@ -1406,6 +1521,27 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Standard input and output and redirects}
+  \begin{itemize}
+    \item Standard input (\texttt{stdin}) is standard place where software takes input (keyboard and terminal) and writes results to standard output (\texttt{stdout}) --- typically monitor
+    \item Standard error output (\texttt{stderr}) is target of error messages --- typically also monitor (but can be log file or so)
+    \item \alert{\texttt{\textgreater}} redirects output into new place (file, device, another command,~\ldots)
+  \end{itemize}
+  \begin{bashcode}
+    cat /etc/group # Print whole file /etc/group
+    grep users /etc/group > users # Extract from /etc/group lines containing
+                                  # "users" and write output into new file
+    cat users # See result
+  \end{bashcode}
+  \begin{itemize}
+    \item \alert{\texttt{\textgreater\textgreater}} adds output to the end of the file (\texttt{\textgreater} rewrites target file)
+  \end{itemize}
+  \begin{bashcode}
+    grep root /etc/group >> users # Add new information into existing file
+    cat users # See result
+  \end{bashcode}
+\end{frame}
+
 \begin{frame}{Redirects and pipes}
   \label{pipe}
   \begin{itemize}
@@ -1433,27 +1569,6 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Standard input and output and redirects}
-  \begin{itemize}
-    \item Standard input (\texttt{stdin}) is standard place where software takes input (keyboard and terminal) and writes results to standard output (\texttt{stdout}) --- typically monitor
-    \item Standard error output (\texttt{stderr}) is target of error messages --- typically also monitor (but can be log file or so)
-    \item \alert{\texttt{\textgreater}} redirects output into new place (file, device, another command,~\ldots)
-  \end{itemize}
-  \begin{bashcode}
-    cat /etc/group # Print whole file /etc/group
-    grep users /etc/group > users # Extract from /etc/group lines containing
-                                  # "users" and write output into new file
-    cat users # See result
-  \end{bashcode}
-  \begin{itemize}
-    \item \alert{\texttt{\textgreater\textgreater}} adds output to the end of the file (\texttt{\textgreater} rewrites target file)
-  \end{itemize}
-  \begin{bashcode}
-    grep root /etc/group >> users # Add new information into existing file
-    cat users # See result
-  \end{bashcode}
-\end{frame}
-
 \begin{frame}[fragile]{Redirects of standard input and output}
   \begin{bashcode}
     # Write directory listing into text file
@@ -1478,6 +1593,28 @@
   \end{bashcode}
 \end{frame}
 
+\begin{frame}[fragile]{Examples of redirects and pipes when working with molecular data}
+  \begin{bashcode}
+    # Extract and sort depth of coverage (how many times was each position
+    # sequenced) in genomic VCF with multiple individuals
+    zcat arabidopsis.vcf.gz | grep -o "DP=[0-9]\+" | sort | less
+    # Convert DNA sequence from FASTQ to FASTA (two of many options)
+    # (discard FASTQ quality scores and keep only the sequence and its name)
+    bzcat Oxalis_hirta_R1.fastq.bz2 | sed -n '1~4s/^@/>/p;2~4p' > \
+      Oxalis_hirta_R1.fasta
+    bzcat Oxalis_hirta_R2.fastq.bz2 | awk '{if(NR%4==1)
+      {printf(">%s\n",substr($0,2));} else if(NR%4==2) print;}' > \
+      Oxalis_hirta_R2.fasta
+    # See both sequences in one view
+    less Oxalis_hirta_R{1,2}.fasta
+    # Mapping of trimmed Illumina FASTQ reads to reference FASTA sequence
+    # and creation of BAM containing the alignment (reference and mapped
+    # reads, one BAM for each sample)
+    bwa mem reference.fasta input_R1.fastq input_R2.fastq | samtools view \
+      -bu | samtools sort -l 9 -o mapped.bam
+  \end{bashcode}
+\end{frame}
+
 \subsection[HW, sys and ps]{Information and processes}
 
 \begin{frame}[fragile]{Which system are we using?}
@@ -1489,6 +1626,7 @@
     cat /proc/cpuinfo # Raw list of information about CPU
     lsusb # List of devices on USB
     lspci # List of PCI devices (graphic card, network card, ...)
+    lspci | grep -i vga # Get information about graphical cay
     lshw # Complete list of hardware
     lshw -C memory # Information about RAM
     hwinfo # Complete list of hardware
@@ -1512,12 +1650,12 @@
     ps x # All user's processes
     ps aux # All processes
     # kill (terminate) process by name or process ID (PID)
-    ps aux | grep geany # Find which PID has application to terminate
-    # This is the application - its PID we need
-    vojta 14639 9.3 0.8 2828512 134816 ?   Sl 16:12 0:01 /usr/bin/geany
-    # This is the previous "ps aux | grep geany" command (last column)
-    vojta 14769 0.0 0.0   9440  1628 pts/0 S+ 16:12 0:00 grep geany
+    # Find which PID has application to terminate
+    pgrep geany
+    14639
+    # Kill (stop by SIGTERM) selected application according to above PID
     kill -SIGTERM 14639 # SIGTERM is "nice" termination, SIGKILL "brutal"
+    kill -SIGTERM `pgrep geany` # Two above commands in one step
     killall -SIGTERM geany # Select by name (more processes with same name)
     # nice - how much resources will task use: from -20 (high priority - not
     # "nice" process) to +19 (low priority - very "nice" process), default 0
@@ -1552,7 +1690,7 @@
 
 \subsection{Directories}
 
-\begin{frame}[fragile]{Directories} % TODO Add some tasks
+\begin{frame}[fragile]{Directories}
   \begin{bashcode}
     pwd # Print working directory - where we are right now
     cd # Change directory (just "cd" or "cd ~" goes to home directory)
@@ -1574,6 +1712,21 @@
     file somefile # Information about questioned file (what it is, ...)
     xdg-open somefile # Open file by graphical application as in GUI
   \end{bashcode}
+\end{frame}
+
+\begin{frame}{Tasks}
+  \begin{enumerate}
+    \item Login via SSH to \texttt{vyuka.natur.cuni.cz}
+    \item Get your path by \texttt{pwd}
+    \item Go to \texttt{/home/scripts\_data} (with \texttt{cd}) and explore its content (\texttt{ls})
+    \item Go back to home directory (by \texttt{cd})
+    \item Create new directory in your home directory (\texttt{mkdir})
+    \item Copy content of \texttt{/home/scripts\_data} into your newly created directory (\texttt{cp})
+    \item Rename that directory with scripts and data using \texttt{mv}
+    \item Explore your home directory and it content by command \texttt{ls} and \texttt{tree} and some files by command \texttt{file}
+    \item Chenge permissions of the files so that only you can read, write and execute them (\texttt{chmod})
+    \item Create other directory, see it and the remove (\texttt{rmdir})
+  \end{enumerate}
 \end{frame}
 
 \begin{frame}{Midnight Commander}
@@ -1681,21 +1834,21 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Find examples} % TODO Examples with toy files
+\begin{frame}[fragile]{Find examples (apply some of them to the toy data)}
   \begin{bashcode}
-    # Find in photos subdir all JPG files and resize them to 1000x1000 px
-    find photos/ -name *.jpg -exec mogrify -resize 1000x1000 '{}' \;
+    # Find in scripts_data all JPG files and resize them to 1000x1000 px
+    find scripts_data -name *.jpg -exec mogrify -resize 1000x1000 '{}' \;
     # Another possibility with xargs (it chains commands - reads input from
     # stdin and execute command with given arguments, using all CPU threads)
     # Note in the example below -print is not needed as it is default action
     find photos/ -name *.jpg | xargs mogrify -resize 1000x1000
     # Find all R scripts in ~/Documents and find in them lines with "DNA"
-    find ~/Documents -name *.r -print | grep -nH DNA # Two possibilities
+    find ~/Documents -name *.r -print | xargs grep -nH DNA # Or
     find ~/Documents -name *.r -exec grep -nH DNA '{}' \;
     # How many directories are there in the books directory
     find books/ -type d -print | wc -l # wc -l calculate lines
-    # Find in /home/$USER/photos all JPG files containing string "trip"
-    find /home/$USER/photos -name *trip*.jpg -print
+    # Find in /home/$USER/ all JPG files containing string "oxalis"
+    find /home/$USER/ -name "*oxalis*.jpg" -print
     # Change permissions of all files within "files" directory to 777
     find files/ -type f -exec chmod 777 '{}' \;
     # Find all executable files within current directory and list them
@@ -1707,24 +1860,24 @@
 
 \subsection{Network}
 
-\begin{frame}[allowframebreaks]{Network protocols} % TODO links to respective slides
+\begin{frame}[allowframebreaks]{Network protocols}
   \begin{itemize}
-    \item SSH --- secure shell --- command-line connection to remote server to work there (port 22)
+    \item SSH --- secure shell --- command-line connection to remote server to work there (port 22), slide~\ref{ssh}
     \item Telnet --- old deprecated insecure version of SSH, never ever use it (port 23)
     \item FTP --- file transfer protocol --- outdated, no encryption (port 21)
     \item FTPS --- FTP with added connection encryption for higher security (port 21)
-    \item SFTP --- FTP over SSH --- common, secure (port 22)
-    \item SCP --- secure copy --- uses SSH, but has restricted possibilities, common, secure (port 22)
-    \item NFS --- network file share/server --- very common in UNIX world, commonly used to permanently connect to network server, share directories, etc. (port 20049)
-    \item webDAV --- file transfer over web (using WWW server) --- not so common, but good (port 80 or 443 --- same as WWW)
+    \item SFTP --- FTP over SSH --- common, secure (port 22), slide~\ref{transfers}
+    \item SCP --- secure copy --- uses SSH, but has restricted possibilities, common, secure (port 22), slide~\ref{transfers}
+    \item NFS --- network file share/server --- very common in UNIX world, commonly used to permanently connect to network server, share directories, etc. (port 20049), slide~\ref{netfs}
+    \item webDAV --- file transfer over web (using WWW server) --- not so common, but good (port 80 or 443 --- same as WWW), slide~\ref{netfs}
     \begin{itemize}
       \item Accompanied by calDav and cardDav to share calendars and address books over the network
     \end{itemize}
-    \item SAMBA --- UNIX connection to Microsoft network shares (port 5445)
+    \item SAMBA --- UNIX connection to Microsoft network shares (port 5445), slide~\ref{netfs}
     \item web --- ``The Internet'' for most of users (port 80 or encrypted 443)
     \item IMAP (port 143 or 993) and SMTP (port 25 or 465) to connect to e-mail server and send mails
     \item Messaging protocols like XMPP (Jabber and derived services like Google Talk or Facebook Messenger), IRC, ICQ, Skype,~\ldots
-    \item And much more\ldots
+    \item And much more (see \texttt{/etc/services})\ldots
     \item Port number can be changed in configuration of respective server service
     \item All firewalls on the way must allow communication on given port
   \end{itemize}
@@ -1738,7 +1891,7 @@
     mtr hostname # Combines ping and traceroute, quit with "q"
     ip a s # Information about all network devices (MAC, IP address, ...)
     ifconfig -a # Older version of above command
-    iwconfig # List of network interfaces
+    iwconfig # List of wireless network interfaces
     ip r # Show routes
     nc -vz web.natur.cuni.cz 22 # Does SSH work on the host?
       # verbose (-v), scan (-z), host, port number (22 for SSH, can be any)
@@ -1753,7 +1906,8 @@
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Connecting file systems on remote servers} % TODO Add task to use sshfs
+\begin{frame}[fragile]{Connecting file systems on remote servers}
+  \label{netfs}
   \begin{itemize}
     \item Target mount point must exist before mounting
     \item Servers can be accessed by IP address or hostname
@@ -1769,14 +1923,16 @@
     man mount.cifs # See for other connection options
     # Mounting remote server over SSH (sshfs package must be installed)
     sshfs user@vyuka.natur.cuni.cz:/some/dir /local/mount/point
+    fusermount -f /mount/point # Disconnect SSHF
     # Mount NFS share (NFS is common protocol in UNIX world)
     mount -t nfs some.server.cz:/shared/directory /local/directory
     # Mount webDAV folder (requires package davfs2 to be installed)
     mount -t davfs https://owncloud.cesnet.cz/directory /local/directory
+    umount /mount/point # Disconnect CIFS/SAMBA, NFS, webDAV, ...
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Transferring files from/to remote server} % TODO Add task to get data from training server
+\begin{frame}[fragile]{Transferring files from/to remote server}
   \label{transfers}
   \begin{itemize}
     \item \texttt{curlftpfs} allows mount FTP as local directory, but FTP is outdated, insecure and not constructed to that usage\ldots
@@ -1799,7 +1955,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Synchronization with rsync} % TODO Add task to get data from training server
+\begin{frame}[fragile]{Synchronization with rsync}
   \begin{itemize}
     \item \texttt{rsync} has huge amount of possibilities (see \texttt{man rsync} or \texttt{rsync -h})
     \item Works locally as well as over network
@@ -1818,9 +1974,25 @@
   \end{bashcode}
 \end{frame}
 
+\begin{frame}{Network tasks}
+  \begin{enumerate}
+    \item Make in your notebook new empty directory and mount there via SSHFS your home directory on \texttt{vyuka.natur.cuni.cz} (or on some other server).
+    \begin{itemize}
+      \item Explore it. What is then path to files on the remote server?
+      \item Disconnect the server when done.
+    \end{itemize}
+    \item Use \texttt{wget} to download this presentation to your notebook (slide~\ref{materials}).
+    \item Use \texttt{scp} to copy directory with toy data and scripts from your home directory on \texttt{vyuka.natur.cuni.cz} into your notebook.
+    \item Use \texttt{scp} to copy any file from your notebook into your home directory on \texttt{vyuka.natur.cuni.cz}.
+    \item Use \texttt{rsync} tu update toy data and scripts in your notebook according to version on \texttt{vyuka.natur.cuni.cz} in \texttt{/home/scripts\_data}.
+    \item Use \texttt{rsync} to update directory with toy data files and scripts in your home directory on \texttt{vyuka.natur.cuni.cz} according to version in your notebook.
+    \item Get MAC and IP address of your notebook.
+  \end{enumerate}
+\end{frame}
+
 \begin{frame}[fragile]{Connect to SSH with key}{No need to remember password for every server\ldots}
   \begin{bashcode}
-    # Create the key
+    # Create the key (several options)
     ssh-keygen -t rsa -b 4096 # Good security, portable
     # ECC gives better security, but not all servers/applications support it
     ssh-keygen -t ecdsa -b 521 # Higher security
@@ -1828,7 +2000,7 @@
     # Empty (no) passphrase will connect to server without password
     # Copy public key to remote server (private key must be kept locally)
     ssh-copy-id user@remote.server.cz # or
-    cat ~/.ssh/XXX.pub | ssh user@remote.server.cz \
+    cat ~/.ssh/*.pub | ssh user@remote.server.cz \
       "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
     # Now, public key is on the server and private key in local computer is
     # unlocking the connection
@@ -1854,7 +2026,7 @@
   \end{itemize}
 \end{frame}
 
-\subsection{Parallelisation} % TODO Examples with toy files
+\subsection{Parallelisation}
 
 \begin{frame}{Parallelisation with GNU Parallel}
   \begin{itemize}
@@ -1870,12 +2042,14 @@
       \item \texttt{:::} --- use arguments from command line instead of stdin (::: is placed after the command and before the argument)
       \item \texttt{::::} --- read from argument files
       \item \texttt{-j} --- number of jobs --- if not provided, \texttt{parallel} will use all available CPU threads
+      \item See examples on next slides
     \end{itemize}
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{GNU Parallel examples I}
   \begin{bashcode}
+    # Apply some of the examples to the toy files (photos).
     # Convert all images from JPG to PNG
     ls -1 *.jpg | parallel --bar convert '{}' '{.}.png'
     # Resize all images ("\" marks that command continue on next line)
@@ -1924,7 +2098,7 @@
 
 \begin{frame}[fragile]{Launching of tasks at certain time}
   \begin{itemize}
-    \item \texttt{at} can run command at certain time (atd daemon must be running)
+    \item \texttt{at} can run command at certain time (\texttt{atd} daemon must be running)
     \item Tasks are running in background, outputs are mailed (e.g. to \texttt{/var/spool/mail/\$USER})
   \end{itemize}
   \begin{bashcode}
@@ -1946,7 +2120,7 @@
 
 \begin{frame}[fragile]{Automated launching of tasks}
   \begin{itemize}
-    \item \texttt{cron} runs tasks repeatedly (cron daemon must be running)
+    \item \texttt{cron} runs tasks repeatedly (\texttt{cron} daemon must be running)
     \item Scripts for tasks running hourly/daily/weekly/monthly can be copied into respective \texttt{/etc/cron.*/} directories
   \end{itemize}
   \begin{bashcode}
@@ -1954,21 +2128,21 @@
     systemctl status/start/stop/enable/disable cron.service
     crontab -l # List user's cron tasks
     crontab -e # Edit user's cron tasks:
-    # Minute, Hour, Day in month, Month, Day in week, Command (absolute path)
+    # Minute, Hour, Day in month, Month, Day in week, Command(absolute path)
     # 0-59    0-23  1-31          1-12   0-6 starting with Sunday (WTF?)
       *       *     *             *      *            /usr/bin/command
-      10      22    1             *      *        # 1st day in month, 23:11
-      0       */3   *             *      *        # Every 3 hours
-      0       11    *             *      0        # Every Sunday, 12:00
-      30      3     */2           *      *        # Every even day, 4:31
-      */15    *     *             *      0,4   # At Sun and Fri every 15 min
+      10      22    1             *      *    # 1st day in month, 23:11
+      0       */3   *             *      *    # Every 3 hours
+      0       11    *             *      0    # Every Sunday, 12:00
+      30      3     */2           *      *    # Every second day, 4:31
+      */15    *     *             *      0,4  # At Sun and Fri every 15 min
     # Columns are separated by any number of spaces
   \end{bashcode}
 \end{frame}
 
 \section{Text}
 
-\begin{frame}{Text}
+\begin{frame}{Text}{Various aspects of working with text files}
   \tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
 \end{frame}
 
@@ -1981,36 +2155,36 @@
     \item One of the most powerful features of BASH
     \item Some operations are complicated (e.g. complex manipulations with columns, various calculations) it is necessary to use AWK or Perl (probably the most advanced language working with text)
     \item Text-manipulating tools have very rich implementation of regular expressions (slide~\ref{regexp})
-    \item Most of the operations are done in stream --- per line --- everything is very fast
+    \item Most of the operations are done in stream --- per line --- everything is very fast and memory efficient
   \end{itemize}
 \end{frame}
 
-\subsection{Reading} % TODO Examples with toy files
+\subsection{Reading}
 
 \begin{frame}[fragile]{Read text file}
   \begin{bashcode}
-    cat # Read or join files (-n adds line numbers, -v prints non-printable
-        # characters like EOL)
-    cat textfile # Print content of text file
+    cat # Read or join files
+        # -n adds line numbers, -v prints non-printable characters like EOL
+    cat long_text.txt # Print content of text file
     cat textfile1 >> textfile2 # Append textfile1 to the end of textfile2
-    nl textfile # Like cat -n, prints textfile with line numbers
+    nl long_text.txt # Like cat -n, prints textfile with line numbers
     tac textfile # Like cat, but prints lines in reverse order
-    more textfile # When textfile is long, prints screen by screen (space
-                  # for next screen, q to quit)
-    less textfile # Better version of more - you can scroll up and down by
-                  # PgUp, PgDown, arrows, searching by / (type searched
-                  # string, hit Enter, n for next, twice ESC to quit),
-                  # q to quit viewing (also used by man)
-    most textfile # Better version of less
-    fmt textfile # Basic formatting of text - joining of commented lines,
-                 # line breaks to break too long lines, ...
+    more long_text.txt # When textfile is long, prints screen by screen
+                       # (space for next screen, q to quit)
+    less long_text.txt # Better version of more - you can scroll up and
+                       # down by PgUp, PgDown, arrows, searching by / (type
+                       # searched string, hit Enter, n for next, twice ESC
+                       # to quit), q to quit viewing (also used by man)
+    most long_text.txt # Better version of less (not available everywhere)
+    fmt long_text.txt # Basic formatting of text - joining of commented
+                      # lines, line breaks to break too long lines, ...
     fmt textfile > formatted_file # Save output of fmt into new file
-    wc textfile # lines, words and bytes in text file
-                # wc -l for only lines, -m for characters, -w for words
+    wc long_text.txt # lines, words and bytes in text file
+                     # wc -l for only lines, -m for characters, -w for words
   \end{bashcode}
 \end{frame}
 
-\subsection{Extractions} % TODO Examples with toy files
+\subsection{Extractions}
 
 \begin{frame}[fragile]{Get part of text file (by lines)}
   \begin{bashcode}
@@ -2058,15 +2232,35 @@
     paste -d "|" diff_test_file_1.txt diff_test_file_2.txt # -d for delimiter
     # Swapping columns is not very comfortable...
     paste <(cut -f2 cut_awk_test_file.tsv) <(cut -f1 cut_awk_test_file.tsv)
-    ls -l | column -t # Reformate input as table (compare with ls -l)
+    ls -l | column -t # Reformate input as table (compare with 'ls -l')
   \end{bashcode}
   \vfill
 \end{frame}
 
-\subsection{AWK} % TODO Examples with toy files, with FASTQ
+\begin{frame}[fragile]{Examples of usage of head, grep and cut with our data}
+  \begin{bashcode}
+    head long_text.txt # Beginning of the file
+    # Extract names of FASTA sequences
+    grep "^>" Oxalis_HybSeq_nrDNA_selection_alignment.fasta
+    # Extract every FASTA sequence containing "AAAAAA" and name of
+    # respective FASTA sequence
+    grep -n -B 1 AAAAAA Oxalis_HybSeq_nrDNA_selection_alignment.fasta
+    # Get column of parwise identities of sequences exported as TSV from
+    # Geneious - discard header (1st line, print from 2nd line) and extract
+    # second column (separated by TAB)
+    tail -n+2 cut_awk_test_file.tsv | cut -f 2 | less
+    # Number of occurrences of word "Gregor" in file long_text.txt
+    grep -o Gregor long_text.txt | wc -l
+    ls -1 *.sh | wc -l # How many BASH script are in current directory
+    # Extract from FASTA file only sequence (discard sequence names) and
+    # save result in seq.txt
+    grep -v "^>" Oxalis_HybSeq_nrDNA_selection_alignment.fasta > seq.txt
+    # Save names of oxalis* JPG files into list_oxalis_photo.txt and see it
+    ls -1 *oxalis*.jpg > list_oxalis_photo.txt && cat list_oxalis_photo.txt
+  \end{bashcode}
+\end{frame}
 
-% AWK: https://www.gnu.org/software/gawk/manual/ http://www.grymoire.com/Unix/Awk.html https://en.wikibooks.org/wiki/An_Awk_Primer
-% gunzip -c XXX.fastq.gz | awk 'NR%4==2{ print length($0) }' | uniq -c
+\subsection{AWK}
 
 \begin{frame}[fragile]{Get a column with awk}
   \begin{itemize}
@@ -2075,61 +2269,80 @@
     \item Can do things other BASH tools can not (easily) do --- better manipulation with columns, calculations,~\ldots
     \item Has complicated syntax, it is hard to read, it is not similar to other tools --- Perl can do more and is more common (learn it instead)\ldots
     \item Supports regular expressions, slide \ref{regexp}
+    \item For more information see manuals \url{https://www.gnu.org/software/gawk/manual/}, \url{https://en.wikibooks.org/wiki/An_Awk_Primer} and \url{http://www.grymoire.com/Unix/Awk.html}
   \end{itemize}
   \begin{bashcode}
-    awk 'regexp { commands parameters }' file
-    awk '{print $NF}' textfile # Select last column (separated by tab)
-    awk '{print $2}' textfile # Select 2nd column (separated by tab)
-    awk '{print $3, $2}' textfile # Print columns 3 and 2 (in this order)
-    awk -F ' ' '{print $4, $1}' textfile # Print columns 4 and 1
-                                         # separated by " " (space)
-    ls -l | awk '/^d/ { print $8 "\t" $3 }' # Separate columns by TAB
-               # /^d/ for lines starting with "d" (only directories)
+    awk 'regexp { commands parameters }' file # General syntax
+    # Print last column (separated by tab, built-in variable $NF)
+    awk '{print $NF}' cut_awk_test_file.tsv
   \end{bashcode}
-  \vfill
 \end{frame}
 
-\begin{frame}[fragile]{More AWK examples}
+\begin{frame}[fragile]{AWK examples I}
   \begin{bashcode}
+    # Select 2nd column ($2; separated by tab)
+    awk '{print $2}' cut_awk_test_file.tsv
+    # Print columns 3 and 2 (in this order)
+    awk '{print $3, $2}' cut_awk_test_file.tsv
+    # Get column 5 and 1 (in this order, separated by ":") from /etc/passwd,
+    # print ", username:" between the columns. Note usage of commas and
+    # consequences to output.
+    cat /etc/passwd | awk -F ':' '{print $5 ", username:", $1}'
+    # Separate columns by TAB, /^d/ for lines starting with "d" (only dirs)
+    ls -l | awk '/^d/ { print $8 "\t" $3 }'
     # Print on even lines ">", former column 1, new line, former column 2
-    awk '{print ">"$1"\n"$2}' awk_test_file.tab # 2 columns into 2 lines
+    # 2 columns into 2 lines (cretae FASTA from tabular record)
+    awk '{print ">"$1"\n"$2}' awk_test_file.tab | less -S
     # Print field 1, TAB (\t), length of field 2, TAB and field 2
-    awk '{print $1"\t"length($2)"\t"$2}' textfile
-    # If field 1=1, print whole line
-    awk '{if($1==1){print $0}}' textfile
+    awk '{print $1"\t"length($2)"\t"$2}' awk_test_file.tab
+    # If field (column) 2 contains exactly 100.0%, print whole line ($0)
+    awk '{if($2=="100.0%"){print $0}}' cut_awk_test_file.tsv
     # Field 1 is numeric (less then 5 digits) - add leading zeroes
-    awk '{printf "%05d\n", $1;}' textfile
-    # As above, but add leading zeroes to field 1 and print whole line
-    awk '{$1=sprintf("%05d", $1); print $0}' textfile
-    # Field 6 is numeric, select lines where field 6 is higher than 100
-    awk -F '\t' '$6>100' cut_awk_test_file.tsv # Separated by TABs (\t)
-    # Print fields 4 and 5 (fields are separated by "_" or TAB)
-    awk -F '[_\t]' '{print $4, $5}' awk_test_file.tab
-    # Precede each line by its line number for all files together, with TAB
-    awk '{print NR "\t" $0}' diff_test_file_*
-    # substitute "foo" with "bar" ONLY for lines which contain "baz"
-    awk '/baz/{gsub(/foo/, "bar")}; 1'
+    awk '{printf "%05d\n", $1;}' awk_test_file.tab
   \end{bashcode}
 \end{frame}
 
-\subsection{Manipulations} % TODO Examples with toy files
+\begin{frame}[fragile]{AWK examples II}
+  \begin{bashcode}
+    # As previous, but add leading zeroes to field 1 and print whole line
+    awk '{$1=sprintf("%05d", $1); print $0}' awk_test_file.tab
+    # Field 6 is numeric, select lines where field 6 is higher than 200
+    awk -F '\t' '$6>200' cut_awk_test_file.tsv # Separated by TABs (\t)
+    # Print fields 4 and 5 (fields are separated by "_" or TAB)
+    awk -F '[_\t]' '{print $4, $5}' cut_awk_test_file.tsv
+    # Precede each line by its line number for all files together, with TAB
+    # (i.e. print line number (NR) and then whole original line ($0))
+    awk '{print NR "\t" $0}' diff_test_file_*
+    # substitute "a" with "XXX" ONLY for lines which contain "The"
+    awk '/The/{gsub(/a/, "XXX")}; 1' diff_test_file_1.txt
+    # For every 4th line starting from line 2 of FASTQ file (from line 2
+    # every 4th line contains the DNA sequence) print its length (bzcat
+    # prints content of file compressed by bzip2)
+    bzcat Oxalis_hirta_R1.fastq.bz2 | awk 'NR%4==2{ print length($0) }'
+    # If sequence is longer that 500 bp (length of field 2), print its name
+    # (field 1) like this "Seq. name: TAB the sequence name (ID)"
+    awk '{if(length($2)>500){print "Seq. name:\t" $1}}' awk_test_file.tab
+  \end{bashcode}
+\end{frame}
+
+\subsection{Manipulations}
 
 \begin{frame}[fragile]{Sorting}
   \begin{bashcode}
-    sort textfile # Sort a text file
+    sort file # Sorting is influenced by locale setting (e.g. Czech "ch")
+    LC_ALL=C sort ... # To force use of English locale use
     sort -d textfile # Take into account only spaces and alphanumerical
-                     # characters (ignore any other characters)
+                     # characters (ignore any other)
     sort -r textfile # Reverse order
     sort -f textfile # Ignore character case (not case sensitive)
     sort -m textfile1 textfile2 # Merge already sorted text files
-    sort -u textfile # Print only first of multiple entries
+    sort -u textfile # Print only first of multiple (repeated) entries
+    # Extract only unique sequences from FASTQ
+    bzcat Oxalis_hirta_R1.fastq.bz2 | awk 'NR%4==2{print $0}' | sort -u
     sort -b textfile # Ignore leading blanks (space on beginning of line)
-    # Sorting is influenced by locale setting (e.g. Czech "ch")
-    LC_ALL=C sort ... # To force use of English locale use
-    sort -k 2 -n textfile # Sort according to 2nd field (numerically)
-    uniq textfile # Filters following identical lines - only unique
-                  # are printed (to get unique lines from whole file,
-                  # sort it first)
+    sort -k 2 -n cut_awk_test_file.tsv # Sort according to 2nd field
+    uniq textfile # Filters following identical lines - only unique are
+                  # printed (to get unique lines from whole file, sort it)
     uniq -c textfile # Add number of occurrences before each line
     uniq -d textfile # Print only repeated lines
     uniq -i textfile # Ignore case (not case sensitive)
@@ -2150,11 +2363,11 @@
     # Replace every occurrence of A, B, C or D by a new line (\n)
     cat inputtextfile | tr "[ABCD]" "\n" > outputtextfile
     # Replace capital letters by small ones
-    tr "[A-Z]" "[a-z]" < inputtextfile > outputtextfile
+    tr "[A-Z]" "[a-z]" < diff_test_file_1.txt > outputtextfile.txt
     # Alternative (easier reading) of previous command:
-    cat inputtextfile | tr "[:upper:]" "[:lower:]" > outputtextfile
+    cat diff_test_file_1.txt | tr "[:upper:]" "[:lower:]" > outputtextfile
     # Replace all new lines (line breaks) by TABs
-    cat inputtextfile | tr "\n" "\t"  > outputtextfile
+    cat diff_test_file_1 | tr "\n" "\t"  > outputtextfile
     # Discard all new lines - output will be one line
     tr -d "\n" < textfile > /dev/stdout # stdout is typically screen
     tr --help # See another possibilities for pattern to find/replace
@@ -2190,28 +2403,41 @@
     seq 1 100 | sed -n '2~10p' # Example of above pattern (see "seq 1 100")
     # Replace first TAB (\t) on each line by new line (\n)
     sed 's/\t/\n/' textfile
+    # Convert sequences in tabular format into FASTA (place ">" to the
+    # beginning of the line, replace TAB "\t" by newline "\n")
+    sed 's/^/>/' awk_test_file.tab | sed 's/\t/\n/' > seq.fasta
+    # Convert FASTQ sequences into FASTA (on every 4th line, starting with
+    # line 1 replace "@" by ">", print every 4th line, starting by line 2)
+    bzcat Oxalis_hirta_R1.fastq.bz2 | sed -n '1~4s/^@/>/p;2~4p' > seq.fasta
     sed 's/find/replace/g' somedirectory/* # Work on all files in directory
-    # Convert all capital letters into lower
-    sed 's/[A-Z]/\L&/g' inputtextfile > outputtextfile # And vice versa:
-    sed 's/[a-z]/\U&/g' inputtextfile > outputtextfile
-    # Groups to remember work in same way in sed, grep as well as vim
-    \(ToRemember\) # Remember expression in brackets (example at next slide)
-    \Number # Use remembered expression (numbered from one: \1, \2, \3, ...)
   \end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Sed examples II}
   \begin{bashcode}
+    # Convert all capital letters into lower
+    sed 's/[A-Z]/\L&/g' inputtextfile > outputtextfile # And vice versa:
+    sed 's/[a-z]/\U&/g' inputtextfile > outputtextfile
+    # Groups to remember work in same way in sed, grep as well as vim
+    \(ToRemember\) # Remember expression in brackets
+    \Number # Use remembered expression (numbered from one: \1, \2, \3, ...)
     # Take output of ls -l and replace value of $USER by "$USER-RULEZZZ"
     ls -l | sed "s/\($USER\)/\1-RULEZZZ/g" # Note " to use variable
     # Replace size column (2nd numeric) by "size:TAB<file size>b"
     # Second sed replaces any white spaces by single TAB
     ls -l | sed 's/\([0-9]\+\)/size:\t\1b/2' | sed 's/[[:blank:]]\+/\t/g'
-    sed '/^$/d' # Delete blank lines ('8d' line 8, 's/ *$//' spaces on EOL)
+    head long_text.txt | sed '/^$/d' # Delete blank (empty) lines
+    head long_text.txt | sed '6d' # Delete 6th line
+    sed 's/ *$//' # Delete extra spaces on the end of lines
     sed '/GUI/d' # Delete all lines containing "GUI" ('s/GUI//g' only "GUI")
     sed '5 i\Linux is great.' # Insert to 5th line ('4 a\' after 4th line)
     # Insert text to the beginning of the 3rd line (compare with previous)
     sed '3s/^/INSERT/' # ^ is beginning of line, $ end ('$/...' last line)
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Sed examples III}
+  \begin{bashcode}
     # From ls -l keep number of links (1st numeric column after permissions)
     # and then flip user and group and print it as "group:user"
     ls -l | sed 's/ \([[:digit:]]\+\) \([[:alnum:]]\+\) \([[:alnum:]]\+\) /
@@ -2223,7 +2449,7 @@
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Joining}
+\begin{frame}[fragile]{Joining} % TODO Examples with toy files
   \begin{itemize}
     \item Generally, most of tools work per-line, \texttt{paste} appends columns (slide~\ref{cutpaste})
     \item Join compares every matching lines (by default 1$^{st}$ field) and creates all combinations - ensure to have sorted input files with unique text
