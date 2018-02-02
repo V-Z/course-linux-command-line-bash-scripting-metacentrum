@@ -1116,6 +1116,7 @@
 \end{frame}
 
 \begin{frame}{macOS and Homebrew}
+  \label{homebrew}
   \begin{itemize}
     \item macOS contains outdated versions of many command line utilities with limited functionality comparing to what we are going to use
     \item Several projects provide Linux style way of installation and update of various (not only) command line tools, probably the best is \href{https://brew.sh/}{Homebrew}
@@ -2374,24 +2375,22 @@
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Replacements with sed}
+\begin{frame}{Replacements with sed}
   \begin{itemize}
     \item \texttt{sed} supports regular expressions, see slide \ref{regexp} (same as in \texttt{grep} and \texttt{vim}), with parameter \texttt{-r} can use extended regular expressions (do not confuse --- the syntax is slightly different, richer)
     \item Output is written to standard output --- use pipes, redirects or \texttt{-i} to modify the file in place (without printing of output)
-    \item macOS has old outdated versions of \texttt{grep}, \texttt{sed} and other tools (richness of regular expressions is poor) --- use versions from \href{http://brew.sh/}{Homebrew} or search documentation how to modify the patterns\ldots
+    \item macOS has old outdated versions of \texttt{grep}, \texttt{sed} and other tools (richness of regular expressions is poor) --- use versions from \href{http://brew.sh/}{Homebrew} (slide~\ref{homebrew}) or search Internet how to modify the patterns\ldots
     \item Option \texttt{-s} separates multiple files (otherwise lines in multiple files are calculated as one stream)
     \item Option \texttt{-n} use to be used when deleting lines or printing only specific lines to suppress other lines (see examples)
+    \item See manuals \url{https://www.gnu.org/software/sed/manual/} and \url{http://www.grymoire.com/Unix/sed.html}
     \item Various parameters, modificators, operators can be combined\ldots
   \end{itemize}
-  \begin{bashcode}
-    sed 'operator/FindToReplace/Replace/modificator' textfile > newtextfile
-  \end{bashcode}
-  \vfill
 \end{frame}
 
 \begin{frame}[fragile]{Sed examples I}
   \label{sedex}
   \begin{bashcode}
+    sed 'operator/FindToReplace/Replace/modificator' textfile > newtextfile
     # Search and replace ("s") all occurrences ("g") of "find" by "replace"
     sed 's/find/replace/g' textfile
     # Replace third occurrence of pattern on every line
@@ -2429,27 +2428,37 @@
     head long_text.txt | sed '/^$/d' # Delete blank (empty) lines
     head long_text.txt | sed '6d' # Delete 6th line
     sed 's/ *$//' # Delete extra spaces on the end of lines
-    sed '/GUI/d' # Delete all lines containing "GUI" ('s/GUI//g' only "GUI")
-    sed '5 i\Linux is great.' # Insert to 5th line ('4 a\' after 4th line)
-    # Insert text to the beginning of the 3rd line (compare with previous)
-    sed '3s/^/INSERT/' # ^ is beginning of line, $ end ('$/...' last line)
+    sed '/GUI/d' # Delete all whole lines containing "GUI"
+    sed 's/GUI//g' # Delete all occurrences of "GUI" (not whole lines)
+    sed '4 i\Linux is great.' diff_test_file_1.txt # Insert to 5th line
+    sed '3 a\Linux is great.' diff_test_file_1.txt # Insert after 4th line
   \end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Sed examples III}
   \begin{bashcode}
+    # Insert text to the beginning of the 3rd line (compare with previous)
+    # "^" is beginning of line, $ end ('$/...' last line)
+    sed '3s/^/INSERT/' diff_test_file_1.txt
     # From ls -l keep number of links (1st numeric column after permissions)
     # and then flip user and group and print it as "group:user"
     ls -l | sed 's/ \([[:digit:]]\+\) \([[:alnum:]]\+\) \([[:alnum:]]\+\) /
       \1 \3:\2 /g' # Note separating spaces (previous line ends with space)
+    ls -l # Compare to the previous command, explain behavior of sed pattern
     # Escaping - replace dot by comma (dot means any single character)
-    sed 's/\./,/g' # \ escapes following character (compare with 's/./,/g')
+    sed 's/\./,/g' diff_test_file_1.txt # \ escapes following character
+    sed 's/./,/g' diff_test_file_1.txt # Compare with the previous example
     # Replace any of characters within [...] by some pattern
-    sed 's/[abcd]/X/g' # Compare with reverse case 's/[^abcd]/X/g'
+    sed 's/[abcd]/X/g' diff_test_file_1.txt # Compare with reverse case:
+    sed 's/[^abcd]/X/g' diff_test_file_1.txt # "[^...]" means anything else
+    sed -i ... file.txt # In-place editing - file is edited, no output to
+                        # standard output (no need for redirects nad pipes)
+    ls -l | sed 's/[0-9]\{4,\}/BIG!/' # Replace 4 or more digits by "BIG!"
+    sed -E ... ; sed -r ... # Use extended regular expressions (see further)
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Joining} % TODO Examples with toy files
+\begin{frame}[fragile]{Joining}
   \begin{itemize}
     \item Generally, most of tools work per-line, \texttt{paste} appends columns (slide~\ref{cutpaste})
     \item Join compares every matching lines (by default 1$^{st}$ field) and creates all combinations - ensure to have sorted input files with unique text
@@ -2474,7 +2483,18 @@
 
 \subsection{Comparisons}
 
-\begin{frame}[fragile]{Comparisons}
+\begin{frame}{Comparisons}
+  \begin{itemize}
+    \item Graphically compare two files by e.g. \href{https://www.kde.org/applications/development/kompare/}{Kompare}, \href{https://sourcegear.com/diffmerge/}{DiffMerge}, \href{http://meldmerge.org/}{Meld},~\ldots
+    \item Most common is usage of GNU diffutils (next slide), see manual \url{https://www.gnu.org/software/diffutils/manual/}
+    \item See also \href{https://www.computerhope.com/unix/udiff.htm}{guide with examples}, česky \href{https://blog.root.cz/petrkrcmar/diff-jak-cist-vystup-z-porovnani-souboru/}{příklady na diff} a \href{https://www.root.cz/clanky/nastroje-pro-porovnani-obsahu-dvou-textovych-souboru/}{porovnání dvou textových souborů}
+  \end{itemize}
+  \begin{center}
+    \includegraphics[height=4.5cm]{kompare.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{comm and diff}
   \begin{bashcode}
     cat diff_test_file_1.txt diff_test_file_2.txt # See and use examples
     # Compare two sorted columns
@@ -2482,21 +2502,22 @@
       # 1st column - lines only in textfile1
       # 2nd column - lines only in textfile2
       # 3rd column - lines in both files
-    comm -2 textfile1 textfile2 # Don't show 2nd column (similarly -1, -3)
+    # Don't show 2nd column (similarly -1, -3)
+    comm -2 diff_test_file_1.txt diff_test_file_2.txt
     # Show differences between text files
-    diff textfile1 textfile2
+    diff diff_test_file_1.txt diff_test_file_2.txt
       # First number shows line(s) in 1st file, then if add/delete/change
       # and last number shows line(s) in the second file, <> show direction
-    diff -e textfile1 textfile2 # More simple output
-    diff -c textfile1 textfile2 # Show context (lines around change)
-    diff -u textfile1 textfile2 # Better version, the most common
-    diff -y textfile1 textfile2 # In two columns comparing both files
+    diff -e diff_test_file_1.txt diff_test_file_2.txt # More simple output
+    diff -c diff_test_file_1.txt diff_test_file_2.txt # Show context
+    diff -u diff_test_file_1.txt diff_test_file_2.txt # Better, most common
+    diff -y diff_test_file_1.txt diff_test_file_2.txt # In two columns
     colordiff # Same usage and parameters as previous, colored output
-    diff -u textfile1 textfile2 | view - # Launches vim (exit by :q! Enter)
+    diff -u diff_test_file_1.txt diff_test_file_2.txt | view - # In vim
     vimdiff # Can show more colors, launches vim (exit by :q! Enter)
   \end{bashcode}
 \end{frame}
-
+% TODO Add usage of patch
 \subsection{Editors} 
 
 \begin{frame}[fragile]{Command line text editors}
@@ -2516,7 +2537,7 @@
    \end{bashcode}
 \end{frame}
 
-\begin{frame}{The editors and their usage} % TODO More about Emacs and Vim
+\begin{frame}{The editors and their usage}
   \begin{itemize}
     \item In \texttt{nano} and \texttt{pico} see bottom line for commands
     \begin{itemize}
@@ -2530,7 +2551,7 @@
     \begin{itemize}
       \item See \url{https://www.gnu.org/software/emacs/tour/}, \url{http://tuhdo.github.io/emacs-tutor.html} and \url{http://www.jesshamrick.com/2012/09/10/absolute-beginners-guide-to-emacs/}
     \end{itemize}
-    \item The most common is \textbf{Vim} (next slide)
+    \item The most common is \textbf{Vim}
     \begin{itemize}
       \item See \url{https://vim-adventures.com/} to play a game and learn Vim
     \end{itemize}
@@ -2538,18 +2559,73 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}{Emacs basics}
+  \begin{itemize}
+    \item Feature-rich ecosystem --- not only text editor, also file manager, debugger, integrated development environment, extra plugins are available,~\ldots
+    \item Keyboard commands are noted as e.g. \texttt{C-x}, where ``\texttt{C}'' stands for (mostly) \texttt{Ctrl} key, \texttt{M-x}, where ``\texttt{M}'' stands mostly for \texttt{Alt} key, sometimes for \texttt{Win} key
+  \end{itemize}
+  \begin{multicols}{2}
+    \begin{itemize}
+      \item \texttt{C-h C-h} help (press twice \texttt{Ctrl~+~H})
+      \item \texttt{C-g} quit
+      \item \texttt{C-x C-f} open file
+      \item \texttt{C-x C-s} save file
+      \item \texttt{C-x C-w} save file as
+      \item \texttt{C-\_} undo
+      \item \texttt{C-s} search forwards
+      \item \texttt{C-r} search backwards
+      \item \texttt{C-left} move one word left
+      \item \texttt{C-right} move one word right
+      \item \texttt{C-up} move one paragraph up
+      \item \texttt{C-down} move one paragraph down
+      \item \texttt{M-\%} search and replace pattern
+    \end{itemize}
+  \end{multicols}
+\end{frame}
+
 \begin{frame}{Vim}{Vim has three different working modes}
   \begin{enumerate}
-    \item \textbf{``Normal''} --- nothing is displayed in bottom left corner, every key has some meaning (\texttt{dd} to cut current line, \texttt{r} to replace character below cursor, \texttt{v} for selection of text, \texttt{y} to copy, \texttt{x} to cut, \texttt{p} to paste, \texttt{i} or \texttt{Insert} key to enter insert mode, \texttt{:} to enter command mode, number to get to line of particular line number, \texttt{u} to undo last change(s),~\ldots)
+    \item \textbf{``Normal''} --- nothing is displayed in bottom left corner, every key has some meaning (next slide)
+    \begin{itemize}
+      \item \texttt{i} or \texttt{Insert} key to enter \textit{insert mode}, \texttt{:} to enter \textit{command mode}
+    \end{itemize}
     \item \textbf{Insert} --- in bottom left corner ``\texttt{-- INSERT --}'' is displayed, the most familiar mode, normal typing etc., exit to normal mode by \texttt{ESC} key
-    \item \textbf{Command} --- in bottom left corner \texttt{:} is displayed, awaits commands, e.g. \texttt{w} to write file, \texttt{q} to quit, \texttt{q!} to quit and discard changes, \texttt{\%s/\ldots} to search and replace as in \texttt{sed}, \texttt{syntax on/off} to turn syntax highlight on/off, \texttt{/ToSearch} to search (\texttt{Enter}, \texttt{n} for next occurrence, quit with \texttt{Esc}),~\ldots{ }Exit to normal mode by \texttt{Backspace} key (delete ``\texttt{:}'').
+    \item \textbf{Command} --- in bottom left corner \texttt{:} is displayed, awaits commands, exit to normal mode by \texttt{Backspace} key (delete ``\texttt{:}'')
   \end{enumerate}
   \begin{itemize}
-    \item See \url{http://vim.wikia.com/}, \url{http://www.vim.org/docs.php}; česky \url{http://www.nti.tul.cz/~satrapa/docs/vim/}
+    \item See documentation \url{http://vim.wikia.com/}, \url{http://www.vim.org/docs.php}; česky \url{http://www.nti.tul.cz/~satrapa/docs/vim/}
+    \item For interactive learning try \url{https://vim-adventures.com/} or command \texttt{vimtutor}
   \end{itemize}
 \end{frame}
 
-\subsection{Regular expressions} % TODO Examples with toy files, more examples
+\begin{frame}{Normal and command Vim modes}
+  \begin{multicols}{2}
+    \begin{itemize}
+      \item \textbf{Normal mode}
+      \begin{itemize}
+	\item \texttt{dd} cut current line
+	\item \texttt{r} replace single character below cursor (type then character to be palced instead of the original one)
+	\item \texttt{v} for selection of text
+	\item \texttt{y} copy selection
+	\item \texttt{x} cut selection (always to clipboard, it can be pasted by \texttt{p})
+	\item \texttt{p} paste
+	\item \textit{number} to get to line of particular line number
+	\item \texttt{u} to undo last change(s)
+	\item \texttt{/ToSearch} search ``ToSearch'' (once press \texttt{Enter}, \texttt{n} for next occurrence, quit with \texttt{Esc})
+      \end{itemize}
+      \item \textbf{Command mode}
+      \begin{itemize}
+	\item \texttt{w} write file
+	\item \texttt{q} quit
+	\item \texttt{q!} quit and discard changes
+	\item \texttt{\%s/...} to search and replace as in \texttt{sed}
+	\item \texttt{syntax on/off} turn syntax highlight on/off
+      \end{itemize}
+    \end{itemize}
+  \end{multicols}
+\end{frame}
+
+\subsection{Regular expressions}
 
 \begin{frame}{Regular expressions are useful\ldots}
   \begin{multicols}{2}
@@ -2583,7 +2659,7 @@
     \item \alert{\texttt{\textbackslash\{n,m\textbackslash\}}} --- range of occurrences of single character
     \item \alert{\texttt{\textbackslash\{n\textbackslash\}}} --- exactly \textit{n} occurrences
     \item \alert{\texttt{\textbackslash\{n,\textbackslash\}}} --- at least \textit{n} occurrences
-    \item \alert{\texttt{\textbackslash}} --- escape following special character
+    \item \alert{\texttt{\textbackslash}} --- escape following special character (e.g. \texttt{\textbackslash .} to literally search for dot and not ``any single character'')
     \item \alert{\texttt{|}} --- either the preceding or following reg exp can be matched (alternation)
     \item \alert{\texttt{\textbackslash(\ldots\textbackslash)}} --- group reg exp (numbered, starting with 1) --- can be called by \alert{\textbackslash\textit{n}}, where \textit{n} is number of the group (starting with 1)
     \item \alert{\texttt{\textbackslash$<$}}, \alert{\texttt{\textbackslash$>$}} --- word boundaries
@@ -2604,16 +2680,40 @@
     \item \alert{\texttt{ *}} --- one or more spaces (there is space before asterisk)
     \item \alert{\texttt{\&}} --- content of pattern that was matched
     \item Implementation in \texttt{vim}, \texttt{sed}, \texttt{grep}, \texttt{awk} and \texttt{perl} and among various UNIX systems is almost same, but not identical\ldots
-    \item \textbf{grep}, \textbf{sed} and \textbf{vim} \alert{require escaping} of \alert{\texttt{+}}, \alert{\texttt{?}}, \alert{\texttt{\{}}, \alert{\texttt{\}}}, \alert{\texttt{(}} and \alert{\texttt{)}} by backslash \alert{\texttt{\textbackslash}} --- \textbf{egrep} (extended version, launched as \texttt{grep -E \ldots} or \texttt{egrep \ldots}), \textbf{sed} with extended reg exp (\texttt{sed -r}) and \textbf{perl} \alert{not}
-    \item Read \url{https://www.regular-expressions.info/}; česky \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{https://www.root.cz/serialy/regularni-vyrazy/} and \url{https://www.regularnivyrazy.info/}, and manuals for Grep, Vim, Sed, Awk, Perl,~\ldots
-    \item See sed examples, slide~\ref{sedex}
-    \item macOS has by default very outdated version of \texttt{sed} and another tools --- it does not have all advanced features --- users need to install e.g. \texttt{gnu-sed} formulae from \href{https://brew.sh/}{Homebrew}
+    \item \textbf{grep}, \textbf{sed} and \textbf{vim} \alert{require escaping} of \alert{\texttt{+}}, \alert{\texttt{?}}, \alert{\texttt{\{}}, \alert{\texttt{\}}}, \alert{\texttt{(}} and \alert{\texttt{)}} by backslash \alert{\texttt{\textbackslash}} (e.g. \texttt{\textbackslash +}) --- \textbf{egrep} (extended version, launched as \texttt{grep -E \ldots} or \texttt{egrep \ldots}), \textbf{sed} with extended reg exp (\texttt{sed -r}) and \textbf{perl} \alert{not}
+    \item Read \url{https://en.wikibooks.org/wiki/Regular_Expressions}, \url{http://www.grymoire.com/Unix/Regular.html}, \url{https://www.regular-expressions.info/}; česky \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{https://www.root.cz/serialy/regularni-vyrazy/} a \url{https://www.regularnivyrazy.info/}
+    \item Manuals for \href{https://www.gnu.org/software/grep/manual/}{Grep}, Vim, \href{https://www.gnu.org/software/sed/manual/}{Sed}, \href{https://www.gnu.org/software/gawk/manual/}{Awk}, \href{https://en.wikibooks.org/wiki/Perl_Programming}{Perl} (\href{https://en.wikibooks.org/wiki/Perl_6_Programming}{newer Perl~6}),~\ldots
+    \item See sed examples, slide~\ref{sedex}; and next slide
+    \item macOS has by default very outdated version of \texttt{sed} and another tools --- it does not have all advanced features --- users need to install e.g. \texttt{gnu-sed} formulae from \href{https://brew.sh/}{Homebrew} (slide~\ref{homebrew})
   \end{itemize}
 \end{frame}
 
-\section{Scripting} % TODO Update according to modified examples
+\begin{frame}[fragile]{Grep and sed examples}
+  \begin{bashcode}
+    # Extract sequences with at least 5 A bases in line
+    grep "A\{5,\}" Oxalis_HybSeq_nrDNA_selection_alignment.fasta
+    # Extract DNA sequence string ATCG or ATGC
+    grep "ATCG\|ATGC" Oxalis_HybSeq_nrDNA_selection_alignment.fasta
+    # Get quality of Illumina reads mapping to reference in genomic VCF
+    zcat arabidopsis.vcf.gz | grep -o "MQ=[[:digit:]]\+"
+    # How many times there is a direct speach (text between "...")
+    grep -o "\"[a-ZA-Z0-9,\.?\! ]\+\"" long_text.txt | wc -l
+    # Add after dot on the end of the line by extra line break
+    sed 's/\.$/.\n/' long_text.txt
+    # Add HTML paragraph tags (<p> and </p>)
+    sed -e 's/^/<p>/' -e 's/$/<\/p>/' long_text.txt | less
+    # Make first word of every paragraph bold in HTML (<strong>...</strong>)
+    sed -e 's/^/<strong>/' -e 's/^[[:graph:]]\+/&<\/strong>/' long_text.txt
+    # How many times is each word in the text
+    grep -o "\<[[:alpha:]]\+\>" long_text.txt | sort | uniq -c | less
+    # List all Internet web links
+    grep -o "http[a-zA-Z0-9\.()/:\-]\+" long_text.txt
+  \end{bashcode}
+\end{frame}
 
-\begin{frame}{Scripting}
+\section{Scripting}
+
+\begin{frame}{Scripting}{Basics of writing scripts in BASH}
   \tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
 \end{frame}
 
@@ -2630,8 +2730,8 @@
   \end{itemize}
   \begin{bashcode}
     #!/bin/bash
-    # Simple non-interactive script - no communication with user
-    # only list of commands
+    # Simple non-interactive script - no communication with user only list
+    # of commands
     echo "Hi, $USER, today is `date` and your PATH is $PATH."
     echo
     exit
@@ -2642,7 +2742,7 @@
 
 \begin{frame}{Special variables available in the script (selection)}
   \begin{itemize}
-    \item \alert{\texttt{\$1}},~\ldots~(number from \texttt{1} up to number of parameters) --- individual positional parameters (see next slide for example)
+    \item \alert{\texttt{\$1}},~\ldots~(number from \texttt{1} up to number of parameters) --- individual positional parameters (see further for example)
     \item \alert{\texttt{\$0}} --- path of the starting script
     \item \alert{\texttt{\$\#}} --- number of command-line arguments
     \item \alert{\texttt{\$*}} --- all of the positional parameters, seen as a single word, must be quoted
@@ -2704,13 +2804,13 @@
     # Arguments are read from command line as parameters of the script
     # Order has to be kept (well, not in this case, but generally yes)
     echo "Sum of two numbers $1 and $2 is `expr $1 + $2`."
-    # "$#" is available every time and contains number of parameters
+    # "$#" is available every time and contains number of parameters 
     # (variables) given to the script
-    echo "Number of parameters is $#."
+    echo "Number of parameters is: $#"
     # "$*" is available every time and contains all supplied parameters
-    echo "Those parameters were supplied: $*."
-    # "$0" is available every time and contains script path
-    echo "Path to the scrip is: \"$0\"."
+    echo "Those parameters were supplied: $*"
+    #  "$0" is available every time and contains script path
+    echo "Path to the scrip is: \"$0\""
     echo
     exit
   \end{bashcode}
@@ -2732,11 +2832,11 @@
   \begin{bashcode}
     #!/bin/bash
     # Arguments are read from user input (script asks for them)
-    echo "Please, input first value to sum and press Enter"
+    echo "Please, input first value to sum and press 'Enter'"
     read V1
-    echo "Please, input second value to sum and press Enter"
+    echo "Please, input second value to sum and press 'Enter'"
     read V2
-    echo "Sum of two numbers $V1 and $V2 is `expr $V1 + $V2` ."
+    echo "Sum of two numbers $V1 and $V2 is `expr $V1 + $V2`."
     echo
     exit
   \end{bashcode}
@@ -2756,7 +2856,7 @@
   \end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Ensuring user interactively provides correct input}
+\begin{frame}[fragile]{Ensuring user interactively provides correct input (while)}
   \begin{itemize}
     \item Detailed explanations of all features used here are in various following slides\ldots{ }See scripts \texttt{interactive2\{whiles,functions\}.sh}
   \end{itemize}
@@ -2775,40 +2875,64 @@
           echo "Try again (the number):" # Ask user for new input value
         fi # End of the conditional evaluation
       done # End of the while cycles
-    ... # The code continues...
+    ... # The code continues... Such check is needed for every variable...
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Ensuring user interactively provides correct input (function)}
+  \begin{bashcode}
+    # Regular expression to check if the provided input is a number
+    NUMBER='^[0-9]+$' # From beginning (^) to end ($) only numbers
+    # Function to read and check user input (this goes to beginning)
+    function checkinput {
+      while :
+        do # Star of the body of the cycles
+          read INPUT # Here the input from keyboard is received
+          if [[ $INPUT =~ $NUMBER ]]; then # Test if $INPUT is a number
+            echo "OK, input value is $INPUT."
+            break # We have correct value, we can break and continue
+            else # What to do if the user did not provide correct value
+              echo "Error! You provided wrong value!" # Tell the user
+              echo "Try again (the number):" # Ask user for new input value
+             fi # End of the conditional evaluation
+        done # End of the while cycles
+      } # Read variable is in $INPUT
+    # Replace line 4 of interactive2.sh by (similarly for line 6)
+    checkinput
+    V1=$INPUT
   \end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Provide named parameters}
   \begin{bashcode}
     #!/bin/bash
-    # Script has only one parameter ($1) provided as its parameter
-    case "$1" in # evaluating provided parameter and behaving accordingly
-      -d|--disk) # "|" means alternatives - more possible inputs
+    # Script has only one parameter ($1) provided
+    # "case" is evaluating provided parameter and behaving accordingly
+    case "$1" in
+      d|disk) # "|" means alternatives - more possible inputs
         echo "Your disk usage is:"
-        df -h
-        ;;
-      -u|--uptime)
+        df -h;;
+      u|uptime)
         echo "Your computer is running:"
-        uptime
-        ;;
+        uptime;;
       # This should be every time last possibility - any other input
-      *) # User is then notified he entered nonsense and gets some help
+      # User is then notified he entered nonsense and gets some help
+      *) # Any other input
         echo "Wrong option!"
-        echo "Usage: -d or --disk for available disk space or"
-        echo "-u or --uptime for computer uptime"
+        echo "Usage: 'd' or 'disk' for available disk space or 'u' or"
+        echo "  'uptime' for computer uptime"
         exit 1;; # In this case, exit with error code 1
-    esac
+      esac
     exit
   \end{bashcode}
 \end{frame}
 
 \begin{frame}{Notes to previous script}
   \begin{itemize}
-    \item First make \texttt{interactive3.sh} executable and launch it via e.g. \texttt{./interactive3.sh -d} or \texttt{./interactive3.sh --uptime} or so
+    \item First make \texttt{interactive3.sh} executable and launch it via e.g. \texttt{./interactive3.sh d} or \texttt{./interactive3.sh uptime} or so
     \item Function \texttt{case} has basic checking of input available --- as last parameter use \texttt{*)} --- any other input except those defined above will produce some warning message, error or so
-    \item In same way can be added more parameters (by multiple use of \texttt{case}), but order of parameters must be kept and all parameters are compulsory
-    \item \texttt{case} can evaluate simple regular expressions, e.g. \texttt{--[Uu]ptime)}, \texttt{-d*},~\ldots
+    \item In same way can be added more parameters (by multiple use of \texttt{case} or by wrapping \texttt{case} by \texttt{while} loop), in the latter variant order of parameters does not have to be kept and all parameters are compulsory
+    \item \texttt{case} can evaluate simple regular expressions, e.g. \texttt{[Uu]ptime}, \texttt{d*},~\ldots
     \item This is the most simple usage, more complex possibilities are ahead
   \end{itemize}
 \end{frame}
@@ -2816,34 +2940,32 @@
 \begin{frame}[fragile]{Provide parameters, verify them and behave accordingly I}
   \begin{bashcode}
     #!/bin/bash
-    NUMBER='^[0-9]+$' # From beginning (^) to the end ($) only number(s) (+)
-    function usagehelp { # Function to print help
+    # From the beginning (^) to the end ($) at least one (+) number ([0-9])
+    NUMBER='^[0-9]+$'
+    function usagehelp { # Function to print help - we will use it twice
       echo "Usage: number1 plus/minus/product/quotient number2"
       echo "Use plus for sum, minus for difference, product"
-      echo "for multiplication or quotient for quotient."
+      echo "  for multiplication or quotient for quotient."
       exit 1 # End up with an error
       }
     if [ "$#" -ne "3" ]; then # Do we have 3 parameters provided?
-        echo "Error! Requiring 3 parameters! Received $# ($*)."
-        usagehelp # The function to print help
-      fi
+      echo "Error! Requiring 3 parameters! Received $# ($*)."
+      usagehelp # The function to print help
+      fi # "=~" means testing if $1 fits to regular expression in $NUMBER
     if [[ ! $1 =~ $NUMBER ]]; then # Is parameter 1 number?
-        echo "Parameter 1 is not an integer!"
-        usagehelp # The function to print help
+      echo "Parameter 1 is not an integer!"
+      usagehelp # The function to print help
       fi
+    # Continues on next slide...
   \end{bashcode}
-  \vfill
-  Continues on next slide\ldots
-  \vfill
 \end{frame}
 
 \begin{frame}[fragile]{Provide parameters, verify them and behave accordingly II}
-  Remaining part from previous slide\ldots
-  \vfill
   \begin{bashcode}
+    # Remaining part from previous slide...
     if [[ ! $3 =~ $NUMBER ]]; then # Is parameter 3 number?
-        echo "Parameter 3 is not an integer!"
-        usagehelp # The function to print help
+      echo "Parameter 3 is not an integer!"
+      usagehelp # The function to print help
       fi
     case "$2" in
       plus) expr $1 '+' $3;;
@@ -2851,16 +2973,16 @@
       product) expr $1 '*' $3;;
       quotient) expr $1 '/' $3;;
       *) echo "Wrong option!"
-         usagehelp # The function to print help
-         ;;
-    esac
+        usagehelp # The function to print help
+        ;;
+      esac
     exit
   \end{bashcode}
   \vfill
   \hrule
   \vfill
   \begin{bashcode}
-    chmod +x interactive4.sh && ./interactive4.sh 7 plus 5 # For example
+    chmod +x interactive4.sh && ./interactive4.sh 7 plus 5 # For example...
   \end{bashcode}
   \vfill
 \end{frame}
@@ -2872,18 +2994,19 @@
     \item \texttt{getopts} reads short (one-letter) parameters, they can have input value (marked by \texttt{:})
   \end{itemize}
   \begin{bashcode}
-    ... # All provided values are evaluated in while cycles...
+    #!/bin/bash
+    # All provided values are evaluated in while cycles...
     while getopts "hvi:o:a:" INITARGS; do
-      case "$INITARGS" in # $INITARGS contains the parameters to evaluate
-        h|v) # Accept parameters "-h" or "-v" for help
-          echo "Usage options..." # What will be done it this is selected...
-          exit # Terminate after providing help
-          ;; # End of this option
-        i) # Parameter "-i" accepts some value (e.g. "-i inputfile.txt")
-          ... # Do some checking etc...
-          INPUTFILE="$OPTARG" # $OPTARG always contains value of parameter
-          ;;
-        # Continues on following slide...
+    case "$INITARGS" in # $INITARGS contains the parameters to evaluate
+      h|v) # Accept parameters "-h" or "-v" for help
+        echo "Usage options..."
+        exit # Terminate after providing help
+        ;; # End of this option
+      i) # Parameter "-i" accepts some value (e.g. "-i inputfile.txt")
+        ... # Do some checking etc...
+        INPUTFILE="$OPTARG" # $OPTARG always contains value of parameter
+        ;; # End of this option
+    # ...continues on following slide...
   \end{bashcode}
 \end{frame}
 
@@ -2893,20 +3016,20 @@
         o) # Parameter "-o" accepts some value (e.g. "-o outputfile.txt")
           ... # Do some checking etc...
           OUTPUTFILE="$OPTARG" # $OPTARG always contains value of parameter
-          ;;
+          ;; # End of this option
         a) # Parameter "-a" accepts some value (e.g. "-a X" for number)
           # Check if provided value makes sense (integer between 10 and 300)
           if [[ "$OPTARG" =~ ^[0-9]+$ ]] && [ "$OPTARG" -ge 10 -a 
             "$OPTARG" -le 300 ]; then # The condition is long...
-            VALUE="$OPTARG" # $OPTARG always contains value of parameter
+            VALUE=$OPTARG # $OPTARG always contains value of parameter
             echo "Value is OK: $VALUE"
             else
-              echo "Error! For parameter \"-a\" you did not provide an 
-                integer ranging from 10 to 300!"
-              exit 1
+             echo "Error! For parameter \"-a\" you did not provide an"
+             echo "  integer ranging from 10 to 300!"
+             exit 1
             fi
-          ;;
-    # ...ends on following slide...
+          ;; # End of this option
+    # ...continues on following slide...
   \end{bashcode}
 \end{frame}
 
@@ -2914,13 +3037,39 @@
   \begin{bashcode}
     # ...continuing from previous slide...
         ?)
-         echo "Invalid option(s)!"
-         echo "See \"$0 -h\" for usage options."
-         exit 1
-         ;;
-      esac
-    done # ...the end.
-    ... # Following code...
+          echo "Invalid option(s)!"
+          echo "See \"$0 -h\" for usage options."
+          exit 1
+          ;; # End of this option
+        esac
+      done # ...the end.
+    # Check if all required values are provided
+    if [ -z "$INPUTFILE" -o -z "$OUTPUTFILE" ]; then
+      echo "Error! Name of input and/or output file was not provided!"
+      echo "See \"$0 -h\" for help usage..."
+      exit 1
+      fi
+    if [ -z "$VALUE" ]; then
+      echo "Warning! Value for \"-a\" was not provided! Using default (10)."
+      VALUE=10
+      fi # ...ends on following slide...
+  \end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) IV}
+  \begin{bashcode}
+    # ...continuing from previous slide...
+    # Do the job...
+    for I in `seq 1 $VALUE`; do # Repeat task given number of time
+      echo -ne "Cycle $I...\r" # Write number of cycle and return cursor to
+           # the beginning of the line to overwrite the number in next step
+      sleep 1s # Wait 1 second - just for fun ;-)
+      # Do the task - append input to the output - note usage of variables
+      cat $INPUTFILE >> $OUTPUTFILE
+      done
+    echo -ne "\n" # Reset cursor to new line
+    echo "Done!"
+    exit
   \end{bashcode}
   \vfill
   \begin{itemize}
@@ -2932,13 +3081,13 @@
     ./interactive5.sh -h # Or ./interactive5.sh -v
     # Try it as common command line tool
     ./interactive5.sh -i input.txt -o output.txt -a 50
-    ./interactive5.sh -o output.txt -a 50 -i input.txt # Order doesn't matter
+    ./interactive5.sh -o out.txt -a 50 -i input.txt # Order doesn't matter
   \end{bashcode}
 \end{frame}
 
-\subsection{Branching the code} % TODO Add more examples
+\subsection{Branching the code}
 
-\begin{frame}[fragile]{If branching}
+\begin{frame}[fragile]{If branching (examples are elsewhere)}
   \begin{bashcode}
     # Basic variant - commands are done only if condition is met
     if expression; then
@@ -2953,8 +3102,7 @@
     # Join together two (or more) if branches
     if expression1; then
         commands1
-      elif expression2
-        then
+      elif expression2; then
           commands2
         else
           commands3
