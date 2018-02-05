@@ -31,7 +31,7 @@ module add parallel
 module add mrbayes-3.2.6
 
 # Launch the analysis - calculate MrBayes for multiple files
-# Note Parallel will distribute task among 8 CPU threads (-j 8), so that qsub must in this case contain nodes=1:ppn=8
+# Note Parallel will distribute task among 8 CPU threads (-j 8), so that qsub must in this case contain select=1:ncpus=8
 ls -1 *.nexus | parallel -j 8 'mb {} | tee -a {}.log'
 
 # Copy results back to home directory
