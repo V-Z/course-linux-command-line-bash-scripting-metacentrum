@@ -110,9 +110,9 @@
 \begin{frame}{The course information}
 	\label{materials}
 	\begin{itemize}
-		\item The course page: \url{https://trapa.cz/en/course-linux-command-line-2018}
+		\item The course page: \url{https://trapa.cz/en/course-linux-command-line-2019}
 		\begin{itemize}
-			\item Česky: \url{https://trapa.cz/cs/kurz-prikazove-radky-linuxu-2018}
+			\item Česky: \url{https://trapa.cz/cs/kurz-prikazove-radky-linuxu-2019}
 		\end{itemize}
 		\item Subject in SIS: \url{https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=MB120C17}
 		\begin{itemize}
@@ -150,7 +150,7 @@
 	\begin{multicols}{2}
 		\begin{itemize}
 			\item If you do not have Linux installed, download and install VirtualBox from \url{https://www.virtualbox.org/}
-			\item Download openSUSE Leap 42.3 Linux distribution for this course from \url{ftp://botany.natur.cuni.cz/openSUSE_Leap_Linux_course.ova} (3.7~GB)
+			\item Download openSUSE Leap 15.0 Linux distribution for this course from \url{ftp://botany.natur.cuni.cz/openSUSE_Leap_courses.ova} ($\sim$4~GB)
 			\item Launch VirtualBox and go to menu \textbf{File | Import appliance\ldots} to import it. When done, launch it (\textbf{Start})
 		\end{itemize}
 		\includegraphics[height=6cm]{virtualbox.png}
@@ -228,7 +228,7 @@
 			\item Still very popular especially on servers, for special purposes, etc.
 			\item License allows closing of the code --- used by Apple macOS kernel, PlayStation firmware,~\ldots
 			\item Installation and management is for beginners usually harder than Linux, everything must be done manually, not so common as Linux anymore
-			\item E.g. \href{https://www.freebsd.org/}{FreeBSD}, \href{https://www.dragonflybsd.org/}{DragonFly BSD}, \href{https://www.openbsd.org/}{OpenBSD}, \href{http://www.freenas.org/}{FreeNAS} (for storage servers),~\ldots
+			\item E.g. \href{https://www.freebsd.org/}{FreeBSD}, \href{https://www.dragonflybsd.org/}{DragonFly BSD}, \href{https://www.openbsd.org/}{OpenBSD}, \href{https://www.freenas.org/}{FreeNAS} (for storage servers),~\ldots
 		\end{itemize}
 		\item \href{https://en.wikipedia.org/wiki/Solaris_(operating_system)}{Solaris} --- commercial, not very common
 		\begin{itemize}
@@ -345,9 +345,9 @@
 		\item \href{https://distrowatch.com/search.php?package=DEB}{Debian (DEB) based}
 		\begin{itemize}
 			\item \href{https://www.debian.org/}{Debian} --- one of oldest and most common, especially on servers
-			\item \href{http://www.ubuntu.com/}{Ubuntu} (nowadays probably the most popular on PCs and notebooks) and derivatives --- \href{https://www.kubuntu.org/}{Kubuntu}, \href{https://xubuntu.org/}{Xubuntu}, \href{http://lubuntu.net/}{Lubuntu},~\ldots~(according to GUI used --- most of the system is same)
+			\item \href{https://www.ubuntu.com/}{Ubuntu} (nowadays probably the most popular on PCs and notebooks) and derivatives --- \href{https://www.kubuntu.org/}{Kubuntu}, \href{https://xubuntu.org/}{Xubuntu}, \href{https://lubuntu.net/}{Lubuntu},~\ldots~(according to GUI used --- most of the system is same)
 			\item \href{https://linuxmint.com/}{Mint} --- Based on Ubuntu as well as Debian, very user-friendly
-			\item \href{https://www.kali.org/}{Kali}, \href{http://knopper.net/knoppix/index-en.html}{KNOPPIX}, \href{https://elementary.io/}{elementaryOS},~\ldots
+			\item \href{https://www.kali.org/}{Kali}, \href{https://knopper.net/knoppix/index-en.html}{KNOPPIX}, \href{https://elementary.io/}{elementaryOS},~\ldots
 		\end{itemize}
 		\item \href{https://distrowatch.com/search.php?package=RPM}{Red Hat (RPM) based}
 		\begin{itemize}
@@ -368,8 +368,8 @@
 		\item \href{https://code.launchpad.net/unity}{Unity} --- originally developed by Ubuntu (discontinued, now community based), ``Mac-style''
 		\item \href{https://www.kde.org/}{KDE} --- one of the most common, feature extremely rich, basically ``Windows-like'' (can be changed)
 		\item \href{https://www.gnome.org/}{GNOME} --- one of the most common, relatively simplistic interface, but still feature rich, ``Mac-like''
-		\item \href{http://xfce.org/}{XFCE} --- lightweight version of older GNOME --- for older computers or users not willing to be disturbed by graphical effects, basically ``Mac-like'' looking, but panels can be moved to ``Windows style''
-		\item \href{http://developer.linuxmint.com/projects/cinnamon-projects.html}{Cinnamon} --- remake of GNOME to look more like Windows\ldots
+		\item \href{https://xfce.org/}{XFCE} --- lightweight version of older GNOME --- for older computers or users not willing to be disturbed by graphical effects, basically ``Mac-like'' looking, but panels can be moved to ``Windows style''
+		\item \href{https://developer.linuxmint.com/projects/cinnamon-projects.html}{Cinnamon} --- remake of GNOME to look more like Windows\ldots
 		\item And much more\ldots
 		\item Choose what you like --- doesn't matter much which one\ldots
 	\end{itemize}
@@ -549,7 +549,7 @@
 		\item \texttt{hdparm -parameters /dev/sdX} can set advanced hardware parameters of hard drive
 		\item The most convenient is using graphical tools available in all distributions\ldots
 		\begin{itemize}
-			\item In \href{https://doc.opensuse.org/documentation/leap/reference/html/book.opensuse.reference/cha.advdisk.html}{openSUSE there is YaST} administrative module --- from command line launch \texttt{yast --qt partitioner} for graphical or \texttt{yast disk} for text-based version
+			\item In \href{https://en.opensuse.org/Portal:YaST}{openSUSE there is YaST} administrative module --- from command line launch \texttt{yast --qt partitioner} for graphical or \texttt{yast disk} for text-based version
 			\item All distributions have graphical tools like \href{https://gparted.org/}{GParted} where it is possible to comfortable manage disks
 		\end{itemize}
 		\item \texttt{df -h} shows available/occupied space on disks/partitions, but because of special features of Btrfs it doesn't show every time correct values for this FS --- it is better to use \texttt{btrfs filesystem df /mount/point} (\texttt{/mount/point} use to be the most commonly \texttt{/})
@@ -1040,7 +1040,7 @@
 		\begin{itemize}
 			\item \href{https://kate-editor.org/}{Kate}
 			\item \href{https://www.kde.org/applications/utilities/kwrite/}{KWrite}
-			\item \href{http://www.vim.org/}{Vim}
+			\item \href{https://www.vim.org/}{Vim}
 			\item \href{https://en.wikipedia.org/wiki/Emacs}{GNU Emacs}
 			\item \href{https://www.geany.org/}{Geany}
 			\item \href{http://bluefish.openoffice.nl/}{Bluefish}
@@ -1078,19 +1078,19 @@
 
 \begin{frame}[fragile]{Converting the text}{Prevent bad display and weird errors when launching scripts}
 	\begin{bashcode}
-		unix2dos textfile # Convert text file from UNIX to Windows EOL
-		unix2mac textfile # Convert text file from UNIX to old Mac EOL
-		dos2unix textfile # Convert text file from Windows to UNIX EOL
-		mac2unix textfile # Convert text file from old Mac to UNIX EOL
-		unix2dos --help # More information about usage, include encoding
-		# Converts encoding of input file (ISO-8859-2) to outfile in UTF-8
-		iconv -f ISO-8859-2 -t UTF-8 infile.txt > outfile.txt
-		iconv -l # List of available encoding to convert
-		iconv --help # More information about usage
-		recode CP1250..UTF-8 textfile # Convert encoding from CP-1250 to UTF-8
-		recode ../CR-LF textfile # Convert EOL from UNIX to Windows
-		recode -l # List of available encoding to convert
-		recode --help # More information about usage
+    unix2dos textfile # Convert text file from UNIX to Windows EOL
+    unix2mac textfile # Convert text file from UNIX to old Mac EOL
+    dos2unix textfile # Convert text file from Windows to UNIX EOL
+    mac2unix textfile # Convert text file from old Mac to UNIX EOL
+    unix2dos --help # More information about usage, include encoding
+    # Converts encoding of input file (ISO-8859-2) to outfile in UTF-8
+    iconv -f ISO-8859-2 -t UTF-8 infile.txt > outfile.txt
+    iconv -l # List of available encoding to convert
+    iconv --help # More information about usage
+    recode CP1250..UTF-8 textfile # Convert encoding from CP-1250 to UTF-8
+    recode ../CR-LF textfile # Convert EOL from UNIX to Windows
+    recode -l # List of available encoding to convert
+    recode --help # More information about usage
 	\end{bashcode}
 	\begin{itemize}
 		\item macOS uses same encoding and EOL as Linux (and rest of UNIX world), so there are no problems with compatibility
@@ -1173,10 +1173,10 @@
     # Confirm by Enter
 		\end{bashcode}
 		\begin{itemize}
-			\item Our toy server: user names from \texttt{lu01} to \texttt{lu40}
+			\item Our toy server: user names from \texttt{cu01} to \texttt{cu20}
 		\end{itemize}
 		\begin{bashcode}
-    ssh uXY@vyuka.natur.cuni.cz
+    ssh cuXY@vyuka.natur.cuni.cz
 		\end{bashcode}
 		\begin{itemize}
 			\item If fingerprint key changes, ssh complains a~lot --- possible \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{man in the middle attack}
@@ -2186,7 +2186,6 @@
                        # down by PgUp, PgDown, arrows, searching by / (type
                        # searched string, hit Enter, n for next, twice ESC
                        # to quit), q to quit viewing (also used by man)
-    most long_text.txt # Better version of less (not available everywhere)
     fmt long_text.txt # Basic formatting of text - joining of commented
                       # lines, line breaks to break too long lines, ...
     fmt textfile > formatted_file # Save output of fmt into new file
@@ -2495,7 +2494,7 @@
 
 \begin{frame}{Comparisons}
 	\begin{itemize}
-		\item Graphically compare two files by e.g. \href{https://www.kde.org/applications/development/kompare/}{Kompare}, \href{https://sourcegear.com/diffmerge/}{DiffMerge}, \href{http://meldmerge.org/}{Meld},~\ldots
+		\item Graphically compare two files by e.g. \href{https://www.kde.org/applications/development/kompare/}{Kompare}, \href{https://sourcegear.com/diffmerge/}{DiffMerge}, \href{https://meldmerge.org/}{Meld},~\ldots
 		\item Most common is usage of GNU diffutils (next slide), see manual \url{https://www.gnu.org/software/diffutils/manual/}
 		\item See also \href{https://www.computerhope.com/unix/udiff.htm}{guide with examples}, česky \href{https://blog.root.cz/petrkrcmar/diff-jak-cist-vystup-z-porovnani-souboru/}{příklady na diff} a~\href{https://www.root.cz/clanky/nastroje-pro-porovnani-obsahu-dvou-textovych-souboru/}{porovnání dvou textových souborů}
 	\end{itemize}
@@ -2565,7 +2564,7 @@
 		\end{itemize}
 		\item \textbf{Emacs} use huge number of commands with \texttt{Ctrl} key
 		\begin{itemize}
-			\item See \url{https://www.gnu.org/software/emacs/tour/}, \url{http://tuhdo.github.io/emacs-tutor.html} and \url{http://www.jesshamrick.com/2012/09/10/absolute-beginners-guide-to-emacs/}
+			\item See \url{https://www.gnu.org/software/emacs/tour/}, \url{https://tuhdo.github.io/emacs-tutor.html} and \url{http://www.jesshamrick.com/2012/09/10/absolute-beginners-guide-to-emacs/}
 		\end{itemize}
 		\item The most common is \textbf{Vim}
 		\begin{itemize}
@@ -2609,7 +2608,7 @@
 		\item \textbf{Command} --- in bottom left corner \texttt{:} is displayed, awaits commands, exit to normal mode by \texttt{Backspace} key (delete ``\texttt{:}'')
 	\end{enumerate}
 	\begin{itemize}
-		\item See documentation \url{http://vim.wikia.com/}, \url{http://www.vim.org/docs.php}; česky \url{http://www.nti.tul.cz/~satrapa/docs/vim/}
+		\item See documentation \url{http://vim.wikia.com/}, \url{https://www.vim.org/docs.php}; česky \url{http://www.nti.tul.cz/~satrapa/docs/vim/}
 		\item For interactive learning try \url{https://vim-adventures.com/} or command \texttt{vimtutor}
 	\end{itemize}
 \end{frame}
@@ -3484,7 +3483,7 @@
 \begin{frame}[fragile]{Launching Java applications}
 	\begin{itemize}
 		\item \href{https://www.java.com/}{Java} is probably the most portable language working on any operating system --- the only condition is to install \href{https://en.wikipedia.org/wiki/Java_virtual_machine}{Java virtual machine (JVM)}
-		\item Linux usually use \href{http://openjdk.java.net/}{OpenJDK} --- search for packages named \texttt{*openjdk*}
+		\item Linux usually use \href{https://openjdk.java.net/}{OpenJDK} --- search for packages named \texttt{*openjdk*}
 		\item Let's download e.g. \href{http://tree.bio.ed.ac.uk/software/figtree/}{FigTree} from \url{http://tree.bio.ed.ac.uk/download.php?id=96&num=3}
 	\end{itemize}
 	\begin{bashcode}
@@ -3995,7 +3994,7 @@
 		\end{center}
 		\begin{flushright}
 			\begin{footnotesize}
-				\href{https://git-scm.com/book/en/v2/Getting-Started-Git-Basics}{https://git-scm.com/}, \href{http://nvie.com/posts/a-successful-git-branching-model/}{http://nvie.com/}
+				\href{https://git-scm.com/book/en/v2/Getting-Started-Git-Basics}{https://git-scm.com/}, \href{https://nvie.com/posts/a-successful-git-branching-model/}{https://nvie.com/}
 			\end{footnotesize}
 		\end{flushright}
 	\end{multicols}
@@ -4096,7 +4095,7 @@
 		\item Grymoire for UNIX wizards \url{http://www.grymoire.com/Unix/}
 		\item BASH Guide for Beginners \url{http://linuxcourse.rutgers.edu/documents/Bash-Beginners-Guide/}
 		\item Linux tutorial \url{https://ryanstutorials.net/linuxtutorial/}
-		\item Getting Started with BASH \url{http://www.hypexr.org/bash_tutorial.php}
+		\item Getting Started with BASH \url{https://www.hypexr.org/bash_tutorial.php}
 		\item Bash Guide \url{https://mywiki.wooledge.org/BashGuide}
 		\item Česky
 		\begin{itemize}
@@ -4162,7 +4161,7 @@
 		\item News \url{https://news.opensuse.org/}, developers' blogs \url{https://lizards.opensuse.org/}, aggregation of blogs \url{https://planet.opensuse.org/}
 		\item Forums \url{https://forums.opensuse.org/}
 		\item Mailing lists \url{https://lists.opensuse.org/}
-		\item Community \url{https://opensuse-community.org/}, guide \url{http://opensuse-guide.org/}
+		\item Community \url{https://opensuse-community.org/}, guide \url{https://opensuse-guide.org/}
 	\end{itemize}
 \end{frame}
 
@@ -4170,8 +4169,7 @@
 	\begin{itemize}
 		\item Debian \url{https://www.debian.org/}
 		\begin{itemize}
-			\item Documentation \url{https://www.debian.org/doc/}
-			\item Wiki \url{https://wiki.debian.org/}
+			\item Documentation, wiki \url{https://wiki.debian.org/}
 			\item Support \url{https://www.debian.org/support}
 		\end{itemize}
 		\item Ubuntu \url{https://www.ubuntu.com/}
@@ -4277,10 +4275,6 @@
 			\item Fórum \url{https://forum.mojefedora.cz/}
 			\item Příručka \url{https://wiki.mojefedora.cz/doku.php?id=navody:prirucka:obsah}
 		\end{itemize}
-		\item openSUSE \url{http://www.opensuse.cz/}
-		\begin{itemize}
-			\item Fórum \url{http://www.opensuse.cz/forum}
-		\end{itemize}
 		\item Linux Mint \url{https://www.linux-mint-czech.cz/}
 		\begin{itemize}
 			\item Fórum \url{https://forum.linux-mint-czech.cz/}
@@ -4316,3 +4310,5 @@
 % * `qsub -p PRIORITY`
 % * PRIORITY <-1204,+1023> (default 0)
 % * BASH arrays, https://opensource.com/article/18/5/you-dont-know-bash-intro-bash-arrays
+% * Remove: recode?
+% * Add: enca
