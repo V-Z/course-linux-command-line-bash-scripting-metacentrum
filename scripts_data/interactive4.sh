@@ -31,11 +31,20 @@ if [[ ! $3 =~ $NUMBER ]]; then
 	fi
 
 case "$2" in
-	plus) expr $1 '+' $3;;
-	minus) expr $1 '-' $3;;
-	product) expr $1 '*' $3;;
-	quotient) expr $1 '/' $3;;
-	*) echo "Wrong option!"
+	plus)
+		echo "$(($1 + $3))"
+		;;
+	minus)
+		echo "$(($1 - $3))"
+		;;
+	product)
+		echo "$(($1 * $3))"
+		;;
+	quotient)
+		echo "$(($1 / $3))"
+		;;
+	*)
+		echo "Wrong option!"
 		usagehelp # The function to print help
 		;;
 	esac

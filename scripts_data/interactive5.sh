@@ -34,7 +34,7 @@ while getopts "hvi:o:a:" INITARGS; do
 			;; # End of this option
 		a) # Parameter "-a" accepts some value (e.g. "-a X" for number)
 			# Check if provided value makes sense (integer between 10 and 300)
-			if [[ "$OPTARG" =~ ^[0-9]+$ ]] && [ "$OPTARG" -ge 10 -a "$OPTARG" -le 300 ]; then # The condition is long...
+			if [[ "$OPTARG" =~ ^[0-9]+$ ]] && [ "$OPTARG" -ge 10 ] && [ "$OPTARG" -le 300 ]; then # The condition is long...
 				VALUE=$OPTARG # $OPTARG always contains value of parameter
 				echo "Value is OK: $VALUE"
 				else
@@ -52,7 +52,7 @@ done
 
 # Check if all required values are provided
 
-if [ -z "$INPUTFILE" -o -z "$OUTPUTFILE" ]; then
+if [ -z "$INPUTFILE" ] || [ -z "$OUTPUTFILE" ]; then
 	echo "Error! Name of input and/or output file was not provided!"
 	echo "See \"$0 -h\" for help usage..."
 	echo
@@ -65,10 +65,10 @@ if [ -z "$VALUE" ]; then
 	fi
 
 # Do the job...
-for I in `seq 1 $VALUE`; do # Repeat task given number of time
+for I in $(seq 1 $VALUE); do # Repeat task given number of times ($VALUE x)
 	echo -ne "Cycle $I...\r" # Write number of cycle and return cursor to the beginning of the line to overwrite the number in next step
 	sleep 1s # Wait 1 second - just for fun ;-)
-	cat $INPUTFILE >> $OUTPUTFILE # Do the task - append input to the output - note usage of variables
+	cat "$INPUTFILE" >> "$OUTPUTFILE" # Do the task - append input to the output - note usage of variables
 	done
 
 echo -ne "\n" # Reset cursor to new line

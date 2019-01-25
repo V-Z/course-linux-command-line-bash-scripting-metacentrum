@@ -4,7 +4,7 @@
 # Order has to be kept (well, not in this case, but generally yes)
 # Usage is e.g. ./interactive1.sh 8 5
 
-echo "Sum of two numbers $1 and $2 is `expr $1 + $2`."
+echo "Sum of two numbers $1 and $2 is $(("$1" + "$2"))."
 
 # "$#" is available every time and contains number of parameters (variables) given to the script
 

@@ -10,7 +10,7 @@ NUMBER='^[0-9]+$'
 function checkinput {
 	while :
 		do # Star of the body of the cycles
-			read INPUT # Here the input from keyboard is received
+			read -r INPUT # Here the input from keyboard is received
 			if [[ $INPUT =~ $NUMBER ]]; then # Test if $INPUT is a number
 				echo "OK, input value is $INPUT."
 				break # We have correct value, we can break the cycle and continue
@@ -33,7 +33,9 @@ echo "Please, input second value to sum and press 'Enter'"
 checkinput
 V2=$INPUT
 
-echo "Sum of two numbers $V1 and $V2 is `expr $V1 + $V2`."
+echo
+
+echo "Sum of two numbers $V1 and $V2 is $(("V1" + "V2"))."
 
 echo
 

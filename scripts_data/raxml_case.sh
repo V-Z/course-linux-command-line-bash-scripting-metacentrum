@@ -25,6 +25,6 @@ case "$CPUFLAGS" in
 # Tell us the result
 echo "Using $RAXML binary."
 
-$RAXML -s $INPUT # All the parameters as usually...
+"$RAXML" -s "$INPUT" # All the parameters as usually...
 
 exit

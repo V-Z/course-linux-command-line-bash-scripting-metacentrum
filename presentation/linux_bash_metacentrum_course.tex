@@ -157,7 +157,11 @@
 	\end{multicols}
 \end{frame}
 
-% TODO More about usage of VB appliance
+\begin{frame}{Enjoy learning virtual machine for the course}
+	\begin{center}
+		\includegraphics[width=\textwidth-1cm]{opensuse_leap_course.png}
+	\end{center}
+\end{frame}
 
 \begin{frame}{VirtualBox shared folder I}{VirtualBox can be configured to share folder with host operating system}
 	\begin{center}
@@ -198,15 +202,15 @@
 		\begin{itemize}
 			\item ``GNU's Not Unix!'' --- but it is compatible, respects its principles
 			\item Since 1984 Richard Stallman (founder of \href{https://www.fsf.org/}{Free Software Foundation}) tried to make new kernel (Hurd --- not finished yet\ldots)
-			\item Generally set of basic system tools --- working with many kernels (Linux, BSD*, Mac's Darwin,~\ldots), also present in many commercial paid UNIX systems
-			\item Source code is free --- anyone can study it (Security!), report bugs, contribute, modify, share it,~\ldots
+			\item Generally set of basic system tools --- working with many kernels (Linux, BSD*, macOS,~\ldots), also present in many commercial paid UNIX systems
+			\item Source code is free and open --- anyone can study it (Security!), report bugs, contribute, modify, share it,~\ldots
 			\item GNU General Public License (GPL) --- free spirit of open-source --- license, idea, how to share software
 		\end{itemize}
 		\item \href{https://en.wikipedia.org/wiki/Linux}{Linux}
 		\begin{itemize}
 			\item First version of kernel written by Linus Torvalds in Helsinki in 1991
-			\item Kernel was in principle inspired by various UNIX systems and using GNU tools for work
-			\item Quickly became popular --- anyone can take it and use for any needs
+			\item Kernel was in principle inspired by various UNIX systems and using GNU tools for standard work
+			\item Quickly became popular --- anyone can take it and use for any needs, adopt (modify it), etc.
 			\item Used in small embedded (commonly network) devices, mobile devices (book readers, Android,~\ldots), personal computers, servers (from home level to biggest data centers),~\ldots
 			\item Nowadays powering most of the Internet
 			\item Anyone can contribute --- not only code, also documentation, design, translations,~\ldots
@@ -222,7 +226,7 @@
 
 \begin{frame}{Most common UNIX-based systems (except Linux)}
 	\begin{itemize}
-		\item \href{https://en.wikipedia.org/wiki/MacOS}{macOS} (previously Mac OS~X) --- system kernel is based on older BSD and uses plenty of GNU tools
+		\item \href{https://en.wikipedia.org/wiki/macOS}{macOS} (previously Mac OS~X) --- system kernel is based on older BSD and uses plenty of GNU tools (although mostly older versions)
 		\item \href{https://en.wikipedia.org/wiki/Berkeley_Software_Distribution}{BSD} --- one of the oldest operating systems, still developed in \href{https://distrowatch.com/search.php?ostype=BSD}{many independent variants}
 		\begin{itemize}
 			\item Still very popular especially on servers, for special purposes, etc.
@@ -264,10 +268,10 @@
 		\item \textbf{Free like freedom of speech, \alert{not} like free beer!}
 		\item Not every OSS (generally less strict conditions) has to be \textbf{F}OSS (you can do with it (almost) whatever you like) --- source code might be available under some circumstance (only to look), but modification and/or reuse of the code prohibited (and then it is not \textbf{free})
 		\item Open-source --- source code can be seen by the holder of the license
-		\item GNU GPL (``\href{https://www.gnu.org/copyleft/}{copyleft}'') --- probably most common OSS license, strict, viral --- derived code has to keep the license --- surprisingly not fully ``free'' as it doesn't allow changes of license
-		\item LGPL --- Lesser GPL --- more permissive
-		\item BSD license --- permissive --- allow derived code to became closed-source (commonly used by e.g. Apple macOS, Safari browser,~\ldots)
-		\item Apache or Mozilla license etc. --- specific use in particular software
+		\item \href{https://www.gnu.org/licenses/gpl-3.0.html}{GNU GPL} (``\href{https://www.gnu.org/copyleft/}{copyleft}'') --- probably most common OSS license, strict, viral --- derived code has to keep the license --- surprisingly not fully ``free'' as it doesn't allow changes of license
+		\item \href{https://www.gnu.org/licenses/lgpl-3.0.en.html}{LGPL} --- Lesser GPL --- more permissive
+		\item \href{https://en.wikipedia.org/wiki/BSD_licenses}{BSD license} --- permissive --- allow derived code to became closed-source (commonly used by e.g. Apple macOS, Safari browser, small electronics,~\ldots)
+		\item \href{https://www.apache.org/licenses/}{Apache} or \href{https://www.mozilla.org/MPL/}{Mozilla} licenses etc. --- specific use in particular software
 		\item Creative Commons (CC) --- software licenses are not suitable for multimedia, text, etc. --- CC has many options (including denial of reuse of the product), see \url{https://creativecommons.org/}
 	\end{itemize}
 	\begin{block}{Spirit of FOSS}
@@ -919,7 +923,7 @@
     chmod 000 FILE # No one can do anything - owner or root must add
                    # some permissions before any other action...
     chmod 777 * # All permissions for everyone on everything (no recursive)
-    chmod --help # Or 'man chmod' for more options 
+    chmod --help # Or 'man chmod' for more options
 	\end{bashcode}
 \end{frame}
 
@@ -1219,7 +1223,7 @@
 
 \subsection[SH]{BASH and others}
 
-\begin{frame}{The shell} 
+\begin{frame}{The shell}
 	\begin{itemize}
 		\item Many names, many ways how to get it, still the same thing
 		\item Fish --- friendly interactive shell --- the command line interface
@@ -1303,7 +1307,7 @@
 	\end{itemize}
 	\begin{bashcode}
     # More colors for outputs
-    eval "`dircolors -b`"
+    eval "$(dircolors -b)"
     # Ignore repeated entries in bash history (stored in ~/.bash_history)
     HISTCONTROL='ignoreboth'
     # Maximal length (number of lines) of bash history (~/.bash_history)
@@ -1313,7 +1317,7 @@
     shopt -s histappend # Append to history, don't overwrite it
     # Save and reload the history after each command finishes
     export PROMPT_COMMAND="history -a; history -c; history -r;
-      $PROMPT_COMMAND" # Note recursive behaviour of $PROMPT_COMMAND
+      $PROMPT_COMMAND" # Note its recursive behavior
 	\end{bashcode}
 \end{frame}
 
@@ -1372,16 +1376,16 @@
 \begin{frame}[fragile]{Expressions}
 	\begin{bashcode}
     # Many operands have special meaning in BASH - must be escaped
-    echo `expr 5 '<' 7` # Is 1 smaller than 2? TRUE (1)
-    echo `expr 6 '>' 4` # Is 1 greater than 2? FALSE (0)
-    echo `expr 5 '%' 2` # What remains after aritmetic division
+    echo $((5 < 7)) # Is 5 smaller than 7? TRUE (1)
+    echo $((3 > 4)) # Is 3 greater than 4? FALSE (0)
+    echo $((12 % 5)) # What remains after aritmetic division
     echo `expr 1 '&' 0` # If both arguments non-empty and not 0, then 1
-    x=`expr 1 '+' 6` # Result will be in $x
+    x=$((1 + 6)) # Result will be in 'x'
     echo $x
     x=1 # Set x to 1
     y=$x+1 # Will this add 1? Why?
     echo $y # See result
-    y=`expr $x + 1` # This will work - note ` and space around +
+    y=$(($x + 1)) # Will this work? Why?
     echo $y # Result
     echo `expr length "MetaCentrum and Linux"` # Get length of chain
     # String of 5 characters starting at position 10 of the text
@@ -1418,13 +1422,13 @@
 	\begin{bashcode}
     printenv # Get all exported variables and their values
     export -p # Get all exported variables and their values
-    echo $VARIABLENAME # Get value of particular variable
-    echo $PATH # Get path where to look for applications
+    echo "$VARIABLENAME" # Get value of particular variable
+    echo "$PATH" # Get path where to look for applications
     VARIABLE='variablevalue' # Set new variable and its value
                              # Or replace existing variable by new value
     export EDITOR=/usr/bin/vim # Set new default text editor
-    LISTFILES=`ls -1` # Get output of command 'ls -1' into the variable
-    echo $LISTFILES # See content of the variable $LISTFILES
+    LISTFILES="$(ls -1)" # Get output of command 'ls -1' into the variable
+    echo "$LISTFILES" # See content of the variable LISTFILES
     export GREP_OPTIONS='--color=auto' # Colored grep
     unset VARIABLENAME # Drop variable and its value
 	\end{bashcode}
@@ -1462,13 +1466,12 @@
     echo $X # Get value of the variable
     10 # It works
     # Following two commands are same and lead to same result
-    X=`command` # Set as variable output of command
     X=$(command) # Set as variable output of command
     echo $X # X will contain output of command
     # "command" from previous lines can be e.g.
     cat somefile.txt # Read content of somefile.txt
-    expr 1 + $X # Sum of 1 and variable $X
-    WORKDIR=`pwd`# Save current directory into variable
+    echo "$((1 + $X))" # Sum of 1 and variable $X
+    WORKDIR=$(pwd)# Save current directory into variable
     ls -1 | head -n 1 # First file/directory in the current directory
     unset X # Destroy this variable
 	\end{bashcode}
@@ -1485,6 +1488,7 @@
     abcdef # This also works
     echo `$A` # Text between back ticks is evaluated and launched
     abcdef: command not found # There is no command "abcdef"...
+    echo $($A) # Same as `...`, this is now recommended way, `...` legacy
     echo "Hi, dear $USER" # Compare this and following command...
     echo 'Hi, dear $USER' # Single quotes do not evaluate variables
 	\end{bashcode}
@@ -1512,7 +1516,7 @@
     echo $F # ab"cde
     G='ab"cde' # '...' keep literal value of the content
     echo $G # ab"cde
-    H=abc`echo $USER`de # See $USER to see what will be inserted into `...`
+    H=abc$(echo $USER)de # See $USER to see what will be inserted in $(...)
     echo $H # abcvojtade # To add output of command into the variable
     I='...' # Needed if $I should contain spaces, quotes, `, $, ...
 	\end{bashcode}
@@ -1666,7 +1670,7 @@
     14639
     # Kill (stop by SIGTERM) selected application according to above PID
     kill -SIGTERM 14639 # SIGTERM is "nice" termination, SIGKILL "brutal"
-    kill -SIGTERM `pgrep geany` # Two above commands in one step
+    kill -SIGTERM $(pgrep geany) # Two above commands in one step; note $()
     killall -SIGTERM geany # Select by name (more processes with same name)
     # nice - how much resources will task use: from -20 (high priority - not
     # "nice" process) to +19 (low priority - very "nice" process), default 0
@@ -2093,8 +2097,8 @@
     ls -1 *.txt | parallel 'sed -i "s/XXX/YYY/g" {}'
     # Launch MrBayes for multiple nexus files and create log file with
     # starting and ending date and time
-    ls -1 *.nexus | parallel 'echo -e "Start: `date`\n" > {}.log && mb {} |
-      tee -a {}.log && echo "End: `date`" >> {}.log'
+    ls -1 *.nexus | parallel 'echo -e "Start: $(date)\n" > {}.log && mb {} |
+      tee -a {}.log && echo "End: $(date)" >> {}.log'
     # tee (-a for append to existing file) records output of MrBayes
     command | tee record.txt # tee will record whole output of command
     tee record.txt | command # tee will record user input
@@ -2529,7 +2533,7 @@
 
 % \begin{frame}{Patch} % TODO Add usage of patch
 % 	\begin{itemize}
-% 		\item 
+% 		\item
 % 	\end{itemize}
 % \end{frame}
 
@@ -2745,9 +2749,9 @@
 	\end{itemize}
 	\begin{bashcode}
     #!/bin/bash
-    # Simple non-interactive script - no communication with user only list
-    # of commands
-    echo "Hi, $USER, today is `date` and your PATH is $PATH."
+    # Simple non-interactive script - no communication with user
+    # only list of commands - prints user, date  name and $PATH
+    echo "Hi, $USER, today is $(date) and your PATH is $PATH."
     echo
     exit
 	\end{bashcode}
@@ -2774,7 +2778,7 @@
 	\begin{bashcode}
     # Declare new function
     function MyNewFunction1 {
-      echo "Hello, $USER on $HOSTNAME!"
+      echo "Hello, $USER from $(groups) on $HOSTNAME!"
       }
     # Use it in a script as any other command
     ...
@@ -2783,7 +2787,7 @@
     # Use with variables - provide parameters for the function
     # See following script examples for another input - same as in scripts
     function MyNewFunction2 {
-      echo "The sum is `expr $1 + $2`."
+      echo "The sum is $(("$1" + "$2"))."
       }
     # Use it in the script
     ...
@@ -2818,8 +2822,8 @@
     #!/bin/bash
     # Arguments are read from command line as parameters of the script
     # Order has to be kept (well, not in this case, but generally yes)
-    echo "Sum of two numbers $1 and $2 is `expr $1 + $2`."
-    # "$#" is available every time and contains number of parameters 
+    echo "Sum of two numbers $1 and $2 is $(("$1" + "$2"))." # $((calc...))
+    # "$#" is available every time and contains number of parameters
     # (variables) given to the script
     echo "Number of parameters is: $#"
     # "$*" is available every time and contains all supplied parameters
@@ -2848,10 +2852,11 @@
     #!/bin/bash
     # Arguments are read from user input (script asks for them)
     echo "Please, input first value to sum and press 'Enter'"
-    read V1
+    read -r V1
     echo "Please, input second value to sum and press 'Enter'"
-    read V2
-    echo "Sum of two numbers $V1 and $V2 is `expr $V1 + $V2`."
+    read -r V2
+    echo "Sum of two numbers $V1 and $V2 is $(("V1" + "V2"))."
+    # $ is unnecessary on arithmetic variables
     echo
     exit
 	\end{bashcode}
@@ -2866,9 +2871,6 @@
 		\item There is no checking of input values, nothing advanced,~\ldots
 		\item See next slide to read the variable in \texttt{while} cycles to ensure it is correctly entered
 	\end{itemize}
-	\begin{bashcode}
-    $(expr $1 + $2) # Alternative - $(...) is same as `...`
-	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Ensuring user interactively provides correct input (while)}
@@ -2881,7 +2883,7 @@
     echo "Please, provide a number as input value:"
     while : # Start of while cycles - run until correct input is provided
       do # Star of the body of the cycles
-      read INPUT # Here the input from keyboard is received
+      read -r INPUT # Here the input from keyboard is received
       if [[ $INPUT =~ $NUMBER ]]; then # Test if INPUT is a number
         echo "OK, input value is $INPUT."
         break # We have correct value, we can break the cycles and continue
@@ -2902,7 +2904,7 @@
     function checkinput {
       while :
         do # Star of the body of the cycles
-          read INPUT # Here the input from keyboard is received
+          read -r INPUT # Here the input from keyboard is received
           if [[ $INPUT =~ $NUMBER ]]; then # Test if $INPUT is a number
             echo "OK, input value is $INPUT."
             break # We have correct value, we can break and continue
@@ -2983,10 +2985,10 @@
       usagehelp # The function to print help
       fi
     case "$2" in
-      plus) expr $1 '+' $3;;
-      minus) expr $1 '-' $3;;
-      product) expr $1 '*' $3;;
-      quotient) expr $1 '/' $3;;
+      plus) echo "$(($1 + $3))";;
+      minus) echo "$(($1 - $3))";;
+      product) echo "$(($1 * $3))";;
+      quotient) echo "$(($1 / $3))";;
       *) echo "Wrong option!"
         usagehelp # The function to print help
         ;;
@@ -3034,8 +3036,8 @@
           ;; # End of this option
         a) # Parameter "-a" accepts some value (e.g. "-a X" for number)
           # Check if provided value makes sense (integer between 10 and 300)
-          if [[ "$OPTARG" =~ ^[0-9]+$ ]] && [ "$OPTARG" -ge 10 -a 
-            "$OPTARG" -le 300 ]; then # The condition is long...
+          if [[ "$OPTARG" =~ ^[0-9]+$ ]] && [ "$OPTARG" -ge 10 ] &&
+            [ "$OPTARG" -le 300 ]; then # The condition is long...
             VALUE=$OPTARG # $OPTARG always contains value of parameter
             echo "Value is OK: $VALUE"
             else
@@ -3059,7 +3061,7 @@
         esac
       done # ...the end.
     # Check if all required values are provided
-    if [ -z "$INPUTFILE" -o -z "$OUTPUTFILE" ]; then
+    if [ -z "$INPUTFILE" ] || [ -z "$OUTPUTFILE" ]; then
       echo "Error! Name of input and/or output file was not provided!"
       echo "See \"$0 -h\" for help usage..."
       exit 1
@@ -3075,12 +3077,12 @@
 	\begin{bashcode}
     # ...continuing from previous slide...
     # Do the job...
-    for I in `seq 1 $VALUE`; do # Repeat task given number of time
+    for I in $(seq 1 $VALUE); do # Repeat task number of times ($VALUE x)
       echo -ne "Cycle $I...\r" # Write number of cycle and return cursor to
            # the beginning of the line to overwrite the number in next step
       sleep 1s # Wait 1 second - just for fun ;-)
       # Do the task - append input to the output - note usage of variables
-      cat $INPUTFILE >> $OUTPUTFILE
+      cat "$INPUTFILE" >> "$OUTPUTFILE" # Do the task - append inp to output
       done
     echo -ne "\n" # Reset cursor to new line
     echo "Done!"
@@ -3187,7 +3189,7 @@
           else # The very last option
             RAXML='raxmlHPC' # Slowest oldest CPU...
       fi # End of branching
-    $RAXML -s $INPUT ... # All the parameters as usually...
+    "$RAXML" -s "$INPUT" # All the parameters as usually...
 	\end{bashcode}
 \end{frame}
 
@@ -3209,7 +3211,7 @@
       *) # The very last option
         RAXML='raxmlHPC';; # Slowest oldest CPU...
       esac # End of branching
-    $RAXML -s $INPUT # All the parameters as usually...
+    "$RAXML" -s "$INPUT" # All the parameters as usually...
 	\end{bashcode}
 \end{frame}
 
@@ -3218,14 +3220,14 @@
 \begin{frame}[fragile]{For cycles}
 	\begin{bashcode}
     # Ways how to declare number of repetitions
-    for I in `seq 1 10`; do echo $I; done # "seq" is outdated
+    for I in $(seq 1 10); do echo $I; done # "seq" is outdated
     for I in 1 2 3 4 5 6 7 8 9 10; do echo $I; done
     for I in {1..10}; do echo $I; done
     for (( I=1; I<=10; I++ )); do echo $I; done
     # One line for cycle for resizing of images (another option, as above)
     for JPGF in *.jpg; do convert $JPGF -resize 100x100 thumbs-$JPGF; done
     # More commands in a block
-    for JPGF in `ls -1 *.jpg`; do
+    for JPGF in $(ls -1 *.jpg); do
       echo "Processing JPGF $JPGF"
       convert $JPGF -resize 100x100 thumbs-$JPGF
       echo "File thumbs-$file created"
@@ -3642,13 +3644,13 @@
     # Clean-up of SCRATCH (it is temporal directory created by server) -
     # the commands will be launched on the end when the job is done
     trap 'clean_scratch' TERM EXIT
-    trap 'cp -ar $SCRATCHDIR $DATADIR/ && clean_scratch' TERM
+    trap 'cp -a "$SCRATCHDIR" "$DATADIR"/ && clean_scratch' TERM
     # Prepare the task - copy all needed files from working directory
     # into particular computer which will finally do the calculations
-    cp -ar $DATADIR/$WORKDIR/* $SCRATCHDIR/  || exit 1 # If it fails, exit
+    cp -a "$DATADIR"/"$WORKDIR"/* "$SCRATCHDIR"/ || exit 1 # If fails, exit
     # Change working directory - script goes to the directory where
     # calculations are done
-    cd $SCRATCHDIR/ || exit 2 # If it fails, exit script
+    cd "$SCRATCHDIR"/ || exit 2 # If it fails, exit script
 	\end{bashcode}
 	\vfill
 	Ends on following slide\ldots
@@ -3662,15 +3664,14 @@
     # Prepare calculations - load required application modules
     # See https://wiki.metacentrum.cz/wiki/Kategorie:Applications
     # Every application module is loaded by "module add XXX"
-    . /packages/run/modules-2.0/init/sh
     module add parallel # In this (example) case GNU Parallel and MrBayes
     module add mrbayes-3.2.6
     # Launch the analysis - calculate MrBayes for multiple files
     # Note Parallel will distribute task among 8 CPU threads (-j 8),
     # so that qsub must in this case contain select=1:ncpus=8 (see further)
-    ls -1 *.nexus | parallel -j 8 'mb {} | tee -a {}.log'
+    find . -name "*.nexus" -print | parallel -j 8 'mb {} | tee -a {}.log'
     # Copy results back to home directory
-    cp -ar $SCRATCHDIR $DATADIR/$WORKDIR || export CLEAN_SCRATCH=false
+    cp -a "$SCRATCHDIR" "$DATADIR"/"$WORKDIR" || export CLEAN_SCRATCH=false
     # This is all needed, the script is ready to be launched...
     exit
 	\end{bashcode}
@@ -3881,10 +3882,10 @@
 \end{frame}
 
 % \subsection{Cloud} % TODO MetaCloud
-% 
+%
 % \begin{frame}{MetaCloud}
 % 	\begin{itemize}
-% 		\item 
+% 		\item
 % 	\end{itemize}
 % \end{frame}
 
@@ -3896,7 +3897,7 @@
 
 % \begin{frame}{Btrfs and Snapper} % TODO Btrfs, Snapper
 % 	\begin{itemize}
-% 		\item 
+% 		\item
 % 	\end{itemize}
 % \end{frame}
 
@@ -3946,7 +3947,7 @@
 
 % \begin{frame}{Security} % TODO Security, antiviruses
 % 	\begin{itemize}
-% 		\item 
+% 		\item
 % 	\end{itemize}
 % \end{frame}
 
@@ -4075,10 +4076,10 @@
 \end{frame}
 
 % \subsection{Switching to Linux} % TODO Switching
-% 
+%
 % \begin{frame}[allowframebreaks]{Brief list of applications to help to switch to Linux}
 % 	\begin{itemize}
-% 		\item 
+% 		\item
 % 	\end{itemize}
 % \end{frame}
 

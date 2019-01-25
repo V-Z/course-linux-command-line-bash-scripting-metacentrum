@@ -18,6 +18,6 @@ if grep -iq avx2 /proc/cpuinfo; then # Does the CPU support AVX2?
 # Tell us the result
 echo "Using $RAXML binary."
 
-$RAXML -s $INPUT # All the parameters as usually...
+"$RAXML" -s "$INPUT" # All the parameters as usually...
 
 exit

@@ -11,7 +11,7 @@ echo "Please, input first value to sum and press Enter"
 # Start of while cycles - run until correct input is provided
 while :
 	do # Star of the body of the cycles
-		read V1 # Here the input from keyboard is received
+		read -r V1 # Here the input from keyboard is received
 		if [[ $V1 =~ $NUMBER ]]; then # Test if V1 is a number
 			echo "OK, input value is $V1."
 			break # We have correct value, we can break the cycle and continue
@@ -26,7 +26,7 @@ echo "Please, input second value to sum and press Enter"
 # Start of while cycles - run until correct input is provided
 while :
 	do # Star of the body of the cycles
-		read V2 # Here the input from keyboard is received
+		read -r V2 # Here the input from keyboard is received
 		if [[ $V2 =~ $NUMBER ]]; then # Test if V2 is a number
 			echo "OK, input value is $V2."
 			break # We have correct value, we can break the cycle and continue
@@ -36,7 +36,9 @@ while :
 			fi # End of the conditional evaluation
 	done # End of the while cycles
 
-echo "Sum of two numbers $V1 and $V2 is `expr $V1 + $V2`."
+echo
+
+echo "Sum of two numbers $V1 and $V2 is $(("V1" + "V2"))."
 
 echo
 
