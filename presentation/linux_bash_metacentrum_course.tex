@@ -80,8 +80,10 @@
 \AfterEndEnvironment{itemize}{\vspace{-0.25em}}
 
 % Default language
-\usepackage{polyglossia}
-\setdefaultlanguage{english}
+\usepackage[main=american, czech]{babel}
+
+% Quotes
+	\usepackage[autostyle=true, czech=quotes, english=american]{csquotes}
 
 % Title page
 \author{Vojtěch Zeisek}
@@ -123,7 +125,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Requirements to exam (``zápočet'')}
+\begin{frame}{Requirements to exam (\enquote{zápočet})}
 	\begin{enumerate}
 		\item Be present whole course.
 		\item Be active --- ask and answer questions.
@@ -138,7 +140,7 @@
 		\item Download the scripts and toy data from \url{https://soubory.trapa.cz/linuxcourse/scripts_data.zip}
 		\begin{itemize}
 			\item \alert{Note:} Open the scripts in some \alert{good} text editor (slide~\ref{editors}) --- showing syntax highlight, line numbers, etc. (\alert{NO} Windows notepad); the files are in UTF-8 encoding and with UNIX end of lines (so that too silly programs like Windows notepad won't be able to open them correctly)
-			\item \alert{Never ever} open any script file in software like MS~Word --- they destroy quotation marks and other things by ``typographical enhancements'' making the script unusable
+			\item \alert{Never ever} open any script file in software like MS~Word --- they destroy quotation marks and other things by \enquote{typographical enhancements} making the script unusable
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -169,7 +171,7 @@
 	\end{center}
 \end{frame}
 
-\begin{frame}[fragile]{VirtualBox shared folder II}{Go to menu ``Devices | Shared Folders'' and set pair of folders}
+\begin{frame}[fragile]{VirtualBox shared folder II}{Go to menu \enquote{Devices | Shared Folders} and set pair of folders}
 	\begin{bashcode}
     sudo mount -t vboxsf -o uid=$UID,gid=$(id -g) shared /mnt
 	\end{bashcode}
@@ -180,27 +182,27 @@
 	\vfill
 \end{frame}
 
-\subsection{What it is a~``UNIX''}
+\subsection{What it is a~\enquote{UNIX}}
 
 \begin{frame}[allowframebreaks]{What it is UNIX, Linux and GNU}
 	\begin{itemize}
 		\item \href{https://en.wikipedia.org/wiki/Unix}{UNIX}
 		\begin{itemize}
 			\item Originally developed in Bell labs of AT\&T in 1696, written in C, since then  huge radiation, hybridization, HGT,~\ldots
-			\item Trademark --- only systems passing certain conditions (paid certification) can be called ``UNIX'' --- Solaris, HP-UX, AIX, etc. (commercial systems for big servers)
+			\item Trademark --- only systems passing certain conditions (paid certification) can be called \enquote{UNIX} --- Solaris, HP-UX, AIX, etc. (commercial systems for big servers)
 			\item Main principles: simple, multitasking, hierarchical, network, for more users (takes cares about permissions etc.), configuration written in plain text files, important relationships among applications (generally one application = one task --- they are chained), work primarily with text, has kernel and API (interface to communicate with the rest of the system)
 			\item \href{https://en.wikipedia.org/wiki/Unix-like}{UNIX-like} (UN*X, *nix)
 			\begin{itemize}
 				\item Systems compatible with UNIX (Linux, BSD and its variants, macOS,~\ldots)
 				\item Mainly open-source (UNIX is commonly commercial --- source code is not available for public, but its specification is)
-				\item Nowadays prevailing over ``old'' UNIX systems, used in many devices from tiny embedded toys to huge data centers
+				\item Nowadays prevailing over \enquote{old} UNIX systems, used in many devices from tiny embedded toys to huge data centers
 				\item Try to provide same quality as paid systems, but (mostly) for free
 			\end{itemize}
 			\item Many courts about copyrights, parts of code, patents --- USA allow software patents, EU not --- GNU, Linux, BSD, etc. try to ensure to have only code not covered by any patents to avoid possible courts
 		\end{itemize}
 		\item \href{https://www.gnu.org/}{GNU}
 		\begin{itemize}
-			\item ``GNU's Not Unix!'' --- but it is compatible, respects its principles
+			\item \enquote{GNU's Not Unix!} --- but it is compatible, respects its principles
 			\item Since 1984 Richard Stallman (founder of \href{https://www.fsf.org/}{Free Software Foundation}) tried to make new kernel (Hurd --- not finished yet\ldots)
 			\item Generally set of basic system tools --- working with many kernels (Linux, BSD*, macOS,~\ldots), also present in many commercial paid UNIX systems
 			\item Source code is free and open --- anyone can study it (Security!), report bugs, contribute, modify, share it,~\ldots
@@ -268,7 +270,7 @@
 		\item \textbf{Free like freedom of speech, \alert{not} like free beer!}
 		\item Not every OSS (generally less strict conditions) has to be \textbf{F}OSS (you can do with it (almost) whatever you like) --- source code might be available under some circumstance (only to look), but modification and/or reuse of the code prohibited (and then it is not \textbf{free})
 		\item Open-source --- source code can be seen by the holder of the license
-		\item \href{https://www.gnu.org/licenses/gpl-3.0.html}{GNU GPL} (``\href{https://www.gnu.org/copyleft/}{copyleft}'') --- probably most common OSS license, strict, viral --- derived code has to keep the license --- surprisingly not fully ``free'' as it doesn't allow changes of license
+		\item \href{https://www.gnu.org/licenses/gpl-3.0.html}{GNU GPL} (\enquote{\href{https://www.gnu.org/copyleft/}{copyleft}}) --- probably most common OSS license, strict, viral --- derived code has to keep the license --- surprisingly not fully \enquote{free} as it doesn't allow changes of license
 		\item \href{https://www.gnu.org/licenses/lgpl-3.0.en.html}{LGPL} --- Lesser GPL --- more permissive
 		\item \href{https://en.wikipedia.org/wiki/BSD_licenses}{BSD license} --- permissive --- allow derived code to became closed-source (commonly used by e.g. Apple macOS, Safari browser, small electronics,~\ldots)
 		\item \href{https://www.apache.org/licenses/}{Apache} or \href{https://www.mozilla.org/MPL/}{Mozilla} licenses etc. --- specific use in particular software
@@ -277,7 +279,7 @@
 	\begin{block}{Spirit of FOSS}
 		\begin{itemize}
 			\item Orientation might be tricky, but practical output for users is same --- \textbf{the software can be independently checked for bugs, backdoor, malware, can be improved and under some circumstances, new software can be derived, and usually, it is available for free}
-			\item \alert{Aim is to ``liberate'' software to keep open sharing of ideas, mutual improve and security control} --- although the point is clear, there are debates how to reach it\ldots
+			\item \alert{Aim is to \enquote{liberate} software to keep open sharing of ideas, mutual improve and security control} --- although the point is clear, there are debates how to reach it\ldots
 		\end{itemize}
 	\end{block}
 	\begin{itemize}
@@ -287,8 +289,8 @@
 
 \begin{frame}{How to make money with free open-source software?}
 	\begin{itemize}
-		\item Traditional model --- user rents right (``buys a~license'') to use the software (and sometimes for support --- usually for extra money)
-		\item Common mistake --- software is not ``bought'' --- only license is rented (``permission to use it'')
+		\item Traditional model --- user rents right (\enquote{buys a~license}) to use the software (and sometimes for support --- usually for extra money)
+		\item Common mistake --- software is not \enquote{bought} --- only license is rented (\enquote{permission to use it})
 		\item Software as service
 		\begin{itemize}
 			\item (F)OSS is available for free --- user can use it as it is or buy a~support --- help of any type
@@ -305,17 +307,17 @@
 	\tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
 \end{frame}
 
-\begin{frame}{What it is a~``Linux''}
+\begin{frame}{What it is a~\enquote{Linux}}
 	\begin{itemize}
 		\item Operating system respecting principles of UNIX
 		\item Components
 		\begin{itemize}
-			\item Linux \textbf{kernel} --- basic part of the system responsible for hardware and very basic low-level running of the system (``\textbf{Linux \textit{sensu stricto}}'')
+			\item Linux \textbf{kernel} --- basic part of the system responsible for hardware and very basic low-level running of the system (\enquote{\textbf{Linux \textit{sensu stricto}}})
 			\item GNU core utilities --- basic applications
 			\item Graphical user environment (GUI) --- many choices
 			\item Many other applications --- according to use --- whatever imaginable
 		\end{itemize}
-		\item Linux \textbf{distribution (``Linux \textit{sensu lato}'')}
+		\item Linux \textbf{distribution (\enquote{Linux \textit{sensu lato}})}
 		\begin{itemize}
 			\item Somehow assemble Linux kernel, basic tools and some applications
 			\item Optionally add some patches and extra tools and gadgets
@@ -323,7 +325,7 @@
 			\item If lazy, remake existing distribution (using e.g. \href{http://openbuildservice.org/}{web service})
 			\item Still surprised there are hundreds of them?
 			\item It is like Lego --- pieces are more or less same across distributions, but result is very variable
-			\item From ``general'' for daily use (pick up whatever you like) to very specialized --- special hardware devices, network services, rescue,~\ldots
+			\item From \enquote{general} for daily use (pick up whatever you like) to very specialized --- special hardware devices, network services, rescue,~\ldots
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -338,7 +340,7 @@
 \begin{frame}{Extremely simplified adaptive radiation of Linux distributions}
 	\includegraphics[width=\textwidth]{linux_fylogen_2.png}
 	\vfil
-	\url{https://en.wikipedia.org/wiki/List_of_Linux_distributions} and \url{https://distrowatch.com/} ($\sim$830 distributions, $\sim$280 active)
+	\url{https://en.wikipedia.org/wiki/List_of_Linux_distributions} and \url{https://distrowatch.com/} ($\sim$850 distributions, $\sim$280 active)
 	\vfill
 \end{frame}
 
@@ -356,7 +358,7 @@
 		\item \href{https://distrowatch.com/search.php?package=RPM}{Red Hat (RPM) based}
 		\begin{itemize}
 			\item \href{https://www.redhat.com/}{Red Hat} --- probably the most common commercial
-			\item \href{https://getfedora.org/}{Fedora} --- ``playground'' for Red Hat --- very experimental
+			\item \href{https://getfedora.org/}{Fedora} --- \enquote{playground} for Red Hat --- very experimental
 			\item \href{https://www.centos.org/}{Centos} --- Clone of Red Hat
 			\item \href{https://www.opensuse.org/}{openSUSE} --- SUSE is second largest Linux company, openSUSE is community distribution (free) companion of SUSE Linux Enterprise
 			\item \href{https://www.scientificlinux.org/}{Scientific Linux}, \href{https://www.mageia.org/}{Mageia}, \href{https://www.pclinuxos.com/}{PCLinuxOS},~\ldots
@@ -366,13 +368,13 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Graphical User Interfaces (GUI)}{More like ``Mac-style'', ``Windows-style'' or something else? Feature rich or minimalistic?}
+\begin{frame}{Graphical User Interfaces (GUI)}{More like \enquote{Mac-style}, \enquote{Windows-style} or something else? Feature rich or minimalistic?}
 	\begin{itemize}
-		\item Most of GUIs are available for most of common distributions --- one is picked as default and ``only'' color style is different
-		\item \href{https://code.launchpad.net/unity}{Unity} --- originally developed by Ubuntu (discontinued, now community based), ``Mac-style''
-		\item \href{https://www.kde.org/}{KDE} --- one of the most common, feature extremely rich, basically ``Windows-like'' (can be changed)
-		\item \href{https://www.gnome.org/}{GNOME} --- one of the most common, relatively simplistic interface, but still feature rich, ``Mac-like''
-		\item \href{https://xfce.org/}{XFCE} --- lightweight version of older GNOME --- for older computers or users not willing to be disturbed by graphical effects, basically ``Mac-like'' looking, but panels can be moved to ``Windows style''
+		\item Most of GUIs are available for most of common distributions --- one is picked as default and \enquote{only} color style is different
+		\item \href{https://code.launchpad.net/unity}{Unity} --- originally developed by Ubuntu (discontinued, now community based), \enquote{Mac-style}
+		\item \href{https://www.kde.org/}{KDE} --- one of the most common, feature extremely rich, basically \enquote{Windows-like} (can be changed)
+		\item \href{https://www.gnome.org/}{GNOME} --- one of the most common, relatively simplistic interface, but still feature rich, \enquote{Mac-like}
+		\item \href{https://xfce.org/}{XFCE} --- lightweight version of older GNOME --- for older computers or users not willing to be disturbed by graphical effects, basically \enquote{Mac-like} looking, but panels can be moved to \enquote{Windows style}
 		\item \href{https://developer.linuxmint.com/projects/cinnamon-projects.html}{Cinnamon} --- remake of GNOME to look more like Windows\ldots
 		\item And much more\ldots
 		\item Choose what you like --- doesn't matter much which one\ldots
@@ -403,7 +405,7 @@
 	\end{center}
 \end{frame}
 
-\begin{frame}{Debian with XFCE --- Xubuntu has more ``modern'' design} % TODO Update print screen, add more
+\begin{frame}{Debian with XFCE --- Xubuntu has more \enquote{modern} design} % TODO Update print screen, add more
 	\begin{center}
 		\includegraphics[height=7cm]{debian.png}
 	\end{center}
@@ -430,7 +432,7 @@
 	\begin{itemize}
 		\item Install it on some computer together with or instead of Windows
 		\begin{itemize}
-			\item If you can use whole disk, just boot from CD/USB and click ``Next''\ldots
+			\item If you can use whole disk, just boot from CD/USB and click \enquote{Next}\ldots
 			\item If you don't have whole disk, you need at least one (commonly more) disk partition(s) --- if you don't know how to manage them, ask someone skilled\ldots
 		\end{itemize}
 		\item Live CD/USB
@@ -440,13 +442,13 @@
 		\end{itemize}
 		\item Virtualization (slide~\ref{VBox})
 		\begin{itemize}
-			\item Requires relatively powerful computer (preferable Intel i5 or i7 and over 4~GB of RAM)
+			\item Requires relatively powerful computer (preferable Intel i5 or i7 or AMD Ryzen and over 4--8~GB of RAM)
 			\item Install virtual machine (probably the most easy is \href{https://www.virtualbox.org/}{VirtualBox}) --- allows install and run another operating system inside host as an ordinary application --- very easy and comfortable
 		\end{itemize}
 		\item Linux subsystem in MS Windows 10 Store
 		\begin{itemize}
 			\item To install follow \url{https://docs.microsoft.com/windows/wsl/about}
-			\item So far only for command line (no GUI)
+			\item Only for command-line applications, does not aim to GUI
 		\end{itemize}
 		\item Cygwin
 		\begin{itemize}
@@ -467,7 +469,7 @@
 		\item If selecting among the most common, it doesn't matter much which one you pick up
 		\item Which design do you like?
 		\item Which distribution is your friend or colleague using? To have someone to ask for help\ldots
-		\item You can change GUI (or its design) without change of distribution (it use to be highly configurable)
+		\item You can change GUI (or its design) without change of distribution, it use to be highly configurable
 		\item Applications are still same --- no difference in Firefox across distributions --- keep your settings when changing distribution
 		\item Everyone using Android is using Linux
 		\item Special use --- \href{https://www.freenas.org/}{FreeNAS} for home as well as business file servers, \href{https://partedmagic.com/}{Parted Magic} and/or \href{https://www.system-rescue-cd.org/}{SystemRescueCD} to repair broken system (disk failure) and save data,~\ldots
@@ -485,7 +487,7 @@
 		\item Management of system services (how to start/stop certain services like database or web server) --- not important for daily usage for most of users
 		\item Sometimes in location of some system files --- also not important in daily usage of most of users
 		\item Kernel is almost same, applications are same and used in same way
-		\item Command line is almost same across Linux, and almost same as in other UNIX systems
+		\item Command line is almost same across Linux, and almost same as in other UNIX systems (macOS,~\ldots)
 	\end{itemize}
 \end{frame}
 
@@ -499,7 +501,7 @@
 
 \begin{frame}{Short overview of hard disk layout}
 	\begin{itemize}
-		\item Physical disk (piece of hardware) has at least 1~partition --- division seen in Windows as ``disks'' (\texttt{C}, \texttt{D},~\ldots) and mounted directory in UNIX
+		\item Physical disk (piece of hardware) has at least 1~partition --- division seen in Windows as \enquote{disks} (\texttt{C}, \texttt{D},~\ldots) and mounted directory in UNIX
 		\item MBR --- older description of disk division, up to 4~primary partitions (OS typically requires at leas one to run), one can be extended and contain more partitions, disks up to 2~TB
 		\item GPT --- newer, no relevant limits, requires UEFI (replacement of BIOS --- responsible for computer to start in newer computers)
 		\item If unsure what to do, high probability to break it\ldots
@@ -528,8 +530,8 @@
 	\end{center}
 	\begin{itemize}
 		\item FAT32 (including extensions) is old-fashioned and not reliable FS
-		\item NTFS, FAT do not support UNIX permissions, so they can't be used as system partition in Linux; see \href{https://en.wikipedia.org/wiki/Comparison_of_file_systems}{full comparison}
-		\item Btrfs, ext4, XFS and ZFS are not accessible from Windows
+		\item NTFS and FAT do not support UNIX permissions, so they can't be used as system partition in Linux; see \href{https://en.wikipedia.org/wiki/Comparison_of_file_systems}{full comparison}
+		\item Btrfs, ext4, XFS and ZFS are not accessible from Windows at all
 		\item Btrfs, XFS and ZFS are the most advanced FS in common use
 	\end{itemize}
 \end{frame}
@@ -549,7 +551,7 @@
 			\item Btrfs uses \texttt{btrfs check /dev/sdXY}, if it is unmountable, \texttt{btrfs-zero-log /dev/XY} use to help, last instance is \texttt{btrfs check --repair /dev/sdXY} (dangerous operation)
 			\item If Btrfs is mountable, but there are various FS errors and/or performance issues, \texttt{btrfs scrub start -Bdf /mount/point}, \texttt{btrfs filesystem defragment -r -v /mount/point} and \texttt{btrfs balance start -v /mount/point} --- manual running can take long time and strongly slow down the computer
 		\end{itemize}
-		\item \texttt{tune2fs -parameters /dev/sdXY} can set various parameters to influence behavior of disk partition
+		\item \texttt{tune2fs -parameters /dev/sdXY} can set various parameters to influence behavior of disk (labels and more) partition
 		\item \texttt{hdparm -parameters /dev/sdX} can set advanced hardware parameters of hard drive
 		\item The most convenient is using graphical tools available in all distributions\ldots
 		\begin{itemize}
@@ -579,7 +581,7 @@
 	\begin{itemize}
 		\item If there are encrypted partitions, they are in \texttt{/dev/mapper/\ldots}
 		\item If LVM (slide~\ref{LVMRAID}) is used, see \texttt{lvscan} and \texttt{pvscan} to find correct location in \texttt{/dev/}
-		\item Disks are also accessible through \texttt{/dev/disk/by-*}
+		\item Disks are also accessible through \texttt{/dev/disk/by-<TAB><TAB>}
 	\end{itemize}
 \end{frame}
 
@@ -618,14 +620,14 @@
 
 \subsection{Types of users}
 
-\begin{frame}{Root vs. ``normal'' user}
+\begin{frame}{Root vs. \enquote{normal} user}
 	\label{root}
 	\begin{itemize}
 		\item Root is administrator --- more than God --- can do anything
 		\item Other users have limited permissions
 		\begin{itemize}
 			\item System users providing particular service (web server, database, networking service) are as restricted as possible to do the task --- security
-			\item ``Human'' users don't have access to system files (at least not for modification), homes of users are separated
+			\item \enquote{Human} users don't have access to system files (at least not for modification), homes of users are separated
 		\end{itemize}
 	\end{itemize}
 	\begin{center}
@@ -639,7 +641,7 @@
 \begin{frame}[fragile]{Becoming root}
 	\begin{itemize}
 		\item Root privileges are required for any administrative task (install of software package, change of system settings,~\ldots)
-		\item Word ``root'' is used as name for system administrator user and also for top of filesystem directory hierarchy (\texttt{/})
+		\item Word \enquote{root} is used as name for system administrator user and also for top of filesystem directory hierarchy (\texttt{/})
 	\end{itemize}
 	\begin{bashcode}
     # Gain root privileges
@@ -661,17 +663,17 @@
 	\begin{itemize}
 		\item In UNIX specifications, everything is (text) file
 		\begin{itemize}
-			\item Technically, directory is ``just'' a~file listing its content
+			\item Technically, directory is \enquote{just} a~file listing its content
 			\item Text files are easy to read, parse, manipulate
 			\begin{itemize}
 				\item Very easily editable (easy to change configuration)
 				\item Easy to transfer to another system
 				\item Easily comparable among users/versions/systems
 			\end{itemize}
-			\item UNIX command line tools are the most powerful when processing text files
+			\item UNIX command line tools are the most powerful when processing text files (of any sort, e.g. genetic data)
 		\end{itemize}
 		\item When transferring to and from Windows, be aware of EOL and encoding (slide~\ref{eolenc})!
-		\item FAT32 (commonly used for USB flash disks) has limits to maximal file size and range of characters allowed in file name is limited (slide~\ref{fs})
+		\item FAT32 (commonly used for USB flash disks) has limits to maximal file size($\sim4$~GB) and range of characters allowed in file name is limited (slide~\ref{fs}), it doesn't support UNIX permissions (breaks executability of scripts)
 		\begin{itemize}
 			\item Avoid large single files and in file names keep only alphanumerical characters, dots and underscores (omit spaces and accented characters)
 		\end{itemize}
@@ -679,6 +681,7 @@
 \end{frame}
 
 \begin{frame}[fragile]{File names}
+	\label{filenames}
 	\begin{itemize}
 		\item Linux allows \alert{any} character in file name, except \alert{slash} (\texttt{/}), so including anything on keyboard as well as line break (\alert{!}) --- be conservative\ldots
 	\end{itemize}
@@ -686,7 +689,7 @@
     mkdir My New Directory # Produces THREE directories (mkdir creates
                            # directories; spaces separate parameters)
                            # Solutions:
-    mkdir "My New Directory" # (you can use simple quotes '...' as well) or
+    mkdir "My New Directory" # (you can use single quotes '...' as well) or
     mkdir My\ New\ Directory # "\" escapes following character
     rmdir My\ New\ Directory # Same problem and solution when removing it
     touch \* # Creates new empty file named just * (yes, asterisk)
@@ -701,12 +704,13 @@
     ls # We will not see it (ls lists only "visible" files/directories)
     ls -a # We will see it ("-a" to see all - also hidden - files/dirs)
 	\end{bashcode}
+	\alert{Task:} Try everything on this slide, also with different file names and characters!
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Directory structure in Linux}
 	\begin{itemize}
 		\item It is similar also in another UN*X systems
-		\item Top directory ``\texttt{/}'' --- ``root''
+		\item Top directory \enquote{\texttt{/}} --- \enquote{root}
 		\item Everything else (including disks and network shares) are mounted in subdirectories (\texttt{/...})
 		\item \texttt{/bin} --- very basic command line utilities
 		\item \texttt{/boot} --- bootloader responsible for start of system
@@ -730,6 +734,7 @@
 		\item \alert{\texttt{/var}} --- data of most of applications and services, including e.g. database data, system logs,~\ldots
 		\item \alert{\texttt{/windows}} --- if on dual boot, Windows disks are commonly mounted here
 		\item Can be altered, modified
+		\item E.g. MetaCentrum has storage servers in various locations accessible from front and calculation nodes in \texttt{/storage}
 		\item Usually, work only in your home, anywhere else modify files only if you are absolutely sure what you are doing
 		\item Normal user doesn't have permission to modify files outside his directory (with exception of plugged removable media, etc.)
 		\item Try \texttt{man hier} for details
@@ -745,9 +750,9 @@
 		\item \texttt{cron*} --- cron automatically repeatedly runs tasks
 		\item \texttt{fstab} --- description of FS mounted during startup
 		\item \texttt{group} --- list of users and groups
-		\item \texttt{passwd} --- basic settings of for users (home directory, default shell,~\ldots)
+		\item \texttt{passwd} --- basic settings for new users (home directory, default shell,~\ldots)
 		\item \texttt{resolv.conf} ---  DNS settings (part of basic networking)
-		\item \texttt{shadow} --- users passwords in encrypted format
+		\item \texttt{shadow} --- users passwords in encrypted form
 		\item \texttt{skel} --- basic directories and configuration for new users
 		\item Much more according to software installed\ldots
 	\end{itemize}
@@ -781,9 +786,9 @@
     ls -la ~
 	\end{bashcode}
 	\begin{itemize}
-		\item Regular file --- ordinary file, marked by \texttt{-}
+		\item Regular file --- ordinary file, marked by dash (--)
 		\item Directory --- in UNIX special type of file, marked by \texttt{d}
-		\item Symbolic link (symlink, ``soft link'') --- points to another place, marked by \texttt{l}, slide \ref{links}
+		\item Symbolic link (symlink, \enquote{soft link}) --- points to another place, marked by \texttt{l}, slide \ref{links}
 		\item Hard link --- just another name for existing file, no special symbol, slide \ref{links}
 		\item Block and character device --- in \texttt{/dev}, representations of devices (hard disks, terminals,~\ldots), marked by \texttt{b} or \texttt{c} respectively
 		\item Named pipe --- pipe can be saved (by \texttt{mkfifo}), looks like a~file, more at slide \ref{pipe}
@@ -794,14 +799,15 @@
 \begin{frame}[fragile]{Links}
 	\label{links}
 	\begin{itemize}
-		\item Soft links --- like links on the web --- short-cut to another place: \texttt{ln -s source target}
+		\item Soft links --- like links on the web --- short-cut to another place
 		\begin{itemize}
 			\item When we delete link, nothing happens, when target, non-working link remains
 		\end{itemize}
 	\end{itemize}
 	\begin{bashcode}
+    ln -s source target # Source will point to target
     ls -l bin/cinema5
-    lrwxrwxrwx 1 vojta users 42 5. dub 2014 cinema5 -> # "l" marks link
+    lrwxrwxrwx 1 vojta users 42 5. dub 2014 cinema5 -> # "l" marks link
       /home/vojta/bin/cinema5-0.2.1-beta/cinema5* # "->" points to target
 	\end{bashcode}
 	\begin{itemize}
@@ -814,9 +820,9 @@
     ln .bashrc .bashrcX
     ls -l .bash* # Numbers in first column show links pointing to it
                  # For directories - number of items, for files = 1
-    -rw------- 1 vojta users 27298 21. led 16.43 .bash_history # One link
-    -rw-r--r-- 2 vojta users  2707 29. lis 16.21 .bashrc # Same file as below
-    -rw-r--r-- 2 vojta users  2707 29. lis 16.21 .bashrcX # Two links
+    -rw------- 1 vojta users 7298 21. jan 16.43 .bash_history # One link
+    -rw-r--r-- 2 vojta users 2707 29. nov 16.21 .bashrc # Same file as below
+    -rw-r--r-- 2 vojta users 2707 29. nov 16.21 .bashrcX # Two links
 	\end{bashcode}
 \end{frame}
 
@@ -838,11 +844,11 @@
 \begin{frame}[fragile]{Change owner and/or group}
 	\begin{bashcode}
     ls -l # Shows also owner and group (columns 3 and 4):
-    drwxr-xr-x 1 vojta users    80  5. led 16.12 linuxcourse
-    drwxr-xr-x 1 vojta users  1648 31. led 10.15 presentation
-    -rw-r--r-- 1 vojta users  1944  5. led 15.18 README
-    drwxr-xr-x 1 vojta users   822 29. led 10.12 scripts_data
-    -rwxr-xr-x 1 vojta users  1126  5. led 15.22 web_update.sh
+    drwxr-xr-x 1 vojta users    80  5. jan 16.12 linuxcourse
+    drwxr-xr-x 1 vojta users  1648 31. jan 10.15 presentation
+    -rw-r--r-- 1 vojta users  1944  5. jan 15.18 README
+    drwxr-xr-x 1 vojta users   822 29. jan 10.12 scripts_data
+    -rwxr-xr-x 1 vojta users  1126  5. jan 15.22 web_update.sh
     l # Common alias for 'ls -l' or 'ls-la' (according to distribution)
     ll # Common alias for 'ls -l' or 'ls-la' (according to distribution)
     id # Display UID and GIDs of current user
@@ -861,7 +867,7 @@
 \begin{frame}{File and directory permissions}
 	\label{permissions}
 	\begin{itemize}
-		\item Combination of permissions to read/write/execute for user(owner)/group/others
+		\item Combination of permissions to read/write/execute for user(owner)/group members/others
 	\end{itemize}
 	\begin{center}
 		\begin{tabular}{llll}
@@ -872,7 +878,7 @@
 		\end{tabular}
 	\end{center}
 	\begin{itemize}
-		\item \texttt{rwxrw-r--} --- 3*3 characters for permissions for owner of the file/directory, group it is belonging to, and other users (\texttt{d} on beginning marks directories, \texttt{l} links, \texttt{+} ACL, slide \ref{acl})
+		\item \texttt{rwxrw}-\texttt{r}-{-} --- 3*3 characters for permissions for owner of the file/directory, group it is belonging to, and other users (\texttt{d} on beginning marks directories, \texttt{l} links, \texttt{+} ACL, slide \ref{acl})
 		\item \texttt{764} --- same as above --- numbers for each role are summed --- first one is for owner, second for group and last for others
 		\item Executable scripts and binaries \textbf{require} executable permission (\texttt{x})
 	\end{itemize}
@@ -882,25 +888,25 @@
 	\begin{bashcode}
     ls -l # Shows permissions, links, owner, group, size, date, name
     # Only owner can read and write the file; 600:
-    -rw-------   1 vojta users   38211 20. led 09.23 .bash_history
+    -rw-------   1 vojta users   38211 20. jan 09.23 .bash_history
     # Owner can write read and write the file, others read; 644:
-    -rw-r--r--   1 vojta users    2707 29. lis 16.21 .bashrc
+    -rw-r--r--   1 vojta users    2707 29. nov 16.21 .bashrc
     # Owner can enter, read and write directory, others can read
     # and enter it; 755:
-    drwxr-xr-x  41 vojta users    4096 27. pro 09.55 bin
+    drwxr-xr-x  41 vojta users    4096 27. pro 09.55 bin
     # Only owner can read, write and enter the directory,
     # others nothing; 700:
-    drwx------  58 vojta users    4096 17. pro 15.45 .config
+    drwx------  58 vojta users    4096 17. pro 15.45 .config
     # Link, everyone can do everything; 777:
-    lrwxrwxrwx   1 vojta users      37 20. led 09.33 .lyxpipe.in ->
+    lrwxrwxrwx   1 vojta users      37 20. jan 09.33 .lyxpipe.in ->
       /tmp/kde-vojta/kilemj7d3E/.lyxpipe.in
     # Executable (application) - everyone can launch it, but only
     # owner can write into the file; 755:
-    -rwxr-xr-x   1 vojta users    2187 27. lis 13.10 strap.sh*
+    -rwxr-xr-x   1 vojta users    2187 27. nov 13.10 strap.sh*
 	\end{bashcode}
 	\vfil
 	\begin{itemize}
-		\item Permission to ``write'' also means permission to \textbf{delete} it
+		\item Permission to \enquote{write} also means permission to \textbf{delete} it
 	\end{itemize}
 \end{frame}
 
@@ -912,8 +918,8 @@
     ls -h # Human readable size units (use with -l or -s)
     ls --color ## Colored output
     ls -laFh --color # Combine any parameters you like
-    chmod u/g/o/a+/-r/w/x FILE # For respective user/group/others/all adds/
-                               # removes permission to read/write/execute
+    chmod u/g/o/a+/-r/w/x FILE # For respective user/group/others/all adds
+                               # /removes permission to read/write/execute
     chmod XYZ FILE # Instead of XYZ use number code of permission
     chmod -R # Recursive (including subdirectories)
     chmod +x script.sh # Make script.sh executable for everyone
@@ -933,7 +939,7 @@
 		\item By default, it is not possible to give specific permission to the user who is not owner, nor member of group owning the file
 		\item In ext4 FS it has to be turned on manually (usually it is by default), it is part of Btrfs, XFS and ZFS
 		\item Command \texttt{getfacl} lists those extra permissions, \texttt{setfacl} sets
-		\item \alert{When in use, ``basic'' tools listing permissions (e.g. \texttt{ls -l}, ACL in use is marked by \texttt{+} after permissions) sometimes do not show correct result and permissions may work unexpectedly}
+		\item \alert{When in use, \enquote{basic} tools listing permissions (e.g. \texttt{ls}~-\texttt{l}, ACL in use is marked by \texttt{+} after permissions --- next slide) sometimes do not show correct result and permissions may work unexpectedly}
 		\item Important especially in network environment with many users
 		\item If intensively used, \texttt{ls -l} sometimes doesn't show correct permissions
 		\item If not in use on server (like e.g. on CESNET data storage), relatively high number of groups is required to be able to correctly setup sharing permissions
@@ -952,7 +958,7 @@
     mask::r-x
     other::---      # Correct
     ls -l FILE # Compare this and previous output (This might be wrong!):
-    drwxr-x---+  2 zeisek zeisek     6 17. zář 20.40 dokumenty/
+    drwxr-x---+  2 zeisek zeisek     6 17. zář 20.40 dokumenty/
     setfacl -m u/g:USER/GROUP:r/w/x FILE # Add for USER/GROUP r/w/x right
     # E.g. recursively add read permission to user 'arabidopsis_data' to
     # folder 'dokumenty/arabidopsis' (no extra group is required)
@@ -987,7 +993,7 @@
 	\begin{bashcode}
     chmod +t somedirectory
     ls -la /
-    drwxrwxrwt 22 root root 800 21. led 18.20 tmp # "t" marks it
+    drwxrwxrwt 22 root root 800 21. jan 18.20 tmp # "t" marks it
 	\end{bashcode}
 	\begin{itemize}
 		\item \texttt{setgid} --- application can have root permission even it was launched by normal user
@@ -1091,10 +1097,10 @@
     iconv -f ISO-8859-2 -t UTF-8 infile.txt > outfile.txt
     iconv -l # List of available encoding to convert
     iconv --help # More information about usage
+    enca -h # See usage of another encoding tool
     recode CP1250..UTF-8 textfile # Convert encoding from CP-1250 to UTF-8
     recode ../CR-LF textfile # Convert EOL from UNIX to Windows
-    recode -l # List of available encoding to convert
-    recode --help # More information about usage
+    recode --help # More information about usage; recode is deprecated
 	\end{bashcode}
 	\begin{itemize}
 		\item macOS uses same encoding and EOL as Linux (and rest of UNIX world), so there are no problems with compatibility
@@ -1110,18 +1116,18 @@
 
 \begin{frame}{Launching commands and scripts}
 	\begin{itemize}
-		\item Parameters of commands are separated by space and preceded by one or two minus(es)
-		\item Parameter \texttt{-h} or \texttt{--help} usually gives help for particular command
+		\item Parameters of commands are separated by space and preceded by one or two dash(es)
+		\item Parameter -\texttt{h} or -{-}\texttt{help} usually gives help for particular command
 		\item Getting help with \texttt{man} command
 		\begin{itemize}
 			\item \texttt{man somecommand}
-			\item Arrows to list up and down, \texttt{q} to quit
+			\item Arrows to move up and down, \texttt{q} to quit
 			\item Type \texttt{/} and type text and hit Enter to search --- next hit by \texttt{n}, quit search by ESC (twice)
 			\item Command \texttt{info} more advanced --- type \texttt{?} for help
 		\end{itemize}
-		\item Parameters can be combined, order doesn't matter (same variants: \texttt{ls -la}; \texttt{ls -al}; \texttt{ls -a -l}; \texttt{ls -l -a})
-		\item ``Long'' parameters (\texttt{--XXX}) must stay separated
-		\item Commands must be in PATH --- actual directory isn't in PATH
+		\item Parameters can be combined, order doesn't matter (same variants: \texttt{ls}~-\texttt{la}; \texttt{ls}~-\texttt{al}; \texttt{ls}~-\texttt{a}~-\texttt{l}; \texttt{ls}~-\texttt{l}~-\texttt{a})
+		\item \enquote{Long} parameters (-{-}\texttt{XXX}) must stay separated
+		\item Commands must be in PATH (slide~\ref{PATH}) --- actual directory isn't
 		\begin{itemize}
 			\item If the script is is current directory, use \texttt{./script.sh} or full path
 		\end{itemize}
@@ -1214,8 +1220,9 @@
 			\item Login via SSH to \texttt{vyuka.natur.cuni.cz} and launch \texttt{screen}.
 			\item Run commands \texttt{pwd}, \texttt{whoami} and \texttt{ls -la}. What do they show?
 			\item Detach from screen and logout from the server.
-			\item Login again to the server.
+			\item Login again to the server. Is it same or different process? Why?
 			\item Reattach to the screen --- same state as before logout from server.
+			\item Practice tasks with file names (slide~\ref{filenames})
 			\item Close screen session and logout from the server.
 		\end{enumerate}
 	\end{block}
@@ -1237,11 +1244,11 @@
 				\item Return back to GUI using \texttt{Alt+F7}
 				\item Some are used for log outputs etc.
 			\end{itemize}
-			\item Nowadays used ``indirectly'' with special applications (``emulators'')
+			\item Nowadays used \enquote{indirectly} with special applications (\enquote{emulators})
 		\end{itemize}
 		\item Terminal emulator
 		\begin{itemize}
-			\item Application used to get the ``terminal'' and work in command line
+			\item Application used to get the \enquote{terminal} and work in command line
 			\item Every GUI has some --- \href{https://konsole.kde.org/}{Konsole}, \href{https://yakuake.kde.org/}{Yakuake}, \href{https://invisible-island.net/xterm/}{XTerm}, \href{https://wiki.gnome.org/Apps/Terminal}{Gnome Terminal}, \href{http://guake.org/}{Guake}, \href{https://docs.xfce.org/apps/terminal/start}{XFCE Terminal}, \href{https://wiki.lxde.org/en/LXTerminal}{LxTerminal},~\ldots
 			\item Commonly allow appearance customization --- font, colors, background, style of notifications,~\ldots
 			\item Launch as many copies as you need (usually allow tabs for easier work)
@@ -1256,16 +1263,16 @@
 \begin{frame}{BASH and others}
 	\begin{itemize}
 		\item Shell (\textbf{sh}) --- feature rich scripting programming language --- general specification, several variants
-		\item So called POSIX shell --- Portable Operating System Interface --- transferable among hardware platforms (and UNIX variants)
+		\item So called POSIX shell --- Portable Operating System Interface --- transferable among hardware platforms (and UNIX systems)
 		\item \textbf{Interpreter of our commands inserted into command line}
 		\item \textbf{BASH} --- Bourne again shell
 		\begin{itemize}
-			\item Probably the most common shell, based on original sh, respecting original specification, adding new features
+			\item Probably the most common shell, based on original \texttt{sh}, respecting original specification, adding new features
 			\item We will use it
 		\end{itemize}
 		\item Other variants: \textbf{csh} (syntax influenced by C), \textbf{ksh} (younger, backward compatible with bash), \textbf{zsh} (extended bash), \textbf{ash} (mainly in BSD)
 		\item There are some differences in syntax and features
-		\item Language suitable for easy scripting and system tasks, not for ``big'' programming, neither for graphical applications
+		\item Language suitable for easy scripting and system tasks, not for \enquote{big} programming, neither for graphical applications
 	\end{itemize}
 \end{frame}
 
@@ -1335,7 +1342,7 @@
     alias ls="ls --color=auto" # Make output of ls colored
     alias l="ls -la" # Long list (add details) with hidden files
     # Popular settings in ~/.bashrc (influencing bash, not other shells)
-    alias grep='grep --colour=always' # Enable color in grep
+    alias grep='grep --color=auto' # Enable color in grep
     # Always human readable output of df (disk free)
     alias df='df -h'
     # Easier history listing
@@ -1347,13 +1354,13 @@
 \begin{frame}{BASH globing and wildcards}
 	\label{globbing}
 	\begin{itemize}
-		\item BASH itself doesn't recognize regular expressions --- it's wildcards have some of functions of regular expressions (from slide~\ref{regexp}) and can look similarly, but behave differently! Do not confuse!
+		\item BASH itself doesn't recognize regular expressions --- it's wildcards have some of functions of regular expressions (from slide~\ref{regexp}) and can look similarly, but behave differently --- Do not confuse!
 		\item \texttt{?} --- Replaces any single character
-		\item \texttt{*} --- Replaces any number of any characters (\texttt{ls a*} lists all files starting with ``a'')
-		\item \texttt{[]} --- Range or a~list --- \texttt{[abcdef]} and \texttt{[a-f]} are same
+		\item \texttt{*} --- Replaces any number of any characters (\texttt{ls a*} lists all files starting with \enquote{a})
+		\item \texttt{[]} --- Range or a~list --- \texttt{[abcdef]} and \texttt{[a}-\texttt{f]} are same
 		\item \texttt{[!\ldots]} --- Reverse previous case (\texttt{!}) --- any character except those listed
 		\item \texttt{\{\}} --- Expansion (terms inside are separated by commas \texttt{,}) --- all possible combinations (see next slide for examples)
-		\item \texttt{\textbackslash} --- Escapes following character and it doesn't have its special meaning (e.g. \texttt{\textbackslash *} means literally asterisk \texttt{*} and not ``any number of any characters'' as usually)
+		\item \texttt{\textbackslash} --- Escapes following character and it doesn't have its special meaning (e.g. \texttt{\textbackslash *} means literally asterisk \texttt{*} and not \enquote{any number of any characters} as usually)
 		\item For details see \texttt{man 7~glob} and \texttt{man 7~regex}
 	\end{itemize}
 \end{frame}
@@ -1368,10 +1375,220 @@
 	\begin{itemize}
 		\item Text in single quotes (\texttt{'\ldots'}) preserves the literal value of each character within the quotes
 		\item Tex tin double quotes (\texttt{"\ldots"}) preserves the literal value of all characters within the quotes, with the exception of dollar (\texttt{\textdollar}), back tick (\texttt{\textasciigrave}) and back slash (\texttt{\textbackslash})
-		\item A~double quote may be quoted within double quotes by preceding it with a~backslash (\texttt{\textbackslash"} means literally ``double quote'')
-		\item Text between back ticks (\texttt{\textasciigrave\ldots\textasciigrave}) will be evaluated and then used as command or argument (see next slide for examples)
+		\item A~double quote may be quoted within double quotes by preceding it with a~backslash (\texttt{\textbackslash"} means literally \enquote{double quote})
+		\item Text between back ticks (\texttt{\textasciigrave\ldots\textasciigrave}) or within \texttt{\$\{\ldots\}} will be evaluated and then used as command or argument (see next slide for examples)
+	\begin{itemize}
+		\item Syntax with back ticks is deprecated, keep using \texttt{\$\{\ldots\}} instead
+	\end{itemize}
 	\end{itemize}
 \end{frame}
+
+\subsection{Directories}
+
+\begin{frame}[fragile]{Directories}
+	\begin{bashcode}
+    pwd # Print working directory - where we are right now
+    cd # Change directory (just "cd" or "cd ~" goes to home directory)
+    cd .. # One directory up; cd ../..; cd ../../another/directory/
+    cd relative/path/from/current/position # Go to selected directory
+    cd /absolute/path/from/root # Absolute path starts by "/"
+    tree # Tree like hierarchy of files and directories
+    tree -d # List only directories; see tree --help
+    tree -L 2 # Only up to second level; combine: tree -d -L 3
+    du -sh # Disk usage by current directory, -s for sum, -h for nice units
+    mkdir NewDirectory # Make directory
+    rmdir DirectoryToRemove # Remove empty directory
+    ls # List directory content
+       # Try parameters -l, -a, -1, -F, -h (with -l or -s), --help
+    rm -r # Recursive delete - remove also non-empty directories
+    mv from to # Move files/directories (also for renaming)
+    cp from to # Copy, -r (recursive, including subdirectories)
+               # -a (keeps all attributes), -v (verbose)
+    file somefile # Information about questioned file (what it is, ...)
+    xdg-open somefile # Open file by graphical application as in GUI
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Tasks on the remote server}
+	\begin{enumerate}
+		\item Login via SSH to \texttt{vyuka.natur.cuni.cz}.
+		\item Get your path by \texttt{pwd}.
+		\item Go to \texttt{/home/scripts\_data} (with \texttt{cd}) and explore its content (\texttt{ls}).
+		\item List permissions in \texttt{/home/scripts\_data} (slide~\ref{permissions}). What to they show? What can you do with the content?
+		\item How much space does \texttt{/home/scripts\_data} consume?
+		\item Go back to home directory (by \texttt{cd}).
+		\item Create new directory in your home directory (\texttt{mkdir}).
+		\item Copy content of \texttt{/home/scripts\_data} into your newly created directory (\texttt{cp}).
+		\item Rename that directory with scripts and data using \texttt{mv} to any custom name. Who is owner of the files in origin location and in new location? Why?
+		\item Explore your home directory and its content by command \texttt{ls} and \texttt{tree} and some files by command \texttt{file}. Which hidden files and directories are there? What could it be?
+		\item Change permissions of the files so that only you can read, write and execute them (\texttt{chmod}).
+		\item Create other directory, see it and then remove (\texttt{rmdir}).
+		\item Can you access directories of another users? Why? If yes, what are your permissions there? Explain it.
+		\item What are some permissions in \texttt{/}? Why?
+		\item Create directory in your home directory and share it with another user so she/he can write there anything (using e.g. \texttt{touch somefile} or \texttt{mkdir somedirectory}) (work e.g. in pairs). Use everywhere as restricted permissions as possible. Can you figure out solution with or without ACL (slide~\ref{acl})?
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{Midnight Commander}
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item \texttt{mc} to launch MC
+			\item Move (\texttt{F6}), copy (\texttt{F5}), delete (\texttt{F8}), files/directories
+			\item Connect to SSH/(S)FTP,~\ldots
+			\item Can be used with mouse
+			\item Edit (\texttt{F4}) or view (\texttt{F3}) text files
+			\item \texttt{F2} for quick menu
+			\item \texttt{F9} for top menu
+			\item And much more\ldots
+			\item Impossible to live without it :-)
+			\item \alert{Task:} Which of the previous tasks can you solve with it? Try it.
+		\end{itemize}
+		\includegraphics[height=6.5cm]{mc.png}
+	\end{multicols}
+\end{frame}
+
+\subsection{Archives}
+
+\begin{frame}{Compressing files into archives}
+	\begin{center}
+		\begin{tabular}{llll}
+			\textbf{Archive} & \textbf{Compressing command}\\
+			*.tar & tar cvf archive.tar file1 file2\\
+			*.tar.gz\alert{/}*.tgz & tar czvf archive.tar.gz\alert{/}.tgz file1 file2\\
+			*.tar.bz\alert{/}*.tbz\alert{/}*.tar.bz2 & tar cjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2 file1 file2\\
+			*.tar.xz & tar cvf - file1 file2 | lzma > archive.tar.xz\\
+			*.gz & gzip file\\
+			*.bz2 & bzip2 file\\
+			*.xz & lzma file\\
+			*.zip & zip -r archive.zip file1 file2\\
+			*.rar & rar a archive.rar file1 file2
+		\end{tabular}
+	\end{center}
+	\begin{itemize}
+		\item \texttt{gzip}, \texttt{bzip2} and \texttt{lzma} are able to pack only one file --- use them together with \texttt{tar} to pack multiple files
+		\item \texttt{gzip}, \texttt{bzip2} and \texttt{lzma} when used \textbf{without} \texttt{tar} \alert{move} file into archive
+		\item \texttt{lzma} has excellent compression, but can be very slow
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Compressing and decompressing archives}
+	\begin{center}
+		\begin{tabular}{llll}
+			\textbf{Archive} & \textbf{Decompressing command}\\
+			*.tar & tar xvf archive.tar\\
+			*.tar.gz\alert{/}*.tgz & tar xzvf archive.tar.gz\alert{/}.tgz\\
+			*.tar.bz\alert{/}*.tbz\alert{/}*.tar.bz2 & tar xjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2\\
+			*.tar.xz & lzcat archive.tar.xz | tar xvf -\\
+			*.gz & gunzip archive.gz\\
+			*.bz2 & bunzip2 archive.bz2\\
+			*.xz & unlzma archive.xz\\
+			*.zip & unzip archive.zip\\
+			*.rar & unrar x archive.rar
+		\end{tabular}
+		\includegraphics[height=2cm]{tar.png}
+		\hfill
+		\url{https://xkcd.com/1168/}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Tasks with archives}
+	\begin{enumerate}
+		\item Compress (and decompress) text file \texttt{Oxalis\_HybSeq\_nrDNA\_selection\_alignment.fasta} (target enrichment sequencing data of South African \textit{Oxalis}) from \texttt{scripts\_data} with various compressing tools.
+		\item Compare sizes of original file and compressed outputs.
+		\item Compress (and decompress) all \texttt{foto\_oxalis\_*.jpg} (\textit{Oxalis} photos) from \texttt{scripts\_data} with various compressing tools.
+		\item Compare sizes of original files and compressed outputs.
+		\item Which compression tool seems to be the best? In terms of compressing ratio and time needed for compression.
+		\item Is more effective compression of text files or images? Why?
+		\item Why is even plain \texttt{tar} (any compression) useful with FAT disks?
+	\end{enumerate}
+\end{frame}
+
+\subsection{Searching}
+
+\begin{frame}[fragile]{Looking for files and applications}
+	\begin{bashcode}
+    apropos keyword # Searches for command descriptions containing keyword
+    updatedb # Must be regularly launched to get "locate" to work
+             # It is usually regularly launched by cron task (see further)
+    locate somename # Searches for files/directories in "locate" database
+    which # Full path to application (shell command)
+    whereis # Path to source code, executable and man pages for the command
+    # Test if executable command exists (good for scripts)
+    # If "Application" is missing, script ends with error
+    command -v Application >/dev/null 2>&1 || { echo >&2 "Application is
+      required but not installed. Aborting."; exit 1; }
+    command -v find # Behaves like which, but reliable in scripts
+    type Application >/dev/null 2>&1 || { echo >&2 "Application is
+      required but not installed. Aborting."; exit 1; }
+    hash Application 2>/dev/null || { echo >&2 "Application is required
+      but not installed. Aborting."; exit 1; }
+    exit 1 # Use to be added (with various numbers) after any error to
+           # send term signal 1 - for better handling of various errors.
+           # Every termination has exit status number - 0 is normal exit.
+           # Exit status 1 and higher number is various error.
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Find}
+	\begin{bashcode}
+    find <where> <what> <what to do> # The most powerful searching tool:
+    find /.. -type d/f -name XXX -print # Most common usage
+	\end{bashcode}
+	\begin{itemize}
+		\item First \texttt{find}'s parameter is location to search --- absolute or relative, \enquote{\texttt{.}} means current directory (the only compulsory parameter)
+		\item \texttt{-type} for only directories \texttt{d} or only files \texttt{f} (without this parameter, files as well as directories are looked for)
+		\item \texttt{-name} of the searched files/directories supports wildcards (\texttt{*}, \texttt{?} and \texttt{[\ldots]}), see globing (slide~\ref{globbing})
+		\item \texttt{-print} is default action --- prints list of results
+		\item \texttt{-exec} runs some command with results (some operation, not just listing)
+		\begin{itemize}
+			\item All following arguments are argument of the command until \enquote{\texttt{;}} is encountered
+			\item \texttt{\{\}} is replaced by the current file name being processed
+			\item Those constructs might require protection by escape (\enquote{\textbackslash}) or quotes not to be expanded by shell
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Find examples (apply some of them to the toy data)}
+	\begin{bashcode}
+    # Find in /home/$USER/ all JPG files containing string "oxalis"
+    find /home/$USER/ -name "*oxalis*.jpg" -print
+    # Find in scripts_data all JPG files and resize them to 1000x1000 px
+    find scripts_data -name "*.jpg" -exec mogrify -resize 1000x1000 '{}' \;
+    # Another possibility with xargs (it chains commands - reads input from
+    # stdin and execute command with given arguments, using all CPU threads)
+    # Note in the example below -print is not needed as it is default action
+    find photos/ -name "*.jpg" | xargs mogrify -resize 1000x1000
+    # Find all R scripts in ~/Documents and find in them lines with "DNA"
+    find ~/Documents -name *.r -print | xargs grep -nH DNA # Or
+    find ~/Documents -name *.r -exec grep -nH DNA '{}' \;
+    # How many directories are there in the books directory
+    find books/ -type d -print | wc -l # wc -l calculate lines
+    # Change permissions of all files within "files" directory to 640
+    find files/ -type f -exec chmod 640 '{}' \;
+    # Find all executable files within current directory and list them
+    find . -executable -type f -print
+    find doc/ -type d -empty -execdir rmdir {} \; # Delete empty directories
+    man find # See another options. Much more...
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}{Searching tasks}
+	\begin{enumerate}
+		\item Use \texttt{locate} to find file \texttt{long\_text.txt}. Is the output absolutely correct? If not, why?
+		\item Where is executable of \texttt{mc}? Why can be such information useful? Where are its libraries, data, configuration and manual?
+		\item Which software is related to keywords \texttt{permission} and \texttt{compress} (use e.g. \texttt{apropos})? Use \texttt{man} to explore some of them.
+	\end{enumerate}
+	\begin{block}{Tasks with \texttt{find}}
+		\begin{enumerate}
+			\item Find all \texttt{*.vcf.gz} files in whole \texttt{/home}. Why do you get errors for some directories?
+			\item Compress, see and decompress all shell scripts in your home directory.
+			\item Change permissions of all content of your home directory so that no one else can access it. Consider hidden files, directories and scripts.
+			\item List all directories in \texttt{/etc}.
+		\end{enumerate}
+	\end{block}
+\end{frame}
+
+\subsection{Variables}
 
 \begin{frame}[fragile]{Expressions}
 	\begin{bashcode}
@@ -1397,8 +1614,6 @@
 		\item \texttt{expr} works with various operands (see \texttt{man expr})
 	\end{itemize}
 \end{frame}
-
-\subsection{Variables}
 
 \begin{frame}{Variables}
 	\begin{itemize}
@@ -1435,11 +1650,12 @@
 	\begin{itemize}
 		\item Exported variables will be lost when logging off
 		\item To make variables permanent, add \texttt{export} commands into \texttt{$\sim$/.profile} or \texttt{$\sim$/.bash\_profile}, or \texttt{$\sim$/.bashrc} (according to shell and its settings)
-		\item ``\texttt{$\sim$}'' means home directory
+		\item \enquote{\texttt{$\sim$}} means home directory
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{The PATH variable}
+	\label{PATH}
 	\begin{itemize}
 		\item Lists directories (separated by colon \texttt{:}) where the current shell searches for commands
 		\item If some software is installed outside standard locations, the user must specify the full path (or update the \texttt{\$PATH})
@@ -1560,10 +1776,10 @@
 \begin{frame}{Redirects and pipes}
 	\label{pipe}
 	\begin{itemize}
-		\item \texttt{/dev/null} --- ``black hole''
+		\item \texttt{/dev/null} --- \enquote{black hole}
 		\begin{itemize}
 			\item Can discard anything
-			\item Discard only errors (note ``2''): \texttt{command 2\textgreater~/dev/null}
+			\item Discard only errors (note \enquote{2}): \texttt{command 2\textgreater~/dev/null}
 		\end{itemize}
 		\item \texttt{/dev/stdin} --- standard input
 		\begin{itemize}
@@ -1703,176 +1919,6 @@
 	\end{bashcode}
 \end{frame}
 
-\subsection{Directories}
-
-\begin{frame}[fragile]{Directories}
-	\begin{bashcode}
-    pwd # Print working directory - where we are right now
-    cd # Change directory (just "cd" or "cd ~" goes to home directory)
-    cd .. # One directory up; cd ../..; cd ../../another/directory/
-    cd relative/path/from/current/position # Go to selected directory
-    cd /absolute/path/from/root # Absolute path starts by "/"
-    tree # Tree like hierarchy of files and directories
-    tree -d # List only directories; see tree --help
-    tree -L 2 # Only up to second level; combine: tree -d -L3
-    du -sh # Disk usage by current directory, -s for sum, -h for nice units
-    mkdir NewDirectory # Make directory
-    rmdir DirectoryToRemove # Remove empty directory
-    ls # List directory content
-       # Try parameters -l, -a, -1, -F, -h (with -l or -s), --help
-    rm -r # Recursive delete - remove also non-empty directories
-    mv from to # Move files/directories (also for renaming)
-    cp from to # Copy, -r (recursive, including subdirectories)
-               # -a (keeps all attributes), -v (verbose)
-    file somefile # Information about questioned file (what it is, ...)
-    xdg-open somefile # Open file by graphical application as in GUI
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}{Tasks}
-	\begin{enumerate}
-		\item Login via SSH to \texttt{vyuka.natur.cuni.cz}
-		\item Get your path by \texttt{pwd}
-		\item Go to \texttt{/home/scripts\_data} (with \texttt{cd}) and explore its content (\texttt{ls})
-		\item Go back to home directory (by \texttt{cd})
-		\item Create new directory in your home directory (\texttt{mkdir})
-		\item Copy content of \texttt{/home/scripts\_data} into your newly created directory (\texttt{cp})
-		\item Rename that directory with scripts and data using \texttt{mv}
-		\item Explore your home directory and it content by command \texttt{ls} and \texttt{tree} and some files by command \texttt{file}
-		\item Change permissions of the files so that only you can read, write and execute them (\texttt{chmod})
-		\item Create other directory, see it and then remove (\texttt{rmdir})
-	\end{enumerate}
-\end{frame}
-
-\begin{frame}{Midnight Commander}
-	\begin{multicols}{2}
-		\begin{itemize}
-			\item \texttt{mc} to launch MC
-			\item Move, copy, delete, files/directories, connect to SSH/(S)FTP,~\ldots
-			\item Can be used with mouse
-			\item Edit text files (\texttt{F4})
-			\item \texttt{F2} for quick menu
-			\item \texttt{F9} for top menu with many functions
-			\item And much more\ldots
-			\item Not possible to live without it :-)
-		\end{itemize}
-		\includegraphics[height=6.5cm]{mc.png}
-	\end{multicols}
-\end{frame}
-
-\subsection{Archives}
-
-\begin{frame}{Compressing files into archives}
-	\begin{center}
-		\begin{tabular}{llll}
-			\textbf{Archive} & \textbf{Compressing command}\\
-			*.tar & tar cvf archive.tar file1 file2\\
-			*.tar.gz\alert{/}*.tgz & tar czvf archive.tar.gz\alert{/}.tgz file1 file2\\
-			*.tar.bz\alert{/}*.tbz\alert{/}*.tar.bz2 & tar cjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2 file1 file2\\
-			*.tar.xz & tar cvf - file1 file2 | lzma > archive.tar.xz\\
-			*.gz & gzip file\\
-			*.bz2 & bzip2 file\\
-			*.xz & lzma file\\
-			*.zip & zip -r archive.zip file1 file2\\
-			*.rar & rar a archive.rar file1 file2
-		\end{tabular}
-	\end{center}
-	\begin{itemize}
-		\item \texttt{gzip}, \texttt{bzip2} and \texttt{lzma} are able to pack only one file --- use them together with \texttt{tar} to pack multiple files
-		\item \texttt{gzip}, \texttt{bzip2} and \texttt{lzma} when used \textbf{without} \texttt{tar} \alert{move} file into archive
-		\item \texttt{lzma} has excellent compression, but can be very slow
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Compressing and decompressing archives}
-	\begin{center}
-		\begin{tabular}{llll}
-			\textbf{Archive} & \textbf{Decompressing command}\\
-			*.tar & tar xvf archive.tar\\
-			*.tar.gz\alert{/}*.tgz & tar xzvf archive.tar.gz\alert{/}.tgz\\
-			*.tar.bz\alert{/}*.tbz\alert{/}*.tar.bz2 & tar xjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2\\
-			*.tar.xz & lzcat archive.tar.xz | tar xvf -\\
-			*.gz & gunzip archive.gz\\
-			*.bz2 & bunzip2 archive.bz2\\
-			*.xz & unlzma archive.xz\\
-			*.zip & unzip archive.zip\\
-			*.rar & unrar x archive.rar
-		\end{tabular}
-		\includegraphics[height=2cm]{tar.png}
-		\hfill
-		\url{https://xkcd.com/1168/}
-	\end{center}
-\end{frame}
-
-\subsection{Searching}
-
-\begin{frame}[fragile]{Looking for files and applications}
-	\begin{bashcode}
-    apropos keyword # Searches for command descriptions containing keyword
-    updatedb # Must be regularly launched to get "locate" to work
-             # It is usually regularly launched by cron task (see further)
-    locate somename # Searches for files/directories in local database
-    which # Full path to application (shell command)
-    whereis # Path to source code, executable and man pages for the command
-    # Test if executable command exists (good for scripts)
-    # If "Application" is missing, script ends with error
-    command -v Application >/dev/null 2>&1 || { echo >&2 "Application is
-      required but not installed. Aborting."; exit 1; }
-    command -v find # Behaves like which, but reliable in scripts
-    type Application >/dev/null 2>&1 || { echo >&2 "Application is
-      required but not installed. Aborting."; exit 1; }
-    hash Application 2>/dev/null || { echo >&2 "Application is required
-      but not installed. Aborting."; exit 1; }
-    exit 1 # Use to be added (with various numbers) after any error to
-           # send term signal 1 - for better handling of various errors.
-           # Every termination has exit status number - 0 is normal exit.
-           # Exit status 1 and higher number is various error.
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Find}
-	\begin{bashcode}
-    find <where> <what> <what to do> # The most powerful searching tool:
-    find /.. -type d/f -name XXX -print # Most common usage
-	\end{bashcode}
-	\begin{itemize}
-		\item First \texttt{find}'s parameter is location to search --- absolute or relative, ``\texttt{.}'' means current directory (the only compulsory parameter)
-		\item \texttt{-type} for only directories \texttt{d} or only files \texttt{f} (without this parameter, files as well as directories are looked for)
-		\item \texttt{-name} of the searched files/directories supports wildcards (\texttt{*}, \texttt{?} and \texttt{[\ldots]}), see globing (slide~\ref{globbing})
-		\item \texttt{-print} is default action --- prints list of results
-		\item \texttt{-exec} runs some command with results (some operation, not just listing)
-		\begin{itemize}
-			\item All following arguments are argument of the command until ``\texttt{;}'' is encountered
-			\item \texttt{\{\}} is replaced by the current file name being processed
-			\item Those constructs might require protection by escape (``\textbackslash'') or quotes not to be expanded by shell
-		\end{itemize}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Find examples (apply some of them to the toy data)}
-	\begin{bashcode}
-    # Find in /home/$USER/ all JPG files containing string "oxalis"
-    find /home/$USER/ -name "*oxalis*.jpg" -print
-    # Find in scripts_data all JPG files and resize them to 1000x1000 px
-    find scripts_data -name "*.jpg" -exec mogrify -resize 1000x1000 '{}' \;
-    # Another possibility with xargs (it chains commands - reads input from
-    # stdin and execute command with given arguments, using all CPU threads)
-    # Note in the example below -print is not needed as it is default action
-    find photos/ -name "*.jpg" | xargs mogrify -resize 1000x1000
-    # Find all R scripts in ~/Documents and find in them lines with "DNA"
-    find ~/Documents -name *.r -print | xargs grep -nH DNA # Or
-    find ~/Documents -name *.r -exec grep -nH DNA '{}' \;
-    # How many directories are there in the books directory
-    find books/ -type d -print | wc -l # wc -l calculate lines
-    # Change permissions of all files within "files" directory to 640
-    find files/ -type f -exec chmod 640 '{}' \;
-    # Find all executable files within current directory and list them
-    find . -executable -type f -print
-    find doc/ -type d -empty -execdir rmdir {} \; # Delete empty directories
-    man find # See another options. Much more...
-	\end{bashcode}
-\end{frame}
-
 \subsection{Network}
 
 \begin{frame}[allowframebreaks]{Network protocols}
@@ -1889,7 +1935,7 @@
 			\item Accompanied by calDav and cardDav to share calendars and address books over the network
 		\end{itemize}
 		\item SAMBA --- UNIX connection to Microsoft network shares (port 5445), slide~\ref{netfs}
-		\item web --- ``The Internet'' for most of users (port 80 or encrypted 443)
+		\item web --- \enquote{The Internet} for most of users (port 80 or encrypted 443)
 		\item IMAP (port 143 or 993) and SMTP (port 25 or 465) to connect to e-mail server and send mails
 		\item Messaging protocols like XMPP (Jabber and derived services like Google Talk or Facebook Messenger), IRC, ICQ, Skype,~\ldots
 		\item And much more (see \texttt{/etc/services})\ldots
@@ -2581,7 +2627,7 @@
 \begin{frame}{Emacs basics}
 	\begin{itemize}
 		\item Feature-rich ecosystem --- not only text editor, also file manager, debugger, integrated development environment, extra plugins are available,~\ldots
-		\item Keyboard commands are noted as e.g. \texttt{C-x}, where ``\texttt{C}'' stands for (mostly) \texttt{Ctrl} key, \texttt{M-x}, where ``\texttt{M}'' stands mostly for \texttt{Alt} key, sometimes for \texttt{Win} key
+		\item Keyboard commands are noted as e.g. \texttt{C-x}, where \enquote{\texttt{C}} stands for (mostly) \texttt{Ctrl} key, \texttt{M-x}, where \enquote{\texttt{M}} stands mostly for \texttt{Alt} key, sometimes for \texttt{Win} key
 	\end{itemize}
 	\begin{multicols}{2}
 		\begin{itemize}
@@ -2604,12 +2650,12 @@
 
 \begin{frame}{Vim}{Vim has three different working modes}
 	\begin{enumerate}
-		\item \textbf{``Normal''} --- nothing is displayed in bottom left corner, every key has some meaning (next slide)
+		\item \textbf{\enquote{Normal}} --- nothing is displayed in bottom left corner, every key has some meaning (next slide)
 		\begin{itemize}
 			\item \texttt{i} or \texttt{Insert} key to enter \textit{insert mode}, \texttt{:} to enter \textit{command mode}
 		\end{itemize}
-		\item \textbf{Insert} --- in bottom left corner ``\texttt{-- INSERT --}'' is displayed, the most familiar mode, normal typing etc., exit to normal mode by \texttt{ESC} key
-		\item \textbf{Command} --- in bottom left corner \texttt{:} is displayed, awaits commands, exit to normal mode by \texttt{Backspace} key (delete ``\texttt{:}'')
+		\item \textbf{Insert} --- in bottom left corner \enquote{\texttt{-- INSERT --}} is displayed, the most familiar mode, normal typing etc., exit to normal mode by \texttt{ESC} key
+		\item \textbf{Command} --- in bottom left corner \texttt{:} is displayed, awaits commands, exit to normal mode by \texttt{Backspace} key (delete \enquote{\texttt{:}})
 	\end{enumerate}
 	\begin{itemize}
 		\item See documentation \url{http://vim.wikia.com/}, \url{https://www.vim.org/docs.php}; česky \url{http://www.nti.tul.cz/~satrapa/docs/vim/}
@@ -2630,7 +2676,7 @@
 				\item \texttt{p} paste
 				\item \textit{number} to get to line of particular line number
 				\item \texttt{u} to undo last change(s)
-				\item \texttt{/ToSearch} search ``ToSearch'' (once press \texttt{Enter}, \texttt{n} for next occurrence, quit with \texttt{Esc})
+				\item \texttt{/ToSearch} search \enquote{ToSearch} (once press \texttt{Enter}, \texttt{n} for next occurrence, quit with \texttt{Esc})
 			\end{itemize}
 			\item \textbf{Command mode}
 			\begin{itemize}
@@ -2678,7 +2724,7 @@
 		\item \alert{\texttt{\textbackslash\{n,m\textbackslash\}}} --- range of occurrences of single character
 		\item \alert{\texttt{\textbackslash\{n\textbackslash\}}} --- exactly \textit{n} occurrences
 		\item \alert{\texttt{\textbackslash\{n,\textbackslash\}}} --- at least \textit{n} occurrences
-		\item \alert{\texttt{\textbackslash}} --- escape following special character (e.g. \texttt{\textbackslash .} to literally search for dot and not ``any single character'')
+		\item \alert{\texttt{\textbackslash}} --- escape following special character (e.g. \texttt{\textbackslash .} to literally search for dot and not \enquote{any single character})
 		\item \alert{\texttt{|}} --- either the preceding or following reg exp can be matched (alternation)
 		\item \alert{\texttt{\textbackslash(\ldots\textbackslash)}} --- group reg exp (numbered, starting with 1) --- can be called by \alert{\textbackslash\textit{n}}, where \textit{n} is number of the group (starting with 1)
 		\item \alert{\texttt{\textbackslash$<$}}, \alert{\texttt{\textbackslash$>$}} --- word boundaries
@@ -2808,7 +2854,7 @@
 	\begin{itemize}
 		\item By accident or purpose (attack), user can enter unexpected value
 		\begin{itemize}
-			\item In the ``best'' case, the script ``just'' crashes
+			\item In the \enquote{best} case, the script \enquote{just} crashes
 			\item Script can behave unexpectedly, returning very weird results
 			\item Internal functions/commands can return error messages, which are hard to understand
 			\item Attacker can e.g. modify web content (\href{https://en.wikipedia.org/wiki/Cross-site_scripting}{XSS},~\ldots), obtain private data, root privileges,~\ldots
@@ -3129,7 +3175,7 @@
 
 \begin{frame}[allowframebreaks]{Evaluation of conditions}
 	\begin{itemize}
-		\item ``\texttt{[} \ldots~\texttt{]}'' (always keep space around it --- inside) is function to evaluate expressions (alternatively use command \texttt{test})
+		\item \enquote{\texttt{[} \ldots~\texttt{]}} (always keep space around it --- inside) is function to evaluate expressions (alternatively use command \texttt{test})
 		\begin{itemize}
 			\item \texttt{if [ "\$VAR" -eq 25 ]} or \texttt{test \$VAR -eq 25}
 			\item \texttt{if [ "\$VAR" == "value" ]; \ldots}
@@ -3282,7 +3328,7 @@
 			\item Updates and bug fixes are installed for all applications using one interface (GUI or command line) --- very reliable
 			\item Packages are digitally signed --- security
 			\item User can set custom repositories to get new packages
-			\item Repositories can be added whenever needed --- check documentation for your distribution (at least basic ``how-to'')
+			\item Repositories can be added whenever needed --- check documentation for your distribution (at least basic \enquote{how-to})
 		\end{itemize}
 		\item The most different task among distributions
 		\item Packages have dependencies --- required shared libraries and so on --- use package manager and try to avoid downloading packages from the internet
@@ -4113,7 +4159,7 @@
 		\item People on mailing lists and forums respond volunteerly in their spare free time --- do not waste it --- be polite, brief and informative
 		\item Be as specific and exact as possible
 		\begin{itemize}
-			\item Write \alert{exactly} what you did (``It doesn't work!'' is useless\ldots)
+			\item Write \alert{exactly} what you did (\enquote{It doesn't work!} is useless\ldots)
 			\item Copy/paste your commands and their output, especially error messages --- they are keys to solve the problem
 			\item Try to search web for the error messages (or their parts)
 			\item Try to provide minimal working example --- add at least part of your data (if applicable) so that the problem is reproducible
@@ -4147,7 +4193,7 @@
 		\item Forum for administrators \url{https://superuser.com/}
 		\item Questions mainly (not only) related to servers \url{https://serverfault.com/}
 		\item Do not hesitate to ask on the forum or contact developers, preferably through some public forum or mailing list, they usually respond quickly and helpfully\ldots{ }--- they wish their software to be working and useful
-		\item \href{https://www.startpage.com/}{Uncle Google} is your friend here (\textit{``how to XXX in BASH/Linux''})\ldots
+		\item \href{https://www.startpage.com/}{Uncle Google} is your friend here (\textit{\enquote{how to XXX in BASH/Linux}})\ldots
 		\item Plenty of bigger projects have their own web fora or e-mail conferences --- search for it to ask on right place
 		\item In Linux/OSS world, e-mail conferences and \href{https://en.wikipedia.org/wiki/Internet_Relay_Chat}{IRC} are sometimes more popular, than web forums --- try them
 		\item If you find a~bug, report it according to instructions given by the project
@@ -4311,5 +4357,3 @@
 % * qsub -p PRIORITY
 % * PRIORITY <-1204,+1023> (default 0)
 % * BASH arrays, https://opensource.com/article/18/5/you-dont-know-bash-intro-bash-arrays
-% * Remove: recode?
-% * Add: enca
