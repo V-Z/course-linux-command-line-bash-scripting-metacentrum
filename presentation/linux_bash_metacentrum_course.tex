@@ -1590,13 +1590,13 @@
 
 \subsection{Variables}
 
-\begin{frame}[fragile]{Expressions}
+\begin{frame}[fragile]{BASH expressions}
 	\begin{bashcode}
     # Many operands have special meaning in BASH - must be escaped
     echo $((5 < 7)) # Is 5 smaller than 7? TRUE (1)
     echo $((3 > 4)) # Is 3 greater than 4? FALSE (0)
+    echo $((16 / 3)) # Division (without decimal part)
     echo $((12 % 5)) # What remains after aritmetic division
-    echo `expr 1 '&' 0` # If both arguments non-empty and not 0, then 1
     x=$((1 + 6)) # Result will be in 'x'
     echo $x
     x=1 # Set x to 1
@@ -1604,20 +1604,20 @@
     echo $y # See result
     y=$(($x + 1)) # Will this work? Why?
     echo $y # Result
-    echo `expr length "MetaCentrum and Linux"` # Get length of chain
+    echo $(expr length "MetaCentrum and Linux") # Get length of chain
     # String of 5 characters starting at position 10 of the text
-    echo `expr substr "MetaCentrum and Linux" 10 5`
+    echo $(expr substr "MetaCentrum and Linux" 10 5)
     # Does 1st chain contain 2nd chain (how long)? Get position of first hit
-    echo `expr index "GNU Linux" "Linux"` # If no overlap, return value is 0
+    echo $(expr index "GNU Linux" "Linux") # If no overlap, return value is 0
 	\end{bashcode}
 	\begin{itemize}
 		\item \texttt{expr} works with various operands (see \texttt{man expr})
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Variables}
+\begin{frame}{Variables in BASH}
 	\begin{itemize}
-		\item Variables contain various information (where to look for the executable programs, name of the computer, user settings,~\ldots)
+		\item Variables contain various information (where to look for the executable programs, name of the computer, various settings, input files,~\ldots)
 		\item Can be local (within a~script for some temporal purpose) or global --- available for all processes (and users)
 		\item Names commonly written in CAPITALS (just a~costume)
 		\item Popular and useful variables
@@ -1625,7 +1625,7 @@
 			\item \texttt{HOME} --- location of user's home directory
 			\item \texttt{HOSTNAME} --- network name of the computer
 			\item \texttt{LANG} --- language settings, encoding, similarly variables \texttt{LC\_*}
-			\item \texttt{PATH} --- paths where to look for applications --- all applications have to be in \texttt{PATH} or called directly
+			\item \texttt{PATH} --- paths where to look for applications --- all applications have to be in \texttt{PATH} or called directly (slide~\ref{PATH})
 			\item \texttt{SHELL} --- shell in use (bash or something else)
 			\item \texttt{USER} --- user name
 			\item And many more, commonly specific for particular server
@@ -1635,8 +1635,9 @@
 
 \begin{frame}[fragile]{Work with variables}
 	\begin{bashcode}
-    printenv # Get all exported variables and their values
+    printenv # Get all environmental variables and their values
     export -p # Get all exported variables and their values
+    declare -p # Get all declared variables and their values
     echo "$VARIABLENAME" # Get value of particular variable
     echo "$PATH" # Get path where to look for applications
     VARIABLE='variablevalue' # Set new variable and its value
@@ -1644,7 +1645,7 @@
     export EDITOR=/usr/bin/vim # Set new default text editor
     LISTFILES="$(ls -1)" # Get output of command 'ls -1' into the variable
     echo "$LISTFILES" # See content of the variable LISTFILES
-    export GREP_OPTIONS='--color=auto' # Colored grep
+    export GREP_OPTIONS='--color=auto' # Colored grep (see further)
     unset VARIABLENAME # Drop variable and its value
 	\end{bashcode}
 	\begin{itemize}
@@ -1681,12 +1682,12 @@
     10 # Type any value and press Enter
     echo $X # Get value of the variable
     10 # It works
-    # Following two commands are same and lead to same result
-    X=$(command) # Set as variable output of command
-    echo $X # X will contain output of command
+    echo "$((1 + $X))" # Sum of 1 and variable $X
+    # Output some command into variable
+    Y=$(command) # Set as variable output of command
+    echo $Y # Y will contain output of command
     # "command" from previous lines can be e.g.
     cat somefile.txt # Read content of somefile.txt
-    echo "$((1 + $X))" # Sum of 1 and variable $X
     WORKDIR=$(pwd)# Save current directory into variable
     ls -1 | head -n 1 # First file/directory in the current directory
     unset X # Destroy this variable
@@ -1710,7 +1711,7 @@
 	\end{bashcode}
 	\begin{itemize}
 		\item \alert{\texttt{\textdollar}} marks variables
-		\item \alert{\texttt{\textbackslash}} escapes following character --- it will not have its special meaning (space to separate arguments,~\ldots)
+		\item \alert{\texttt{\textbackslash}} escapes following character --- it will not have its special meaning (space to separate arguments,~\ldots{ }--- next slide)
 		\item If variable is going to contain any special character (\texttt{?}, \texttt{.}, \texttt{*},~\ldots), the value must be quoted --- \texttt{"\ldots"} allow escaping of special character or inclusion of another variables, \texttt{'\ldots'} keeps absolutely literal value
 	\end{itemize}
 \end{frame}
@@ -1771,51 +1772,92 @@
     grep root /etc/group >> users # Add new information into existing file
     cat users # See result
 	\end{bashcode}
+	\begin{itemize}
+		\item \alert{Task:} Practice chaining and redirects from previous and this slide. What is it good for?
+	\end{itemize}
 \end{frame}
 
-\begin{frame}{Redirects and pipes}
+\begin{frame}[fragile]{Redirects and pipes}
 	\label{pipe}
 	\begin{itemize}
-		\item \texttt{/dev/null} --- \enquote{black hole}
-		\begin{itemize}
-			\item Can discard anything
-			\item Discard only errors (note \enquote{2}): \texttt{command 2\textgreater~/dev/null}
-		\end{itemize}
+		\item \texttt{/dev/null} --- \enquote{black hole} --- can discard anything
+	\end{itemize}
+	\begin{bashcode}
+    command 2> /dev/null # Discard only errors (note "2" for errors only)
+    command > /dev/null # Discard all output (no logging or onscreen output)
+	\end{bashcode}
+	\begin{itemize}
 		\item \texttt{/dev/stdin} --- standard input
 		\begin{itemize}
 			\item Typically keyboard
-			\item In case application reads files, not from standard input: \texttt{echo "Žluťoučký kůň úpěl" | iconv -f utf-8 -t cp1250 /dev/stdin}
+			\item In case application reads files, not from standard input:
 		\end{itemize}
+	\end{itemize}
+	\begin{bashcode}
+    echo "Žluťoučký kůň úpěl" | iconv -f utf-8 -t cp1250 /dev/stdin
+	\end{bashcode}
+	\begin{itemize}
 		\item \texttt{/dev/stdout} --- standard output
 		\begin{itemize}
 			\item Typically screen, commonly redirected into file
-			\item We wish to see errors which would be discarded otherwise: \texttt{command 2\textgreater~/dev/stdout}
+			\item We wish to see errors which would be discarded otherwise:
 		\end{itemize}
+	\end{itemize}
+	\begin{bashcode}
+    command 2> /dev/stdout # Errors go to screen (typically), not to log
+	\end{bashcode}
+	\begin{itemize}
 		\item \texttt{/dev/stderr} --- standard error output
 		\begin{itemize}
-			\item Typically screen or log file
-			\item Right place to send errors to: \texttt{echo "error" > /dev/stderr}
+			\item Typically screen or log file, right place to send errors to:
 		\end{itemize}
+	\end{itemize}
+	\begin{bashcode}
+    echo "error" > /dev/stderr
+    command 2> /dev/stderr # Errors go to standard error log
+	\end{bashcode}
+	\begin{itemize}
 		\item \texttt{|} --- pipe --- basic redirecting method --- standard output of one command to standard input of another command
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Redirects of standard input and output}
+\begin{frame}[fragile]{Redirects of standard input and output I}
+	\begin{block}{Tasks with redirects of standard input/output}
+		\begin{itemize}
+			\item Try everything on this and following slide
+			\item Be sure to understand the redirects and differences among the variants
+			\item Try to figure out some other example regarding your practical needs
+		\end{itemize}
+	\end{block}
 	\begin{bashcode}
     # Write directory listing into text file
     # If file directory_listing.txt exists, will be overwritten
     ls -la > directory_listing.txt
     cat directory_listing.txt # See result (same as running "ls -la")
     # If file directory_listing.txt exists, new content will be appended
-    ls -la >> directory_listing.txt
-    cat directory_listing.txt # See result
+    ls -la >> directory_listing.txt # See result 'cat directory_listing.txt'
+    # We are outputting 'ls -lh' to 'awk' and not to screen, printing only
+    # selected columns, and parsing with 'column -t' for tabular display
+    ls -lh # Compare outputs of the 3 commands starting with 'ls -lh'
+    ls -lh | awk '{ print $NF, " ", $5}' # See further more info about awk
+    ls -lh | awk '{ print $NF, " ", $5}' | column -t
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Redirects of standard input and output II}{Try everything and be sure to understand}
+	\begin{bashcode}
     # Add error output to the end of standard output file
     # Note: In the examples below command "commandX" does not exist -
     # it produces error "command not found" to be recorded by the log
     # and because of redirect, the error is not shown in the terminal.
-    command >> outputfile.log 2>&1 # Example:
-    { commandX; ls; } >> outputfile 2>&1
+    command > outputfile.log 2>&1 # Example:
+    { commandX; ls; } > outputfile.log 2>&1
     cat outputfile # See result
+    # Compare with following. What is the difference?
+    { commandX; ls; } > outputfile.log # Where does error and output go?
+    # Compare two following commands. What is the difference?
+    { commandX; ls; } > outputfile.log 2>&1 # Inspect outputfile.log
+    { commandX; ls; } >> outputfile.log 2>&1 # Inspect outputfile.log
     # Add error output to the error log text file
     command >> outputfile.log 2>error.log # Example:
     { commandX; ls; } >> outputfile.txt 2>error.log
@@ -1919,20 +1961,41 @@
 	\end{bashcode}
 \end{frame}
 
+\begin{frame}{Tasks regarding hardware, information and processes}
+	\begin{enumerate}
+		\item Change your password on the remote server and/or virtual machine.
+		\item Who is and was recently logged in to the remote server?
+		\item Which information about hardware can you get from your local computer (if you are running Linux) and from course server? Why could such information be useful?
+	\begin{enumerate}
+		\item Which disks are mounted?
+		\item How many memory (RAM) slots are occupied and what is memory size?
+	\end{enumerate}
+	\item Find your user ID on local computer and remote server? Do you think this has any implications when copying files from your local computer to server and back?
+	\item Terminate from command line some running graphical application. What is difference between \texttt{kill} and \texttt{killall}?
+	\item Change priority of some running (graphical) application.
+	\item Which applications are consuming the most resources (CPU, RAM)?
+	\end{enumerate}
+\end{frame}
+
 \subsection{Network}
 
 \begin{frame}[allowframebreaks]{Network protocols}
 	\begin{itemize}
+		\item Every network communication protocol (e.g. browsing web or Skype) has its own distinct port (\enquote{door to access target computer}) --- it must be opened (by firewall)
 		\item SSH --- secure shell --- command-line connection to remote server to work there (port 22), slide~\ref{ssh}
-		\item Telnet --- old deprecated insecure version of SSH, never ever use it (port 23)
-		\item FTP --- file transfer protocol --- outdated, no encryption (port 21)
-		\item FTPS --- FTP with added connection encryption for higher security (port 21)
+		\item Telnet --- old deprecated insecure version of SSH, never ever use it (port 23), only low-quality electronics still sometimes use it
+		\item FTP --- file transfer protocol --- outdated, no encryption (port 21), slowly replaced by FTPS or SFTP/SCP
+		\begin{itemize}
+			\item Sometimes used only for download, e.g. \url{ftp://ftp.ebi.ac.uk/pub/} or \url{ftp://botany.natur.cuni.cz/}
+		\end{itemize}
+		\item FTPS --- FTP with added connection encryption for higher security (port 21), common
 		\item SFTP --- FTP over SSH --- common, secure (port 22), slide~\ref{transfers}
 		\item SCP --- secure copy --- uses SSH, but has restricted possibilities, common, secure (port 22), slide~\ref{transfers}
-		\item NFS --- network file share/server --- very common in UNIX world, commonly used to permanently connect to network server, share directories, etc. (port 20049), slide~\ref{netfs}
+		\item NFS --- network file share/server --- very common in UNIX world (commonly used e.g. by CESNET MetaCentrum and \href{https://du.cesnet.cz/en/navody/nfs/start}{data storage} --- \href{https://du.cesnet.cz/cs/navody/nfs/start}{česky}), commonly used to permanently connect to network server, share directories, etc. (port 20049), slide~\ref{netfs}
 		\item webDAV --- file transfer over web (using WWW server) --- not so common, but good (port 80 or 443 --- same as WWW), slide~\ref{netfs}
 		\begin{itemize}
 			\item Accompanied by calDav and cardDav to share calendars and address books over the network
+			\item Used e.g. by ownCloud/nextCloud (also \href{https://du.cesnet.cz/en/navody/owncloud/start}{provided by CESNET} --- \href{https://du.cesnet.cz/cs/navody/owncloud/start}{česky}) --- tool to synchronize and share files etc, similar to Dropbox or Google Drive
 		\end{itemize}
 		\item SAMBA --- UNIX connection to Microsoft network shares (port 5445), slide~\ref{netfs}
 		\item web --- \enquote{The Internet} for most of users (port 80 or encrypted 443)
@@ -1940,7 +2003,7 @@
 		\item Messaging protocols like XMPP (Jabber and derived services like Google Talk or Facebook Messenger), IRC, ICQ, Skype,~\ldots
 		\item And much more (see \texttt{/etc/services})\ldots
 		\item Port number can be changed in configuration of respective server service
-		\item All firewalls on the way must allow communication on given port
+		\item All firewalls on the way must allow communication on given port --- some ports are commonly filtered in restrictive Wi-Fi networks or totalitarian countries
 	\end{itemize}
 \end{frame}
 
@@ -1948,7 +2011,7 @@
 	\begin{bashcode}
     hostname # Get name of the computer
     ping web.natur.cuni.cz # Ping host. Is it alive? Cancel by Ctrl+C
-    traceroute www.metacentrum.cz # Get route to the host
+    traceroute www.metacentrum.cz # Get route (path) to the host
     mtr hostname # Combines ping and traceroute, quit with "q"
     ip a s # Information about all network devices (MAC, IP address, ...)
     ifconfig -a # Older version of above command
@@ -1974,16 +2037,15 @@
 		\item Servers can be accessed by IP address or hostname
 	\end{itemize}
 	\begin{bashcode}
-    # Mount Windows server (requires package samba)
+    # Mount Windows server (requires packages samba and cifs)
     mount.cifs //windows.server.cz/Some/Directory /mnt/win -o \
       credentials=/path/to/password.file,uid=USER,gid=GROUP
     # "password.file" contains login credentials to Windows server:
     username=user.name
     password=TopSecretPassword1
     domain=DOMAINNAME
-    man mount.cifs # See for other connection options
     # Mounting remote server over SSH (sshfs package must be installed)
-    sshfs user@vyuka.natur.cuni.cz:/some/dir /local/mount/point
+    sshfs USER@vyuka.natur.cuni.cz:/some/dir /local/mount/point
     fusermount -u /mount/point # Disconnect SSHF
     # Mount NFS share (NFS is common protocol in UNIX world)
     mount -t nfs some.server.cz:/shared/directory /local/directory
@@ -2018,15 +2080,15 @@
 
 \begin{frame}[fragile]{Synchronization with rsync}
 	\begin{itemize}
-		\item \texttt{rsync} has huge amount of possibilities (see \texttt{man rsync} or \texttt{rsync -h})
+		\item \texttt{rsync} has huge amount of possibilities (see \texttt{man rsync} or \texttt{rsync}~-\texttt{h})
 		\item Works locally as well as over network
 		\item It transmits only changes --- very efficient
 		\item Suitable for local as well as network backup
 		\item Network address for rsync is written in same way as for \texttt{scp}
-		\item \texttt{--delete} delete in target location files which are not in source location any more
-		\item \texttt{--progress} show progress percentage for every file
-		\item \texttt{--exclude=*.jpg} skip JPG files
-		\item For incremental backups use \texttt{duplicity}
+		\item -{-}\texttt{delete} delete in target location files which are not in source location any more
+		\item -{-}\texttt{progress} show progress percentage for every file
+		\item -{-}\texttt{exclude=*.jpg} skip JPG files
+		\item For incremental backups use e.g. \texttt{duplicity}
 	\end{itemize}
 	\begin{bashcode}
     rsync -arv somedirectory otherplace # All attributes, recursive, verbose
@@ -2035,20 +2097,19 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}{Network tasks}
-	\begin{enumerate}
-		\item Make in your notebook new empty directory and mount there via SSHFS your home directory on \texttt{vyuka.natur.cuni.cz} (or on some other server).
+\begin{frame}{SSH keys}{Secure way how to connect to multiple servers with single key and more}
+	\begin{itemize}
+		\item Secure way how to connect to multiple servers via SSH with single (or no) password using asymmetric encryption
+		\item Command \texttt{ssh}-\texttt{keygen} generates pair of keys
 		\begin{itemize}
-			\item Explore it. What is then path to files on the remote server?
-			\item Disconnect the server when done.
+			\item Private key is typically in \texttt{$\sim$/.ssh/id\_*} file(s) (according to cipher)
+			\item Public key is typically in \texttt{$\sim$/.ssh/id\_*.pub} file(s) (according to selected cipher) and are copied to target servers
+			\item Private key is unlocked by password and it then allows to login to any server having the public key
+			\item Having only public key is not enough to login, private key without password is still not enough, but user must be sure private key is kept securely and not lost or stolen
 		\end{itemize}
-		\item Use \texttt{wget} to download this presentation to your notebook (slide~\ref{materials}).
-		\item Use \texttt{scp} to copy directory with toy data and scripts from your home directory on \texttt{vyuka.natur.cuni.cz} into your notebook.
-		\item Use \texttt{scp} to copy any file from your notebook into your home directory on \texttt{vyuka.natur.cuni.cz}.
-		\item Use \texttt{rsync} tu update toy data and scripts in your notebook according to version on \texttt{vyuka.natur.cuni.cz} in \texttt{/home/scripts\_data}.
-		\item Use \texttt{rsync} to update directory with toy data files and scripts in your home directory on \texttt{vyuka.natur.cuni.cz} according to version in your notebook.
-		\item Get MAC and IP address of your notebook.
-	\end{enumerate}
+		\item File \texttt{$\sim$/.ssh/known\_hosts} contain servers you have ever connect to, and their SSH fingerprints (unique IDs) --- if this changes, SSH complains a lot as it could be \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{Man-in-the-middle attack}
+		\item File \texttt{$\sim$/.ssh/authorized\_keys} contains public keys allowing logging to the machine
+	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Connect to SSH with key}{No need to remember password for every server\ldots}
@@ -2071,6 +2132,45 @@
     # Connect as usually
     ssh user@remote.server.cz
 	\end{bashcode}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Network tasks}
+	\begin{enumerate}
+		\item Create SSH key (if you don't have any), copy the public part to \texttt{vyuka.natur.cuni.cz} and connect there with SSH.
+		\begin{enumerate}
+			\item What are advantages and disadvantages of having the key with or without password?
+			\item Is there any reason for having multiple keys? Can you find any examples?
+			\item Which services, protocols can use it? Find some examples.
+		\end{enumerate}
+		\item Make in your notebook new empty directory and mount there via SSHFS your home directory on \texttt{vyuka.natur.cuni.cz} (or on some other server).
+		\begin{enumerate}
+			\item Explore it. What is then path to files on the remote server?
+			\item Disconnect the server when done.
+		\end{enumerate}
+		\item Use \texttt{wget} and \texttt{curl} to download this presentation to your notebook (link at slide~\ref{materials}).
+		\begin{itemize}
+			\item For \texttt{curl} be aware of setting of output --- what is default behavior?
+		\end{itemize}
+		\item Use \texttt{scp} to copy directory with toy data and scripts from your home directory on \texttt{vyuka.natur.cuni.cz} into your notebook.
+		\item Use \texttt{scp} to copy any file from your notebook into your home directory on \texttt{vyuka.natur.cuni.cz}.
+		\item Use \texttt{rsync} to update toy data and scripts in your notebook according to version on \texttt{vyuka.natur.cuni.cz} in \texttt{/home/scripts\_data}.
+		\item Use \texttt{rsync} to update directory with toy data files and scripts in your home directory on \texttt{vyuka.natur.cuni.cz} according to version in your notebook.
+		\begin{itemize}
+			\item For \texttt{rsync} try to use various options, run it several times.
+			\item Explore help of \texttt{rsync}. Can you find there some useful parameters?
+		\end{itemize}
+		\item Get MAC and IP address of your notebook. Why can be such information useful?
+		\item Ping some web server. Is it alive and well reachable?
+		\item Why can be output of \texttt{traceroute} useful when you have problems with network?
+		\item Mount (explore and then unmount) your CESNET ownCloud into your notebook. If unsure, consult \href{https://du.cesnet.cz/en/navody/owncloud/start}{help} (\href{https://du.cesnet.cz/cs/navody/owncloud/start}{česky}).
+		\begin{itemize}
+			\item It is available for all academics in the Czech Republic, just go to \url{https://owncloud.cesnet.cz} and login with your institutional credentials
+			\item Alternatively connect to some other ownCloud/nextCloud/generic webDAV server
+		\end{itemize}
+		\item What are advantages and disadvantages of mounting of remote servers (SSHFS,~etc.) into local directories?
+		\item Connect to \texttt{vyuka.natur.cuni.cz} (or any other server) using \texttt{mc} and copy there and back some files.
+		\item Find in graphical interface of your computer how to connect via SSH/SFTP/SCP to transfer files.
+	\end{enumerate}
 \end{frame}
 
 \begin{frame}{Faculty web server}
@@ -2102,7 +2202,7 @@
 			\item \texttt{\{/.\}} --- base name of input line without extension
 			\item \texttt{:::} --- use arguments from command line instead of stdin (::: is placed after the command and before the argument)
 			\item \texttt{::::} --- read from argument files
-			\item \texttt{-j} --- number of jobs --- if not provided, \texttt{parallel} will use all available CPU threads
+			\item -\texttt{j} --- number of jobs --- if not provided, \texttt{parallel} will use all available CPU threads
 			\item See examples on next slides
 		\end{itemize}
 	\end{itemize}
@@ -2110,9 +2210,8 @@
 
 \begin{frame}[fragile]{GNU Parallel examples I}
 	\begin{bashcode}
-    # Apply some of the examples to the toy files (photos).
     # Convert all images from JPG to PNG
-    ls -1 *.jpg | parallel --bar convert '{}' '{.}.png'
+    find . -name '*.jpg' -print | parallel --bar convert '{}' '{.}.png'
     # Resize all images ("\" marks that command continue on next line)
     find . -name '*.jpg' -print | parallel convert -resize 500x500 \
       -quality 75 '{}' '{.}-small.jpg' # or
@@ -2138,20 +2237,43 @@
     parallel < command_list.txt # (each command on one line) or
     parallel :::: command_list.txt
     # Add same text to the end of multiple files
-    ls -1 *.txt | parallel 'cat block_to_be_added.txt >> {}'
+    find . '*.txt' -print | parallel 'cat block_to_be_added.txt >> {}'
     # Replace particular text in multiple files with sed and GNU Parallel
-    ls -1 *.txt | parallel 'sed -i "s/XXX/YYY/g" {}'
-    # Launch MrBayes for multiple nexus files and create log file with
-    # starting and ending date and time
-    ls -1 *.nexus | parallel 'echo -e "Start: $(date)\n" > {}.log && mb {} |
-      tee -a {}.log && echo "End: $(date)" >> {}.log'
-    # tee (-a for append to existing file) records output of MrBayes
+    find . '*.txt' -print | parallel 'sed -i "s/XXX/YYY/g" {}'
+    # Launch MrBayes for multiple nexus files and create log file (see also
+    # next slide) with starting and ending date and time
+    find . '*.nexus' -print | parallel 'echo -e "Start: $(date)\n" > {}.log
+      && mb {} | tee -a {}.log && echo "End: $(date)" >> {}.log'
+	\end{bashcode}
+	\begin{block}{Tasks}
+		\begin{enumerate}
+			\item Resize using \texttt{parallel} photos \texttt{foto\_oxalis\_*.jpg} to 1000x1000~px.
+			\item Convert all above JPG files to PNG.
+			\item Use several options how to run \texttt{parallel}.
+		\end{enumerate}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Recording output of commands}
+	\begin{itemize}
+		\item Alternative (commonly more convenient) to redirects of outputs to log file (slide~\ref{pipe}) is command \texttt{tee}
+		\begin{itemize}
+			\item Very useful if redirects would be harder to code
+		\end{itemize}
+		\item \texttt{tee} can record
+		\begin{itemize}
+			\item All output of the software (standard as well as error output)
+			\item Commands (keys) typed by user --- it can be later reused to rerun the application --- unique feature useful for certain software
+		\end{itemize}
+	\end{itemize}
+	\begin{bashcode}
+    # tee (-a for append to existing file) records output of any application
     command | tee record.txt # tee will record whole output of command
     tee record.txt | command # tee will record user input
     # If software reads commands from user, we can reuse record next time:
     command < record.txt # Empty lines are interpreted as Enter key
                          # Each line is used whenever command waits for new
-                         # input (instead of typing, record.txt is used)
+                         # input (instead of typing, 'record.txt' is used)
 	\end{bashcode}
 \end{frame}
 
@@ -2218,13 +2340,16 @@
 		\item Text-manipulating tools have very rich implementation of regular expressions (slide~\ref{regexp})
 		\item Most of the operations are done in stream --- per line --- everything is very fast and memory efficient
 	\end{itemize}
+	\begin{block}{Text tasks}
+		Try all the commands from this chapter. It is one of key BASH features.
+	\end{block}
 \end{frame}
 
 \subsection{Reading}
 
 \begin{frame}[fragile]{Read text file}
 	\begin{bashcode}
-    cat # Read or join files
+    cat # Read or join (using redirects) files
         # -n adds line numbers, -v prints non-printable characters like EOL
     cat long_text.txt # Print content of text file
     cat textfile1 >> textfile2 # Append textfile1 to the end of textfile2
@@ -2241,6 +2366,7 @@
     fmt textfile > formatted_file # Save output of fmt into new file
     wc long_text.txt # lines, words and bytes in text file
                      # wc -l for only lines, -m for characters, -w for words
+    mc # It has text viewer (F3) and editor (F4)
 	\end{bashcode}
 \end{frame}
 
@@ -2261,8 +2387,8 @@
     cat /etc/passwd | grep user # Same as above
     grep -v user /etc/passwd # Write all lines in passwd NOT containing user
     grep -c user /etc/passwd # Get number of lines in passwd containing user
-    grep -i USER /etc/passwd # -i isn't case sensitive
-    grep -q ... # quiet - no output - good for testing in scripts
+    grep -i USER /etc/passwd # -i for case insensitive
+    grep -q ... # quiet - no output (only T/F) - good for testing in scripts
     grep -ls user /etc/* # -l print files with pattern, -s suppress errors
     grep "longer text" textfile # Extract whole phrase
 	\end{bashcode}
@@ -2374,7 +2500,7 @@
     # (i.e. print line number (NR) and then whole original line ($0))
     awk '{print NR "\t" $0}' diff_test_file_*
     # substitute "a" with "XXX" ONLY for lines which contain "The"
-    awk '/She/{gsub(/a/, "XXX")}; 1' diff_test_file_1.txt
+    awk '/The/{gsub(/a/, "XXX")}; 1' diff_test_file_1.txt
     # For every 4th line starting from line 2 of FASTQ file (from line 2
     # every 4th line contains the DNA sequence) print its length (bzcat
     # prints content of file compressed by bzip2)
@@ -2436,11 +2562,11 @@
 
 \begin{frame}{Replacements with sed}
 	\begin{itemize}
-		\item \texttt{sed} supports regular expressions, see slide \ref{regexp} (same as in \texttt{grep} and \texttt{vim}), with parameter \texttt{-r} can use extended regular expressions (do not confuse --- the syntax is slightly different, richer)
-		\item Output is written to standard output --- use pipes, redirects or \texttt{-i} to modify the file in place (without printing of output)
+		\item \texttt{sed} supports regular expressions, see slide \ref{regexp} (same as in \texttt{grep} and \texttt{vim}), with parameter -\texttt{r} can use extended regular expressions (do not confuse --- the syntax is slightly different, richer)
+		\item Output is written to standard output --- use pipes, redirects or -\texttt{i} to modify the file in place (without printing of output)
 		\item macOS has old outdated versions of \texttt{grep}, \texttt{sed} and other tools (richness of regular expressions is poor) --- use versions from \href{http://brew.sh/}{Homebrew} (slide~\ref{homebrew}) or search Internet how to modify the patterns\ldots
-		\item Option \texttt{-s} separates multiple files (otherwise lines in multiple files are calculated as one stream)
-		\item Option \texttt{-n} use to be used when deleting lines or printing only specific lines to suppress other lines (see examples)
+		\item Option -\texttt{s} separates multiple files (otherwise lines in multiple files are calculated as one stream)
+		\item Option -\texttt{n} use to be used when deleting lines or printing only specific lines to suppress other lines (see examples)
 		\item See manuals \url{https://www.gnu.org/software/sed/manual/} and \url{http://www.grymoire.com/Unix/sed.html}
 		\item Various parameters, modificators, operators can be combined\ldots
 	\end{itemize}
@@ -2453,7 +2579,7 @@
     # Search and replace ("s") all occurrences ("g") of "find" by "replace"
     sed 's/find/replace/g' textfile
     # Replace third occurrence of pattern on every line
-    sed 's/pattern/Replace/3' # 's/.../.../' replace only first occurrence
+    sed 's/pattern/Replace/3' # 's/.../.../' replace only third occurrence
     sed '1,7s/...' # To work only on particular line, place single number or
     sed '5s/...'   # range (e.g. 1,7) right before "s" ("$" for last line)
     sed '1~2n;s/F/R/g' # Work on every second line, starting by line 1
@@ -2480,7 +2606,7 @@
     \(ToRemember\) # Remember expression in brackets
     \Number # Use remembered expression (numbered from one: \1, \2, \3, ...)
     # Take output of ls -l and replace value of $USER by "$USER-RULEZZZ"
-    ls -l | sed "s/\($USER\)/\1-RULEZZZ/g" # Note " to use variable
+    ls -l | sed "s/\($USER\)/\1-RULEZZZ/g" # Note " to use the variable
     # Replace size column (2nd numeric) by "size:TAB<file size>b"
     # Second sed replaces any white spaces by single TAB
     ls -l | sed 's/\([0-9]\+\)/size:\t\1b/2' | sed 's/[[:blank:]]\+/\t/g'
@@ -2540,6 +2666,14 @@
 	\vfill
 \end{frame}
 
+% \subsection{Compressed text} % TODO Compressed text
+%
+% \begin{frame}{Variants of basic commands for processing of compressed text files}
+% 	\begin{itemize}
+% 		\item
+% 	\end{itemize}
+% \end{frame}
+
 \subsection{Comparisons}
 
 \begin{frame}{Comparisons}
@@ -2573,7 +2707,7 @@
     diff -y diff_test_file_1.txt diff_test_file_2.txt # In two columns
     colordiff # Same usage and parameters as previous, colored output
     diff -u diff_test_file_1.txt diff_test_file_2.txt | view - # In vim
-    vimdiff # Can show more colors, launches vim (exit by :q! Enter)
+    vimdiff # Can show more colors, launches vim (exit by <ESC>:q! Enter)
 	\end{bashcode}
 \end{frame}
 
@@ -2600,6 +2734,9 @@
     vim textfile # Probably the most common, as rich as Emacs (see further)
     vimtutor # Launch tutorial to learn Vim (in various languages)
 	\end{bashcode}
+	\begin{itemize}
+		\item \alert{Task:} Run \texttt{vimtutor} and follow instructions there.
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{The editors and their usage}
@@ -2627,34 +2764,34 @@
 \begin{frame}{Emacs basics}
 	\begin{itemize}
 		\item Feature-rich ecosystem --- not only text editor, also file manager, debugger, integrated development environment, extra plugins are available,~\ldots
-		\item Keyboard commands are noted as e.g. \texttt{C-x}, where \enquote{\texttt{C}} stands for (mostly) \texttt{Ctrl} key, \texttt{M-x}, where \enquote{\texttt{M}} stands mostly for \texttt{Alt} key, sometimes for \texttt{Win} key
+		\item Keyboard commands are noted as e.g. \texttt{C}-\texttt{x}, where \enquote{\texttt{C}} stands for (mostly) \texttt{Ctrl} key, \texttt{M}-\texttt{x}, where \enquote{\texttt{M}} stands mostly for \texttt{Alt} key (\texttt{Meta}), sometimes for \texttt{Win} key
 	\end{itemize}
 	\begin{multicols}{2}
 		\begin{itemize}
-			\item \texttt{C-h C-h} help (twice \texttt{Ctrl~+~H})
-			\item \texttt{C-x C-c} quit (\texttt{X-g} for particular buffer, etc.)
-			\item \texttt{C-x C-f} open file
-			\item \texttt{C-x C-s} save file
-			\item \texttt{C-x C-w} save file as
-			\item \texttt{C-\_} undo
-			\item \texttt{C-s} search forwards
-			\item \texttt{C-r} search backwards
-			\item \texttt{C-left} move one word left
-			\item \texttt{C-right} move one word right
-			\item \texttt{C-up} move one paragraph up
-			\item \texttt{C-down} move one paragraph down
-			\item \texttt{M-\%} search and replace pattern
+			\item \texttt{C}-\texttt{h C}-\texttt{}h help (twice \texttt{Ctrl~+~H})
+			\item \texttt{C}-\texttt{x C}-\texttt{c} quit (\texttt{X}-\texttt{g} for particular buffer, etc.)
+			\item \texttt{C}-\texttt{x C}-\texttt{f} open file
+			\item \texttt{C}-\texttt{x C}-\texttt{s} save file
+			\item \texttt{C}-\texttt{x C}-\texttt{w} save file as
+			\item \texttt{C}-\texttt{\_} undo
+			\item \texttt{C}-\texttt{s} search forwards
+			\item \texttt{C}-\texttt{r} search backwards
+			\item \texttt{C}-\texttt{left} move one word left
+			\item \texttt{C}-\texttt{right} move one word right
+			\item \texttt{C}-\texttt{up} move one paragraph up
+			\item \texttt{C}-\texttt{down} move one paragraph down
+			\item \texttt{M}-\texttt{\%} search and replace pattern
 		\end{itemize}
 	\end{multicols}
 \end{frame}
 
-\begin{frame}{Vim}{Vim has three different working modes}
+\begin{frame}{Vim}{Vim has three different working modes} % TODO Update Vim usage
 	\begin{enumerate}
 		\item \textbf{\enquote{Normal}} --- nothing is displayed in bottom left corner, every key has some meaning (next slide)
 		\begin{itemize}
 			\item \texttt{i} or \texttt{Insert} key to enter \textit{insert mode}, \texttt{:} to enter \textit{command mode}
 		\end{itemize}
-		\item \textbf{Insert} --- in bottom left corner \enquote{\texttt{-- INSERT --}} is displayed, the most familiar mode, normal typing etc., exit to normal mode by \texttt{ESC} key
+		\item \textbf{Insert} --- in bottom left corner \enquote{{-}- \texttt{INSERT} -{-}} is displayed, the most familiar mode, normal typing etc., exit to normal mode by \texttt{ESC} key
 		\item \textbf{Command} --- in bottom left corner \texttt{:} is displayed, awaits commands, exit to normal mode by \texttt{Backspace} key (delete \enquote{\texttt{:}})
 	\end{enumerate}
 	\begin{itemize}
@@ -2728,28 +2865,28 @@
 		\item \alert{\texttt{|}} --- either the preceding or following reg exp can be matched (alternation)
 		\item \alert{\texttt{\textbackslash(\ldots\textbackslash)}} --- group reg exp (numbered, starting with 1) --- can be called by \alert{\textbackslash\textit{n}}, where \textit{n} is number of the group (starting with 1)
 		\item \alert{\texttt{\textbackslash$<$}}, \alert{\texttt{\textbackslash$>$}} --- word boundaries
-		\item \alert{\texttt{[[:alnum:]]}} --- alphanumerical characters (includes white space), same like \alert{\texttt{[a-zA-Z0-9]}}
-		\item \alert{\texttt{[[:alpha:]]}} --- alphabetic characters, like \alert{\texttt{[a-zA-Z]}}
+		\item \alert{\texttt{[[:alnum:]]}} --- alphanumerical characters (includes white space), same like \alert{\texttt{[a}-\texttt{zA}-\texttt{Z0}-\texttt{9]}}
+		\item \alert{\texttt{[[:alpha:]]}} --- alphabetic characters, like \alert{\texttt{[a}-\texttt{zA}-\texttt{Z]}}
 		\item \alert{\texttt{[[:blank:]]}} --- space and TAB
 		\item \alert{\texttt{[[:cntrl:]]}} --- control characters
-		\item \alert{\texttt{[[:digit:]]}} --- numeric characters, like \alert{\texttt{[0-9]}}
+		\item \alert{\texttt{[[:digit:]]}} --- numeric characters, like \alert{\texttt{[0}-\texttt{9]}}
 		\item \alert{\texttt{[[:graph:]]}} --- printable and visible (non-space) characters
-		\item \alert{\texttt{[[:lower:]]}} --- lowercase characters, like \alert{\texttt{[a-z]}}
+		\item \alert{\texttt{[[:lower:]]}} --- lowercase characters, like \alert{\texttt{[a}-\texttt{z]}}
 		\item \alert{\texttt{[[:print:]]}} --- printable characters (includes white space)
 		\item \alert{\texttt{[[:punct:]]}} --- punctuation characters
 		\item \alert{\texttt{[[:space:]]}} --- white space characters
-		\item \alert{\texttt{[[:upper:]]}} --- uppercase characters, like \alert{\texttt{[A-Z]}}
+		\item \alert{\texttt{[[:upper:]]}} --- uppercase characters, like \alert{\texttt{[A}-\texttt{Z]}}
 		\item \alert{\texttt{[[:xdigit:]]}} --- hexadecimal digits
 		\item \alert{\texttt{\textasciicircum\$}} --- blank line
 		\item \alert{\texttt{\textasciicircum.*\$}} --- entire line whatever it is
 		\item \alert{\texttt{ +}} --- one or more spaces (there is space before plus)
 		\item \alert{\texttt{\&}} --- content of pattern that was matched
 		\item Implementation in \texttt{vim}, \texttt{sed}, \texttt{grep}, \texttt{awk} and \texttt{perl} and among various UNIX systems is almost same, but not identical\ldots
-		\item \textbf{grep}, \textbf{sed} and \textbf{vim} \alert{require escaping} of \alert{\texttt{+}}, \alert{\texttt{?}}, \alert{\texttt{\{}}, \alert{\texttt{\}}}, \alert{\texttt{(}} and \alert{\texttt{)}} by backslash \alert{\texttt{\textbackslash}} (e.g. \texttt{\textbackslash +}) --- \textbf{egrep} (extended version, launched as \texttt{grep -E \ldots} or \texttt{egrep \ldots}), \textbf{sed} with extended reg exp (\texttt{sed -r}) and \textbf{perl} \alert{not}
+		\item \textbf{grep}, \textbf{sed} and \textbf{vim} \alert{require escaping} of \alert{\texttt{+}}, \alert{\texttt{?}}, \alert{\texttt{\{}}, \alert{\texttt{\}}}, \alert{\texttt{(}} and \alert{\texttt{)}} by backslash \alert{\texttt{\textbackslash}} (e.g. \texttt{\textbackslash +}) --- \textbf{egrep} (extended version, launched as \texttt{grep}~-\texttt{E \ldots} or \texttt{egrep \ldots}), \textbf{sed} with extended reg exp (\texttt{sed}~-\texttt{r}) and \textbf{perl} \alert{not}
 		\item Read \url{https://en.wikibooks.org/wiki/Regular_Expressions}, \url{http://www.grymoire.com/Unix/Regular.html}, \url{https://www.regular-expressions.info/}; česky \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{https://www.root.cz/serialy/regularni-vyrazy/} a~\url{https://www.regularnivyrazy.info/}
 		\item Manuals for \href{https://www.gnu.org/software/grep/manual/}{Grep}, Vim, \href{https://www.gnu.org/software/sed/manual/}{Sed}, \href{https://www.gnu.org/software/gawk/manual/}{Awk}, \href{https://en.wikibooks.org/wiki/Perl_Programming}{Perl} (\href{https://en.wikibooks.org/wiki/Perl_6_Programming}{newer Perl~6}),~\ldots
 		\item See sed examples, slide~\ref{sedex}; and next slide
-		\item macOS has by default very outdated version of \texttt{sed} and another tools --- it does not have all advanced features --- users need to install e.g. \texttt{gnu-sed} formulae from \href{https://brew.sh/}{Homebrew} (slide~\ref{homebrew})
+		\item macOS has by default very outdated version of \texttt{sed} and another tools --- it does not have all advanced features --- users need to install e.g. \texttt{gnu}-\texttt{sed} formulae from \href{https://brew.sh/}{Homebrew} (slide~\ref{homebrew})
 	\end{itemize}
 \end{frame}
 
@@ -2776,6 +2913,14 @@
 	\end{bashcode}
 \end{frame}
 
+% \subsection{} % TODO Add text tasks
+%
+% \begin{frame}{Text tasks}
+% 	\begin{enumerate}
+% 		\item
+% 	\end{enumerate}
+% \end{frame}
+
 \section{Scripting}
 
 \begin{frame}{Scripting}{Basics of writing scripts in BASH}
@@ -2796,7 +2941,7 @@
 	\begin{bashcode}
     #!/bin/bash
     # Simple non-interactive script - no communication with user
-    # only list of commands - prints user, date  name and $PATH
+    # only list of commands - prints user name, date and $PATH
     echo "Hi, $USER, today is $(date) and your PATH is $PATH."
     echo
     exit
@@ -2813,7 +2958,7 @@
 		\item \alert{\texttt{\$*}} --- all of the positional parameters, seen as a~single word, must be quoted (i.e. \texttt{"\$*"})
 		\item \alert{\texttt{\$@}} --- same as \texttt{\$*}, but each parameter is a~quoted string --- the parameters are passed on intact, without interpretation or expansion, each parameter in the argument list is seen as a~separate word, should be quoted (i.e. something like \texttt{"\$@"})
 		\item \alert{\texttt{\$\$}} --- process ID (PID) of the script itself
-		\item \alert{\texttt{\$?}} --- Exit status of a~command, function, or the script itself
+		\item \alert{\texttt{\$?}} --- Exit status of previous command, function, or the script itself
 		\item \href{https://www.tldp.org/LDP/abs/html/internalvariables.html}{See more variables\ldots}
 	\end{itemize}
 \end{frame}
