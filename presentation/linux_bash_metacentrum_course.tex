@@ -539,26 +539,26 @@
 \begin{frame}[allowframebreaks]{Creation and control of FS}
 	\begin{itemize}
 		\item All commands require root privileges (slide~\ref{root})
-		\item \texttt{fdisk -l} lists disks and partitions
+		\item -\texttt{fdisk l} lists disks and partitions
 		\item To manage disk partitioning use \texttt{fdisk /dev/sdX} or \texttt{gdisk /dev/sdX}
 		\item When hard drive is partitioned, partitions must be formatted in next step
-		\item Commands \texttt{mkfs.*} create various FS, common syntax is \texttt{mkfs.XXX -parameters /dev/sdXY}, where sdXY is particular disk partition
+		\item Commands \texttt{mkfs.*} create various FS, common syntax is \texttt{mkfs.XXX} -\texttt{parameters /dev/sdXY}, where sdXY is particular disk partition
 		\item Parameters can set label and various settings of behavior of the disk partition, check \texttt{man mkfs.XXX}
 		\item To check FS for errors use \texttt{fsck.XXX /dev/sdXY} (according to respective FS)
 		\begin{itemize}
 			\item The filesystem must be unmounted when checking it
 			\item XFS uses \texttt{xfs\_repair /dev/sdXY}
-			\item Btrfs uses \texttt{btrfs check /dev/sdXY}, if it is unmountable, \texttt{btrfs-zero-log /dev/XY} use to help, last instance is \texttt{btrfs check --repair /dev/sdXY} (dangerous operation)
-			\item If Btrfs is mountable, but there are various FS errors and/or performance issues, \texttt{btrfs scrub start -Bdf /mount/point}, \texttt{btrfs filesystem defragment -r -v /mount/point} and \texttt{btrfs balance start -v /mount/point} --- manual running can take long time and strongly slow down the computer
+			\item Btrfs uses \texttt{btrfs check /dev/sdXY}, if it is unmountable, \texttt{btrfs}-\texttt{zero}-\texttt{log /dev/XY} use to help, last instance is \texttt{btrfs check} -{-}\texttt{repair /dev/sdXY} (dangerous operation)
+			\item If Btrfs is mountable, but there are various FS errors and/or performance issues, \texttt{btrfs scrub start} -\texttt{Bdf /mount/point}, \texttt{btrfs filesystem defragment} -\texttt{r} -\texttt{v /mount/point} and \texttt{btrfs balance start} -\texttt{v /mount/point} --- manual running can take long time and strongly slow down the computer
 		\end{itemize}
-		\item \texttt{tune2fs -parameters /dev/sdXY} can set various parameters to influence behavior of disk (labels and more) partition
-		\item \texttt{hdparm -parameters /dev/sdX} can set advanced hardware parameters of hard drive
+		\item \texttt{tune2fs} -\texttt{parameters /dev/sdXY} can set various parameters to influence behavior of disk (labels and more) partition
+		\item \texttt{hdparm} -\texttt{parameters /dev/sdX} can set advanced hardware parameters of hard drive
 		\item The most convenient is using graphical tools available in all distributions\ldots
 		\begin{itemize}
-			\item In \href{https://en.opensuse.org/Portal:YaST}{openSUSE there is YaST} administrative module --- from command line launch \texttt{yast --qt partitioner} for graphical or \texttt{yast disk} for text-based version
+			\item In \href{https://en.opensuse.org/Portal:YaST}{openSUSE there is YaST} administrative module --- from command line launch \texttt{yast} -{-}\texttt{qt partitioner} for graphical or \texttt{yast disk} for text-based version
 			\item All distributions have graphical tools like \href{https://gparted.org/}{GParted} where it is possible to comfortable manage disks
 		\end{itemize}
-		\item \texttt{df -h} shows available/occupied space on disks/partitions, but because of special features of Btrfs it doesn't show every time correct values for this FS --- it is better to use \texttt{btrfs filesystem df /mount/point} (\texttt{/mount/point} use to be the most commonly \texttt{/})
+		\item \texttt{df} -\texttt{h} shows available/occupied space on disks/partitions, but because of special features of Btrfs it doesn't show every time correct values for this FS --- it is better to use \texttt{btrfs filesystem df /mount/point} (\texttt{/mount/point} use to be the most commonly \texttt{/})
 		\item On UNIX FS, defragmentation and another maintenance tasks use to be done in background when computer is idling --- unless there is at least $\sim$20\% of free space on the device, this is not any problem and there are no performance issues
 		\item \alert{Users must be sure what is doing, otherwise system can be damaged}
 	\end{itemize}
@@ -581,14 +581,14 @@
 	\begin{itemize}
 		\item If there are encrypted partitions, they are in \texttt{/dev/mapper/\ldots}
 		\item If LVM (slide~\ref{LVMRAID}) is used, see \texttt{lvscan} and \texttt{pvscan} to find correct location in \texttt{/dev/}
-		\item Disks are also accessible through \texttt{/dev/disk/by-<TAB><TAB>}
+		\item Disks are also accessible through \texttt{/dev/disk/by}-\texttt{<TAB><TAB>}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Mounting and unmounting disks and removable media}
 	\begin{itemize}
 		\item Mounting and unmounting of devices require root privileges
-		\item In Linux, physical disks are named from \texttt{sda} to \texttt{sdz}, each disk has partitions (at least one) numbered from \texttt{1}, e.g. \texttt{sda1}, \texttt{sda2}, \texttt{sdb1},~\ldots{ }-- all are accessible in \texttt{/dev} directory (\texttt{/dev/sdc3},~\ldots)
+		\item In Linux, physical disks are named from \texttt{sda} to \texttt{sdz}, each disk has partitions (at least one) numbered from \texttt{1}, e.g. \texttt{sda1}, \texttt{sda2}, \texttt{sdb1},~\ldots{ }--- all are accessible in \texttt{/dev} directory (\texttt{/dev/sdc3},~\ldots)
 		\item Target mount point must exist before mounting
 	\end{itemize}
 	\begin{bashcode}
@@ -941,7 +941,7 @@
 		\item Command \texttt{getfacl} lists those extra permissions, \texttt{setfacl} sets
 		\item \alert{When in use, \enquote{basic} tools listing permissions (e.g. \texttt{ls}~-\texttt{l}, ACL in use is marked by \texttt{+} after permissions --- next slide) sometimes do not show correct result and permissions may work unexpectedly}
 		\item Important especially in network environment with many users
-		\item If intensively used, \texttt{ls -l} sometimes doesn't show correct permissions
+		\item If intensively used, \texttt{ls} -\texttt{l} sometimes doesn't show correct permissions
 		\item If not in use on server (like e.g. on CESNET data storage), relatively high number of groups is required to be able to correctly setup sharing permissions
 	\end{itemize}
 \end{frame}
@@ -1205,8 +1205,8 @@
 		\item \texttt{screen} is solution --- virtual terminals
 		\item Launch \texttt{screen} to start new screen terminal, read some info, confirm by \textbf{Space key} or \textbf{Enter}
 		\item To detach from the screen press \texttt{Ctrl+A, D} --- screen is still running in background --- you can even log off
-		\item To return back to running screen use \texttt{screen -r} --- if only one screen is running, you get back to it
-		\item If more screens are running, use \texttt{screen -r 1234} (the number is seen from \texttt{screen -r})
+		\item To return back to running screen use \texttt{screen} -\texttt{r} --- if only one screen is running, you get back to it
+		\item If more screens are running, use \texttt{screen} -\texttt{r 1234} (the number is seen from \texttt{screen} -\texttt{r})
 		\item To cancel running screen press \texttt{Ctrl+D} (or type \texttt{exit} or \texttt{logout})
 	\end{itemize}
 \end{frame}
@@ -1218,7 +1218,7 @@
 	\begin{block}{Tasks}
 		\begin{enumerate}
 			\item Login via SSH to \texttt{vyuka.natur.cuni.cz} and launch \texttt{screen}.
-			\item Run commands \texttt{pwd}, \texttt{whoami} and \texttt{ls -la}. What do they show?
+			\item Run commands \texttt{pwd}, \texttt{whoami} and \texttt{ls} -\texttt{la}. What do they show?
 			\item Detach from screen and logout from the server.
 			\item Login again to the server. Is it same or different process? Why?
 			\item Reattach to the screen --- same state as before logout from server.
@@ -1536,10 +1536,10 @@
 	\end{bashcode}
 	\begin{itemize}
 		\item First \texttt{find}'s parameter is location to search --- absolute or relative, \enquote{\texttt{.}} means current directory (the only compulsory parameter)
-		\item \texttt{-type} for only directories \texttt{d} or only files \texttt{f} (without this parameter, files as well as directories are looked for)
-		\item \texttt{-name} of the searched files/directories supports wildcards (\texttt{*}, \texttt{?} and \texttt{[\ldots]}), see globing (slide~\ref{globbing})
-		\item \texttt{-print} is default action --- prints list of results
-		\item \texttt{-exec} runs some command with results (some operation, not just listing)
+		\item -\texttt{type} for only directories \texttt{d} or only files \texttt{f} (without this parameter, files as well as directories are looked for)
+		\item -\texttt{name} of the searched files/directories supports wildcards (\texttt{*}, \texttt{?} and \texttt{[\ldots]}), see globing (slide~\ref{globbing})
+		\item -\texttt{print} is default action --- prints list of results
+		\item -\texttt{exec} runs some command with results (some operation, not just listing)
 		\begin{itemize}
 			\item All following arguments are argument of the command until \enquote{\texttt{;}} is encountered
 			\item \texttt{\{\}} is replaced by the current file name being processed
@@ -1748,7 +1748,7 @@
 		\item \alert{\texttt{;}} --- second command is launched regardless exit status of the first one: \texttt{kshfskcbd; hostname}
 		\item \alert{\texttt{\textbraceleft\ldots\textbraceright}} --- commands within curl brackets are launched as one block
 		\item \alert{\texttt{||}} --- second command is launched when first command fails (has non zero exit status):\\\texttt{cd newdir || \textbraceleft~mkdir newdir \&\& cd newdir; \textbraceright}
-		\item \alert{\texttt{|}} --- pipe --- redirects standard output of one command into standard input of second command: compare \texttt{mount} and \texttt{mount | column -t}
+		\item \alert{\texttt{|}} --- pipe --- redirects standard output of one command into standard input of second command: compare \texttt{mount} and \texttt{mount | column} -\texttt{t}
 		\item Behavior in shells other than bash might be little bit different
 	\end{itemize}
 \end{frame}
@@ -2646,7 +2646,7 @@
 \begin{frame}[fragile]{Joining}
 	\begin{itemize}
 		\item Generally, most of tools work per-line, \texttt{paste} appends columns (slide~\ref{cutpaste})
-		\item Join compares every matching lines (by default 1$^{st}$ field) and creates all combinations - ensure to have sorted input files with unique text
+		\item Join compares every matching lines (by default 1$^{st}$ field) and creates all combinations --- ensure to have sorted input files with unique text
 		\begin{itemize}
 			\item E.g. if 1$^{st}$ file contains \texttt{A~B} and \texttt{A~C} and 2$^{nd}$ file \texttt{A~D} and \texttt{A~E}, the result will be \texttt{A~B D}, \texttt{A~B E}, \texttt{A~C D} and \texttt{A~C E}
 		\end{itemize}
@@ -3322,39 +3322,39 @@
 	\begin{itemize}
 		\item \enquote{\texttt{[} \ldots~\texttt{]}} (always keep space around it --- inside) is function to evaluate expressions (alternatively use command \texttt{test})
 		\begin{itemize}
-			\item \texttt{if [ "\$VAR" -eq 25 ]} or \texttt{test \$VAR -eq 25}
+			\item \texttt{if [ "\$VAR"} -\texttt{eq 25 ]} or \texttt{test \$VAR} -\texttt{eq 25}
 			\item \texttt{if [ "\$VAR" == "value" ]; \ldots}
 			\begin{itemize}
 				\item Escaping variables and values by double quotes (\texttt{"}\ldots\texttt{"}) is recommended (to be sure), but not strictly required all the time
 			\end{itemize}
-			\item \texttt{if [ ! -f regularfile ]; \ldots} --- reverted condition (\texttt{!})
+			\item \texttt{if [ !} -\texttt{f regularfile ]; \ldots} --- reverted condition (\texttt{!})
 			\item Single-bracket conditions --- file, string, or arithmetic conditions
 			\item Double-bracket syntax --- enhanced
 			\begin{itemize}
 				\item Allow usage of regular expressions and globing patterns
 				\item Word splitting is prevented --- \texttt{\$STRINGVAR} can contain spaces
-				\item Expanding file names --- \texttt{if [[ -a *.sh ]]} (variant with only one bracket doesn't work when there are multiple sh files)
-				\item Allows more detailed test, e.g. \texttt{if [[ \$num -eq 3 \&\& "\$STRINGVAR" == XXX ]] \ldots}
+				\item Expanding file names --- \texttt{if [[} -\texttt{a *.sh ]]} (variant with only one bracket doesn't work when there are multiple sh files)
+				\item Allows more detailed test, e.g. \texttt{if [[ \$num} -\texttt{eq 3 \&\& "\$STRINGVAR" == XXX ]]} \ldots
 			\end{itemize}
 		\end{itemize}
-		\item \texttt{-eq} --- Equal to
-		\item \texttt{-lt} --- Less than
-		\item \texttt{-gt} --- Greater than
-		\item \texttt{-ge} --- Greater than or equal to
-		\item \texttt{-le} --- Less than or equal to
-		\item \texttt{-f \$FILE} --- True if \texttt{\$FILE} exists and is a~regular file
-		\item \texttt{-r \$FILE} --- True if \texttt{\$FILE} exists and is readable
-		\item \texttt{-w \$FILE} --- True if \texttt{\$FILE} exists and is writable
-		\item \texttt{-x \$FILE} --- True if \texttt{\$FILE} exists and is executable
-		\item \texttt{-d \$FILE} --- True if \texttt{\$FILE} exists and is a~directory
-		\item \texttt{-s \$FILE} --- True if \texttt{\$FILE} exists and has a~size greater than zero
-		\item \texttt{-n \$STR} --- True if string \texttt{\$STR} is not a~null (empty) string
-		\item \texttt{-z \$STR} --- True if string \texttt{\$STR} is a~null string
+		\item -\texttt{eq} --- Equal to
+		\item -\texttt{lt} --- Less than
+		\item -\texttt{gt} --- Greater than
+		\item -\texttt{ge} --- Greater than or equal to
+		\item -\texttt{le} --- Less than or equal to
+		\item -\texttt{f \$FILE} --- True if \texttt{\$FILE} exists and is a~regular file
+		\item -\texttt{r \$FILE} --- True if \texttt{\$FILE} exists and is readable
+		\item -\texttt{w \$FILE} --- True if \texttt{\$FILE} exists and is writable
+		\item -\texttt{x \$FILE} --- True if \texttt{\$FILE} exists and is executable
+		\item -\texttt{d \$FILE} --- True if \texttt{\$FILE} exists and is a~directory
+		\item -\texttt{s \$FILE} --- True if \texttt{\$FILE} exists and has a~size greater than zero
+		\item -\texttt{n \$STR} --- True if string \texttt{\$STR} is not a~null (empty) string
+		\item -\texttt{z \$STR} --- True if string \texttt{\$STR} is a~null string
 		\item \texttt{\$STR1 == \$STR2} --- True if both strings are equal
 		\item \texttt{\$STR} --- True if string \texttt{\$STR} is assigned a~value and is not null
 		\item \texttt{\$STR1 != \$STR2} --- True if both strings are unequal
-		\item \texttt{-a} --- Performs the \texttt{AND} function
-		\item \texttt{-o} --- Performs the \texttt{OR} function
+		\item -\texttt{a} --- Performs the \texttt{AND} function
+		\item -\texttt{o} --- Performs the \texttt{OR} function
 		\item Do not confuse globing patterns and regular expressions when using \texttt{[[ \ldots~]]}
 		\begin{itemize}
 			\item Shell globing: \texttt{if [[ "\$STRINGVAR" == ?[sS]tring* ]]; then} --- \texttt{?} represents single character \texttt{[]} any character inside and \texttt{*} zero or more characters
@@ -3506,7 +3506,7 @@
 
 \begin{frame}[allowframebreaks]{Package management in command line in openSUSE and SLE (basic commands)}
 	\begin{itemize}
-		\item Root password is required: use \texttt{sudo\ldots} or \texttt{su -}
+		\item Root password is required: use \texttt{sudo\ldots} or \texttt{su}~-
 		\item Package name \texttt{*.rpm}
 		\item \texttt{zypper in \textit{package}} --- install \textit{package}
 		\item \texttt{zypper rm \textit{package}} --- remove \textit{package}
@@ -3514,7 +3514,7 @@
 		\item \texttt{zypper up} --- update
 		\item \texttt{zypper dup} -- upgrade to newer release of whole distribution
 		\item \texttt{zypper se \textit{term}} --- search \textit{term}
-		\item \texttt{rpmorphan} and/or \texttt{zypper -pa --orphaned --unneeded} --- list packages, which can be safely removed
+		\item \texttt{rpmorphan} and/or \texttt{zypper} \texttt{pa} -{-}\texttt{orphaned} -{-}\texttt{unneeded} --- list packages, which can be safely removed
 		\item \texttt{yast sw\_single} --- interactive manager
 		\item \texttt{zypper lr} --- list repositories
 		\item \texttt{zypper ar \textit{repository}} --- add \textit{repository} (URL of remote \texttt{*.repo} file)
@@ -3528,39 +3528,39 @@
 
 \begin{frame}[allowframebreaks]{Package management in command line in Debian/Ubuntu and derivatives (basic commands)}
 	\begin{itemize}
-		\item Root password is required: use \texttt{sudo\ldots} or \texttt{su -}
+		\item Root password is required: use \texttt{sudo\ldots} or \texttt{su}~-
 		\item Package name \texttt{*.deb}
-		\item \texttt{apt-get install \textit{package}} --- install \textit{package}
-		\item \texttt{apt-get remove \textit{package}} --- remove \textit{package}
-		\item \texttt{apt-get update} --- refresh repositories
-		\item \texttt{apt-get upgrade} -- upgrade packages
-		\item \texttt{apt-get dist-upgrade} -- upgrade to newer release of whole distribution
-		\item \texttt{apt-cache search \textit{term}} --- search \textit{term}
-		\item \texttt{apt-get autoremove} --- clear packages
+		\item \texttt{apt}-\texttt{get install \textit{package}} --- install \textit{package}
+		\item \texttt{apt}-\texttt{get remove \textit{package}} --- remove \textit{package}
+		\item \texttt{apt}-\texttt{get update} --- refresh repositories
+		\item \texttt{apt}-\texttt{get upgrade} -- upgrade packages
+		\item \texttt{apt}-\texttt{get dist}-\texttt{upgrade} -- upgrade to newer release of whole distribution
+		\item \texttt{apt}-\texttt{cache search \textit{term}} --- search \textit{term}
+		\item \texttt{apt}-\texttt{get autoremove} --- clear packages
 		\item \texttt{aptitude} --- interactive manager
 		\item \texttt{cat /etc/apt/sources.list} --- list repositories
 		\item \texttt{nano /etc/apt/sources.list} --- add/remove/edit repositories
-		\item \texttt{dpkg-*}, \texttt{apt-*} commands for other tasks
-		\item \texttt{aptitude} is used in similar way as \texttt{apt-get} (e.g. \texttt{aptitude install \textit{package}},~\ldots)
-		\item \texttt{man aptitude}, \texttt{man apt-XXX} (e.g. \texttt{man apt-get}), \texttt{man dpkg-XXX} --- usage help
+		\item \texttt{dpkg}-\texttt{*}, \texttt{apt}-\texttt{*} commands for other tasks
+		\item \texttt{aptitude} is used in similar way as \texttt{apt}-\texttt{get} (e.g. \texttt{aptitude install \textit{package}},~\ldots)
+		\item \texttt{man aptitude}, \texttt{man apt}-\texttt{XXX} (e.g. \texttt{man apt}-\texttt{get}), \texttt{man dpkg}-\texttt{XXX}, \texttt{man apt} --- usage help
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Package management in command line in RedHat, Fedora, CENTOS and derivatives (basic commands)}
 	\begin{itemize}
-		\item Root password is required: use \texttt{sudo\ldots} or \texttt{su -}
+		\item Root password is required: use \texttt{sudo\ldots} or \texttt{su}~-
 		\item Package name \texttt{*.rpm}
 		\item \texttt{dnf install \textit{package}} --- install \textit{package}
 		\item \texttt{dnf remove \textit{package}} --- remove \textit{package}
-		\item \texttt{dbf check-update} --- refresh repositories, check for updates
+		\item \texttt{dbf check}-\texttt{update} --- refresh repositories, check for updates
 		\item \texttt{dnf upgrade} --- upgrade packages
 		\item \texttt{dnf search \textit{term}} --- search \textit{term}
 		\item \texttt{dnf autoremove} --- clear packages
 		\item \texttt{dnf info \textit{package}} --- get information about \textit{package}
 		\item \texttt{dnf repolist} --- list repositories
-		\item \texttt{dnf config-manager} --- manage repositories and another settings
-		\item \texttt{rpm -Uvh \textit{package}.rpm} --- install locally downloaded \texttt{\textit{package}.rpm}
-		\item \texttt{rpm -e \textit{package}} --- remove \textit{package}
+		\item \texttt{dnf config}-\texttt{manager} --- manage repositories and another settings
+		\item \texttt{rpm} -\texttt{Uvh \textit{package}.rpm} --- install locally downloaded \texttt{\textit{package}.rpm}
+		\item \texttt{rpm} -\texttt{e \textit{package}} --- remove \textit{package}
 		\item \texttt{rpm*} commands for other tasks
 		\item In older releases of Fedora, RedHat and CENTOS, \texttt{yum} is used instead of \texttt{dnf} in nearly identical way
 		\item \texttt{man dnf} (or \texttt{man dnf}), \texttt{man rpm} --- usage help
@@ -3596,12 +3596,12 @@
 		\item Compilation creates binary specific for particular operating system and hardware platform --- can be tuned for optimal performance
 		\item Interpreted languages like Bash, Perl, Python or Java don't have to be compiled (but it is possible) --- they need their interpreter to run, relative easily portable among hardware platforms and OS
 		\item Applications requiring compilation usually have good instructions
-		\item If you don't have to do it, don't do it. Solving problems can be complicated --- contact someone skilled or author of the application\ldots
+		\item \textbf{If you don't have to do it, don't do it.}\textbf{} Solving problems can be complicated --- contact someone skilled or author of the application\ldots
 	\end{itemize}
 	\begin{bashcode}
     # General schema within application directory with the source code:
-    configure # Many possible parameters, settings for compilation
-              # Not required in every time
+    ./configure # Many possible parameters, settings for compilation
+                # Not required every time
     make # Basic building command, sometimes only this is required
     make install # Final creation of binary, sometimes required
 	\end{bashcode}
@@ -3612,7 +3612,7 @@
 		\item You need to install compilation tools for your distribution and programming languages you are going to use
 		\item Commonly, extra dependencies are required to compile the application
 		\begin{itemize}
-			\item Packages for compilation use to end with \texttt{-dev} or \texttt{-devel} (e.g. if the software requires package \texttt{zlib} to run, install also its developmental version \texttt{zlib-dev(el)} to be able to compile it)
+			\item Packages for compilation use to end with -\texttt{dev} or -\texttt{devel} (e.g. if the software requires package \texttt{zlib} to run, install also its developmental version \texttt{zlib}-\texttt{dev(el) }to be able to compile it)
 			\item All requirements should be listed in README or INSTALL documents of particular package --- user must install them manually\ldots
 		\end{itemize}
 	\end{itemize}
@@ -3621,10 +3621,9 @@
     zypper in -t pattern devel_basis devel_C_C++
     # Debian, Ubuntu and derivatives like Linux Mint and others
     apt-get install build-essential # Or "aptitude install build-essential"
-    # Red Hat, CENTOS, Scientific Linux, Older Fedora and derivatives
-    yum groupinstall "Development Tools" "C Development Tools and Libraries"
-    # Fedora since version 22
+    # Red Hat, CENTOS, Scientific Linux, Fedora and derivatives (2 options)
     dnf groupinstall "Development Tools" "C Development Tools and Libraries"
+    yum groupinstall "Development Tools" "C Development Tools and Libraries"
 	\end{bashcode}
 \end{frame}
 
@@ -3632,7 +3631,7 @@
 	\begin{itemize}
 		\item Available from \url{https://github.com/stamatak/standard-RAxML} (cite \href{https://academic.oup.com/bioinformatics/article/30/9/1312/238053}{Stamakis 2014})
 		\item Before compilation check \href{https://github.com/stamatak/standard-RAxML/blob/master/README}{README}
-		\item This example does not require to run \texttt{make install}, it does not have extra dependencies for compilation, it requires specifying of particular source file by \texttt{make -f} (there are multiple \texttt{GCC} files, no one main)
+		\item This example does not require to run \texttt{make install}, it does not have extra dependencies for compilation, it requires specifying of particular source file by \texttt{make}~-\texttt{f} (there are multiple \texttt{GCC} files, no one main)
 	\end{itemize}
 	\begin{bashcode}
     mkdir raxml # Create working directory
@@ -3652,7 +3651,7 @@
 \begin{frame}[fragile]{Compilation of SAMtools}
 	\begin{itemize}
 		\item See \url{http://www.htslib.org/download/}
-		\item Ensure packages \texttt{zlib} and \texttt{zlib-dev(el)} are installed --- required for running and compilation, see \href{https://github.com/samtools/samtools/blob/master/INSTALL}{INSTALL} and \href{https://github.com/samtools/samtools/blob/master/README}{README}
+		\item Ensure packages \texttt{zlib} and \texttt{zlib}-\texttt{dev(el)} are installed --- required for running and compilation, see \href{https://github.com/samtools/samtools/blob/master/INSTALL}{INSTALL} and \href{https://github.com/samtools/samtools/blob/master/README}{README}
 	\end{itemize}
 	\begin{bashcode}
     wget https://github.com/samtools/samtools/releases/download/1.7/
@@ -3689,8 +3688,8 @@
     ls * # List files, also in subdirectories
     # Launch it (command java launches *.jar files)
     java -jar lib/figtree.jar
-    # Limit its memory usage to 512 MB
-    java -Xmx512m -jar lib/figtree.jar
+    # Limit its memory usage to 128 MB
+    java -Xmx128m -jar lib/figtree.jar
 	\end{bashcode}
 \end{frame}
 
@@ -3707,7 +3706,7 @@
 		\item To run Windows applications on Linux use \href{https://www.winehq.org/}{Wine}
 		\begin{itemize}
 			\item Search for packages named \texttt{wine} and install it
-			\item Sometimes, extra functionality is in extra packages --- check \texttt{wine-*}
+			\item Sometimes, extra functionality is in extra packages --- check \texttt{wine}-\texttt{*}
 		\end{itemize}
 		\item To run DOS application on Linux use \href{https://www.dosbox.com/}{dosbox} (package \texttt{dosbox})
 		\item As soon as Wine is installed, just click to Windows \texttt{*.exe} file\ldots
@@ -3753,7 +3752,7 @@
 			\item Large \href{https://www.cesnet.cz/services/data-storage/?lang=en}{data storage}
 			\item \href{https://www.cesnet.cz/services/filesender/?lang=en}{FileSender} to be able to send up to 500~GB file
 			\item \href{https://www.metacentrum.cz/en/Sluzby/MetaCloud/}{MetaCloud} --- computing (HPC) cloud similar to e.g. Amazon Elastic Compute Cloud (EC2) or Google Compute Engine
-			\item \href{https://www.cesnet.cz/services/owncloud/?lang=en}{ownCloud} to backup and/or sync data across devices (default capacity is 100~GB, user may ask for more)
+			\item \href{https://www.cesnet.cz/services/owncloud/?lang=en}{ownCloud} to backup and/or sync data across devices (default capacity is 100~GB, user may ask for more) --- similar to e.g. Dropbox
 			\begin{itemize}
 				\item It is possible to connect by webDAV to ownCloud (slide \ref{transfers}) --- many applications support it
 				\item It is possible to share calendars and/or address books via calDav and cardDav among devices and/or people
@@ -3832,8 +3831,8 @@
     DATADIR="/storage/praha1/home/$LOGNAME" # Or other storage
     # There is directory /storage/praha1/home/USER/my_data_dir
     # (in this case) containing all the data needed for calculations
-    # Clean-up of SCRATCH (it is temporal directory created by server) -
-    # the commands will be launched on the end when the job is done
+    # Clean-up of SCRATCH (it is temporal directory created by server)
+    # - the commands will be launched on the end when the job is done
     trap 'clean_scratch' TERM EXIT
     trap 'cp -a "$SCRATCHDIR" "$DATADIR"/ && clean_scratch' TERM
     # Prepare the task - copy all needed files from working directory
@@ -3896,30 +3895,30 @@
 	\begin{itemize}
 		\item Specify needed time
 		\begin{itemize}
-			\item Always \texttt{hours:minutes:seconds}, so e.g. for 4~weeks use \texttt{-l walltime=672:00:00} (28~$\cdot$~24), for two days and 12 hours \texttt{-l walltime=60:00:00}
+			\item Always \texttt{hours:minutes:seconds}, so e.g. for 4~weeks use -\texttt{l~walltime=672:00:00} (28~$\cdot$~24), for two days and 12 hours -\texttt{l~walltime=60:00:00}
 			\item User \href{mailto:meta@cesnet.cz}{may ask} to prolong the walltime --- it is needed to write in advance
 		\end{itemize}
-		\item Ask for as much RAM as you need (e.g. \texttt{-l mem=8gb} to request 8~GB)
+		\item Ask for as much RAM as you need (e.g. -\texttt{l~mem=8gb} to request 8~GB)
 		\begin{itemize}
 			\item If the task is going to require more, than allowed, system kills it\ldots
 			\item If user doesn't use all required RAM, the system temporarily lowers priority for future tasks
 			\item It can be hard to estimate\ldots
 		\end{itemize}
-		\item Disk space is relatively free resource, user can ask more to have some reserve (e.g. \texttt{-l scratch\_local=10gb} to request 10~GB)
-		\item Specify how many physical computer(s) you are going to use (e.g. \texttt{-l select=1} for one machine) and number of CPU threads on each machine (e.g. \texttt{-l select=1:ncpus=8} for 1~machine with 8~cores or \texttt{-l select=2:ncpus=4} for 2~machines, each with 4~CPU threads)
+		\item Disk space is relatively free resource, user can ask more to have some reserve (e.g. -\texttt{l~scratch\_local=10gb} to request 10~GB)
+		\item Specify how many physical computer(s) you are going to use (e.g. -\texttt{l~select=1} for one machine) and number of CPU threads on each machine (e.g. -\texttt{l~select=1:ncpus=8} for 1~machine with 8~cores or -\texttt{l~select=2:ncpus=4} for 2~machines, each with 4~CPU threads)
 		\begin{itemize}
-			\item It use to be necessary to specify correct number of threads for the application (e.g. \texttt{parallel -j 4}) --- the application sees all CPUs on the machine, but can't use them
+			\item It use to be necessary to specify correct number of threads for the application (e.g. \texttt{parallel}~-\texttt{j 4}) --- the application sees all CPUs on the machine, but can't use them
 			\item If the application consumes less than required, the system temporarily lowers priority for future tasks, if it try to use more, it will be very slowed down or killed by the server
 			\item If using more physical machines, ensure correct settings of e.g. MPI (see documentation for respective software you are using)
 		\end{itemize}
-		\item If requesting e-mails (e.g. \texttt{-m abe} to get mail about abort, beginning and exit of the task) and submitting plenty of tasks by some script, it can result in hundreds of mails --- receiving mail servers don't like it\ldots
+		\item If requesting e-mails (e.g. -\texttt{m abe} to get mail about abort, beginning and exit of the task) and submitting plenty of tasks by some script, it can result in hundreds of mails --- receiving mail servers don't like it\ldots
 		\item Every user has certain \href{https://metavo.metacentrum.cz/pbsmon2/users/}{priority} highered by \href{https://wiki.metacentrum.cz/wiki/Usage_rules/Acknowledgement}{acknowledgments} in publications to MetaCentrum and lowered by intensive usage of the service (the usage is calculated from past month)
 		\item After submission of the task, check in \href{https://metavo.metacentrum.cz/pbsmon2/queues/jobsQueued}{the queue} in which state it is --- sometimes it can't start because of impossible combination of resources or so
 		\item User can \href{https://metavo.metacentrum.cz/pbsmon2/nodes/physical}{check load of machines}
 		\item For more options read \url{https://wiki.metacentrum.cz/wiki/How_to_compute/Requesting_resources}
 		\begin{itemize}
-			\item Request special CPU (AMD, graphical,~\ldots), e.g. CPU with AVX2 \texttt{-l select=cpu\_flag=avx2}
-			\item SSD local storage (e.g. \texttt{-l scratch\_ssd=1gb})
+			\item Request special CPU (AMD, graphical,~\ldots), e.g. CPU with AVX2 -\texttt{l~select=cpu\_flag=avx2}
+			\item SSD local storage (e.g. -\texttt{l~scratch\_ssd=1gb})
 			\item Request particular location, ...
 			\item \url{https://metavo.metacentrum.cz/pbsmon2/qsub_pbspro} helps with preparation of \texttt{qsub} command
 		\end{itemize}
@@ -4043,7 +4042,7 @@
 		\item Generally, it is possible to connect via FTPS, NFS, SAMBA (Windows network drive), SCP/SFTP or SSH
 		\item After logging via SSH, it is possible to work as on any other server
 		\item Users get information about selected storage location and paths after registration (there are three locations, user get space on one of them)
-		\item All storage locations are accessible from any MetaCentrum front node via directories in \texttt{/storage} (e.g. \texttt{/storage/jihlava2-archive/tape\_tape/VO\_cuni\_prf\_...})
+		\item All storage locations are accessible from any MetaCentrum front node via directories in \texttt{/storage} (e.g. \texttt{/storage/ostrava2}-\texttt{archive/tape\_tape/VO\_cuni\_prf\_...})
 	\end{itemize}
 \end{frame}
 
@@ -4075,68 +4074,6 @@
 % \subsection{Cloud} % TODO MetaCloud
 %
 % \begin{frame}{MetaCloud}
-% 	\begin{itemize}
-% 		\item
-% 	\end{itemize}
-% \end{frame}
-
-\section{Administration}
-
-\begin{frame}{Administration}
-	\tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
-\end{frame}
-
-% \begin{frame}{Btrfs and Snapper} % TODO Btrfs, Snapper
-% 	\begin{itemize}
-% 		\item
-% 	\end{itemize}
-% \end{frame}
-
-\subsection{System services}
-
-\begin{frame}[fragile]{Managing system services}
-	\begin{itemize}
-		\item Different among distributions --- several main methods
-		\item In Linux, most common is \href{https://wiki.freedesktop.org/www/Software/systemd/}{SystemD}, less common older init scripts and RC scripts
-		\item macOS and various BSD and other systems have different methods
-		\item Used to manage system services like networking, cron, web server, database,~\ldots
-		\item \alert{Read documentation for your distribution first!}
-		\item Most of actions require root authentication
-	\end{itemize}
-	\begin{bashcode}
-    # SystemD - huge amount of possibilities
-    systemctl enable/disable/status/start/stop servicename # TAB helps
-    # RC scripts
-    rcservicename status/start/stop # TAB helps to select service
-    # Init scripts
-    /etc/init.d/servicename status/start/stop # TAB helps to select service
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{SystemD usage}
-	\begin{bashcode}
-    # List installed services and their status
-    systemctl list-units --type service
-    # Enable/disable/see status/start/stop/restart/... service
-    systemctl enable/disable/status/start/stop/restart servicename # TAB...
-    # Show overridden config files after upgrade
-    systemd-delta
-    # Analyze boot time (how long does each service take to start)
-    systemd-analyze blame # Text output
-    systemd-analyze plot > filename.svg # Same in graphics
-    # Log for particular service
-    journalctl -u servicename
-    # Last logged messages (press Ctrl+C to exit)
-    journalctl -f
-    # Log records since last boot
-    journalctl -b
-    # Time and date information and management
-    timedatectl
-    # And much more...
-	\end{bashcode}
-\end{frame}
-
-% \begin{frame}{Security} % TODO Security, antiviruses
 % 	\begin{itemize}
 % 		\item
 % 	\end{itemize}
@@ -4259,6 +4196,68 @@
            # data and settings for particular repository
 	\end{bashcode}
 \end{frame}
+
+\section{Administration}
+
+\begin{frame}{Administration}
+	\tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
+\end{frame}
+
+% \begin{frame}{Btrfs and Snapper} % TODO Btrfs, Snapper
+% 	\begin{itemize}
+% 		\item
+% 	\end{itemize}
+% \end{frame}
+
+\subsection{System services}
+
+\begin{frame}[fragile]{Managing system services}
+	\begin{itemize}
+		\item Different among distributions --- several main methods
+		\item In Linux, most common is \href{https://wiki.freedesktop.org/www/Software/systemd/}{SystemD}, less common older init scripts and RC scripts
+		\item macOS and various BSD and other systems have different methods
+		\item Used to manage system services like networking, cron, web server, database,~\ldots
+		\item \alert{Read documentation for your distribution first!}
+		\item Most of actions require root authentication
+	\end{itemize}
+	\begin{bashcode}
+    # SystemD - huge amount of possibilities
+    systemctl enable/disable/status/start/stop servicename # TAB helps
+    # RC scripts
+    rcservicename status/start/stop # TAB helps to select service
+    # Init scripts
+    /etc/init.d/servicename status/start/stop # TAB helps to select service
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{SystemD usage}
+	\begin{bashcode}
+    # List installed services and their status
+    systemctl list-units --type service
+    # Enable/disable/see status/start/stop/restart/... service
+    systemctl enable/disable/status/start/stop/restart servicename # TAB...
+    # Show overridden config files after upgrade
+    systemd-delta
+    # Analyze boot time (how long does each service take to start)
+    systemd-analyze blame # Text output
+    systemd-analyze plot > filename.svg # Same in graphics
+    # Log for particular service
+    journalctl -u servicename
+    # Last logged messages (press Ctrl+C to exit)
+    journalctl -f
+    # Log records since last boot
+    journalctl -b
+    # Time and date information and management
+    timedatectl
+    # And much more...
+	\end{bashcode}
+\end{frame}
+
+% \begin{frame}{Security} % TODO Security, antiviruses
+% 	\begin{itemize}
+% 		\item
+% 	\end{itemize}
+% \end{frame}
 
 \section{The End}
 
