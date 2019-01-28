@@ -3298,19 +3298,19 @@
 \begin{frame}[fragile]{If branching (examples are elsewhere)}
 	\begin{bashcode}
     # Basic variant - commands are done only if condition is met
-    if expression; then
+    if condition; then
         commands
       fi
     # Two branches - when condition is met and when not
-    if expression; then
-        commands1 # expression is TRUE
+    if condition; then
+        commands1 # condition is TRUE
       else
-        commands2 # expression is FALSE - all other cases
+        commands2 # condition is FALSE - all other cases
       fi
     # Join together two (or more) if branches
-    if expression1; then
+    if condition1; then
         commands1
-      elif expression2; then
+      elif condition2; then
           commands2
         else
           commands3
@@ -3327,38 +3327,38 @@
 			\begin{itemize}
 				\item Escaping variables and values by double quotes (\texttt{"}\ldots\texttt{"}) is recommended (to be sure), but not strictly required all the time
 			\end{itemize}
-			\item \texttt{if [ ! -f regularfile ]; \ldots} --- reverted condition (\texttt{!})
+			\item \texttt{if [ ! }-\texttt{f regularfile ];} \ldots --- reverted condition (\texttt{!})
 			\item Single-bracket conditions --- file, string, or arithmetic conditions
 			\item Double-bracket syntax --- enhanced
 			\begin{itemize}
 				\item Allow usage of regular expressions and globing patterns
 				\item Word splitting is prevented --- \texttt{\$STRINGVAR} can contain spaces
-				\item Expanding file names --- \texttt{if [[ -a *.sh ]]} (variant with only one bracket doesn't work when there are multiple sh files)
-				\item Allows more detailed test, e.g. \texttt{if [[ \$num -eq 3 \&\& "\$STRINGVAR" == XXX ]] \ldots}
+				\item Expanding file names --- \texttt{if [[ }-\texttt{a *.sh ]]} (variant with only one bracket doesn't work when there are multiple sh files)
+				\item Allows more detailed test, e.g. \texttt{if [[ \$num }-\texttt{eq 3 \&\& "\$STRINGVAR" == XXX ]] \ldots}
 			\end{itemize}
 		\end{itemize}
-		\item \texttt{-eq} --- Equal to
-		\item \texttt{-lt} --- Less than
-		\item \texttt{-gt} --- Greater than
-		\item \texttt{-ge} --- Greater than or equal to
-		\item \texttt{-le} --- Less than or equal to
-		\item \texttt{-f \$FILE} --- True if \texttt{\$FILE} exists and is a~regular file
-		\item \texttt{-r \$FILE} --- True if \texttt{\$FILE} exists and is readable
-		\item \texttt{-w \$FILE} --- True if \texttt{\$FILE} exists and is writable
-		\item \texttt{-x \$FILE} --- True if \texttt{\$FILE} exists and is executable
-		\item \texttt{-d \$FILE} --- True if \texttt{\$FILE} exists and is a~directory
-		\item \texttt{-s \$FILE} --- True if \texttt{\$FILE} exists and has a~size greater than zero
-		\item \texttt{-n \$STR} --- True if string \texttt{\$STR} is not a~null (empty) string
-		\item \texttt{-z \$STR} --- True if string \texttt{\$STR} is a~null string
+		\item -\texttt{eq} --- Equal to
+		\item -\texttt{lt} --- Less than
+		\item -\texttt{gt} --- Greater than
+		\item -\texttt{ge} --- Greater than or equal to
+		\item -\texttt{le} --- Less than or equal to
+		\item -\texttt{f \$FILE} --- True if \texttt{\$FILE} exists and is a~regular file
+		\item -\texttt{r \$FILE} --- True if \texttt{\$FILE} exists and is readable
+		\item -\texttt{w \$FILE} --- True if \texttt{\$FILE} exists and is writable
+		\item -\texttt{x \$FILE} --- True if \texttt{\$FILE} exists and is executable
+		\item -\texttt{d \$FILE} --- True if \texttt{\$FILE} exists and is a~directory
+		\item -\texttt{s \$FILE} --- True if \texttt{\$FILE} exists and has a~size greater than zero
+		\item -\texttt{n \$STR} --- True if string \texttt{\$STR} is not a~null (empty) string
+		\item -\texttt{z \$STR} --- True if string \texttt{\$STR} is a~null string
 		\item \texttt{\$STR1 == \$STR2} --- True if both strings are equal
 		\item \texttt{\$STR} --- True if string \texttt{\$STR} is assigned a~value and is not null
 		\item \texttt{\$STR1 != \$STR2} --- True if both strings are unequal
-		\item \texttt{-a} --- Performs the \texttt{AND} function
-		\item \texttt{-o} --- Performs the \texttt{OR} function
+		\item -\texttt{a} --- Performs the \texttt{AND} function (\texttt{[ \ldots }-\texttt{a \ldots~]} or \texttt{[ \ldots~] \&\& [ \ldots~]})
+		\item -\texttt{o} --- Performs the \texttt{OR} function (\texttt{[ \ldots }-\texttt{o \ldots~]} or \texttt{[ \ldots~] || [ \ldots~]})
 		\item Do not confuse globing patterns and regular expressions when using \texttt{[[ \ldots~]]}
 		\begin{itemize}
-			\item Shell globing: \texttt{if [[ "\$STRINGVAR" == ?[sS]tring* ]]; then} --- \texttt{?} represents single character \texttt{[]} any character inside and \texttt{*} zero or more characters
-			\item Regular expressions: \texttt{if [[ "\$STRINGVAR" =$\sim$ .[sS]tring.* ]]; then} --- \texttt{.} represents single character (\texttt{?} would be zero or one occurrence of preceding expression), \texttt{[]} any character inside and \texttt{.*} zero or more occurrences of any single characters
+			\item Shell globing: \texttt{if [[ "\$STRINGVAR" \textbf{==} ?[sS]tring* ]]; then} --- \texttt{?} represents single character \texttt{[]} any character inside and \texttt{*} zero or more characters
+			\item Regular expressions: \texttt{if [[ "\$STRINGVAR" \textbf{=$\sim$} .[sS]tring.* ]]; then} --- \texttt{.} represents single character (\texttt{?} would be zero or one occurrence of preceding expression), \texttt{[]} any character inside and \texttt{.*} zero or more occurrences of any single characters
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -3386,7 +3386,7 @@
 
 \begin{frame}[fragile]{Selecting version of RAxML according the CPU type II}{Multiple branching in one step}
 	\begin{itemize}
-		\item Same task as on previous slide, but instead of it-then branching it is using \texttt{case}
+		\item Same task as on previous slide, but instead of if-then branching it is using \texttt{case}
 		\item See \texttt{raxml\_case.sh} for whole script
 	\end{itemize}
 	\begin{bashcode}
@@ -3434,14 +3434,14 @@
 
 \begin{frame}[fragile]{While and until cycles}
 	\begin{bashcode}
-    # while cycle is evaluating expression and if it is equal to 0
+    # while cycle is evaluating condition and if it is equal to 0 (TRUE)
     # the cycle body is launched, repeatedly while the condition is met
-    while expression
+    while condition
       do
         commands
       done
-    # Like while cycle, but until expression is not equal to zero
-    until expression; do
+    # Like while cycle, but until condition is not equal to zero
+    until condition; do
       commands
       done
     while ...; do # Start cycles as you need
@@ -3454,6 +3454,49 @@
     while :; do echo "Press CTRL+C to exit..."; done # Infinite loop
     for (( ; ; )) ; do echo "Press CTRL+C to exit..."; done # Infinite loop
 	\end{bashcode}
+\end{frame}
+
+\subsection{}
+
+\begin{frame}{Scripting tasks}
+	\begin{enumerate}
+		\item Write short script (or at least concept how it should work) to print file name of JPG file and its dimensions in px. Use e.g. \texttt{file} or ImageMagick \texttt{identify} to get the dimensions.
+		\item Write short script (or at least concept how it should work) taking as input arguments file name and taxon name, verify their validity, extract respective FASTA sequence and print it to standard output.
+		\begin{itemize}
+			\item Work on file \texttt{Oxalis\_HybSeq\_nrDNA\_selection\_alignment.fasta}.
+		\end{itemize}
+		\item Think about several tasks where you would use BASH scripts to automatize repeated work and/or processing of multiple files.
+		\begin{itemize}
+			\item Think about usage of various loops (and/or GNU Parallel), if-then branching, various conditions, etc.
+			\item Prepare concept(s) of such script(s).
+		\end{itemize}
+	\end{enumerate}
+	\begin{block}{Keep in mind\ldots}
+		\alert{Do not do simple repeated work worth of trained monkey manually. It is silly. Every such task is worth of (one-line) script to work instead of you.}
+	\end{block}
+\end{frame}
+
+\begin{frame}{What is worth of scripting}
+	\begin{itemize}
+		\item \textbf{Any task you need to repeat from time to time requiring more commands} --- almost anything :-)
+		\begin{itemize}
+			\item Take advantage of usage of loops, conditions, variables,~\ldots
+		\end{itemize}
+		\item Processing of multiple files
+		\begin{itemize}
+			\item Various manipulations (conversions,~\ldots)
+			\item Parsing (e.g. extracting information from multiple CSV)
+		\end{itemize}
+		\item Repeated running of some analysis (requiring multiple steps)
+		\begin{itemize}
+			\item Keep settings and all preparing and post-processing steps
+		\end{itemize}
+		\item Anything you do often and it requires non-trivial set of commands
+		\item And much more\ldots
+	\end{itemize}
+	\begin{block}{\alert{Start scripting, coding}}
+		Now you should have enough knowledge to start writing scripts to do such tasks. Start with something simple, solving some your practical need (e.g. for MetaCentrum, from slide~\ref{CESNET}). You'll gather experience and improve.
+	\end{block}
 \end{frame}
 
 \section{Software}
@@ -3476,7 +3519,7 @@
 			\item Repositories can be added whenever needed --- check documentation for your distribution (at least basic \enquote{how-to})
 		\end{itemize}
 		\item The most different task among distributions
-		\item Packages have dependencies --- required shared libraries and so on --- use package manager and try to avoid downloading packages from the internet
+		\item Packages have dependencies --- required shared libraries and so on --- use package manager and try to avoid downloading packages from the internet outside repositories
 		\item \alert{Read manual for your distribution!}
 		\item Package is basically an archive and system has configured directories where to unpack it --- binaries are commonly in \texttt{/usr/bin/}, shared libraries in \texttt{/usr/lib} and \texttt{/sr/lib64}, data in \texttt{/var},~\ldots
 		\item User should not care where parts of packages go to --- system is taking the care --- user can only damage it
@@ -3500,8 +3543,10 @@
 		\item There use to be web services to look for packages, also from other sources --- \href{https://software.opensuse.org/search}{openSUSE}, \href{https://www.debian.org/distrib/packages\#search_packages}{Debian}, \href{https://packages.ubuntu.com/}{Ubuntu} (+ \href{https://launchpad.net/ubuntu/+search}{Launchpad} and \href{https://launchpad.net/ubuntu/+ppas}{PPAs}), \href{https://apps.fedoraproject.org/packages/}{Fedora},~\ldots
 		\item The task is always same, the exact work-flow and commands more or less differ among distributions\ldots
 		\item Tools like Android Google Play, Apple Store or Windows Store are inspired from Linux\ldots
-		\item \alert{\textbf{Task:} Install some new software into your Linux. Use graphical as well as command-line tools. See following slides for instructions.}
 	\end{itemize}
+	\begin{block}{Task}
+		Install some new software into your Linux. Use graphical as well as command-line tools. See following slides for instructions.
+	\end{block}
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Package management in command line in openSUSE and SLE (basic commands)}
@@ -3514,7 +3559,7 @@
 		\item \texttt{zypper up} --- update
 		\item \texttt{zypper dup} -- upgrade to newer release of whole distribution
 		\item \texttt{zypper se \textit{term}} --- search \textit{term}
-		\item \texttt{rpmorphan} and/or \texttt{zypper -pa --orphaned --unneeded} --- list packages, which can be safely removed
+		\item \texttt{rpmorphan} and/or \texttt{zypper} -\texttt{pa} -{-}\texttt{orphaned} -{-}\texttt{unneeded} --- list packages, which can be safely removed
 		\item \texttt{yast sw\_single} --- interactive manager
 		\item \texttt{zypper lr} --- list repositories
 		\item \texttt{zypper ar \textit{repository}} --- add \textit{repository} (URL of remote \texttt{*.repo} file)
