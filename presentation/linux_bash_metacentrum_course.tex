@@ -673,7 +673,7 @@
 			\item UNIX command line tools are the most powerful when processing text files (of any sort, e.g. genetic data)
 		\end{itemize}
 		\item When transferring to and from Windows, be aware of EOL and encoding (slide~\ref{eolenc})!
-		\item FAT32 (commonly used for USB flash disks) has limits to maximal file size($\sim4$~GB) and range of characters allowed in file name is limited (slide~\ref{fs}), it doesn't support UNIX permissions (breaks executability of scripts)
+		\item FAT32 (commonly used for USB flash disks) has limits to maximal file size ($\sim4$~GB) and range of characters allowed in file name is limited (slide~\ref{fs}), it doesn't support UNIX permissions (breaks executability of scripts)
 		\begin{itemize}
 			\item Avoid large single files and in file names keep only alphanumerical characters, dots and underscores (omit spaces and accented characters)
 		\end{itemize}
@@ -849,8 +849,8 @@
     -rw-r--r-- 1 vojta users  1944  5. jan 15.18 README
     drwxr-xr-x 1 vojta users   822 29. jan 10.12 scripts_data
     -rwxr-xr-x 1 vojta users  1126  5. jan 15.22 web_update.sh
-    l # Common alias for 'ls -l' or 'ls-la' (according to distribution)
-    ll # Common alias for 'ls -l' or 'ls-la' (according to distribution)
+    l # Common alias for 'ls -l' or 'ls -la' (according to distribution)
+    ll # Common alias for 'ls -l' or 'ls -la' (according to distribution)
     id # Display UID and GIDs of current user
     # New owner or group can be defined as name or ID
     chown newowner:newgroup files # Change owner and group
@@ -1559,15 +1559,15 @@
     # Note in the example below -print is not needed as it is default action
     find photos/ -name "*.jpg" | xargs mogrify -resize 1000x1000
     # Find all R scripts in ~/Documents and find in them lines with "DNA"
-    find ~/Documents -name *.r -print | xargs grep -nH DNA # Or
-    find ~/Documents -name *.r -exec grep -nH DNA '{}' \;
+    find ~/Documents -name "*.r" -print | xargs grep -nH DNA # Or
+    find ~/Documents -name "*.r" -exec grep -nH DNA '{}' \;
     # How many directories are there in the books directory
     find books/ -type d -print | wc -l # wc -l calculate lines
     # Change permissions of all files within "files" directory to 640
     find files/ -type f -exec chmod 640 '{}' \;
     # Find all executable files within current directory and list them
     find . -executable -type f -print
-    find doc/ -type d -empty -execdir rmdir {} \; # Delete empty directories
+    find doc/ -type d -empty -execdir rmdir '{}' \; # Delete empty dirs
     man find # See another options. Much more...
 	\end{bashcode}
 \end{frame}
@@ -2050,7 +2050,7 @@
     # Mount NFS share (NFS is common protocol in UNIX world)
     mount -t nfs some.server.cz:/shared/directory /local/directory
     # Mount webDAV folder (requires package davfs2 to be installed)
-    mount -t davfs https://owncloud.cesnet.cz/directory /local/directory
+    mount -t davfs https://owncloud.cesnet.cz/remote.php/webdav/ /local/dir
     umount /mount/point # Disconnect CIFS/SAMBA, NFS, webDAV, ...
 	\end{bashcode}
 \end{frame}
@@ -2593,7 +2593,7 @@
     # Convert FASTQ sequences into FASTA (on every 4th line, starting with
     # line 1 replace "@" by ">", print every 4th line, starting by line 2)
     bzcat Oxalis_hirta_R1.fastq.bz2 | sed -n '1~4s/^@/>/p;2~4p' > seq.fasta
-    sed 's/find/replace/g' somedirectory/* # Work on all files in directory
+    sed -i 's/find/replace/g' directory/* # Process all files in directory
 	\end{bashcode}
 \end{frame}
 
@@ -4549,3 +4549,5 @@
 % * qsub -p PRIORITY
 % * PRIORITY <-1204,+1023> (default 0)
 % * BASH arrays, https://opensource.com/article/18/5/you-dont-know-bash-intro-bash-arrays
+% * Přidat víc příkladů na základní operace
+% * Možná dát k sobě všechny věci týkající se globbingu, výrazů, proměnných apod. v BASHi
