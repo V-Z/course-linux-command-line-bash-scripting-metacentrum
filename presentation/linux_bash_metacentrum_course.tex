@@ -1,4 +1,4 @@
-\documentclass[compress, ucs, xelatex, 11pt, xcolor=svgnames,
+\documentclass[compress, ucs, xelatex, 11pt, xcolor=svgnames, aspectratio=1610,
 	hyperref={
 		bookmarks=true,
 		unicode=true,
@@ -37,6 +37,9 @@
 \usepackage{metalogo}
 \usepackage{xunicode}
 \usepackage{fontspec}
+
+% Fonts Linux Libertine
+\usepackage{libertine}
 
 % Other packages
 \usepackage{multicol}
@@ -91,7 +94,7 @@
 \title{Linux, command line \& MetaCentrum}
 \subtitle{Use of Linux command line not only for CESNET's MetaCentrum}
 \titlegraphic{\includegraphics[width=1.5cm]{tux.png}}
-\date{January 29 to 31, 2019}
+\date{January 14 to 16, 2020}
 
 \begin{document}
 
@@ -112,16 +115,16 @@
 \begin{frame}{The course information}
 	\label{materials}
 	\begin{itemize}
-		\item The course page: \url{https://trapa.cz/en/course-linux-command-line-2019}
+		\item The course page: \url{https://trapa.cz/en/course-linux-command-line-2020}
 		\begin{itemize}
-			\item Česky: \url{https://trapa.cz/cs/kurz-prikazove-radky-linuxu-2019}
+			\item Česky: \url{https://trapa.cz/cs/kurz-prikazove-radky-linuxu-2020}
 		\end{itemize}
-		\item Subject in SIS: \url{https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=MB120C17}
+		\item Subject in SIS: \url{https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=MB120C23}
 		\begin{itemize}
-			\item Česky: \url{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=MB120C17}
+			\item Česky: \url{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=MB120C23}
 			\item For students having subscribed the subject, requirements are on next slide
 		\end{itemize}
-		\item Working version is available at \url{https://github.com/V-Z/course-linux-command-line-bash-scripting-metacentrum} --- feel free to contribute, request new parts or report bugs
+		\item Working version of the presentation is available at \url{https://github.com/V-Z/course-linux-command-line-bash-scripting-metacentrum} --- feel free to contribute, request new parts or report bugs
 	\end{itemize}
 \end{frame}
 
@@ -152,7 +155,7 @@
 	\begin{multicols}{2}
 		\begin{itemize}
 			\item If you do not have Linux installed, download and install VirtualBox from \url{https://www.virtualbox.org/}
-			\item Download openSUSE Leap 15.0 Linux distribution for this course from \url{ftp://botany.natur.cuni.cz/openSUSE_Leap_courses.ova} ($\sim$4~GB)
+			\item Download openSUSE Leap 15.0 Linux distribution for this course from \url{ftp://botany.natur.cuni.cz/openSUSE_Leap_courses.ova} ($\sim$5~GB)
 			\item Launch VirtualBox and go to menu \textbf{File | Import appliance\ldots} to import it. When done, launch it (\textbf{Start})
 		\end{itemize}
 		\includegraphics[height=6cm]{virtualbox.png}
@@ -161,13 +164,13 @@
 
 \begin{frame}{Enjoy learning virtual machine for the course}
 	\begin{center}
-		\includegraphics[width=\textwidth-1cm]{opensuse_leap_course.png}
+		\includegraphics[width=\textwidth-3cm]{opensuse_leap_course.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{VirtualBox shared folder I}{VirtualBox can be configured to share folder with host operating system}
 	\begin{center}
-		\includegraphics[width=\textwidth-2cm]{virtualbox_shared_folder_1.png}
+		\includegraphics[width=\textwidth-4cm]{virtualbox_shared_folder_1.png}
 	\end{center}
 \end{frame}
 
@@ -177,7 +180,7 @@
 	\end{bashcode}
 	\vfil
 	\begin{center}
-		\includegraphics[width=\textwidth-1cm]{virtualbox_shared_folder_2.png}
+		\includegraphics[width=\textwidth-2.5cm]{virtualbox_shared_folder_2.png}
 	\end{center}
 	\vfill
 \end{frame}
@@ -194,7 +197,7 @@
 			\item \href{https://en.wikipedia.org/wiki/Unix-like}{UNIX-like} (UN*X, *nix)
 			\begin{itemize}
 				\item Systems compatible with UNIX (Linux, BSD and its variants, macOS,~\ldots)
-				\item Mainly open-source (UNIX is commonly commercial --- source code is not available for public, but its specification is)
+				\item Mainly open-source (UNIX is commonly commercial --- source code is not publicaly available, but its specification is)
 				\item Nowadays prevailing over \enquote{old} UNIX systems, used in many devices from tiny embedded toys to huge data centers
 				\item Try to provide same quality as paid systems, but (mostly) for free
 			\end{itemize}
@@ -203,6 +206,7 @@
 		\item \href{https://www.gnu.org/}{GNU}
 		\begin{itemize}
 			\item \enquote{GNU's Not Unix!} --- but it is compatible, respects its principles
+			\item System written from scratch, following ideas of UNIX
 			\item Since 1984 Richard Stallman (founder of \href{https://www.fsf.org/}{Free Software Foundation}) tried to make new kernel (Hurd --- not finished yet\ldots)
 			\item Generally set of basic system tools --- working with many kernels (Linux, BSD*, macOS,~\ldots), also present in many commercial paid UNIX systems
 			\item Source code is free and open --- anyone can study it (Security!), report bugs, contribute, modify, share it,~\ldots
@@ -216,19 +220,20 @@
 			\item Used in small embedded (commonly network) devices, mobile devices (book readers, Android,~\ldots), personal computers, servers (from home level to biggest data centers),~\ldots
 			\item Nowadays powering most of the Internet
 			\item Anyone can contribute --- not only code, also documentation, design, translations,~\ldots
+			\item Most of people working with UNIX are using Linux (or macOS)
 		\end{itemize}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Extremely simplified UNIX phylogeny}
 	\begin{center}
-		\includegraphics[height=7cm]{unix_history-simple.png}
+		\includegraphics[height=7.5cm]{unix_history-simple.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{Most common UNIX-based systems (except Linux)}
 	\begin{itemize}
-		\item \href{https://en.wikipedia.org/wiki/macOS}{macOS} (previously Mac OS~X) --- system kernel is based on older BSD and uses plenty of GNU tools (although mostly older versions)
+		\item \href{https://en.wikipedia.org/wiki/macOS}{macOS} (previously Mac OS~X) --- system kernel is based on older BSD and uses plenty of GNU tools (although mostly older outdated versions)
 		\item \href{https://en.wikipedia.org/wiki/Berkeley_Software_Distribution}{BSD} --- one of the oldest operating systems, still developed in \href{https://distrowatch.com/search.php?ostype=BSD}{many independent variants}
 		\begin{itemize}
 			\item Still very popular especially on servers, for special purposes, etc.
@@ -262,6 +267,7 @@
 			\item Much cheaper to shop there
 		\end{itemize}
 		\item Both have pros and cons --- depends what you wish\ldots
+		\item According to \href{https://en.wikipedia.org/wiki/The_Cathedral_and_the_Bazaar}{book by Eric S. Raymond}
 	\end{itemize}
 \end{frame}
 
@@ -284,13 +290,21 @@
 	\end{block}
 	\begin{itemize}
 		\item And \href{https://en.wikipedia.org/wiki/Comparison_of_free_and_open-source_software_licenses}{many} \href{https://opensource.org/licenses}{more} licenses\ldots
+		\item Practical output of using open-source licenses for the user
+		\begin{itemize}
+			\item Software can be used anywhere
+			\item Software can be modified
+			\item User can learn from the software (from the code), new software can be developed on top of it
+			\item Easier to find and trace bugs
+			\item Security --- no back doors
+		\end{itemize}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{How to make money with free open-source software?}
 	\begin{itemize}
 		\item Traditional model --- user rents right (\enquote{buys a~license}) to use the software (and sometimes for support --- usually for extra money)
-		\item Common mistake --- software is not \enquote{bought} --- only license is rented (\enquote{permission to use it})
+		\item Common mistake --- software is not \enquote{bought} --- only license is rented (\enquote{permission to use it} with many limitations)
 		\item Software as service
 		\begin{itemize}
 			\item (F)OSS is available for free --- user can use it as it is or buy a~support --- help of any type
@@ -331,14 +345,18 @@
 \end{frame}
 
 \begin{frame}{Linux kernel and other parts around it}
-	\includegraphics[width=\textwidth]{linux_kernel_ubiquity.png}
+	\begin{center}
+		\includegraphics[width=\textwidth-3.5cm]{linux_kernel_ubiquity.png}
+	\end{center}
 	\vfil
 	\url{https://en.wikipedia.org/wiki/Linux_distribution}
 	\vfill
 \end{frame}
 
 \begin{frame}{Extremely simplified adaptive radiation of Linux distributions}
-	\includegraphics[width=\textwidth]{linux_fylogen_2.png}
+	\begin{center}
+		\includegraphics[width=\textwidth-1cm]{linux_fylogen_2.png}
+	\end{center}
 	\vfil
 	\url{https://en.wikipedia.org/wiki/List_of_Linux_distributions} and \url{https://distrowatch.com/} ($\sim$850 distributions, $\sim$280 active)
 	\vfill
@@ -383,43 +401,43 @@
 
 \begin{frame}{Ubuntu with GNOME} % TODO Update print screen, add more
 	\begin{center}
-		\includegraphics[width=\textwidth]{ubuntu.png}
+		\includegraphics[width=\textwidth-2cm]{ubuntu.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{openSUSE with KDE --- Kubuntu is same, but blue\ldots} % TODO Update print screen, add more
 	\begin{center}
-		\includegraphics[height=7cm]{opensuse.png}
+		\includegraphics[height=7.5cm]{opensuse.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{Fedora with GNOME --- GNOME is always almost same} % TODO Update print screen, add more
 	\begin{center}
-		\includegraphics[height=7cm]{fedora.png}
+		\includegraphics[height=7.5cm]{fedora.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{Linux Mint with Cinnamon} % TODO Update print screen, add more
 	\begin{center}
-		\includegraphics[height=7cm]{mint.png}
+		\includegraphics[height=7.5cm]{mint.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{Debian with XFCE --- Xubuntu has more \enquote{modern} design} % TODO Update print screen, add more
 	\begin{center}
-		\includegraphics[height=7cm]{debian.png}
+		\includegraphics[height=7.5cm]{debian.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{XFCE in Xubuntu, openSUSE, Fedora and Linux Mint} % TODO Update print screen
 	\begin{center}
-		\includegraphics[width=\textwidth]{xfce.png}
+		\includegraphics[width=\textwidth-2.5cm]{xfce.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{Dolphin (KDE file manager) --- default for openSUSE (inset) and after tuning in the same distribution\ldots} % TODO Update print screen
 	\begin{center}
-		\includegraphics[width=\textwidth-0.5cm]{dolphin.png}
+		\includegraphics[width=\textwidth-2.5cm]{dolphin.png}
 	\end{center}
 \end{frame}
 
@@ -1018,7 +1036,7 @@
 
 \begin{frame}{It \textbf{is} important to select \textbf{good} text editor\ldots}
 	\begin{center}
-		\includegraphics[width=\textwidth-1cm]{real_programmers.png}
+		\includegraphics[width=\textwidth-3cm]{real_programmers.png}
 	\end{center}
 	\begin{flushright}
 		\url{https://xkcd.com/378/}
@@ -1257,7 +1275,9 @@
 \end{frame}
 
 \begin{frame}{The command line can has various look and feel\ldots}{Change colors, font size, etc. for your terminal to like it more and work comfortably}
-	\includegraphics[width=\textwidth]{terminals.png}
+	\begin{center}
+		\includegraphics[width=\textwidth-2.5cm]{terminals.png}
+	\end{center}
 \end{frame}
 
 \begin{frame}{BASH and others}
@@ -3614,7 +3634,9 @@
 \end{frame}
 
 \begin{frame}{Graphical package managers I}{Ubuntu Software, and Synaptic and text-based Aptitude for all DEB-based distributions}
-	\includegraphics[width=\textwidth]{software_managers_ubuntu_deb.png}
+	\begin{center}
+		\includegraphics[width=\textwidth-2cm]{software_managers_ubuntu_deb.png}
+	\end{center}
 \end{frame}
 
 \begin{frame}{Graphical package managers II}{GNOME Software in Fedora and YaST in openSUSE}
@@ -3778,7 +3800,9 @@
 \end{frame}
 
 \begin{frame}{winefile, winetricks and winecfg}
-	\includegraphics[width=\textwidth]{wine.png}
+	\begin{center}
+		\includegraphics[width=\textwidth-1.5cm]{wine.png}
+	\end{center}
 \end{frame}
 
 \section{MetaCentrum}
@@ -4077,7 +4101,9 @@
 \end{frame}
 
 \begin{frame}{Running VNC}
-	\includegraphics[width=\textwidth]{vnc.png}
+	\begin{center}
+		\includegraphics[width=\textwidth-1cm]{vnc.png}
+	\end{center}
 \end{frame}
 
 \subsection{Data storage}
