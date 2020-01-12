@@ -1172,7 +1172,7 @@
 		\begin{itemize}
 			\item \texttt{man somecommand}
 			\item Arrows to move up and down, \texttt{q} to quit
-			\item Type \texttt{/} and type text and hit Enter to search --- next hit by \texttt{n}, quit search by ESC (twice)
+			\item Type \texttt{/} and then type text to search and hit Enter to search --- next hit by \texttt{n}, quit search by ESC (twice)
 			\item Command \texttt{info} more advanced --- type \texttt{?} for help
 		\end{itemize}
 		\item Parameters can be combined, order doesn't matter (same variants: \texttt{ls}~-\texttt{la}; \texttt{ls}~-\texttt{al}; \texttt{ls}~-\texttt{a}~-\texttt{l}; \texttt{ls}~-\texttt{l}~-\texttt{a})
@@ -1188,10 +1188,11 @@
 \begin{frame}{macOS and Homebrew}
 	\label{homebrew}
 	\begin{itemize}
-		\item macOS contains outdated versions of many command line utilities with limited functionality comparing to what we are going to use
+		\item macOS contains outdated versions of many command line utilities with limited functionality comparing to what we are going to use (what is available in modern Linux distributions)
 		\item Several projects provide Linux style way of installation and update of various (not only) command line tools, probably the best is \href{https://brew.sh/}{Homebrew}
 		\item Homebrew contains also plenty of scientific packages, there is also specialized similar \href{https://brewsci.github.io/homebrew-bio/}{source for bioinformatics}
 		\item Tools installed via Homebrew are installed into \texttt{/usr/local} not to interact with system packages
+		\item Derived project is \href{https://docs.brew.sh/Homebrew-on-Linux}{Linuxbrew} (works also on Windows subsystem for Linux) useful especially for installation of special (scientific) software unavailable in main Linux repositories (software resources)
 	\end{itemize}
 \end{frame}
 
@@ -1218,67 +1219,7 @@
 	\end{bashcode}
 \end{frame}
 
-\subsection[SSH]{SSH --- secure shell and screen}
-
-\begin{frame}[fragile]{Login to remote server}{SSH --- secure shell --- encrypted connection}
-	\label{ssh}
-	\begin{multicols}{2}
-		\begin{bashcode}
-    ssh remoteUser@remote.server.cz
-    # When logging first time, check
-    # and confirm fingerprint key
-    yes # And press Enter
-    # Type remote user's password
-    # (nothing is shown when typing)
-    # Confirm by Enter
-		\end{bashcode}
-		\begin{itemize}
-			\item Our toy server: user names from \texttt{cu01} to \texttt{cu20}
-		\end{itemize}
-		\begin{bashcode}
-    ssh cuXY@vyuka.natur.cuni.cz
-		\end{bashcode}
-		\begin{itemize}
-			\item If fingerprint key changes, ssh complains a~lot --- possible \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{man in the middle attack}
-			\item From Windows use \href{https://www.putty.org/}{Putty}
-		\end{itemize}
-		\begin{center}
-			\includegraphics[height=6cm]{putty.png}
-		\end{center}
-	\end{multicols}
-\end{frame}
-
-\begin{frame}{Screen}{Split terminal or keep task running after logging off}
-	\begin{itemize}
-		\item When you log off or network connection is broken, running tasks for particular terminal usually crash
-		\item Sometimes number of connections is limited
-		\item \texttt{screen} is solution --- virtual terminals
-		\item Launch \texttt{screen} to start new screen terminal, read some info, confirm by \textbf{Space key} or \textbf{Enter}
-		\item To detach from the screen press \texttt{Ctrl+A, D} --- screen is still running in background --- you can even log off
-		\item To return back to running screen use \texttt{screen} -\texttt{r} --- if only one screen is running, you get back to it
-		\item If more screens are running, use \texttt{screen} -\texttt{r 1234} (the number is seen from \texttt{screen} -\texttt{r})
-		\item To cancel running screen press \texttt{Ctrl+D} (or type \texttt{exit} or \texttt{logout})
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{SSH and screen practice}
-	\begin{center}
-		\includegraphics[height=1.75cm]{sshterm.png}
-	\end{center}
-	\begin{block}{Tasks}
-		\begin{enumerate}
-			\item Login via SSH to \texttt{vyuka.natur.cuni.cz} and launch \texttt{screen}.
-			\item Run commands \texttt{pwd}, \texttt{whoami} and \texttt{ls} -\texttt{la}. What do they show?
-			\item Detach from screen and logout from the server.
-			\item Login again to the server. Is it same or different process? Why?
-			\item Reattach to the screen --- same state as before logout from server.
-			\item Practice tasks with file names (slide~\ref{filenames})
-			\item Close screen session and logout from the server.
-		\end{enumerate}
-	\end{block}
-\end{frame}
-
-\subsection[SH]{BASH and others}
+\subsection[SH]{BASH and other shells (\enquote{command lines})}
 
 \begin{frame}{The shell}
 	\begin{itemize}
@@ -1311,6 +1252,100 @@
 		\includegraphics[width=\textwidth-2.5cm]{terminals.png}
 	\end{center}
 \end{frame}
+
+\subsection{Screen}
+
+\begin{frame}{Screen}{Split terminal or keep task running after logging off}
+	\begin{itemize}
+		\item When you log off or network connection is broken, running tasks for particular terminal usually crashes
+		\item Sometimes number of connections to the server is limited
+		\item \texttt{screen} is solution --- virtual terminals
+		\item Launch \texttt{screen} to start new screen terminal, read some info, confirm by \textbf{Space key} or \textbf{Enter}
+		\item To detach from the screen press \texttt{Ctrl+A, D} --- screen is still running in background --- you can even log off
+		\item To return back to running screen use \texttt{screen} -\texttt{r} --- if only one screen is running, you get back to it
+		\item If more screens are running, use \texttt{screen} -\texttt{r 1234} (the number is seen from \texttt{screen} -\texttt{r})
+		\item To cancel running screen press \texttt{Ctrl+D} (or type \texttt{exit} or \texttt{logout})
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Tmux}
+	\begin{itemize}
+		\item More advanced (but not so common) alternative to \texttt{screen}
+	\end{itemize}
+	\vfill
+	\begin{bashcode}
+    # Start new tmux session
+    tmux
+    # Or name the new session (useful if there are more sessions)
+    tmux new -s SomeName
+    # Detach from the session by Ctrl+B, D
+    # List sessions on the server
+    tmux ls
+    # Attach to existing session by name
+    tmux attach-session -t SomeName
+    # Attach to existing session by its number
+    tmux attach-session -t 0
+    # Cancel running session by Ctrl+D or exit
+	\end{bashcode}
+	\vfill
+	\begin{itemize}
+		\item Get help by \texttt{Ctrl+B, ?} (\texttt{Q} to quit)
+		\item Split window by \texttt{Ctrl+B, \%} and navigate between them by \texttt{Ctrl+B, left/right arrow}
+	\end{itemize}
+\end{frame}
+
+\subsection[SSH]{SSH --- secure shell and screen}
+
+\begin{frame}[fragile]{Login to remote server}{SSH --- secure shell --- encrypted connection}
+	\label{ssh}
+	\begin{multicols}{2}
+		\begin{bashcode}
+    ssh remoteUser@remote.server.cz
+    # When logging first time, check
+    # and confirm fingerprint key
+    yes # And press Enter
+    # Type remote user's password
+    # (nothing is shown when typing)
+    # Confirm by Enter
+		\end{bashcode}
+		\vfill
+		\begin{itemize}
+			\item Our toy server: user names from \texttt{cu01} to \texttt{cu20}
+		\end{itemize}
+		\vfill
+		\begin{bashcode}
+    ssh cuXY@vyuka.natur.cuni.cz
+		\end{bashcode}
+		\vfill
+		\begin{itemize}
+			\item If fingerprint key changes, ssh complains a~lot --- possible \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{man in the middle attack}
+			\item From Windows use \href{https://www.putty.org/}{Putty}
+		\end{itemize}
+		\begin{center}
+			\includegraphics[height=7cm]{putty.png}
+		\end{center}
+	\end{multicols}
+\end{frame}
+
+\begin{frame}{SSH and screen practice}
+	\begin{center}
+		\includegraphics[height=1.75cm]{sshterm.png}
+	\end{center}
+	\begin{block}{Tasks}
+		\begin{enumerate}
+			\item Login via SSH to \texttt{vyuka.natur.cuni.cz} and launch \texttt{screen}.
+			\item Run commands \texttt{pwd}, \texttt{whoami} and \texttt{ls} -\texttt{la}. What do they show?
+			\item Detach from screen and logout from the server.
+			\item Login again to the server. Is it same or different process? Why?
+			\item Reattach to the screen --- same state as before logout from server.
+			\item Open new screen and practice tasks with file names (slide~\ref{filenames}).
+			\item Detach and re-attach to both sreens.
+			\item Close all screen sessions and logout from the server.
+		\end{enumerate}
+	\end{block}
+\end{frame}
+
+\subsection{BASH}
 
 \begin{frame}{BASH and others}
 	\begin{itemize}
@@ -1351,7 +1386,7 @@
 	\begin{itemize}
 		\item \texttt{/etc/bash.bashrc} --- System wide BASH settings --- can be overridden by user's configuration
 		\item \texttt{$\sim$/.bashrc} --- File is loaded each time user creates new session (typically opens new terminal window)
-		\item \texttt{$\sim$/.bash\_profile} --- Used specifically (not in every system) when user is using remote connection (e.g. SSH)
+		\item \texttt{$\sim$/.bash\_profile} --- Used specifically (not in every system) when user is using remote connection (e.g. SSH) --- user can have different settings for local and remote work
 		\item \texttt{/etc/profile} --- System wide profile file --- can be overridden by user's configuration
 		\item \texttt{$\sim$/.profile} --- Settings loaded when user logs-in (mainly for language settings), sometimes used by remote connections
 		\item \alert{Note:} BASH scripts are non-interactive shells --- they do not read settings above --- there are no aliases,~\ldots{ }but they inherit some settings (PATH, language,~\ldots) and they can read global variables
@@ -1364,6 +1399,7 @@
 		\item Behavior of BASH can be set to fit user's needs
 		\item Terminal emulators allow to set custom fonts and colors,~\ldots
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     # More colors for outputs
     eval "$(dircolors -b)"
@@ -1406,7 +1442,7 @@
 \begin{frame}{BASH globing and wildcards}
 	\label{globbing}
 	\begin{itemize}
-		\item BASH itself doesn't recognize regular expressions --- it's wildcards have some of functions of regular expressions (from slide~\ref{regexp}) and can look similarly, but behave differently --- Do not confuse!
+		\item BASH itself doesn't recognize regular expressions --- its wildcards have some of functions of regular expressions (from slide~\ref{regexp}) and can look similarly, but behave differently --- Do not confuse!
 		\item \texttt{?} --- Replaces any single character
 		\item \texttt{*} --- Replaces any number of any characters (\texttt{ls a*} lists all files starting with \enquote{a})
 		\item \texttt{[]} --- Range or a~list --- \texttt{[abcdef]} and \texttt{[a-f]} are same
@@ -1414,6 +1450,7 @@
 		\item \texttt{\{\}} --- Expansion (terms inside are separated by commas \texttt{,}) --- all possible combinations (see next slide for examples)
 		\item \texttt{\textbackslash} --- Escapes following character and it doesn't have its special meaning (e.g. \texttt{\textbackslash *} means literally asterisk \texttt{*} and not \enquote{any number of any characters} as usually)
 		\item For details see \texttt{man 7~glob} and \texttt{man 7~regex}
+		\item This is useful e.g. to list only subset of files or to provide file selection as input for some command
 	\end{itemize}
 \end{frame}
 
@@ -1423,15 +1460,18 @@
     echo {a,b,c}{d,e,f} # ad ae af bd be bf cd ce cf - all combinations
     ls *.{jpg,jpeg,png} # expansion to *.jpg *.jpeg *.png, same as
     ls *.jpg *.jpeg *.png
+    ls scripts_data/*_R[12].fastq.bz2
 	\end{bashcode}
+	\vfill
 	\begin{itemize}
 		\item Text in single quotes (\texttt{'\ldots'}) preserves the literal value of each character within the quotes
-		\item Tex tin double quotes (\texttt{"\ldots"}) preserves the literal value of all characters within the quotes, with the exception of dollar (\texttt{\textdollar}), back tick (\texttt{\textasciigrave}) and back slash (\texttt{\textbackslash})
+		\item Text in double quotes (\texttt{"\ldots"}) preserves the literal value of all characters within the quotes, with the exception of dollar (\texttt{\textdollar}), back tick (\texttt{\textasciigrave}) and back slash (\texttt{\textbackslash})
 		\item A~double quote may be quoted within double quotes by preceding it with a~backslash (\texttt{\textbackslash"} means literally \enquote{double quote})
 		\item Text between back ticks (\texttt{\textasciigrave\ldots\textasciigrave}) or within \texttt{\$\{\ldots\}} will be evaluated and then used as command or argument (see next slide for examples)
 	\begin{itemize}
 		\item Syntax with back ticks is deprecated, keep using \texttt{\$\{\ldots\}} instead
 	\end{itemize}
+	\item This is important when handling file names with non-Latin characters, when working with variables (from slide~\ref{variables}), printing various information within scripts (e.g. slide~\ref{varquotes}), etc.
 	\end{itemize}
 \end{frame}
 
@@ -1466,7 +1506,7 @@
 		\item Login via SSH to \texttt{vyuka.natur.cuni.cz}.
 		\item Get your path by \texttt{pwd}.
 		\item Go to \texttt{/home/scripts\_data} (with \texttt{cd}) and explore its content (\texttt{ls}).
-		\item List permissions in \texttt{/home/scripts\_data} (slide~\ref{permissions}). What to they show? What can you do with the content?
+		\item List permissions in \texttt{/home/scripts\_data} (slide~\ref{permissions}). What do they show? What can you do with the content?
 		\item How much space does \texttt{/home/scripts\_data} consume?
 		\item Go back to home directory (by \texttt{cd}).
 		\item Create new directory in your home directory (\texttt{mkdir}).
@@ -1478,6 +1518,8 @@
 		\item Can you access directories of another users? Why? If yes, what are your permissions there? Explain it.
 		\item What are some permissions in \texttt{/}? Why?
 		\item Create directory in your home directory and share it with another user so she/he can write there anything (using e.g. \texttt{touch somefile} or \texttt{mkdir somedirectory}) (work e.g. in pairs). Use everywhere as restricted permissions as possible. Can you figure out solution with or without ACL (slide~\ref{acl})?
+		\item Practice moving between \texttt{/home/scripts\_data} and your home directory. Use \texttt{cd} and \texttt{TAB}.
+		\item Within \texttt{/home/scripts\_data} list by single command only \texttt{jpg} and \texttt{txt} files.
 	\end{enumerate}
 \end{frame}
 
@@ -1495,7 +1537,7 @@
 			\item Impossible to live without it :-)
 			\item \alert{Task:} Which of the previous tasks can you solve with it? Try it.
 		\end{itemize}
-		\includegraphics[height=6.5cm]{mc.png}
+		\includegraphics[height=7cm]{mc.png}
 	\end{multicols}
 \end{frame}
 
@@ -1551,7 +1593,8 @@
 		\item Compare sizes of original files and compressed outputs.
 		\item Which compression tool seems to be the best? In terms of compressing ratio and time needed for compression.
 		\item Is more effective compression of text files or images? Why?
-		\item Why is even plain \texttt{tar} (any compression) useful with FAT disks?
+		\item Why is even plain \texttt{tar} (without compression, it requires \texttt{gzip}, \texttt{bzip2} or \texttt{lzma} to add compression) useful with FAT disks?
+		\item Search the Internet to find out how to unpack \texttt{rar} or \texttt{arj} archives from command line.
 	\end{enumerate}
 \end{frame}
 
@@ -1574,8 +1617,8 @@
       required but not installed. Aborting."; exit 1; }
     hash Application 2>/dev/null || { echo >&2 "Application is required
       but not installed. Aborting."; exit 1; }
-    exit 1 # Use to be added (with various numbers) after any error to
-           # send term signal 1 - for better handling of various errors.
+    exit 1 # "exit" use to be added (with various numbers) after any error
+           # to send term signal 1 - for better handling of various errors.
            # Every termination has exit status number - 0 is normal exit.
            # Exit status 1 and higher number is various error.
 	\end{bashcode}
@@ -1584,7 +1627,7 @@
 \begin{frame}[fragile]{Find}
 	\begin{bashcode}
     find <where> <what> <what to do> # The most powerful searching tool:
-    find /.. -type d/f -name XXX -print # Most common usage
+    find /... -type d/f -name XXX -print # Most common usage
 	\end{bashcode}
 	\begin{itemize}
 		\item First \texttt{find}'s parameter is location to search --- absolute or relative, \enquote{\texttt{.}} means current directory (the only compulsory parameter)
@@ -1626,7 +1669,7 @@
 
 \begin{frame}{Searching tasks}
 	\begin{enumerate}
-		\item Use \texttt{locate} to find file \texttt{long\_text.txt}. Is the output absolutely correct? If not, why?
+		\item Use \texttt{locate} to find file \texttt{long\_text.txt} on the server. Is the output absolutely correct? If not, why?
 		\item Where is executable of \texttt{mc}? Why can be such information useful? Where are its libraries, data, configuration and manual?
 		\item Which software is related to keywords \texttt{permission} and \texttt{compress} (use e.g. \texttt{apropos})? Use \texttt{man} to explore some of them.
 	\end{enumerate}
@@ -1635,37 +1678,12 @@
 			\item Find all \texttt{*.vcf.gz} files in whole \texttt{/home}. Why do you get errors for some directories?
 			\item Compress, see and decompress all shell scripts in your home directory.
 			\item Change permissions of all content of your home directory so that no one else can access it. Consider hidden files, directories and scripts.
-			\item List all directories in \texttt{/etc}.
+			\item List all directories in \texttt{/etc} up to sesond level.
 		\end{enumerate}
 	\end{block}
 \end{frame}
 
 \subsection{Variables}
-
-\begin{frame}[fragile]{BASH expressions}
-	\begin{bashcode}
-    # Many operands have special meaning in BASH - must be escaped
-    echo $((5 < 7)) # Is 5 smaller than 7? TRUE (1)
-    echo $((3 > 4)) # Is 3 greater than 4? FALSE (0)
-    echo $((16 / 3)) # Division (without decimal part)
-    echo $((12 % 5)) # What remains after aritmetic division
-    x=$((1 + 6)) # Result will be in 'x'
-    echo $x
-    x=1 # Set x to 1
-    y=$x+1 # Will this add 1? Why?
-    echo $y # See result
-    y=$(($x + 1)) # Will this work? Why?
-    echo $y # Result
-    echo $(expr length "MetaCentrum and Linux") # Get length of chain
-    # String of 5 characters starting at position 10 of the text
-    echo $(expr substr "MetaCentrum and Linux" 10 5)
-    # Does 1st chain contain 2nd chain (how long)? Get position of first hit
-    echo $(expr index "GNU Linux" "Linux") # If no overlap, return value is 0
-	\end{bashcode}
-	\begin{itemize}
-		\item \texttt{expr} works with various operands (see \texttt{man expr})
-	\end{itemize}
-\end{frame}
 
 \begin{frame}{Variables in BASH}
 	\begin{itemize}
@@ -1682,6 +1700,33 @@
 			\item \texttt{USER} --- user name
 			\item And many more, commonly specific for particular server
 		\end{itemize}
+		\item Names start with \texttt{\$}, e.g. \texttt{\$HOME}, but declaration is without \texttt{\$}, e.g. \texttt{MYVAR='XXX'}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{BASH expressions}
+	\label{variables}
+	\begin{bashcode}
+    # Many operands have special meaning in BASH - must be escaped
+    echo $((5 < 7)) # Is 5 smaller than 7? TRUE (1)
+    echo $((3 > 4)) # Is 3 greater than 4? FALSE (0)
+    echo $((16 / 3)) # Division (without decimal part)
+    echo $((12 % 5)) # What remains after aritmetic division
+    x=$((1 + 6)) # Result will be in 'x' - save output into variable $x
+    echo $x # See content of $x
+    x=1 # Set x to 1
+    y=$x+1 # Will this add 1? Why?
+    echo $y # See result
+    y=$(($x + 1)) # Will this work? Why?
+    echo $y # Result
+    echo $(expr length "MetaCentrum and Linux") # Get length of chain
+    # String of 5 characters starting at position 10 of the text
+    echo $(expr substr "MetaCentrum and Linux" 10 5)
+    # Does 1st chain contain 2nd chain (how long)? Get position of first hit
+    echo $(expr index "GNU Linux" "Linux") # If no overlap, return value is 0
+	\end{bashcode}
+	\begin{itemize}
+		\item \texttt{expr} works with various operands (see \texttt{man expr})
 	\end{itemize}
 \end{frame}
 
@@ -1700,6 +1745,7 @@
     export GREP_OPTIONS='--color=auto' # Colored grep (see further)
     unset VARIABLENAME # Drop variable and its value
 	\end{bashcode}
+	\vfill
 	\begin{itemize}
 		\item Exported variables will be lost when logging off
 		\item To make variables permanent, add \texttt{export} commands into \texttt{$\sim$/.profile} or \texttt{$\sim$/.bash\_profile}, or \texttt{$\sim$/.bashrc} (according to shell and its settings)
@@ -1713,7 +1759,9 @@
 		\item Lists directories (separated by colon \texttt{:}) where the current shell searches for commands
 		\item If some software is installed outside standard locations, the user must specify the full path (or update the \texttt{\$PATH})
 		\item In case there are two commands with the same name (e.g. \texttt{/bin/somecommand} and \texttt{/usr/bin/somecommand}), the order of directories in \texttt{\$PATH} matters --- the first occurrence is used, any possible later ignored
+		\item Computing clusters (like MetaCentrum) use to have special command (e.g. \texttt{module}) to load particular software (including particular version) by extending user's \texttt{\$PATH}
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     # See the $PATH variable
     echo $PATH # Sample output is on the next line:
@@ -1739,7 +1787,8 @@
     Y=$(command) # Set as variable output of command
     echo $Y # Y will contain output of command
     # "command" from previous lines can be e.g.
-    cat somefile.txt # Read content of somefile.txt
+    cat somefile.txt # Read content of somefile.txt; or
+    find . -name "*.txt" # Save list of matching files
     WORKDIR=$(pwd)# Save current directory into variable
     ls -1 | head -n 1 # First file/directory in the current directory
     unset X # Destroy this variable
@@ -1747,6 +1796,7 @@
 \end{frame}
 
 \begin{frame}[fragile]{Variables and quotes and more}
+	\label{varquotes}
 	\begin{bashcode}
     A=abcdef # Set new variable (no special characters allowed)
     echo $A # See variable's content
@@ -1757,7 +1807,7 @@
     abcdef # This also works
     echo `$A` # Text between back ticks is evaluated and launched
     abcdef: command not found # There is no command "abcdef"...
-    echo $($A) # Same as `...`, this is now recommended way, `...` legacy
+    echo $($A) # Same as `...`, this is now recommended way, `...` is legacy
     echo "Hi, dear $USER" # Compare this and following command...
     echo 'Hi, dear $USER' # Single quotes do not evaluate variables
 	\end{bashcode}
@@ -1795,6 +1845,7 @@
 
 \begin{frame}{Chaining commands}
 	\begin{itemize}
+		\item Key feature of BASH --- work with individual commands as with Lego to get new functionality
 		\item \alert{\texttt{\&}} --- command will be launched in background, terminal is available for next typing: \texttt{firefox \&} (when launching graphical application, hit \textbf{Enter} afterward if there is no active command line prompt)
 		\item \alert{\texttt{\&\&}} --- second command is launched only when first command exits without error (exits with status \texttt{0}): \texttt{mkdir NewDir \&\& cd NewDir}
 		\item \alert{\texttt{;}} --- second command is launched regardless exit status of the first one: \texttt{kshfskcbd; hostname}
@@ -1811,19 +1862,23 @@
 		\item Standard error output (\texttt{stderr}) is target of error messages --- typically also monitor (but can be log file or so)
 		\item \alert{\texttt{\textgreater}} redirects output into new place (file, device, another command,~\ldots)
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     cat /etc/group # Print whole file /etc/group
     grep users /etc/group > users # Extract from /etc/group lines containing
                                   # "users" and write output into new file
     cat users # See result
 	\end{bashcode}
+	\vfill
 	\begin{itemize}
 		\item \alert{\texttt{\textgreater\textgreater}} adds output to the end of the file (\texttt{\textgreater} rewrites target file)
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     grep root /etc/group >> users # Add new information into existing file
     cat users # See result
 	\end{bashcode}
+	\vfill
 	\begin{itemize}
 		\item \alert{Task:} Practice chaining and redirects from previous and this slide. What is it good for?
 	\end{itemize}
@@ -1846,7 +1901,7 @@
 		\end{itemize}
 	\end{itemize}
 	\begin{bashcode}
-    echo "Žluťoučký kůň úpěl" | iconv -f utf-8 -t cp1250 /dev/stdin
+    echo "Žluťoučký kůň úpěl ďábelské ó" | iconv -f utf-8 -t cp1250 /dev/stdin
 	\end{bashcode}
 	\begin{itemize}
 		\item \texttt{/dev/stdout} --- standard output
@@ -1876,11 +1931,12 @@
 \begin{frame}[fragile]{Redirects of standard input and output I}
 	\begin{block}{Tasks with redirects of standard input/output}
 		\begin{itemize}
-			\item Try everything on this and following slide
-			\item Be sure to understand the redirects and differences among the variants
-			\item Try to figure out some other example regarding your practical needs
+			\item Try everything on this and following slide. Is it clear what happens?
+			\item Be sure to understand the redirects and differences among the variants.
+			\item Try to figure out some other example regarding your practical needs.
 		\end{itemize}
 	\end{block}
+	\vfill
 	\begin{bashcode}
     # Write directory listing into text file
     # If file directory_listing.txt exists, will be overwritten
@@ -1937,6 +1993,8 @@
     # reads, one BAM for each sample)
     bwa mem reference.fasta input_R1.fastq input_R2.fastq | samtools view \
       -bu | samtools sort -l 9 -o mapped.bam
+    # How many FASTQ reads are there in the file
+    cat file.fastq | echo "$(("$(wc -l)" / 4))"
 	\end{bashcode}
 \end{frame}
 
@@ -1972,7 +2030,7 @@
     pstree # See running processes with child processes, recursively
     pgrep application # Return PID (process ID) of application
     ps # processes related to actual terminal
-    ps x # All user's processes
+    ps ux # All user's processes
     ps aux # All processes
     # kill (terminate) process by name or process ID (PID)
     # Find which PID has application to terminate
@@ -2022,7 +2080,7 @@
 		\item Which disks are mounted?
 		\item How many memory (RAM) slots are occupied and what is memory size?
 	\end{enumerate}
-	\item Find your user ID on local computer and remote server? Do you think this has any implications when copying files from your local computer to server and back?
+	\item Find your user ID on local computer and remote server. Do you think this has any implications when copying files from your local computer to server and back?
 	\item Terminate from command line some running graphical application. What is difference between \texttt{kill} and \texttt{killall}?
 	\item Change priority of some running (graphical) application.
 	\item Which applications are consuming the most resources (CPU, RAM)?
@@ -2034,8 +2092,16 @@
 \begin{frame}[allowframebreaks]{Network protocols}
 	\begin{itemize}
 		\item Every network communication protocol (e.g. browsing web or Skype) has its own distinct port (\enquote{door to access target computer}) --- it must be opened (by firewall)
+		\item There are plenty of network services
+		\begin{itemize}
+			\item Especially file servers and various data storages support more protocols to access the data --- according to operating system and/or use case
+			\item Sometimes it can be tricky to pick up (and configure) the right protocol
+		\end{itemize}
 		\item SSH --- secure shell --- command-line connection to remote server to work there (port 22), slide~\ref{ssh}
-		\item Telnet --- old deprecated insecure version of SSH, never ever use it (port 23), only low-quality electronics still sometimes use it
+		\begin{itemize}
+			\item Plenty of other protocols can run over SSH (SFTP, SCP, SSHFS, rsync,~\ldots)
+		\end{itemize}
+		\item Telnet --- old deprecated insecure predecessor of SSH, never ever use it (port 23), only low-quality electronics still sometimes use it
 		\item FTP --- file transfer protocol --- outdated, no encryption (port 21), slowly replaced by FTPS or SFTP/SCP
 		\begin{itemize}
 			\item Sometimes used only for download, e.g. \url{ftp://ftp.ebi.ac.uk/pub/} or \url{ftp://botany.natur.cuni.cz/}
@@ -2053,6 +2119,7 @@
 		\item web --- \enquote{The Internet} for most of users (port 80 or encrypted 443)
 		\item IMAP (port 143 or 993) and SMTP (port 25 or 465) to connect to e-mail server and send mails
 		\item Messaging protocols like XMPP (Jabber and derived services like Google Talk or Facebook Messenger), IRC, ICQ, Skype,~\ldots
+		\item Databases (if accessible over the Internet), and another special services, use to be available on dedicated ports
 		\item And much more (see \texttt{/etc/services})\ldots
 		\item Port number can be changed in configuration of respective server service
 		\item All firewalls on the way must allow communication on given port --- some ports are commonly filtered in restrictive Wi-Fi networks or totalitarian countries
@@ -2088,6 +2155,7 @@
 		\item Target mount point must exist before mounting
 		\item Servers can be accessed by IP address or hostname
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     # Mount Windows server (requires packages samba and cifs)
     mount.cifs //windows.server.cz/Some/Directory /mnt/win -o \
@@ -2112,6 +2180,7 @@
 	\begin{itemize}
 		\item \texttt{curlftpfs} allows mount FTP as local directory, but FTP is outdated, insecure and not constructed to that usage\ldots
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     wget http://some.address.cz/internet # Download file(s) from Internet
     wget --help # -r for recursive download (whole web), -k to convert links
@@ -2124,6 +2193,7 @@
     scp -r remoteuser@remote.server.cz:/remote/files /local/directory/
     # scp behaves like cp, but works over SSH
 	\end{bashcode}
+	\vfill
 	\begin{itemize}
 		\item \texttt{rsync} is synchronization tool (commonly used for backups) able to connect to remote server (next slide)
 		\item On server side, same files can be accessible (shared) by more methods
@@ -2142,6 +2212,7 @@
 		\item -{-}\texttt{exclude=*.jpg} skip JPG files
 		\item For incremental backups use e.g. \texttt{duplicity}
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     rsync -arv somedirectory otherplace # All attributes, recursive, verbose
     rsync -arv localdirectory user@remote.server.cz:/remote/directory/
@@ -2161,6 +2232,7 @@
 		\end{itemize}
 		\item File \texttt{$\sim$/.ssh/known\_hosts} contain servers you have ever connect to, and their SSH fingerprints (unique IDs) --- if this changes, SSH complains a lot as it could be \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{Man-in-the-middle attack}
 		\item File \texttt{$\sim$/.ssh/authorized\_keys} contains public keys allowing logging to the machine
+		\item \texttt{~/.ssh/config} can store various settings for particular servers
 	\end{itemize}
 \end{frame}
 
@@ -2174,8 +2246,6 @@
     # Empty (no) passphrase will connect to server without password
     # Copy public key to remote server (private key must be kept locally)
     ssh-copy-id user@remote.server.cz # or
-    cat ~/.ssh/*.pub | ssh user@remote.server.cz \
-      "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
     # Now, public key is on the server and private key in local computer is
     # unlocking the connection
     # Unlock the key (no need in some distributions or if there is no
@@ -2184,6 +2254,11 @@
     # Connect as usually
     ssh user@remote.server.cz
 	\end{bashcode}
+	\vfill
+	\begin{itemize}
+		\item SSH keys work in all applications using SSH (SFTP, SSHFS, rsync, many graphical file managers,~\ldots)
+		\item User can have various local passwords on servers, but use single SSH key to connect to them
+	\end{itemize}
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Network tasks}
@@ -2220,8 +2295,8 @@
 			\item Alternatively connect to some other ownCloud/nextCloud/generic webDAV server
 		\end{itemize}
 		\item What are advantages and disadvantages of mounting of remote servers (SSHFS,~etc.) into local directories?
-		\item Connect to \texttt{vyuka.natur.cuni.cz} (or any other server) using \texttt{mc} and copy there and back some files.
-		\item Find in graphical interface of your computer how to connect via SSH/SFTP/SCP to transfer files.
+		\item Connect to \texttt{vyuka.natur.cuni.cz} (or any other server) using \texttt{mc} and copy there and back some files. What are advantages and disadvantages of \texttt{mc} when compared with usage of \texttt{scp} or \texttt{rsync}?
+		\item Find in graphical interface of your computer how to connect via SSH/SFTP/SCP to transfer files. Connect to \texttt{vyuka.natur.cuni.cz} or some other server and transfer there and back some files.
 	\end{enumerate}
 \end{frame}
 
@@ -2297,6 +2372,7 @@
     find . '*.nexus' -print | parallel 'echo -e "Start: $(date)\n" > {}.log
       && mb {} | tee -a {}.log && echo "End: $(date)" >> {}.log'
 	\end{bashcode}
+	\vfill
 	\begin{block}{Tasks}
 		\begin{enumerate}
 			\item Resize using \texttt{parallel} photos \texttt{foto\_oxalis\_*.jpg} to 1000x1000~px.
@@ -2318,6 +2394,7 @@
 			\item Commands (keys) typed by user --- it can be later reused to rerun the application --- unique feature useful for certain software
 		\end{itemize}
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     # tee (-a for append to existing file) records output of any application
     command | tee record.txt # tee will record whole output of command
@@ -2336,6 +2413,7 @@
 		\item \texttt{at} can run command at certain time (\texttt{atd} daemon must be running)
 		\item Tasks are running in background, outputs are mailed (e.g. to \texttt{/var/spool/mail/\$USER})
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     # Check status of atd daemon (it must run), start/stop/enable/disable it
     systemctl status/start/stop/enable/disable atd.service
@@ -2357,7 +2435,9 @@
 	\begin{itemize}
 		\item \texttt{cron} runs tasks repeatedly (\texttt{cron} daemon must be running)
 		\item Scripts for tasks running hourly/daily/weekly/monthly can be copied into respective \texttt{/etc/cron.*/} directories
+		\item Can be replaced by SystemD timers (more complex, but more versatile)
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     # Check status of cron daemon (it must run), start/stop/enable/disable
     systemctl status/start/stop/enable/disable cron.service
