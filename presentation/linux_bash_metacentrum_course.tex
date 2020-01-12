@@ -2524,6 +2524,7 @@
     grep -ls user /etc/* # -l print files with pattern, -s suppress errors
     grep "longer text" textfile # Extract whole phrase
 	\end{bashcode}
+	\vfill
 	\begin{itemize}
 		\item Grep supports regular expressions, slide \ref{regexp}
 	\end{itemize}
@@ -2535,6 +2536,7 @@
 		\item \texttt{cut} extracts columns, \texttt{paste} joins, \texttt{column} reformates
 		\item BASH can not select column according to its name (Perl can do that)
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     cut column/delimiter+field textfile
     cut -c 1 /etc/group # Get first character
@@ -2549,10 +2551,9 @@
     # Output will be two columns (from file1 and file2) separated by TAB
     paste -d "|" diff_test_file_1.txt diff_test_file_2.txt # -d for delimiter
     # Swapping columns is not very comfortable...
-    paste <(cut -f2 cut_awk_test_file.tsv) <(cut -f1 cut_awk_test_file.tsv)
+    paste <(cut -f 2 cut_awk_test_file.tsv) <(cut -f 1 cut_awk_test_file.tsv)
     ls -l | column -t # Reformate input as table (compare with 'ls -l')
 	\end{bashcode}
-	\vfill
 \end{frame}
 
 \begin{frame}[fragile]{Examples of usage of head, grep and cut with our data}
@@ -2568,7 +2569,8 @@
     # second column (separated by TAB)
     tail -n+2 cut_awk_test_file.tsv | cut -f 2 | less
     # Number of occurrences of word "Gregor" in file long_text.txt
-    grep -o Gregor long_text.txt | wc -l
+    grep -o Gregor long_text.txt | wc -l # Or just
+    grep -c Gregor long_text.txt
     ls -1 *.sh | wc -l # How many BASH script are in current directory
     # Extract from FASTA file only sequence (discard sequence names) and
     # save result in seq.txt
@@ -2587,8 +2589,9 @@
 		\item Can do things other BASH tools can not (easily) do --- better manipulation with columns, calculations,~\ldots
 		\item Has complicated syntax, it is hard to read, it is not similar to other tools --- Perl can do more and is more common (learn it instead)\ldots
 		\item Supports regular expressions, slide \ref{regexp}
-		\item For more information see manuals \url{https://www.gnu.org/software/gawk/manual/}, \url{https://en.wikibooks.org/wiki/An_Awk_Primer} and \url{http://www.grymoire.com/Unix/Awk.html}
+		\item For more information see manuals \url{https://www.gnu.org/software/gawk/manual/}, \url{https://en.wikibooks.org/wiki/An_Awk_Primer} and \url{https://www.grymoire.com/Unix/Awk.html}
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     awk 'regexp { commands parameters }' file # General syntax
     # Print last column (separated by tab, built-in variable $NF)
@@ -2602,10 +2605,10 @@
     awk '{print $2}' cut_awk_test_file.tsv
     # Print columns 3 and 2 (in this order)
     awk '{print $3, $2}' cut_awk_test_file.tsv
-    # Get column 5 and 1 (in this order, separated by ":") from /etc/passwd,
-    # print ", username:" between the columns. Note usage of commas and
-    # consequences to output.
-    cat /etc/passwd | awk -F ':' '{print $5 ", username:", $1}'
+    # Get column 5 and 1 (in this order, separated by ":") from /etc/passwd
+    # (only lines containing "home") print ", username:" between the columns.
+    # Note usage of commas and consequences to output.
+    grep home /etc/passwd | awk -F ':' '{print $5 ", username:", $1}'
     # Separate columns by TAB, /^d/ for lines starting with "d" (only dirs)
     ls -l | awk '/^d/ { print $8 "\t" $3 }'
     # Print on even lines ">", former column 1, new line, former column 2
@@ -2673,6 +2676,7 @@
 	\begin{itemize}
 		\item \texttt{tr} replaces or deletes characters from standard input and writes result to standard output --- use pipes and/or redirects
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     # Replace space by TAB in inputtextfile, save result as outputtextfile
     cat inputtextfile | tr " " "\t" > outputtextfile
@@ -2699,7 +2703,7 @@
 		\item macOS has old outdated versions of \texttt{grep}, \texttt{sed} and other tools (richness of regular expressions is poor) --- use versions from \href{http://brew.sh/}{Homebrew} (slide~\ref{homebrew}) or search Internet how to modify the patterns\ldots
 		\item Option -\texttt{s} separates multiple files (otherwise lines in multiple files are calculated as one stream)
 		\item Option -\texttt{n} use to be used when deleting lines or printing only specific lines to suppress other lines (see examples)
-		\item See manuals \url{https://www.gnu.org/software/sed/manual/} and \url{http://www.grymoire.com/Unix/sed.html}
+		\item See manuals \url{https://www.gnu.org/software/sed/manual/} and \url{https://www.grymoire.com/Unix/sed.html}
 		\item Various parameters, modificators, operators can be combined\ldots
 	\end{itemize}
 \end{frame}
@@ -2783,6 +2787,7 @@
 			\item E.g. if 1$^{st}$ file contains \texttt{A~B} and \texttt{A~C} and 2$^{nd}$ file \texttt{A~D} and \texttt{A~E}, the result will be \texttt{A~B D}, \texttt{A~B E}, \texttt{A~C D} and \texttt{A~C E}
 		\end{itemize}
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     # Add file to the end of another text file
     cat file1 >> file2 # file2 will contain both files, file1 is unchanged
@@ -2798,24 +2803,38 @@
 	\vfill
 \end{frame}
 
-% \subsection{Compressed text} % TODO Compressed text
-%
-% \begin{frame}{Variants of basic commands for processing of compressed text files}
-% 	\begin{itemize}
-% 		\item
-% 	\end{itemize}
-% \end{frame}
+\subsection{Compressed text}
+
+\begin{frame}[fragile]{Variants of basic commands for processing of compressed text files}
+	\begin{itemize}
+		\item Many tools are able to directly handle files (i.e. single text files) compressed by \texttt{gzip}
+		\item For files compressed by \texttt{gzip} use \texttt{zcat} (instead of \texttt{cat}), \texttt{zdiff} (instead of \texttt{diff}), \texttt{zegrep} (instead of \texttt{egrep}), \texttt{zfgrep} (instead of \texttt{fgrep}), \texttt{zless} (instead of \texttt{less}), \texttt{zmore} (instead of \texttt{more}),~\ldots
+		\item For files compressed by \texttt{bzip2} use \texttt{bzcat}, \texttt{bzdiff}, \texttt{bzegrep}, \texttt{bzfgrep}, \texttt{bzless}, \texttt{bzmore},~\ldots
+		\item For files compressed by \texttt{lzma} use \texttt{lzcat}, \texttt{lzdiff}, \texttt{lzegrep}, \texttt{lzfgrep}, \texttt{lzgrep}, \texttt{lzless}, \texttt{lzmore},~\ldots
+		\item Sometimes these variants are used automatically when user works with compressed file
+		\item \texttt{mc} can also do the job
+	\end{itemize}
+	\vfill
+	\begin{bashcode}
+    # Extract lines with grep
+    zgrep FORMAT arabidopsis.vcf.gz
+    # Display file compressed by bzip2
+    bzless Oxalis_hirta_R2.fastq.bz2
+    # Get end of the file
+    bzcat Oxalis_hirta_R2.fastq.bz2 | tail
+	\end{bashcode}
+\end{frame}
 
 \subsection{Comparisons}
 
 \begin{frame}{Comparisons}
 	\begin{itemize}
-		\item Graphically compare two files by e.g. \href{https://www.kde.org/applications/development/kompare/}{Kompare}, \href{https://sourcegear.com/diffmerge/}{DiffMerge}, \href{https://meldmerge.org/}{Meld},~\ldots
+		\item Graphically compare two files by e.g. \href{https://kde.org/applications/development/org.kde.kompare}{Kompare}, \href{https://sourcegear.com/diffmerge/}{DiffMerge}, \href{https://meldmerge.org/}{Meld},~\ldots
 		\item Most common is usage of GNU diffutils (next slide), see manual \url{https://www.gnu.org/software/diffutils/manual/}
 		\item See also \href{https://www.computerhope.com/unix/udiff.htm}{guide with examples}, česky \href{https://blog.root.cz/petrkrcmar/diff-jak-cist-vystup-z-porovnani-souboru/}{příklady na diff} a~\href{https://www.root.cz/clanky/nastroje-pro-porovnani-obsahu-dvou-textovych-souboru/}{porovnání dvou textových souborů}
 	\end{itemize}
 	\begin{center}
-		\includegraphics[height=4.5cm]{kompare.png}
+		\includegraphics[height=5cm]{kompare.png}
 	\end{center}
 \end{frame}
 
@@ -2838,16 +2857,39 @@
     diff -u diff_test_file_1.txt diff_test_file_2.txt # Better, most common
     diff -y diff_test_file_1.txt diff_test_file_2.txt # In two columns
     colordiff # Same usage and parameters as previous, colored output
-    diff -u diff_test_file_1.txt diff_test_file_2.txt | view - # In vim
-    vimdiff # Can show more colors, launches vim (exit by <ESC>:q! Enter)
+    colordiff -u diff_test_file_1.txt diff_test_file_2.txt # Most common
 	\end{bashcode}
 \end{frame}
 
-% \begin{frame}{Patch} % TODO Add usage of patch
-% 	\begin{itemize}
-% 		\item
-% 	\end{itemize}
-% \end{frame}
+\begin{frame}[fragile]{diff and patch}
+	\begin{itemize}
+		\item Users of \texttt{vim} (slide~\ref{vim}) can display the diff in \texttt{vim}, or use \texttt{vimdiff}
+		\item In vimdiff swap between panes by \texttt{Ctrl+W+W}
+		\begin{itemize}
+			\item Can open more files, works like standard \texttt{vim} (from slide~\ref{vim}), individual files can be saved
+		\end{itemize}
+	\end{itemize}
+	\vfill
+	\begin{bashcode}
+    # Display diff in vim
+    diff -u diff_test_file_1.txt diff_test_file_2.txt | view -
+    # vimdiff can show more colors, launches vim (exit by <ESC>:q! Enter)
+    vimdiff diff_test_file_1.txt diff_test_file_2.txt
+	\end{bashcode}
+	\vfill
+	\begin{itemize}
+		\item Saves difference between two files --- it can be later used as template to modify original file
+		\item Single patch file can contain changes from multiple files
+	\end{itemize}
+	\vfill
+	\begin{bashcode}
+    # Create the diff file
+    diff -u diff_test_file_1.txt diff_test_file_2.txt > difference.patch
+    # Apply the patch
+    patch < difference.patch # or
+    patch diff_test_file_1.txt difference.patch
+	\end{bashcode}
+\end{frame}
 
 \subsection{Editors}
 
@@ -2857,15 +2899,17 @@
 		\item You can work most of the time in graphical editors (slide \ref{editors})
 		\item Emacs and Vim are extremely rich, but having completely different approach --- when you get use to one, you can't use the another
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     nano textfile # Enhanced clone of pico, basic simple text editor
     pico textfile # Basic simple text editor
     mc # Use its internal editor, just very basic (press F4 on the file)
-    emacs textfile # Extremely feature rich (including file browser
-                   # and many tools), Exit by Ctrl+X and Ctrl+C
+    emacs textfile # Extremely feature rich (including file browser and
+                   # many tools), exit by Ctrl+X and Ctrl+C
     vim textfile # Probably the most common, as rich as Emacs (see further)
     vimtutor # Launch tutorial to learn Vim (in various languages)
 	\end{bashcode}
+	\vfill
 	\begin{itemize}
 		\item \alert{Task:} Run \texttt{vimtutor} and follow instructions there.
 	\end{itemize}
@@ -2890,34 +2934,36 @@
 			\item See \url{https://vim-adventures.com/} to play a~game and learn Vim
 		\end{itemize}
 		\item \textbf{Emacs} and \textbf{Vim} have huge number of possibilities and support for plugins and scripts, but completely different usage style --- one person can really learn only one\ldots
+		\item If regularly working in command line, master any command line editor
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Emacs basics}
 	\begin{itemize}
 		\item Feature-rich ecosystem --- not only text editor, also file manager, debugger, integrated development environment, extra plugins are available,~\ldots
-		\item Keyboard commands are noted as e.g. \texttt{C-x}, where \enquote{\texttt{C}} stands for (mostly) \texttt{Ctrl} key, \texttt{M-x}, where \enquote{\texttt{M}} stands mostly for \texttt{Alt} key (\texttt{Meta}), sometimes for \texttt{Win} key
+		\item Keyboard commands are noted as e.g. \texttt{C}-\texttt{x}, where \enquote{\texttt{C}} stands for (mostly) \texttt{Ctrl} key, \texttt{M}-\texttt{x}, where \enquote{\texttt{M}} stands mostly for \texttt{Alt} key (\texttt{Meta}), sometimes for \texttt{Win} key
 	\end{itemize}
 	\begin{multicols}{2}
 		\begin{itemize}
-			\item \texttt{C-h C-}h help (twice \texttt{Ctrl~+~H})
-			\item \texttt{C-x C-c} quit (\texttt{X-g} for particular buffer, etc.)
-			\item \texttt{C-x C-f} open file
-			\item \texttt{C-x C-s} save file
-			\item \texttt{C-x C-w} save file as
-			\item \texttt{C-\_} undo
-			\item \texttt{C-s} search forwards
-			\item \texttt{C-r} search backwards
-			\item \texttt{C-left} move one word left
-			\item \texttt{C-right} move one word right
-			\item \texttt{C-up} move one paragraph up
-			\item \texttt{C-down} move one paragraph down
-			\item \texttt{M-\%} search and replace pattern
+			\item \texttt{C}-\texttt{h C}-\texttt{h} help (twice \texttt{Ctrl~+~H})
+			\item \texttt{C}-\texttt{x C}-\texttt{c} quit (\texttt{X}-\texttt{g} for particular buffer, etc.)
+			\item \texttt{C}-\texttt{x C}-\texttt{f} open file
+			\item \texttt{C}-\texttt{x C}-\texttt{s} save file
+			\item \texttt{C}-\texttt{x C}-\texttt{w} save file as
+			\item \texttt{C}-\texttt{\_} undo
+			\item \texttt{C}-\texttt{s} search forwards
+			\item \texttt{C}-\texttt{r} search backwards
+			\item \texttt{C}-\texttt{left} move one word left
+			\item \texttt{C}-\texttt{right} move one word right
+			\item \texttt{C}-\texttt{up} move one paragraph up
+			\item \texttt{C}-\texttt{down} move one paragraph down
+			\item \texttt{M}-\texttt{\%} search and replace pattern
 		\end{itemize}
 	\end{multicols}
 \end{frame}
 
 \begin{frame}{Vim}{Vim has three different working modes} % TODO Update Vim usage
+	\label{vim}
 	\begin{enumerate}
 		\item \textbf{\enquote{Normal}} --- nothing is displayed in bottom left corner, every key has some meaning (next slide)
 		\begin{itemize}
@@ -2927,8 +2973,8 @@
 		\item \textbf{Command} --- in bottom left corner \texttt{:} is displayed, awaits commands, exit to normal mode by \texttt{Backspace} key (delete \enquote{\texttt{:}})
 	\end{enumerate}
 	\begin{itemize}
-		\item See documentation \url{http://vim.wikia.com/}, \url{https://www.vim.org/docs.php}; česky \url{http://www.nti.tul.cz/~satrapa/docs/vim/}
-		\item For interactive learning try \url{https://vim-adventures.com/} or command \texttt{vimtutor}
+		\item See documentation \url{https://vim.fandom.com/wiki/Vim_Tips_Wiki}, \url{https://www.vim.org/docs.php}; česky \url{http://www.nti.tul.cz/~satrapa/docs/vim/}
+		\item For interactive learning try \url{https://vim-adventures.com/} (\alert{Task:} Play it for a while.:) or command \texttt{vimtutor}
 	\end{itemize}
 \end{frame}
 
@@ -2939,7 +2985,7 @@
 			\begin{itemize}
 				\item \texttt{dd} cut current line
 				\item \texttt{r} replace single character below cursor (type then character to be placed instead of the original one)
-				\item \texttt{v} for selection of text
+				\item \texttt{v} for selection of text (and then e.g. delete by \texttt{d} or copy by \texttt{y})
 				\item \texttt{y} copy selection
 				\item \texttt{x} cut selection (always to clipboard, it can be pasted by \texttt{p})
 				\item \texttt{p} paste
@@ -2990,24 +3036,24 @@
 		\item \alert{\texttt{[\textasciicircum\ldots]}} --- reverse case --- all characters except newline and those listed in brackets
 		\item \alert{\texttt{\textasciicircum}} --- first character of reg exp --- beginning of the line
 		\item \alert{\texttt{\$}} --- last character of reg exp --- end of the line
-		\item \alert{\texttt{\textbackslash\{n,m\textbackslash\}}} --- range of occurrences of single character
+		\item \alert{\texttt{\textbackslash\{n,m\textbackslash\}}} --- range (number) of occurrences of single character (from \textit{n} to \textit{m})
 		\item \alert{\texttt{\textbackslash\{n\textbackslash\}}} --- exactly \textit{n} occurrences
 		\item \alert{\texttt{\textbackslash\{n,\textbackslash\}}} --- at least \textit{n} occurrences
 		\item \alert{\texttt{\textbackslash}} --- escape following special character (e.g. \texttt{\textbackslash .} to literally search for dot and not \enquote{any single character})
 		\item \alert{\texttt{|}} --- either the preceding or following reg exp can be matched (alternation)
-		\item \alert{\texttt{\textbackslash(\ldots\textbackslash)}} --- group reg exp (numbered, starting with 1) --- can be called by \alert{\textbackslash\textit{n}}, where \textit{n} is number of the group (starting with 1)
+		\item \alert{\texttt{\textbackslash(\ldots\textbackslash)}} --- remembered group reg exp (numbered, starting with 1) --- can be called by \alert{\textbackslash\textit{n}}, where \textit{n} is number of the group (starting with 1)
 		\item \alert{\texttt{\textbackslash$<$}}, \alert{\texttt{\textbackslash$>$}} --- word boundaries
-		\item \alert{\texttt{[[:alnum:]]}} --- alphanumerical characters (includes white space), same like \alert{\texttt{[a-zA-Z0-9]}}
-		\item \alert{\texttt{[[:alpha:]]}} --- alphabetic characters, like \alert{\texttt{[a-zA-Z]}}
+		\item \alert{\texttt{[[:alnum:]]}} --- alphanumerical characters (includes white space), same like \alert{\texttt{[a}-\texttt{zA}-\texttt{Z0}-\texttt{9]}}
+		\item \alert{\texttt{[[:alpha:]]}} --- alphabetic characters, like \alert{\texttt{[a}-\texttt{zA}-\texttt{Z]}}
 		\item \alert{\texttt{[[:blank:]]}} --- space and TAB
 		\item \alert{\texttt{[[:cntrl:]]}} --- control characters
-		\item \alert{\texttt{[[:digit:]]}} --- numeric characters, like \alert{\texttt{[0-9]}}
+		\item \alert{\texttt{[[:digit:]]}} --- numeric characters, like \alert{\texttt{[0}-\texttt{9]}}
 		\item \alert{\texttt{[[:graph:]]}} --- printable and visible (non-space) characters
-		\item \alert{\texttt{[[:lower:]]}} --- lowercase characters, like \alert{\texttt{[a-z]}}
+		\item \alert{\texttt{[[:lower:]]}} --- lowercase characters, like \alert{\texttt{[a}-\texttt{z]}}
 		\item \alert{\texttt{[[:print:]]}} --- printable characters (includes white space)
 		\item \alert{\texttt{[[:punct:]]}} --- punctuation characters
 		\item \alert{\texttt{[[:space:]]}} --- white space characters
-		\item \alert{\texttt{[[:upper:]]}} --- uppercase characters, like \alert{\texttt{[A-Z]}}
+		\item \alert{\texttt{[[:upper:]]}} --- uppercase characters, like \alert{\texttt{[A}-\texttt{Z]}}
 		\item \alert{\texttt{[[:xdigit:]]}} --- hexadecimal digits
 		\item \alert{\texttt{\textasciicircum\$}} --- blank line
 		\item \alert{\texttt{\textasciicircum.*\$}} --- entire line whatever it is
@@ -3015,8 +3061,8 @@
 		\item \alert{\texttt{\&}} --- content of pattern that was matched
 		\item Implementation in \texttt{vim}, \texttt{sed}, \texttt{grep}, \texttt{awk} and \texttt{perl} and among various UNIX systems is almost same, but not identical\ldots
 		\item \textbf{grep}, \textbf{sed} and \textbf{vim} \alert{require escaping} of \alert{\texttt{+}}, \alert{\texttt{?}}, \alert{\texttt{\{}}, \alert{\texttt{\}}}, \alert{\texttt{(}} and \alert{\texttt{)}} by backslash \alert{\texttt{\textbackslash}} (e.g. \texttt{\textbackslash +}) --- \textbf{egrep} (extended version, launched as \texttt{grep}~-\texttt{E \ldots} or \texttt{egrep \ldots}), \textbf{sed} with extended reg exp (\texttt{sed}~-\texttt{r}) and \textbf{perl} \alert{not}
-		\item Read \url{https://en.wikibooks.org/wiki/Regular_Expressions}, \url{http://www.grymoire.com/Unix/Regular.html}, \url{https://www.regular-expressions.info/}; česky \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{https://www.root.cz/serialy/regularni-vyrazy/} a~\url{https://www.regularnivyrazy.info/}
-		\item Manuals for \href{https://www.gnu.org/software/grep/manual/}{Grep}, Vim, \href{https://www.gnu.org/software/sed/manual/}{Sed}, \href{https://www.gnu.org/software/gawk/manual/}{Awk}, \href{https://en.wikibooks.org/wiki/Perl_Programming}{Perl} (\href{https://en.wikibooks.org/wiki/Perl_6_Programming}{newer Perl~6}),~\ldots
+		\item Read \url{https://en.wikibooks.org/wiki/Regular_Expressions}, \url{https://www.grymoire.com/Unix/Regular.html}, \url{https://www.regular-expressions.info/}; česky \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{https://www.root.cz/serialy/regularni-vyrazy/} a~\url{https://www.regularnivyrazy.info/}
+		\item Manuals for \href{https://www.gnu.org/software/grep/manual/}{Grep}, Vim, \href{https://www.gnu.org/software/sed/manual/}{Sed}, \href{https://www.gnu.org/software/gawk/manual/}{Awk}, \href{https://en.wikibooks.org/wiki/Perl_Programming}{Perl} (\href{https://en.wikibooks.org/wiki/Perl_6_Programming}{newer Perl~6 Raku}),~\ldots
 		\item See sed examples, slide~\ref{sedex}; and next slide
 		\item macOS has by default very outdated version of \texttt{sed} and another tools --- it does not have all advanced features --- users need to install e.g. \texttt{gnu-sed} formulae from \href{https://brew.sh/}{Homebrew} (slide~\ref{homebrew})
 	\end{itemize}
@@ -4469,7 +4515,7 @@
 		\item Debian (general handbook) \url{https://www.debian.org/doc/manuals/debian-reference/ch01.en.html}
 		\item Guide to Unix \url{https://en.wikibooks.org/wiki/Guide_to_Unix}
 		\item BASH for beginners \url{https://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html} (the site has plenty of good resources)
-		\item Grymoire for UNIX wizards \url{http://www.grymoire.com/Unix/}
+		\item Grymoire for UNIX wizards \url{https://www.grymoire.com/Unix/}
 		\item BASH Guide for Beginners \url{http://linuxcourse.rutgers.edu/documents/Bash-Beginners-Guide/}
 		\item Linux tutorial \url{https://ryanstutorials.net/linuxtutorial/}
 		\item Getting Started with BASH \url{https://www.hypexr.org/bash_tutorial.php}
