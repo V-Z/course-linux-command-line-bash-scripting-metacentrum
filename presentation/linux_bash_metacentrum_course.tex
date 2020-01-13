@@ -1369,42 +1369,6 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}{BASH globing and wildcards}
-	\label{globbing}
-	\begin{itemize}
-		\item BASH itself doesn't recognize regular expressions --- its wildcards have some of functions of regular expressions (from slide~\ref{regexp}) and can look similarly, but behave differently --- Do not confuse!
-		\item \texttt{?} --- Replaces any single character
-		\item \texttt{*} --- Replaces any number of any characters (\texttt{ls a*} lists all files starting with \enquote{a})
-		\item \texttt{[]} --- Range or a~list --- \texttt{[abcdef]} and \texttt{[a-f]} are same
-		\item \texttt{[!\ldots]} --- Reverse previous case (\texttt{!}) --- any character except those listed
-		\item \texttt{\{\}} --- Expansion (terms inside are separated by commas \texttt{,}) --- all possible combinations (see next slide for examples)
-		\item \texttt{\textbackslash} --- Escapes following character and it doesn't have its special meaning (e.g. \texttt{\textbackslash *} means literally asterisk \texttt{*} and not \enquote{any number of any characters} as usually)
-		\item For details see \texttt{man 7~glob} and \texttt{man 7~regex}
-		\item This is useful e.g. to list only subset of files or to provide file selection as input for some command
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Brace expansion and quotes}
-	\begin{bashcode}
-    echo a{p,c,d,b}e # ape ace ade abe - all combinations
-    echo {a,b,c}{d,e,f} # ad ae af bd be bf cd ce cf - all combinations
-    ls *.{jpg,jpeg,png} # expansion to *.jpg *.jpeg *.png, same as
-    ls *.jpg *.jpeg *.png
-    ls scripts_data/*_R[12].fastq.bz2
-	\end{bashcode}
-	\vfill
-	\begin{itemize}
-		\item Text in single quotes (\texttt{'\ldots'}) preserves the literal value of each character within the quotes
-		\item Text in double quotes (\texttt{"\ldots"}) preserves the literal value of all characters within the quotes, with the exception of dollar (\texttt{\textdollar}), back tick (\texttt{\textasciigrave}) and back slash (\texttt{\textbackslash})
-		\item A~double quote may be quoted within double quotes by preceding it with a~backslash (\texttt{\textbackslash"} means literally \enquote{double quote})
-		\item Text between back ticks (\texttt{\textasciigrave\ldots\textasciigrave}) or within \texttt{\$\{\ldots\}} will be evaluated and then used as command or argument (see next slide for examples)
-	\begin{itemize}
-		\item Syntax with back ticks is deprecated, keep using \texttt{\$\{\ldots\}} instead
-	\end{itemize}
-	\item This is important when handling file names with non-Latin characters, when working with variables (from slide~\ref{variables}), printing various information within scripts (e.g. slide~\ref{varquotes}), etc.
-	\end{itemize}
-\end{frame}
-
 \subsection{Directories}
 
 \begin{frame}[fragile]{Directories}
@@ -1611,6 +1575,44 @@
 			\item List all directories in \texttt{/etc} up to sesond level.
 		\end{enumerate}
 	\end{block}
+\end{frame}
+
+\subsection{Globbing, wildcards, quotes}
+
+\begin{frame}{BASH globing and wildcards}
+	\label{globbing}
+	\begin{itemize}
+		\item BASH itself doesn't recognize regular expressions --- its wildcards have some of functions of regular expressions (from slide~\ref{regexp}) and can look similarly, but behave differently --- Do not confuse!
+		\item \texttt{?} --- Replaces any single character
+		\item \texttt{*} --- Replaces any number of any characters (\texttt{ls a*} lists all files starting with \enquote{a})
+		\item \texttt{[]} --- Range or a~list --- \texttt{[abcdef]} and \texttt{[a-f]} are same
+		\item \texttt{[!\ldots]} --- Reverse previous case (\texttt{!}) --- any character except those listed
+		\item \texttt{\{\}} --- Expansion (terms inside are separated by commas \texttt{,}) --- all possible combinations (see next slide for examples)
+		\item \texttt{\textbackslash} --- Escapes following character and it doesn't have its special meaning (e.g. \texttt{\textbackslash *} means literally asterisk \texttt{*} and not \enquote{any number of any characters} as usually)
+		\item For details see \texttt{man 7~glob} and \texttt{man 7~regex}
+		\item This is useful e.g. to list only subset of files or to provide file selection as input for some command
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Brace expansion and quotes}
+	\begin{bashcode}
+    echo a{p,c,d,b}e # ape ace ade abe - all combinations
+    echo {a,b,c}{d,e,f} # ad ae af bd be bf cd ce cf - all combinations
+    ls *.{jpg,jpeg,png} # expansion to *.jpg *.jpeg *.png, same as
+    ls *.jpg *.jpeg *.png
+    ls scripts_data/*_R[12].fastq.bz2
+	\end{bashcode}
+	\vfill
+	\begin{itemize}
+		\item Text in single quotes (\texttt{'\ldots'}) preserves the literal value of each character within the quotes
+		\item Text in double quotes (\texttt{"\ldots"}) preserves the literal value of all characters within the quotes, with the exception of dollar (\texttt{\textdollar}), back tick (\texttt{\textasciigrave}) and back slash (\texttt{\textbackslash})
+		\item A~double quote may be quoted within double quotes by preceding it with a~backslash (\texttt{\textbackslash"} means literally \enquote{double quote})
+		\item Text between back ticks (\texttt{\textasciigrave\ldots\textasciigrave}) or within \texttt{\$\{\ldots\}} will be evaluated and then used as command or argument (see next slide for examples)
+	\begin{itemize}
+		\item Syntax with back ticks is deprecated, keep using \texttt{\$\{\ldots\}} instead
+	\end{itemize}
+	\item This is important when handling file names with non-Latin characters, when working with variables (from slide~\ref{variables}), printing various information within scripts (e.g. slide~\ref{varquotes}), etc.
+	\end{itemize}
 \end{frame}
 
 \subsection{Variables}
@@ -4861,7 +4863,5 @@
 \end{document}
 
 % TODO Missing topics
-% * PRIORITY <-1204,+1023> (default 0)
 % * BASH arrays, https://opensource.com/article/18/5/you-dont-know-bash-intro-bash-arrays
 % * Přidat víc příkladů na základní operace
-% * Možná dát k sobě všechny věci týkající se globbingu, výrazů, proměnných apod. v BASHi
