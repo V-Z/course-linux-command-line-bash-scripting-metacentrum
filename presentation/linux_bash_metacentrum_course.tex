@@ -4544,6 +4544,7 @@
 		\item \alert{Read documentation for your distribution first!}
 		\item Most of actions require root authentication
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     # SystemD - huge amount of possibilities
     systemctl enable/disable/status/start/stop servicename # TAB helps
@@ -4601,7 +4602,7 @@
 
 \begin{frame}[allowframebreaks]{Resources to learn to work in the terminal}
 	\begin{itemize}
-		\item openSUSE (general handbook) \url{https://doc.opensuse.org/documentation/leap/startup/html/book.opensuse.startup/part.bash.html}
+		\item openSUSE (general handbook) \url{https://doc.opensuse.org/documentation/leap/startup/html/book.opensuse.startup/part-bash.html}
 		\item Ubuntu (general handbook) \url{https://help.ubuntu.com/community/UsingTheTerminal}
 		\item BASH full reference manual \url{https://www.gnu.org/software/bash/manual/} (advanced)
 		\item Debian (general handbook) \url{https://www.debian.org/doc/manuals/debian-reference/ch01.en.html}
@@ -4616,6 +4617,7 @@
 		\begin{itemize}
 			\item Učebnice Linuxu \url{https://www.abclinuxu.cz/ucebnice}
 			\item Příkazová řádka Ubuntu \url{http://wiki.ubuntu.cz/syst\%C3\%A9m/p\%C5\%99\%C3\%ADkazov\%C3\%A1_\%C5\%99\%C3\%A1dka/termin\%C3\%A1l}
+			\item Příkazová řádka Fedory \url{https://wiki.mojefedora.cz/domains/wiki.mojefedora.cz/doku.php?id=navody:prirucka:prompt}
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -4636,13 +4638,16 @@
 		\item \textbf{OSS is free as freedom of speech --- not as free beer!}
 		\begin{itemize}
 			\item As soon as you don't pay for support, you can't blame anyone for lack of responses
-			\item There are plenty of reasons some software doesn't work --- usage/data author didn't expect, unsupported version of operating system, author's mistake, user's mistake,~\ldots
+			\item Most of software we use to process our data is provided under \enquote{best effort}, without warranty\ldots
+			\item Plenty of scientific software is not written by professional programmers, authors often do not foresee everything what could happen and they could have troubles wehn fixing reported issues\ldots
+			\item There are plenty of reasons some software doesn't work --- usage/data author didn't expect, unsupported version of operating system, author's mistake, user's mistake, unexpected interaction with another software,~\ldots
 			\item Authors wish their software to be useful --- constructive feedback, reporting bugs and wishes is welcomed, but it must be provided in the way useful for the developer
 		\end{itemize}
 		\item Imagine you should answer --- which information do you need?
 		\item Try to find the best place to ask your question --- specific forum for particular distribution or software use to be the best option
-		\item Learning command line is like learning foreign language\ldots
+		\item Learning command line is like learning foreign language --- it takes time\ldots
 		\item \alert{Reading documentation is not wasting of time!}
+		\item Plenty of software packages have bug (issue) trackers (e.g. on GitHub) to report any problem with the software and discuss --- search them on software homepage
 	\end{itemize}
 \end{frame}
 
@@ -4665,18 +4670,21 @@
 		\item Plenty of bigger projects have their own web fora or e-mail conferences --- search for it to ask on right place
 		\item In Linux/OSS world, e-mail conferences and \href{https://en.wikipedia.org/wiki/Internet_Relay_Chat}{IRC} are sometimes more popular, than web forums --- try them
 		\item If you find a~bug, report it according to instructions given by the project
+		\item Bioinformatics is discussed on \href{https://www.biostars.org/}{Biostars} (including various related programming issues)
+		\item Plenty of software packages have bug (issue) trackers (e.g. on GitHub) to report any problem with the software and discuss --- search them on software homepage
+		\item Programming languages like R or Python have their own discussion fora, commonly specific for particular field
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{openSUSE}
 	\begin{itemize}
 		\item Homepage \url{https://www.opensuse.org/}
-		\item Wiki \url{https://en.opensuse.org/Main_Page}
+		\item Wiki (knowledge base) \url{https://en.opensuse.org/Main_Page}
 		\item Documentation \url{https://doc.opensuse.org/}
 		\item News \url{https://news.opensuse.org/}, developers' blogs \url{https://lizards.opensuse.org/}, aggregation of blogs \url{https://planet.opensuse.org/}
 		\item Forums \url{https://forums.opensuse.org/}
 		\item Mailing lists \url{https://lists.opensuse.org/}
-		\item Community \url{https://opensuse-community.org/}, guide \url{https://opensuse-guide.org/}
+		\item Community \url{https://opensuse-community.org/}, short community guide \url{https://opensuse-guide.org/}
 	\end{itemize}
 \end{frame}
 
@@ -4687,13 +4695,13 @@
 			\item Documentation, wiki \url{https://wiki.debian.org/}
 			\item Support \url{https://www.debian.org/support}
 		\end{itemize}
-		\item Ubuntu \url{https://www.ubuntu.com/}
+		\item Ubuntu \url{https://ubuntu.com/}
 		\begin{itemize}
-			\item Support \url{https://www.ubuntu.com/support}
-			\item Ask Ubuntu \url{https://askubuntu.com/}
+			\item Support \url{https://ubuntu.com/support}
+			\item Ask Ubuntu (probably the best forum) \url{https://askubuntu.com/}
 			\item Forum \url{https://ubuntuforums.org/}
 			\item Documentation \url{https://help.ubuntu.com/}
-			\item Kubuntu \url{https://www.kubuntu.org/}
+			\item Kubuntu \url{https://kubuntu.org/}
 			\item Kubuntu forum \url{https://www.kubuntuforums.net/}
 			\item Xubuntu \url{https://xubuntu.org/}
 			\item Lubuntu \url{https://lubuntu.net/}
@@ -4724,7 +4732,7 @@
 			\item Help for users \url{https://help.gnome.org/users/}
 			\item Wiki \url{https://wiki.gnome.org/}
 		\end{itemize}
-		\item KDE \url{https://www.kde.org/}
+		\item KDE \url{https://kde.org/}
 		\begin{itemize}
 			\item Forum \url{https://forum.kde.org/}
 			\item UserBase wiki \url{https://userbase.kde.org/Welcome_to_KDE_UserBase}
@@ -4748,8 +4756,8 @@
 		\begin{itemize}
 			\item Document Foundation \url{https://www.documentfoundation.org/}
 			\item Ask LO \url{https://ask.libreoffice.org/}
-			\item Wiki of LO \url{https://help.libreoffice.org/Main_Page} and DF \url{https://wiki.documentfoundation.org/Main_Page}
-			\item Documentation \url{https://documentation.libreoffice.org/en/english-documentation/}
+			\item Wiki of LO \url{https://help.libreoffice.org/} and DF \url{https://wiki.documentfoundation.org/Main_Page}
+			\item Documentation \url{https://documentation.libreoffice.org/}
 		\end{itemize}
 		\item Česky
 		\begin{itemize}
@@ -4780,9 +4788,6 @@
 		\begin{itemize}
 			\item Wiki \url{http://wiki.ubuntu.cz/}
 			\item Fórum \url{http://forum.ubuntu.cz/}
-			\item Kubuntu \url{http://www.kubuntu.cz/}
-			\item Xubuntu \url{http://www.xubuntu.cz/}
-			\item Lubuntu \url{http://www.lubuntu.cz/}
 		\end{itemize}
 		\item Fedora \url{https://mojefedora.cz/}
 		\begin{itemize}
