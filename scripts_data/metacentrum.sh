@@ -2,7 +2,7 @@
 
 # Modify the script according to your needs!
 
-# Submit the script to the queueu by
+# Submit the script to the queue by
 # qsub -l walltime=72:0:0 -l select=1:ncpus=8:mem=24gb:scratch_local=10gb -m abe metacentrum.sh
 # In this case, maximal running time is 72 hours (72:0:0), it will run on one computer (select=1), use 8 CPU threads (ncpus=8), up to 24 GB of RAM (mem=24gb) and send email when it aborts, begins and completes/ends
 
@@ -20,7 +20,7 @@ trap 'cp -a "$SCRATCHDIR" "$DATADIR"/ && clean_scratch' TERM
 cp -a "$DATADIR"/"$WORKDIR"/* "$SCRATCHDIR"/ || exit 1 # If it fails, exit script
 
 # Change working directory - script goes to the directory where calculations are done
-cd "$SCRATCHDIR"/ || exit 2 # If it fails, exit script
+cd "$SCRATCHDIR"/ || exit 1 # If it fails, exit script
 
 # Prepare calculations - load required application modules
 # See https://wiki.metacentrum.cz/wiki/Kategorie:Applications

@@ -4156,6 +4156,27 @@
 	\end{bashcode}
 \end{frame}
 
+\begin{frame}[fragile]{Key MetaCentrum commands}
+	\begin{itemize}
+		\item MetaCentrum is \enquote{just} normal Linux server --- work there as on any other Linux system
+		\item Command \texttt{module} loads/unloads selected \href{https://wiki.metacentrum.cz/wiki/Kategorie:Applications}{application}
+		\item Tasks (BASH scripts) are submitted for computing by \texttt{qsub} --- the script must copy the data into \texttt{\$SCRATCHDIR} and do all calculations there
+		\begin{itemize}
+			\item It has plenty of options how to specify requirements (see next slide and \href{https://wiki.metacentrum.cz/wiki/About_scheduling_system}{help})
+		\end{itemize}
+		\item Queued and running jobs can be seen by \texttt{qstat -u \$USER} (\texttt{qstat} has much more options) and any job can be terminated by \texttt{qdel 123456789} (number from \texttt{qstat})
+	\end{itemize}
+	\vfill
+	\begin{bashcode}
+    module add <TAB><TAB> # Load some module
+    module rm XXX # Unload selected module
+    module list # List of currently loaded modules
+    qsub ... # Submit task for computing - select any parameters needed
+    qstat -u $USER # See $USER's running and queued jobs
+    qdel 123456789 # Termite task (number from qstat)
+	\end{bashcode}
+\end{frame}
+
 \begin{frame}[allowframebreaks]{Scheduling details}
 	\begin{itemize}
 		\item Specify needed time
@@ -4270,6 +4291,21 @@
 		\item Work as on normal Linux server\ldots
 		\item With \texttt{screen} we can disconnect as usually and let tasks run in background
 	\end{itemize}
+\end{frame}
+
+\begin{frame}{MetaCentrum task}
+	\begin{block}{Now work on MetaCentrum\ldots}
+		\begin{enumerate}
+			\item Upload to any MetaCentrum fronted files \texttt{metacentrum\_oxalis.sh} and \texttt{oxalis\_assembly\_6235.aln.fasta} from \texttt{scripts\_data}.
+			\item See \texttt{metacentrum\_oxalis.sh}, be sure you know what it is doing, that you understand every command there.
+			\item If needed, edit \texttt{metacentrum\_oxalis.sh} (e.g. correct paths).
+			\item Submit the task via \texttt{qsub}.
+			\item Monitor the task with \texttt{qstat}.
+			\item Login with SSH to computing node where the task is running, go to \texttt{\$SCRATCHDIR} and see its progress. Look at output of \texttt{ps ux}. What does it say?
+			\item Wait for the task to be done and explore output.
+			\item If you encounter any error, try to find its source and fix it.
+		\end{enumerate}
+	\end{block}
 \end{frame}
 
 \subsection{Graphical connection}
@@ -4825,9 +4861,6 @@
 \end{document}
 
 % TODO Missing topics
-% * Priority of MetaCentrum tasks - priority is calculated among user's tasks
-% * qualter JOBID -p PRIORITY
-% * qsub -p PRIORITY
 % * PRIORITY <-1204,+1023> (default 0)
 % * BASH arrays, https://opensource.com/article/18/5/you-dont-know-bash-intro-bash-arrays
 % * Přidat víc příkladů na základní operace
