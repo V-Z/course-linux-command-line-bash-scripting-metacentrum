@@ -1066,54 +1066,6 @@
 
 \subsection{Text}
 
-\begin{frame}{It \textbf{is} important to select \textbf{good} text editor\ldots}
-	\begin{center}
-		\includegraphics[width=\textwidth-3cm]{real_programmers.png}
-	\end{center}
-	\begin{flushright}
-		\url{https://xkcd.com/378/}
-	\end{flushright}
-\end{frame}
-
-\begin{frame}{Importance of good text editor}{Can your text editor\ldots ?}
-	\label{editors}
-	\begin{multicols}{2}
-		\begin{itemize}
-			\item Show syntax highlight
-			\item Show line numbers
-			\item Show space between brackets
-			\item Open any encoding and EOL
-			\item Fold source code
-			\item Show line breaks
-			\item Mark lines
-			\item Open multiple files
-			\item Advanced search and replace
-			\item Use regular expressions
-			\item Make projects, add notes
-			\item Use command line
-			\item Check spelling
-			\item Debug source code
-			\item And more\ldots
-		\end{itemize}
-	\end{multicols}
-	\begin{multicols}{4}
-		\begin{itemize}
-			\item \href{https://kate-editor.org/}{Kate}
-			\item \href{https://kde.org/applications/utilities/kwrite/}{KWrite}
-			\item \href{https://www.vim.org/}{Vim}
-			\item \href{https://en.wikipedia.org/wiki/Emacs}{GNU Emacs}
-			\item \href{https://www.geany.org/}{Geany}
-			\item \href{http://bluefish.openoffice.nl/}{Bluefish}
-			\item \href{https://wiki.gnome.org/Apps/Gedit}{Gedit}
-			\item \href{https://notepad-plus-plus.org/}{Notepad++}
-			\item \href{https://www.sublimetext.com/}{Sublime}
-			\item \href{https://atom.io/}{Atom}
-			\item \href{https://www.nano-editor.org/}{Nano}
-			\item And \href{https://en.wikipedia.org/wiki/List_of_text_editors}{more}\ldots
-		\end{itemize}
-	\end{multicols}
-\end{frame}
-
 \begin{frame}{Text and text --- differences among operating systems}
 	\label{eolenc}
 	\begin{itemize}
@@ -1133,28 +1085,6 @@
 			\item Important mainly for accented characters
 		\end{itemize}
 		\item Text editors can usually open any encoding, but automatic detection commonly fails --- set it manually
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Converting the text}{Prevent bad display and weird errors when launching scripts}
-	\begin{bashcode}
-    unix2dos textfile # Convert text file from UNIX to Windows EOL
-    unix2mac textfile # Convert text file from UNIX to old Mac EOL
-    dos2unix textfile # Convert text file from Windows to UNIX EOL
-    mac2unix textfile # Convert text file from old Mac to UNIX EOL
-    unix2dos --help # More information about usage, include encoding
-    # Converts encoding of input file (ISO-8859-2) to outfile in UTF-8
-    iconv -f ISO-8859-2 -t UTF-8 infile.txt > outfile.txt
-    iconv -l # List of available encoding to convert
-    iconv --help # More information about usage
-    enca -h # See usage of another encoding tool
-    recode CP1250..UTF-8 textfile # Convert encoding from CP-1250 to UTF-8
-    recode ../CR-LF textfile # Convert EOL from UNIX to Windows
-    recode --help # More information about usage; recode is deprecated
-	\end{bashcode}
-	\begin{itemize}
-		\item macOS uses same encoding and EOL as Linux (and rest of UNIX world), so there are no problems with compatibility
-		\item Launching of bash script written on Windows on Linux/macOS will probably fail (because of different EOL)
 	\end{itemize}
 \end{frame}
 
@@ -2475,6 +2405,76 @@
 	\begin{block}{Text tasks}
 		Try all the commands from this chapter. It is one of key BASH features.
 	\end{block}
+\end{frame}
+
+\begin{frame}{It \textbf{is} important to select \textbf{good} text editor\ldots}
+	\begin{center}
+		\includegraphics[width=\textwidth-3cm]{real_programmers.png}
+	\end{center}
+	\begin{flushright}
+		\url{https://xkcd.com/378/}
+	\end{flushright}
+\end{frame}
+
+\begin{frame}{Importance of good text editor}{Can your text editor\ldots ?}
+	\label{editors}
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item Show syntax highlight
+			\item Show line numbers
+			\item Show space between brackets
+			\item Open any encoding and EOL
+			\item Fold source code
+			\item Show line breaks
+			\item Mark lines
+			\item Open multiple files
+			\item Advanced search and replace
+			\item Use regular expressions
+			\item Make projects, add notes
+			\item Use command line
+			\item Check spelling
+			\item Debug source code
+			\item And more\ldots
+		\end{itemize}
+	\end{multicols}
+	\begin{multicols}{4}
+		\begin{itemize}
+			\item \href{https://kate-editor.org/}{Kate}
+			\item \href{https://kde.org/applications/utilities/kwrite/}{KWrite}
+			\item \href{https://www.vim.org/}{Vim}
+			\item \href{https://en.wikipedia.org/wiki/Emacs}{GNU Emacs}
+			\item \href{https://www.geany.org/}{Geany}
+			\item \href{http://bluefish.openoffice.nl/}{Bluefish}
+			\item \href{https://wiki.gnome.org/Apps/Gedit}{Gedit}
+			\item \href{https://notepad-plus-plus.org/}{Notepad++}
+			\item \href{https://www.sublimetext.com/}{Sublime}
+			\item \href{https://atom.io/}{Atom}
+			\item \href{https://www.nano-editor.org/}{Nano}
+			\item And \href{https://en.wikipedia.org/wiki/List_of_text_editors}{more}\ldots
+		\end{itemize}
+	\end{multicols}
+\end{frame}
+
+\begin{frame}[fragile]{Converting the text}{Prevent bad display and weird errors when launching scripts}
+	\begin{bashcode}
+    unix2dos textfile # Convert text file from UNIX to Windows EOL
+    unix2mac textfile # Convert text file from UNIX to old Mac EOL
+    dos2unix textfile # Convert text file from Windows to UNIX EOL
+    mac2unix textfile # Convert text file from old Mac to UNIX EOL
+    unix2dos --help # More information about usage, include encoding
+    # Converts encoding of input file (ISO-8859-2) to outfile in UTF-8
+    iconv -f ISO-8859-2 -t UTF-8 infile.txt > outfile.txt
+    iconv -l # List of available encoding to convert
+    iconv --help # More information about usage
+    enca -h # See usage of another encoding tool
+    recode CP1250..UTF-8 textfile # Convert encoding from CP-1250 to UTF-8
+    recode ../CR-LF textfile # Convert EOL from UNIX to Windows
+    recode --help # More information about usage; recode is deprecated
+	\end{bashcode}
+	\begin{itemize}
+		\item macOS uses same encoding and EOL as Linux (and rest of UNIX world), so there are no problems with compatibility
+		\item Launching of bash script written on Windows on Linux/macOS will probably fail (because of different EOL)
+	\end{itemize}
 \end{frame}
 
 \subsection{Reading}
