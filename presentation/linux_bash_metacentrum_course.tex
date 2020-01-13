@@ -3751,8 +3751,8 @@
 		\item There use to be web services to look for packages, also from other sources --- \href{https://software.opensuse.org/search}{openSUSE}, \href{https://www.debian.org/distrib/packages\#search_packages}{Debian}, \href{https://packages.ubuntu.com/}{Ubuntu} (+ \href{https://launchpad.net/ubuntu/+search}{Launchpad} and \href{https://launchpad.net/ubuntu/+ppas}{PPAs}), \href{https://apps.fedoraproject.org/packages/}{Fedora},~\ldots
 		\item The task is always same, the exact work-flow and commands more or less differ among distributions\ldots
 		\item Tools like Android Google Play, Apple Store or Windows Store are inspired from Linux\ldots
-
 	\end{itemize}
+	\vfill
 	\begin{block}{Task}
 		Install some new software into your Linux. Use graphical as well as command-line tools. See following slides for instructions.
 	\end{block}
@@ -3768,7 +3768,7 @@
 		\item \texttt{zypper up} --- update
 		\item \texttt{zypper dup} -- upgrade to newer release of whole distribution
 		\item \texttt{zypper se \textit{term}} --- search \textit{term}
-		\item \texttt{rpmorphan} and/or \texttt{zypper} \texttt{pa} -{-}\texttt{orphaned} -{-}\texttt{unneeded} --- list packages, which can be safely removed
+		\item \texttt{zypper} \texttt{pa} -{-}\texttt{orphaned} -{-}\texttt{unneeded} --- list packages, which can be safely removed
 		\item \texttt{yast sw\_single} --- interactive manager
 		\item \texttt{zypper lr} --- list repositories
 		\item \texttt{zypper ar \textit{repository}} --- add \textit{repository} (URL of remote \texttt{*.repo} file)
@@ -3784,19 +3784,20 @@
 	\begin{itemize}
 		\item Root password is required: use \texttt{sudo\ldots} or \texttt{su}~-
 		\item Package name \texttt{*.deb}
-		\item \texttt{apt-get install \textit{package}} --- install \textit{package}
-		\item \texttt{apt-get remove \textit{package}} --- remove \textit{package}
-		\item \texttt{apt-get update} --- refresh repositories
-		\item \texttt{apt-get upgrade} -- upgrade packages
-		\item \texttt{apt-get dist-upgrade} -- upgrade to newer release of whole distribution
-		\item \texttt{apt-cache search \textit{term}} --- search \textit{term}
-		\item \texttt{apt-get autoremove} --- clear packages
+		\item \texttt{apt install \textit{package}} --- install \textit{package}
+		\item \texttt{apt remove \textit{package}} --- remove \textit{package}
+		\item \texttt{apt update} --- refresh repositories
+		\item \texttt{apt upgrade} -- upgrade packages
+		\item \texttt{apt dist-upgrade} -- upgrade to newer release of whole distribution
+		\item \texttt{apt search \textit{term}} --- search \textit{term}
+		\item \texttt{apt autoremove} --- clear packages
 		\item \texttt{aptitude} --- interactive manager
 		\item \texttt{cat /etc/apt/sources.list} --- list repositories
 		\item \texttt{nano /etc/apt/sources.list} --- add/remove/edit repositories
-		\item \texttt{dpkg-*}, \texttt{apt-*} commands for other tasks
-		\item \texttt{aptitude} is used in similar way as \texttt{apt-get} (e.g. \texttt{aptitude install \textit{package}},~\ldots)
-		\item \texttt{man aptitude}, \texttt{man apt-XXX} (e.g. \texttt{man apt-get}), \texttt{man dpkg-XXX}, \texttt{man apt} --- usage help
+		\item \texttt{dpkg}-\texttt{*}, \texttt{apt}-\texttt{*} commands for other tasks
+		\item \texttt{aptitude} is used in similar way as \texttt{apt} (e.g. \texttt{aptitude install \textit{package}},~\ldots)
+		\item Similar tasks can be done with \texttt{apt}, \texttt{apt}-\texttt{get}, or \texttt{aptitude}
+		\item \texttt{man aptitude}, \texttt{man apt}-\texttt{XXX} (e.g. \texttt{man apt}), \texttt{man dpkg}-\texttt{XXX}, \texttt{man apt} --- usage help
 	\end{itemize}
 \end{frame}
 
@@ -3836,7 +3837,7 @@
 
 \begin{frame}{Manuals for package management}
 	\begin{itemize}
-		\item openSUSE and SUSE Linux Enterprise: \url{https://doc.opensuse.org/documentation/leap/startup/html/book.opensuse.startup/part.reference.software.html} and \url{https://en.opensuse.org/Portal:Zypper}
+		\item openSUSE and SUSE Linux Enterprise: \url{https://doc.opensuse.org/documentation/leap/startup/html/book.opensuse.startup/part-reference-software.html} and \url{https://en.opensuse.org/Portal:Zypper}
 		\item Red Hat, Fedora, CENTOS, Scientific Linux and others: \url{http://yum.baseurl.org/} and newer \url{https://fedoraproject.org/wiki/DNF}
 		\item Debian (and derivatives): \url{https://www.debian.org/doc/manuals/debian-reference/ch02.en.html} and \url{https://wiki.debian.org/PackageManagement}
 		\item Ubuntu (and derivatives): \url{https://help.ubuntu.com/stable/ubuntu-help/addremove.html} and \url{https://help.ubuntu.com/community/AptGet/Howto}
@@ -3868,17 +3869,17 @@
 		\item You need to install compilation tools for your distribution and programming languages you are going to use
 		\item Commonly, extra dependencies are required to compile the application
 		\begin{itemize}
-			\item Packages for compilation use to end with -\texttt{dev} or -\texttt{devel} (e.g. if the software requires package \texttt{zlib} to run, install also its developmental version \texttt{zlib-dev(el) }to be able to compile it)
+			\item Packages for compilation use to end with -\texttt{dev} or -\texttt{devel} (e.g. if the software requires package \texttt{zlib} to run, install also its developmental version \texttt{zlib}-\texttt{dev(el)} to be able to compile it)
 			\item All requirements should be listed in README or INSTALL documents of particular package --- user must install them manually\ldots
 		\end{itemize}
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     # openSUSE and SUSE Linux Enterprise
     zypper in -t pattern devel_basis devel_C_C++
     # Debian, Ubuntu and derivatives like Linux Mint and others
     apt-get install build-essential # Or "aptitude install build-essential"
-    # Red Hat, CENTOS, Scientific Linux, Fedora and derivatives (2 options)
-
+    # Red Hat, CENTOS, Fedora and derivatives (2 options)
     dnf groupinstall "Development Tools" "C Development Tools and Libraries"
     yum groupinstall "Development Tools" "C Development Tools and Libraries"
 	\end{bashcode}
@@ -3894,8 +3895,8 @@
     mkdir raxml # Create working directory
     cd raxml/ # Go there
     # Get source code from GitHub (svn downloads only changed files)
-    svn co https://github.com/stamatak/standard-RAxML/tags/v8.2.11
-    cd v8.2.11/ # Go to newly created directory
+    svn co https://github.com/stamatak/standard-RAxML/tags/v8.2.12
+    cd v8.2.12/ # Go to newly created directory
     ls # List files
     rm -rf Windows* # No need of Windows version - delete it
     # Compile standard version (other versions are available for better CPU)
@@ -3908,13 +3909,14 @@
 \begin{frame}[fragile]{Compilation of SAMtools}
 	\begin{itemize}
 		\item See \url{http://www.htslib.org/download/}
-		\item Ensure packages \texttt{zlib} and \texttt{zlib-dev(el)} are installed --- required for running and compilation, see \href{https://github.com/samtools/samtools/blob/master/INSTALL}{INSTALL} and \href{https://github.com/samtools/samtools/blob/master/README}{README}
+		\item Ensure packages \texttt{zlib} and \texttt{zlib}-\texttt{dev(el) }are installed --- required for running and compilation, see \href{https://github.com/samtools/samtools/blob/master/INSTALL}{INSTALL} and \href{https://github.com/samtools/samtools/blob/master/README}{README}
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
-    wget https://github.com/samtools/samtools/releases/download/1.7/
-      samtools-1.7.tar.bz2 # Download SAMtools
-    tar xjvf samtools-1.7.tar.bz2 # Unpack the archive
-    cd samtools-1.7/ # Go to the unpacked directory
+    wget https://github.com/samtools/samtools/releases/download/1.10/
+      samtools-1.10.tar.bz2 # Download SAMtools
+    tar xjvf samtools-1.10.tar.bz2 # Unpack the archive
+    cd samtools-1.10/ # Go to the unpacked directory
     ./configure # Configure settings for compilation
     ./configure --help # See various configuring options
     ./configure --without-curses # Compile without ncurses support
@@ -3935,6 +3937,7 @@
 		\item Linux usually use \href{https://openjdk.java.net/}{OpenJDK} --- search for packages named \texttt{*openjdk*}
 		\item Let's download e.g. \href{http://tree.bio.ed.ac.uk/software/figtree/}{FigTree} from \url{http://tree.bio.ed.ac.uk/download.php?id=96&num=3}
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     # Go to directory where you downloaded it
     cd directory/with/downloaded/figtree
@@ -4009,8 +4012,8 @@
 		\begin{itemize}
 			\item Massive computations --- \href{https://www.cesnet.cz/services/massive-computations-metacentrum/?lang=en}{MetaCentrum}
 			\item Large \href{https://www.cesnet.cz/services/data-storage/?lang=en}{data storage}
-			\item \href{https://www.cesnet.cz/services/filesender/?lang=en}{FileSender} to be able to send up to 500~GB file
-			\item \href{https://www.metacentrum.cz/en/Sluzby/MetaCloud/}{MetaCloud} --- computing (HPC) cloud similar to e.g. Amazon Elastic Compute Cloud (EC2) or Google Compute Engine
+			\item \href{https://www.cesnet.cz/services/filesender/?lang=en}{FileSender} to be able to send up to 1.9~TB file
+			\item \href{https://www.metacentrum.cz/en/Sluzby/Cloud/}{Cloud} --- computing (HPC) cloud similar to e.g. Amazon Elastic Compute Cloud (EC2) or Google Compute Engine
 			\item \href{https://www.cesnet.cz/services/owncloud/?lang=en}{ownCloud} to backup and/or sync data across devices (default capacity is 100~GB, user may ask for more) --- similar to e.g. Dropbox
 			\begin{itemize}
 				\item It is possible to connect by webDAV to ownCloud (slide \ref{transfers}) --- many applications support it
@@ -4028,8 +4031,7 @@
 			\item To use MetaCentrum fill registration form \url{https://metavo.metacentrum.cz/en/application/form}
 			\item To use data storage fill registration form \url{https://einfra.cesnet.cz/perun-registrar-fed/?vo=storage}
 			\item After registration for MetaCentrum, user can join MetaCloud via \url{https://perun.metacentrum.cz/fed/registrar/?vo=meta&group=metacloud}
-			\item Users not having access to \href{https://www.eduid.cz/en/index}{EduID} have to register first at HostelID \url{https://hostel.eduid.cz/en/}
-			\item Note some browser do not have required certificate and registration pages do not work correctly. \href{https://www.mozilla.org/firefox/}{Mozilla Firefox} should be safe choice every time.
+			\item Users not having access to \href{https://www.eduid.cz/en/index}{EduID} have to register first at HostelID \url{http://hostel.eduid.cz/en/index.html}
 		\end{itemize}
 		\item Information about data storage \url{https://du.cesnet.cz/en/start} contains detailed usage instructions
 		\item Information about MetaCentrum \url{https://www.metacentrum.cz/en/}
@@ -4045,7 +4047,7 @@
 		\item Manage your user account at \url{http://metavo.metacentrum.cz/en/myaccount/}
 		\item Personal view on actual resources and running tasks is at \url{https://metavo.metacentrum.cz/pbsmon2/person}
 		\item List of available applications \url{https://wiki.metacentrum.cz/wiki/Kategorie:Applications}
-		\item It has 8~front ends where users log and thousands of computers doing the calculations --- they are not accessed directly to run task
+		\item It has 9~\href{https://wiki.metacentrum.cz/wiki/Frontend}{front ends} where users log and thousands of computers doing the calculations --- they are not accessed directly to run task
 		\item Most of computers are running \href{https://www.debian.org/}{Debian GNU/Linux}
 	\end{itemize}
 \end{frame}
@@ -4054,15 +4056,17 @@
 
 \begin{frame}[fragile]{MetaCentrum usage}
 	\begin{itemize}
-		\item User can transfer data on one of \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontends} (next slide) by e.g. \texttt{scp} or \href{https://winscp.net/}{WinSCP} from Windows
+		\item User can transfer data on one of \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontends} (next slide) by e.g. \texttt{scp} or \href{https://winscp.net/}{WinSCP} from Windows or \href{https://filezilla-project.org/}{FileZilla} from anywhere
 		\item Same credentials are used for all front ends, for SSH login as well as file transmissions
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     # Login to selected server (tarkil is located in Prague)
     ssh USER@tarkil.metacentrum.cz
     # Continue as in any other command line...
     qsub ... # Submit the job (see later)
 	\end{bashcode}
+	\vfill
 	\begin{itemize}
 		\item In home directory on the server prepare all needed data and non-interactive script (interactive are more complicated) which will do the calculations
 		\item Tasks are not launched immediately, but using \texttt{qsub} the task is submitted into queue and system decides when it will be launched
@@ -4099,7 +4103,7 @@
     cp -a "$DATADIR"/"$WORKDIR"/* "$SCRATCHDIR"/ || exit 1 # If fails, exit
     # Change working directory - script goes to the directory where
     # calculations are done
-    cd "$SCRATCHDIR"/ || exit 2 # If it fails, exit script
+    cd "$SCRATCHDIR"/ || exit 1 # If it fails, exit script
 	\end{bashcode}
 	\vfill
 	Ends on following slide\ldots
@@ -4124,6 +4128,7 @@
     # This is all needed, the script is ready to be launched...
     exit
 	\end{bashcode}
+	\vfill
 	\begin{itemize}
 		\item Make \texttt{metacentrum.sh} executable and modify it to fit your needs\ldots
 		\item If it was written on Windows, convert EOL (and encoding)\ldots
@@ -4136,6 +4141,7 @@
 		\item \url{https://wiki.metacentrum.cz/wiki/How_to_compute/Requesting_resources}
 		\item Personal view \url{https://metavo.metacentrum.cz/pbsmon2/person} has nice overview of available resources and tasks and allows comfortable construction of submission command
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     # We will run up to 5 days (120 hours), require one physical computer
     # with 8 CPU threads, 24 GB of RAM, 10 GB of disk space and we get all
@@ -4143,7 +4149,7 @@
     qsub -l walltime=120:0:0 -l select=1:ncpus=8:mem=24gb:scratch_local=10gb
       -m abe metacentrum.sh
     # Check how the task is running (above web) and
-    qstat -u $USER # Or qstat | grep $USER
+    qstat -u $USER # Information about $USER's jobs (queued and running)
     qstat 123456789 # The task ID is available from commands above or mail
     qstat -f 123456789 # Print a lot of details
     qdel 123456789 # Terminate scheduled or running task
@@ -4154,7 +4160,7 @@
 	\begin{itemize}
 		\item Specify needed time
 		\begin{itemize}
-			\item Always \texttt{hours:minutes:seconds}, so e.g. for 4~weeks use -\texttt{l~walltime=672:00:00} (28~$\cdot$~24), for two days and 12 hours -\texttt{l~walltime=60:00:00}
+			\item Always \texttt{hours:minutes:seconds}, so e.g. for 4~weeks use -\texttt{l~walltime=672:0:0} (28~$\cdot$~24), for two days and 12 hours -\texttt{l~walltime=60:0:0}
 			\item User \href{mailto:meta@cesnet.cz}{may ask} to prolong the walltime --- it is needed to write in advance
 		\end{itemize}
 		\item Ask for as much RAM as you need (e.g. -\texttt{l~mem=8gb} to request 8~GB)
@@ -4244,18 +4250,22 @@
 	\begin{itemize}
 		\item See information at \url{https://wiki.metacentrum.cz/wiki/How_to_compute/Interactive_jobs}
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
+    # Secure we can log off in the meantime
+    screen # Or tmux
     # Again launch qsub according to actual needs
     # Note "-I" for interactive session and missing script name
     qsub -I -l walltime=2:0:0 -l select=1:ncpus=1:mem=2gb:scratch_local=1gb
     # Wait for job to start..
+    cd $SCRATCHDIR # Go to $SCRATCHDIR - work there
     # After we get the interactive task, we are on new server
     hostname # See where we are - we can connect to that server directly
     ssh USER@given.server.cz # User name and password are the same
                              # Server address is output from "hostname"
-    screen # Secure we can log off in the meantime
     # When you logout, the task is done (use screen to secure connection)
 	\end{bashcode}
+	\vfill
 	\begin{itemize}
 		\item Work as on normal Linux server\ldots
 		\item With \texttt{screen} we can disconnect as usually and let tasks run in background
@@ -4269,19 +4279,19 @@
 		\item See information at \url{https://wiki.metacentrum.cz/wiki/Remote_desktop}
 	\end{itemize}
 	\begin{bashcode}
+    screen # Secure we can log off in the meantime
     # Again launch qsub according to actual needs
     # Note "-I" for interactive session and missing script name
     qsub -I -l walltime=2:0:0 -l select=1:ncpus=1:mem=2gb:scratch_local=1gb
     # Wait for job to start..
     # After we get the interactive task, we are on new server
-    screen # Secure we can log off in the meantime
     module add gui # We need to add GUI module
     gui start # Start GUI (see above link for details)
     gui info -p # Print information about running VNC sessions
                 # Including address, port and password to connect
 	\end{bashcode}
 	\begin{itemize}
-		\item Launch your favorite VNC client (\href{https://www.kde.org/applications/internet/krdc/}{KRDC}, \href{https://www.tightvnc.com/}{TightVNC},~\ldots) and use credentials from above output to connect
+		\item Launch your favorite VNC client (\href{https://kde.org/applications/internet/krdc/}{KRDC}, \href{https://www.tightvnc.com/}{TightVNC},~\ldots) and use credentials from above output to connect
 		\item Work as on normal Linux desktop\ldots
 		\item With \texttt{screen} we can disconnect as usually
 		\item It provides limited amount of resources, not suitable for big tasks
@@ -4322,6 +4332,7 @@
 			\item All members of the group must be able to manipulate the data
 		\end{itemize}
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     # Change group ownership to XXX
     chgrp -R XXX /tape_tape/VO_XXX 2>/dev/null
