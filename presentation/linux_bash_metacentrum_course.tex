@@ -1572,7 +1572,7 @@
 			\item Find all \texttt{*.vcf.gz} files in whole \texttt{/home}. Why do you get errors for some directories?
 			\item Compress, see and decompress all shell scripts in your home directory.
 			\item Change permissions of all content of your home directory so that no one else can access it. Consider hidden files, directories and scripts.
-			\item List all directories in \texttt{/etc} up to sesond level.
+			\item List all directories in \texttt{/etc} up to second level.
 		\end{enumerate}
 	\end{block}
 \end{frame}
@@ -1585,7 +1585,7 @@
 		\item BASH itself doesn't recognize regular expressions --- its wildcards have some of functions of regular expressions (from slide~\ref{regexp}) and can look similarly, but behave differently --- Do not confuse!
 		\item \texttt{?} --- Replaces any single character
 		\item \texttt{*} --- Replaces any number of any characters (\texttt{ls a*} lists all files starting with \enquote{a})
-		\item \texttt{[]} --- Range or a~list --- \texttt{[abcdef]} and \texttt{[a-f]} are same
+		\item \texttt{[]} --- Range or a~list --- \texttt{[abcdef]} and \texttt{[a}-\texttt{f]} are same
 		\item \texttt{[!\ldots]} --- Reverse previous case (\texttt{!}) --- any character except those listed
 		\item \texttt{\{\}} --- Expansion (terms inside are separated by commas \texttt{,}) --- all possible combinations (see next slide for examples)
 		\item \texttt{\textbackslash} --- Escapes following character and it doesn't have its special meaning (e.g. \texttt{\textbackslash *} means literally asterisk \texttt{*} and not \enquote{any number of any characters} as usually)
@@ -1607,9 +1607,9 @@
 		\item Text in single quotes (\texttt{'\ldots'}) preserves the literal value of each character within the quotes
 		\item Text in double quotes (\texttt{"\ldots"}) preserves the literal value of all characters within the quotes, with the exception of dollar (\texttt{\textdollar}), back tick (\texttt{\textasciigrave}) and back slash (\texttt{\textbackslash})
 		\item A~double quote may be quoted within double quotes by preceding it with a~backslash (\texttt{\textbackslash"} means literally \enquote{double quote})
-		\item Text between back ticks (\texttt{\textasciigrave\ldots\textasciigrave}) or within \texttt{\$\{\ldots\}} will be evaluated and then used as command or argument (see next slide for examples)
+		\item Text between back ticks (\texttt{\textasciigrave\ldots\textasciigrave}) or within \texttt{\$(\ldots)} will be evaluated and then used as command or argument (see next slide for examples)
 	\begin{itemize}
-		\item Syntax with back ticks is deprecated, keep using \texttt{\$\{\ldots\}} instead
+		\item Syntax with back ticks is deprecated, keep using \texttt{\$(\ldots)} instead
 	\end{itemize}
 	\item This is important when handling file names with non-Latin characters, when working with variables (from slide~\ref{variables}), printing various information within scripts (e.g. slide~\ref{varquotes}), etc.
 	\end{itemize}
@@ -2296,13 +2296,13 @@
     parallel < command_list.txt # (each command on one line) or
     parallel :::: command_list.txt
     # Add same text to the end of multiple files
-    find . '*.txt' -print | parallel 'cat block_to_be_added.txt >> {}'
+    find . -name '*.txt' -print | parallel 'cat block_to_be_added.txt >> {}'
     # Replace particular text in multiple files with sed and GNU Parallel
-    find . '*.txt' -print | parallel 'sed -i "s/XXX/YYY/g" {}'
+    find . -name '*.txt' -print | parallel 'sed -i "s/XXX/YYY/g" {}'
     # Launch MrBayes for multiple nexus files and create log file (see also
     # next slide) with starting and ending date and time
-    find . '*.nexus' -print | parallel 'echo -e "Start: $(date)\n" > {}.log
-      && mb {} | tee -a {}.log && echo "End: $(date)" >> {}.log'
+    find . -name '*.nexus' -print | parallel 'echo -e "Start: $(date)\n" >
+      {}.log && mb {} | tee -a {}.log && echo "End: $(date)" >> {}.log'
 	\end{bashcode}
 	\vfill
 	\begin{block}{Tasks}
@@ -3668,24 +3668,6 @@
 
 \subsection{}
 
-\begin{frame}{Scripting tasks}
-	\begin{enumerate}
-		\item Write short script (or at least concept how it should work) to print file name of JPG file and its dimensions in px. Use e.g. \texttt{file} or ImageMagick \texttt{identify} to get the dimensions.
-		\item Write short script (or at least concept how it should work) taking as input arguments file name and taxon name, verify their validity, extract respective FASTA sequence and print it to standard output.
-		\begin{itemize}
-			\item Work on file \texttt{Oxalis\_HybSeq\_nrDNA\_selection\_alignment.fasta}.
-		\end{itemize}
-		\item Think about several tasks where you would use BASH scripts to automatize repeated work and/or processing of multiple files.
-		\begin{itemize}
-			\item Think about usage of various loops (and/or GNU Parallel), if-then branching, various conditions, etc.
-			\item Prepare concept(s) of such script(s).
-		\end{itemize}
-	\end{enumerate}
-	\begin{block}{Keep in mind\ldots}
-		\alert{Do not do simple repeated work worth of trained monkey manually. It is silly. Every such task is worth of (one-line) script to work instead of you.}
-	\end{block}
-\end{frame}
-
 \begin{frame}{What is worth of scripting}
 	\begin{itemize}
 		\item \textbf{Any task you need to repeat from time to time requiring more commands} --- almost anything :-)
@@ -3706,6 +3688,24 @@
 	\end{itemize}
 	\begin{block}{\alert{Start scripting, coding}}
 		Now you should have enough knowledge to start writing scripts to do such tasks. Start with something simple, solving some your practical need (e.g. for MetaCentrum, from slide~\ref{CESNET}). You'll gather experience and improve.
+	\end{block}
+\end{frame}
+
+\begin{frame}{Scripting tasks}
+	\begin{enumerate}
+		\item Write short script (or at least concept how it should work) to print file name of JPG file and its dimensions in px. Use e.g. \texttt{file} or ImageMagick \texttt{identify} to get the dimensions.
+		\item Write short script (or at least concept how it should work) taking as input arguments file name and taxon name, verify their validity, extract respective FASTA sequence and print it to standard output.
+		\begin{itemize}
+			\item Work on file \texttt{Oxalis\_HybSeq\_nrDNA\_selection\_alignment.fasta}.
+		\end{itemize}
+		\item Think about several tasks where you would use BASH scripts to automatize repeated work and/or processing of multiple files.
+		\begin{itemize}
+			\item Think about usage of various loops (and/or GNU Parallel), if-then branching, various conditions, etc.
+			\item Prepare concept(s) of such script(s).
+		\end{itemize}
+	\end{enumerate}
+	\begin{block}{Keep in mind\ldots}
+		\alert{Do not do simple repeated work worth of trained monkey manually. It is silly. Every such task is worth of (one-line) script to work instead of you.}
 	\end{block}
 \end{frame}
 
@@ -4865,3 +4865,5 @@
 % TODO Missing topics
 % * BASH arrays, https://opensource.com/article/18/5/you-dont-know-bash-intro-bash-arrays
 % * Přidat víc příkladů na základní operace
+% * Přeskládat řetězení, přesměrování, globbing, proměnné, atd.
+% * Zkontrolovat syntax skriptování (hlavně v prezentaci), povyházet zastaralé konstrukce.
