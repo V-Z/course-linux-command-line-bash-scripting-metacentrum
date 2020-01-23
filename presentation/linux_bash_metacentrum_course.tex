@@ -1,4 +1,4 @@
-\documentclass[compress, ucs, xelatex, 11pt, xcolor=svgnames, aspectratio=1610,
+\documentclass[compress, ucs, xelatex, 11pt, xcolor=svgnames, aspectratio=169,
 	hyperref={
 		bookmarks=true,
 		unicode=true,
@@ -9,12 +9,12 @@
 		pdfsubject={Course about use of Linux command line, writing shell scripts and using MetaCentrum of CESNET},
 		pdfcreator={XeLaTeX},
 		pdfkeywords={Linux, GNU, BASH, shell, command line, MetaCentrum},
-		linkcolor=DarkRed,
-		anchorcolor=DarkBlue,
-		citecolor=Indigo,
-		filecolor=NavyBlue,
-		menucolor=DarkMagenta,
-		urlcolor=DarkBlue,
+		linkcolor=DarkRed, % Navigation menu links on pages and in navigation menus
+		anchorcolor=DarkBlue, % Not in use?
+		citecolor=Indigo, % Not in use?
+		filecolor=NavyBlue, % Not in use?
+		menucolor=DarkMagenta, % Not in use?
+		urlcolor=DarkBlue, % Links with \href and \url
 		pdftex},
 	url={hyphens, lowtilde} % Allow line breaks within URLs
 	]{beamer}
@@ -71,8 +71,8 @@
 	}
 
 % Fixing space before and after block of code higlight
-\BeforeBeginEnvironment{bashcode}{\vspace{-1em}}
-\AfterEndEnvironment{bashcode}{\par\vspace{-1em}}
+\BeforeBeginEnvironment{bashcode}{\vspace{-0.5em}}
+\AfterEndEnvironment{bashcode}{\par\vspace{-0.5em}}
 
 % Fixing space before and after multicols region
 \BeforeBeginEnvironment{multicols}{\vspace{-0.5em}}
@@ -93,7 +93,7 @@
 \institute[\url{https://trapa.cz/}]{Department of Botany, Faculty of Science, Charles University, Prague\\Institute of Botany, Czech Academy of Sciences, Průhonice\\\url{https://trapa.cz/}, \href{mailto:zeisek@natur.cuni.cz}{zeisek@natur.cuni.cz}}
 \title{Linux, command line \& MetaCentrum}
 \subtitle{Use of Linux command line not only for CESNET's MetaCentrum}
-\titlegraphic{\includegraphics[width=1.5cm]{tux.png}}
+\titlegraphic{\includegraphics[width=1cm]{tux.png}}
 \date{January 14 to 16, 2020}
 
 \begin{document}
