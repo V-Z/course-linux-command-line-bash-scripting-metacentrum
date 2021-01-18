@@ -94,7 +94,7 @@
 \title{Linux, command line \& MetaCentrum}
 \subtitle{Use of Linux command line not only for CESNET's MetaCentrum}
 \titlegraphic{\includegraphics[width=1cm]{tux.png}}
-\date{January 14 to 16, 2020}
+\date{January 25 to 27, 2021}
 
 \begin{document}
 
@@ -164,13 +164,13 @@
 
 \begin{frame}{Enjoy learning virtual machine for the course}
 	\begin{center}
-		\includegraphics[width=\textwidth-3cm]{opensuse_leap_course.png}
+		\includegraphics[width=\textwidth-4.5cm]{opensuse_leap_course.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{VirtualBox shared folder I}{VirtualBox can be configured to share folder with host operating system}
 	\begin{center}
-		\includegraphics[width=\textwidth-4cm]{virtualbox_shared_folder_1.png}
+		\includegraphics[width=\textwidth-6cm]{virtualbox_shared_folder_1.png}
 	\end{center}
 \end{frame}
 
@@ -180,7 +180,7 @@
 	\end{bashcode}
 	\vfil
 	\begin{center}
-		\includegraphics[width=\textwidth-2.5cm]{virtualbox_shared_folder_2.png}
+		\includegraphics[width=\textwidth-5cm]{virtualbox_shared_folder_2.png}
 	\end{center}
 	\vfill
 \end{frame}
@@ -227,7 +227,7 @@
 
 \begin{frame}{Extremely simplified UNIX phylogeny}
 	\begin{center}
-		\includegraphics[height=7.5cm]{unix_history-simple.png}
+		\includegraphics[height=6.5cm]{unix_history-simple.png}
 	\end{center}
 \end{frame}
 
@@ -348,7 +348,7 @@
 
 \begin{frame}{Linux kernel and other parts around it}
 	\begin{center}
-		\includegraphics[width=\textwidth-3.5cm]{linux_kernel_ubiquity.png}
+		\includegraphics[width=\textwidth-5cm]{linux_kernel_ubiquity.png}
 	\end{center}
 	\vfil
 	\url{https://en.wikipedia.org/wiki/Linux_distribution}
@@ -357,7 +357,7 @@
 
 \begin{frame}{Extremely simplified adaptive radiation of Linux distributions}
 	\begin{center}
-		\includegraphics[width=\textwidth-1cm]{linux_fylogen_2.png}
+		\includegraphics[width=\textwidth-3.5cm]{linux_fylogen_2.png}
 	\end{center}
 	\vfil
 	\url{https://en.wikipedia.org/wiki/List_of_Linux_distributions} and \url{https://distrowatch.com/} ($\sim$850 distributions, $\sim$250 active)
@@ -404,43 +404,43 @@
 
 \begin{frame}{Ubuntu with GNOME} % TODO Update print screen, add more
 	\begin{center}
-		\includegraphics[width=\textwidth-2cm]{ubuntu.png}
+		\includegraphics[width=\textwidth-4cm]{ubuntu.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{openSUSE with KDE --- Kubuntu is same, but blue\ldots} % TODO Update print screen, add more
 	\begin{center}
-		\includegraphics[height=7.5cm]{opensuse.png}
+		\includegraphics[height=6.5cm]{opensuse.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{Fedora with GNOME --- GNOME is always almost same} % TODO Update print screen, add more
 	\begin{center}
-		\includegraphics[height=7.5cm]{fedora.png}
+		\includegraphics[height=6.5cm]{fedora.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{Linux Mint with Cinnamon} % TODO Update print screen, add more
 	\begin{center}
-		\includegraphics[height=7.5cm]{mint.png}
+		\includegraphics[height=6.5cm]{mint.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{Debian with XFCE --- Xubuntu has more \enquote{modern} design} % TODO Update print screen, add more
 	\begin{center}
-		\includegraphics[height=7.5cm]{debian.png}
+		\includegraphics[height=6.5cm]{debian.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{XFCE in Xubuntu, openSUSE, Fedora and Linux Mint} % TODO Update print screen
 	\begin{center}
-		\includegraphics[width=\textwidth-2.5cm]{xfce.png}
+		\includegraphics[width=\textwidth-4cm]{xfce.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{Dolphin (KDE file manager) --- default for openSUSE (inset) and after tuning in the same distribution\ldots} % TODO Update print screen
 	\begin{center}
-		\includegraphics[width=\textwidth-2.5cm]{dolphin.png}
+		\includegraphics[width=\textwidth-4.5cm]{dolphin.png}
 	\end{center}
 \end{frame}
 
@@ -555,9 +555,8 @@
 	\begin{itemize}
 		\item FAT32 (including extensions) is old-fashioned and not reliable FS, but still common in various flash disks and memory cards
 		\item NTFS (basic Windows FS) and FAT do not support UNIX permissions, so they can't be used as system partition in Linux; see also \href{https://en.wikipedia.org/wiki/Comparison_of_file_systems}{full comparison}
-		\item Btrfs, ext4, XFS and ZFS are not accessible from Windows at all
+		\item Btrfs, ext4, XFS and ZFS are not accessible from Windows at all (Linux mainly uses ext4)
 		\item Btrfs, XFS and ZFS are the most advanced FS in common use
-		\item Linux users use mainly ext4, less Btrfs or others
 	\end{itemize}
 \end{frame}
 
@@ -617,8 +616,8 @@
 \begin{frame}[fragile]{Mounting and unmounting disks and removable media}
 	\begin{itemize}
 		\item Mounting and unmounting of devices require root privileges
-		\item In modern Linux distributions, mounting is done automatically and media are visible in \texttt{/media} or \texttt{/run/media}
-		\item In Linux, physical disks are named from \texttt{sda} to \texttt{sdz}, each disk has partitions (at least one) numbered from \texttt{1}, e.g. \texttt{sda1}, \texttt{sda2}, \texttt{sdb1},~\ldots{ }--- all are accessible in \texttt{/dev} directory (\texttt{/dev/sdc3},~\ldots)
+		\item In modern desktop Linux distributions, mounting is done automatically and media are visible in \texttt{/media} or \texttt{/run/media}
+		\item In Linux, physical disks are named from \texttt{sda} to \texttt{sdz}, each disk has partitions (at least one) numbered from \texttt{1}, e.g. \texttt{sda1}, \texttt{sda2}, \texttt{sdb1},~\ldots{ }--- all are in \texttt{/dev} (e.g. \texttt{/dev/sdc3})
 		\item Target mount point must exist before mounting
 	\end{itemize}
 	\begin{bashcode}
@@ -748,10 +747,7 @@
     # ssh_config(5) for more information.  This file provides defaults for
     # users, and the values can be changed in per-user configuration files
     # or on the command line.
-    # Minimum accepted size of the DH parameter p. By default this is set to
-    # 1024 to maintain compatibility with RFC4419, but should be set higher.
-    # Upstream default is identical to setting this to 2048.
-    #KexDHMin 1024
+    # ...
     Host *
     # If you do not trust your remote host (or its administrator), you
     # should not forward X11 connections to your local X11-display for
@@ -762,6 +758,7 @@
     # file if you want to have the remote X11 authentification data to
     # expire after twenty minutes after remote login.
     ForwardX11Trusted yes
+    # ...
 	\end{bashcode}
 \end{frame}
 
@@ -797,15 +794,13 @@
 		\item Linux allows \alert{any} character in file name, except \alert{slash} (\texttt{/}), so including anything on keyboard as well as line break (\alert{!}) --- be conservative\ldots
 	\end{itemize}
 	\begin{bashcode}
-    mkdir My New Directory # Produces THREE directories (mkdir creates
-                           # directories; spaces separate parameters)
-                           # Solutions:
+    mkdir My New Directory # Produces THREE directories (mkdir creates dirs;
+                           # spaces separate parameters). Solutions:
     mkdir "My New Directory" # (you can use single quotes '...' as well) or
     mkdir My\ New\ Directory # "\" escapes following character
     rmdir My\ New\ Directory # Same problem and solution when removing it
     touch \* # Creates new empty file named just * (yes, asterisk)
-    rm * # What would be removed? :-)
-    rm \* # This works... Or rm '*'
+    rm * # What would be removed? :-) Solution: rm \* or rm '*'
 	\end{bashcode}
 	\begin{itemize}
 		\item Files and directories starting by \alert{dot} (\texttt{.}) are hidden by default (typically user settings and application data in user home)
@@ -968,8 +963,7 @@
     chmod -R # Recursive (including subdirectories)
     chmod +x script.sh # Make script.sh executable for everyone
     chmod o-r mydir # Remove read permission from others on mydir
-    chmod 600 FILE1 FILE2 # Make both files readable and
-                          # writable only by their owner
+    chmod 600 FILE1 FILE2 # Make both files R/W only by their owner
     chmod 000 FILE # No one can do anything - owner or root must add
                    # some permissions before any other action...
     chmod 777 * # All permissions for everyone on everything (no recursive)
@@ -1090,7 +1084,7 @@
 
 \section{Command line}
 
-\begin{frame}{Command line}
+\begin{frame}[allowframebreaks]{Command line}
 	\tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
 \end{frame}
 
@@ -1128,11 +1122,10 @@
 
 \begin{frame}[fragile]{Working with Homebrew}
 	\begin{bashcode}
-    # Install compilation tools
-    xcode-select --install
+    xcode-select --install # Install compilation tools
     # Install Homebrew
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/
-      Homebrew/install/master/install)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/
+      install/HEAD/install.sh)"
     brew help # Basic help
     # Install updated basic UNIX tools
     brew install coreutils gnu-sed gawk grep bash gcc make wget dos2unix
@@ -1143,9 +1136,9 @@
     brew upgrade # Update all packages installed by Homebrew
     brew uninstall FORMULA # Remove Homebrew package (formula)
     brew cleanup # Cleaning after uninstallation
-    # Completely remove Homebrew (after uninstallation of all formulae)
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/
-      install/master/uninstall)"
+    # Completely remove Homebrew
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/
+      install/master/uninstall.sh)"
 	\end{bashcode}
 \end{frame}
 
@@ -1179,7 +1172,7 @@
 
 \begin{frame}{The command line can has various look and feel\ldots}{Change colors, font size, etc. for your terminal to like it more and work comfortably}
 	\begin{center}
-		\includegraphics[width=\textwidth-2.5cm]{terminals.png}
+		\includegraphics[width=\textwidth-4.5cm]{terminals.png}
 	\end{center}
 \end{frame}
 
@@ -1240,7 +1233,7 @@
 		\end{bashcode}
 		\vfill
 		\begin{itemize}
-			\item Our toy server: user names from \texttt{cu01} to \texttt{cu20}
+			\item Toy server: user names \texttt{cu01} --- \texttt{cu20}
 		\end{itemize}
 		\vfill
 		\begin{bashcode}
@@ -1252,14 +1245,14 @@
 			\item From Windows use \href{https://www.putty.org/}{Putty}
 		\end{itemize}
 		\begin{center}
-			\includegraphics[height=7cm]{putty.png}
+			\includegraphics[height=6cm]{putty.png}
 		\end{center}
 	\end{multicols}
 \end{frame}
 
 \begin{frame}{SSH and screen practice}
 	\begin{center}
-		\includegraphics[height=1.75cm]{sshterm.png}
+		\includegraphics[height=1cm]{sshterm.png}
 	\end{center}
 	\begin{block}{Tasks}
 		\begin{enumerate}
