@@ -32,12 +32,6 @@
 	}
 \useinnertheme{circles}
 
-% Basic packages
-\usepackage{xltxtra} % Loads following 3 packages for processing with XeLaTeX
-\usepackage{metalogo}
-\usepackage{xunicode}
-\usepackage{fontspec}
-
 % Fonts Linux Libertine
 \usepackage{libertine}
 
@@ -48,12 +42,14 @@
 % In-line higlighting
 \usepackage{soul}
 
-% Add background for \texttt{} (using pacakge soul)
-\sethlcolor{Beige}
-\renewcommand{\texttt}[1]{\hl{\ttfamily #1}}
+% Add background for \texttt{}
+\renewcommand{\texttt}[1]{\colorbox{Beige}{{\ttfamily #1}}}
 
 % Change text color of highlighted text back to red
 \renewcommand{\alert}[1]{\textcolor{red}{#1}}
+
+% TeX logos
+\usepackage{dtk-logos}
 
 % Syntax higlight
 \usepackage{minted}
@@ -71,22 +67,22 @@
 	}
 
 % Fixing space before and after block of code higlight
-\BeforeBeginEnvironment{bashcode}{\vspace{-0.5em}}
+\BeforeBeginEnvironment{bashcode}{\vspace{-0.75em}}
 \AfterEndEnvironment{bashcode}{\par\vspace{-0.5em}}
 
 % Fixing space before and after multicols region
-\BeforeBeginEnvironment{multicols}{\vspace{-0.5em}}
+\BeforeBeginEnvironment{multicols}{\vspace{-0.75em}}
 \AfterEndEnvironment{multicols}{\par\vspace{-0.5em}}
 
 % Fixing space before and after itemize region
-\BeforeBeginEnvironment{itemize}{\vspace{-0.25em}}
+\BeforeBeginEnvironment{itemize}{\vspace{-0.5em}}
 \AfterEndEnvironment{itemize}{\vspace{-0.25em}}
 
 % Default language
-\usepackage[main=american, czech]{babel}
+\usepackage[main=american]{babel}
 
 % Quotes
-	\usepackage[autostyle=true, czech=quotes, english=american]{csquotes}
+\usepackage[autostyle=true, english=american]{csquotes}
 
 % Title page
 \author{Vojtěch Zeisek}
@@ -616,21 +612,19 @@
 \begin{frame}[fragile]{Mounting and unmounting disks and removable media}
 	\begin{itemize}
 		\item Mounting and unmounting of devices require root privileges
-		\item In modern desktop Linux distributions, mounting is done automatically and media are visible in \texttt{/media} or \texttt{/run/media}
+		\item In modern desktop Linux distributions, mounting is done automatically and media are visible mostly in \texttt{/media} or \texttt{/run/media}
 		\item In Linux, physical disks are named from \texttt{sda} to \texttt{sdz}, each disk has partitions (at least one) numbered from \texttt{1}, e.g. \texttt{sda1}, \texttt{sda2}, \texttt{sdb1},~\ldots{ }--- all are in \texttt{/dev} (e.g. \texttt{/dev/sdc3})
-		\item Target mount point must exist before mounting
 	\end{itemize}
 	\begin{bashcode}
     eject # Open CD/DVD drive
     mount # Which FS (disk partitions) are mounted
     findmnt # See mounted devices in tree-like structure
-    mkdir /mnt/point # Directory must exist prior mounting into it
+    mkdir /mnt/point # Empty directory must exist prior mounting into it
     # mount usually recognize FS of mounted device, if not, add '-t FS_type'
     mount /dev/sdXY /mount/directory # Mount disk sdXY to /mount/directory
+    mount -t iso9660 -o loop file.iso /mnt/iso # Mount CD/DVD ISO file
     umount /dev/sdXY # Unmount disk sdXY, alternatively use below command
     umount /mount/directory # Unmount disk from /mount/directory
-    # Mount CD/DVD ISO image file into directory /mnt/iso
-    mount -t iso9660 -o loop file.iso /mnt/iso # See CD/DVD image content
 	\end{bashcode}
 \end{frame}
 
@@ -1213,7 +1207,7 @@
 	\vfill
 	\begin{itemize}
 		\item Get help by \texttt{Ctrl+B, ?} (\texttt{Q} to quit)
-		\item Split window by \texttt{Ctrl+B, \%} and navigate between them by \texttt{Ctrl+B, left/right arrow}
+		\item Split window by \texttt{Ctrl+B, \%} and navigate between them by \texttt{Ctrl+B, L/R arrow}
 	\end{itemize}
 \end{frame}
 
@@ -1251,9 +1245,6 @@
 \end{frame}
 
 \begin{frame}{SSH and screen practice}
-	\begin{center}
-		\includegraphics[height=1cm]{sshterm.png}
-	\end{center}
 	\begin{block}{Tasks}
 		\begin{enumerate}
 			\item Login via SSH to \texttt{vyuka.natur.cuni.cz} and launch \texttt{screen}.
@@ -1265,6 +1256,9 @@
 			\item Detach and re-attach to both sreens.
 			\item Close all screen sessions and logout from the server.
 		\end{enumerate}
+	\begin{center}
+		\includegraphics[height=0.75cm]{sshterm.png}
+	\end{center}
 	\end{block}
 \end{frame}
 
@@ -1286,11 +1280,11 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Nice BASH features for easier work (selection)}
+\begin{frame}[allowframebreaks]{Nice BASH features for easier work (selection)}
 	\begin{itemize}
 		\item Arrows up and down list in the history of commands
 		\item List whole history by command \texttt{history}
-		\item \texttt{Ctrl+R} --- reverse search in history --- type to search last command containing typed characters
+		\item \texttt{Ctrl+R} --- reverse search in history --- type to search last command(s) containing typed character(s) --- repeat typing \texttt{Ctrl+R} to search deeper in history
 		\item \texttt{TAB} --- list command and files starting by typed characters
 		\item \texttt{Home}/\texttt{End} --- go to beginning/end of the line
 		\item \texttt{Ctrl+L} --- clear screen (like \texttt{clear} command)
@@ -1339,7 +1333,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Aliases and BASH settings}{Alias is short cut --- instead of very long command write short alias}
+\begin{frame}[fragile]{Aliases and BASH settings I}{Alias is short cut --- instead of very long command write short alias}
 	\begin{bashcode}
     # Define new alias
     alias ll="ls -l"
@@ -1356,6 +1350,11 @@
     alias grep='grep --color=auto' # Enable color in grep
     # Always human readable output of df (disk free)
     alias df='df -h'
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Aliases and BASH settings II}
+	\begin{bashcode}
     # Easier history listing
     alias his="history | grep" # Use e.g. 'his ls' to list last 'ls' usage
     # Add aliases pointing to software installed outside PATH, ...
@@ -1371,6 +1370,7 @@
     cd .. # One directory up; cd ../..; cd ../../another/directory/
     cd relative/path/from/current/position # Go to selected directory
     cd /absolute/path/from/root # Absolute path starts by "/"
+    cd - # Go to previous directory
     tree # Tree like hierarchy of files and directories
     tree -d # List only directories; see tree --help
     tree -L 2 # Only up to second level; combine: tree -d -L 3
@@ -1381,6 +1381,11 @@
        # Try parameters -l, -a, -1, -F, -h (with -l or -s), --help
     rm -r # Recursive delete - remove also non-empty directories
     mv from to # Move files/directories (also for renaming)
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Directories and files}
+	\begin{bashcode}
     cp from to # Copy, -r (recursive, including subdirectories)
                # -a (keeps all attributes), -v (verbose)
     file somefile # Information about questioned file (what it is, ...)
@@ -1424,7 +1429,7 @@
 			\item Impossible to live without it :-)
 			\item \alert{Task:} Which of the previous tasks can you solve with it? Try it.
 		\end{itemize}
-		\includegraphics[height=7cm]{mc.png}
+		\includegraphics[height=6.5cm]{mc.png}
 	\end{multicols}
 \end{frame}
 
@@ -1446,8 +1451,7 @@
 		\end{tabular}
 	\end{center}
 	\begin{itemize}
-		\item \texttt{gzip}, \texttt{bzip2} and \texttt{lzma} are able to pack only one file --- use them together with \texttt{tar} to pack multiple files
-		\item \texttt{gzip}, \texttt{bzip2} and \texttt{lzma} when used \textbf{without} \texttt{tar} \alert{move} file into archive
+		\item \texttt{gzip}, \texttt{bzip2} and \texttt{lzma} are able to pack only one file --- use them together with \texttt{tar} to pack multiple files (when used \textbf{without} \texttt{tar} \alert{move} file into archive)
 		\item \texttt{lzma} has excellent compression, but can be very slow
 	\end{itemize}
 \end{frame}
@@ -1466,17 +1470,20 @@
 			*.zip & unzip archive.zip\\
 			*.rar & unrar x archive.rar
 		\end{tabular}
-		\includegraphics[height=2cm]{tar.png}
 		\hfill
-		\url{https://xkcd.com/1168/}
+		\includegraphics[height=1.75cm]{tar.png}
+		\begin{flushright}
+			\url{https://xkcd.com/1168/}
+		\end{flushright}
+		\hfill
 	\end{center}
 \end{frame}
 
 \begin{frame}{Tasks with archives}
 	\begin{enumerate}
-		\item Compress (and decompress) text file \texttt{Oxalis\_HybSeq\_nrDNA\_selection\_alignment.fasta} (target enrichment sequencing data of South African \textit{Oxalis}) from \texttt{scripts\_data} with various compressing tools.
+		\item Compress (and decompress) text file \texttt{Oxalis\_HybSeq\_nrDNA\_selection\_} \texttt{alignment.fasta} (target enrichment sequencing data of South African \textit{Oxalis}) from \texttt{scripts\_data} with various compressing tools.
 		\item Compare sizes of original file and compressed outputs.
-		\item Compress (and decompress) all \texttt{foto\_oxalis\_*.jpg} (\textit{Oxalis} photos) from \texttt{scripts\_data} with various compressing tools.
+		\item Compress (and decompress) all \texttt{foto\_oxalis\_*.jpg} (\textit{Oxalis} photos) together from \texttt{scripts\_data} with various compressing tools.
 		\item Compare sizes of original files and compressed outputs.
 		\item Which compression tool seems to be the best? In terms of compressing ratio and time needed for compression.
 		\item Is more effective compression of text files or images? Why?
@@ -1502,8 +1509,6 @@
     command -v find # Behaves like which, but reliable in scripts
     type Application >/dev/null 2>&1 || { echo >&2 "Application is
       required but not installed. Aborting."; exit 1; }
-    hash Application 2>/dev/null || { echo >&2 "Application is required
-      but not installed. Aborting."; exit 1; }
     exit 1 # "exit" use to be added (with various numbers) after any error
            # to send term signal 1 - for better handling of various errors.
            # Every termination has exit status number - 0 is normal exit.
@@ -1530,7 +1535,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Find examples (apply some of them to the toy data)}
+\begin{frame}[fragile]{Find examples (apply some of them to the toy data) I}
 	\begin{bashcode}
     # Find in /home/$USER/ all JPG files containing string "oxalis"
     find /home/$USER/ -name "*oxalis*.jpg" -print
@@ -1549,6 +1554,11 @@
     find files/ -type f -exec chmod 640 '{}' \;
     # Find all executable files within current directory and list them
     find . -executable -type f -print
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Find examples (apply some of them to the toy data) II}
+	\begin{bashcode}
     find doc/ -type d -empty -execdir rmdir '{}' \; # Delete empty dirs
     man find # See another options. Much more...
 	\end{bashcode}
@@ -1557,7 +1567,7 @@
 \begin{frame}{Searching tasks}
 	\begin{enumerate}
 		\item Use \texttt{locate} to find file \texttt{long\_text.txt} on the server. Is the output absolutely correct? If not, why?
-		\item Where is executable of \texttt{mc}? Why can be such information useful? Where are its libraries, data, configuration and manual?
+		\item Where is executable of \texttt{mc}? Why can be such information useful?
 		\item Which software is related to keywords \texttt{permission} and \texttt{compress} (use e.g. \texttt{apropos})? Use \texttt{man} to explore some of them.
 	\end{enumerate}
 	\begin{block}{Tasks with \texttt{find}}
@@ -1583,7 +1593,7 @@
 		\item \texttt{\{\}} --- Expansion (terms inside are separated by commas \texttt{,}) --- all possible combinations (see next slide for examples)
 		\item \texttt{\textbackslash} --- Escapes following character and it doesn't have its special meaning (e.g. \texttt{\textbackslash *} means literally asterisk \texttt{*} and not \enquote{any number of any characters} as usually)
 		\item For details see \texttt{man 7~glob} and \texttt{man 7~regex}
-		\item This is useful e.g. to list only subset of files or to provide file selection as input for some command
+		\item Useful e.g. to list only subset of files or to provide file selection as input for some command
 	\end{itemize}
 \end{frame}
 
@@ -1650,9 +1660,6 @@
     # Does 1st chain contain 2nd chain (how long)? Get position of first hit
     echo $(expr index "GNU Linux" "Linux") # If no overlap, return value is 0
 	\end{bashcode}
-	\begin{itemize}
-		\item \texttt{expr} works with various operands (see \texttt{man expr})
-	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Work with variables}
@@ -1670,15 +1677,18 @@
     export GREP_OPTIONS='--color=auto' # Colored grep (see further)
     unset VARIABLENAME # Drop variable and its value
 	\end{bashcode}
-	\vfill
+\end{frame}
+
+\begin{frame}{Expressions and variables notes}
 	\begin{itemize}
+		\item \texttt{expr} works with various operands (see \texttt{man expr}) --- it used to be utilised also for simple computations, \texttt{\$((\ldots))} is now preferred
 		\item Exported variables will be lost when logging off
 		\item To make variables permanent, add \texttt{export} commands into \texttt{$\sim$/.profile} or \texttt{$\sim$/.bash\_profile}, or \texttt{$\sim$/.bashrc} (according to shell and its settings)
 		\item \enquote{\texttt{$\sim$}} means home directory
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{The PATH variable}
+\begin{frame}{The PATH variable}
 	\label{PATH}
 	\begin{itemize}
 		\item Lists directories (separated by colon \texttt{:}) where the current shell searches for commands
@@ -1686,7 +1696,9 @@
 		\item In case there are two commands with the same name (e.g. \texttt{/bin/somecommand} and \texttt{/usr/bin/somecommand}), the order of directories in \texttt{\$PATH} matters --- the first occurrence is used, any possible later ignored
 		\item Computing clusters (like MetaCentrum) use to have special command (e.g. \texttt{module}) to load particular software (including particular version) by extending user's \texttt{\$PATH}
 	\end{itemize}
-	\vfill
+\end{frame}
+
+\begin{frame}[fragile]{Working with PATH variable}
 	\begin{bashcode}
     # See the $PATH variable
     echo $PATH # Sample output is on the next line:
@@ -1699,7 +1711,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Reading variables from command line and as output of another commands}{This is especially useful in scripting to read input from users or from another commands}
+\begin{frame}[fragile]{Reading variables from command line and as output of other commands}{This is especially useful in scripting to read input from users or from another commands}
 	\begin{bashcode}
     # Reading variable from user's input from command line
     # (some interactive script interacting with the user)
@@ -1720,8 +1732,16 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Variables and quotes and more}
+\begin{frame}{Variables and quotes and more I}
 	\label{varquotes}
+	\begin{itemize}
+		\item \alert{\texttt{\textdollar}} marks variables
+		\item \alert{\texttt{\textbackslash}} escapes following character --- it will not have its special meaning (space to separate arguments,~\ldots{ }--- next slide)
+		\item If variable is going to contain any special character (\texttt{?}, \texttt{.}, \texttt{*},~\ldots), the value must be quoted --- \texttt{"\ldots"} allow escaping of special character or inclusion of another variables, \texttt{'\ldots'} keeps absolutely literal value
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Variables and quotes and more II}{How quotes influence reading of variable content}
 	\begin{bashcode}
     A=abcdef # Set new variable (no special characters allowed)
     echo $A # See variable's content
@@ -1735,18 +1755,13 @@
     echo $($A) # Same as `...`, this is now recommended way, `...` is legacy
     echo "Hi, dear $USER" # Compare this and following command...
     echo 'Hi, dear $USER' # Single quotes do not evaluate variables
+    A=abcde # OK
+    echo $A # abcde
 	\end{bashcode}
-	\begin{itemize}
-		\item \alert{\texttt{\textdollar}} marks variables
-		\item \alert{\texttt{\textbackslash}} escapes following character --- it will not have its special meaning (space to separate arguments,~\ldots{ }--- next slide)
-		\item If variable is going to contain any special character (\texttt{?}, \texttt{.}, \texttt{*},~\ldots), the value must be quoted --- \texttt{"\ldots"} allow escaping of special character or inclusion of another variables, \texttt{'\ldots'} keeps absolutely literal value
-	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{How quotes influence reading of variable content}
 	\begin{bashcode}
-    A=abcde # OK
-    echo $A # abcde
     B=abcd$e # The content will be "abcde + $e" or "abcd" (if $e is missing)
     echo $B # abcd
     C=abcd\$e # \ escapes next character - it is loosing its special meaning
@@ -1768,7 +1783,7 @@
 
 \subsection[Chaining]{Input, output and their redirecting}
 
-\begin{frame}{Chaining commands}
+\begin{frame}[allowframebreaks]{Chaining commands}
 	\begin{itemize}
 		\item Key feature of BASH --- work with individual commands as with Lego to get new functionality
 		\item \alert{\texttt{\&}} --- command will be launched in background, terminal is available for next typing: \texttt{firefox \&} (when launching graphical application, hit \textbf{Enter} afterward if there is no active command line prompt)
@@ -1819,9 +1834,8 @@
     command > /dev/null # Discard all output (no logging or onscreen output)
 	\end{bashcode}
 	\begin{itemize}
-		\item \texttt{/dev/stdin} --- standard input
+		\item \texttt{/dev/stdin} --- standard input (typically keyboard)
 		\begin{itemize}
-			\item Typically keyboard
 			\item In case application reads files, not from standard input:
 		\end{itemize}
 	\end{itemize}
@@ -1870,15 +1884,15 @@
     # If file directory_listing.txt exists, new content will be appended
     ls -la >> directory_listing.txt # See result 'cat directory_listing.txt'
     # We are outputting 'ls -lh' to 'awk' and not to screen, printing only
-    # selected columns, and parsing with 'column -t' for tabular display
-    ls -lh # Compare outputs of the 3 commands starting with 'ls -lh'
-    ls -lh | awk '{ print $NF, " ", $5}' # See further more info about awk
-    ls -lh | awk '{ print $NF, " ", $5}' | column -t
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Redirects of standard input and output II}{Try everything and be sure to understand}
 	\begin{bashcode}
+    # selected columns, and parsing with 'column -t' for tabular display
+    ls -lh # Compare outputs of the 3 commands starting with 'ls -lh'
+    ls -lh | awk '{ print $NF, " ", $5}' # See further more info about awk
+    ls -lh | awk '{ print $NF, " ", $5}' | column -t
     # Add error output to the end of standard output file
     # Note: In the examples below command "commandX" does not exist -
     # it produces error "command not found" to be recorded by the log
@@ -1891,6 +1905,11 @@
     # Compare two following commands. What is the difference?
     { commandX; ls; } > outputfile.log 2>&1 # Inspect outputfile.log
     { commandX; ls; } >> outputfile.log 2>&1 # Inspect outputfile.log
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Redirects of standard input and output III}{Try everything and be sure to understand}
+	\begin{bashcode}
     # Add error output to the error log text file
     command >> outputfile.log 2>error.log # Example:
     { commandX; ls; } >> outputfile.txt 2>error.log
@@ -1899,7 +1918,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Examples of redirects and pipes when working with molecular data}
+\begin{frame}[fragile]{Examples of redirects and pipes when working with molecular data I}
 	\begin{bashcode}
     # Extract and sort depth of coverage (how many times was each position
     # sequenced) in genomic VCF with multiple individuals
@@ -1918,6 +1937,11 @@
     # reads, one BAM for each sample)
     bwa mem reference.fasta input_R1.fastq input_R2.fastq | samtools view \
       -bu | samtools sort -l 9 -o mapped.bam
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Examples of redirects and pipes when working with molecular data II}
+	\begin{bashcode}
     # How many FASTQ reads are there in the file
     cat file.fastq | echo "$(("$(wc -l)" / 4))"
 	\end{bashcode}
@@ -1925,7 +1949,7 @@
 
 \subsection[HW, sys and ps]{Information and processes}
 
-\begin{frame}[fragile]{Which system are we using?}
+\begin{frame}[fragile]{Which system are we using? I}
 	\begin{bashcode}
     uname -a # Information about Linux kernel (version, ...)
     lsb_release -a # Information about Linux distribution release
@@ -1944,6 +1968,11 @@
     lsmod # List loaded kernel modules
     uptime # How long is the system running, number of users, average load
     date # Date and time - plenty of options for formatting
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Which system are we using? II}
+	\begin{bashcode}
     mount # Information about mounted file systems
     findmnt # Display mounted devices in tree structure
 	\end{bashcode}
@@ -1965,16 +1994,16 @@
     kill -SIGTERM 14639 # SIGTERM is "nice" termination, SIGKILL "brutal"
     kill -SIGTERM $(pgrep geany) # Two above commands in one step; note $()
     killall -SIGTERM geany # Select by name (more processes with same name)
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Processes and users}
+	\begin{bashcode}
     # nice - how much resources will task use: from -20 (high priority - not
     # "nice" process) to +19 (low priority - very "nice" process), default 0
     nice -n 7 hard_task.sh # set priority 7 for newly launched task
     renice 15 16302 # Change priority of PID 16302 to 15
     sudo renice 15 16302 -u USER # Change priority of USER's process
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Users}
-	\begin{bashcode}
     whoami # What is my user name
     id # Information about current user (user ID and group IDs)
     who # Who is logged in
@@ -1985,6 +2014,11 @@
     passwd # Change password
     passwd USER # Change USER's password
     groups # List your groups
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Users}
+	\begin{bashcode}
     # Following commands to manage users and groups do not have to work
     # on all systems - depends on authentication methods used
     useradd newuser # Add new user
@@ -2051,7 +2085,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Basic network information and testing}
+\begin{frame}[fragile]{Basic network information and testing I}
 	\begin{bashcode}
     hostname # Get name of the computer
     ping web.natur.cuni.cz # Ping host. Is it alive? Cancel by Ctrl+C
@@ -2068,6 +2102,11 @@
     netstat -ntplu # Show open TCP/UDP ports
     netstat -anp # Show active connections
     netstat -h # See for explanation of 3 above examples
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Basic network information and testing II}
+	\begin{bashcode}
     # If using nmap at faculty, firewall disconnects you for 10 minutes!
     nmap -r someserver.cz # Scan someserver.cz for opened ports
     nmap botany.natur.cuni.cz --script ssh-hostkey # See SSH key
@@ -2145,7 +2184,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}{SSH keys}{Secure way how to connect to multiple servers with single key and more}
+\begin{frame}[allowframebreaks]{SSH keys}{Secure way how to connect to multiple servers with single key and more}
 	\begin{itemize}
 		\item Secure way how to connect to multiple servers via SSH with single (or no) password using asymmetric encryption
 		\item Command \texttt{ssh-keygen} generates pair of keys
@@ -2158,6 +2197,8 @@
 		\item File \texttt{$\sim$/.ssh/known\_hosts} contain servers you have ever connect to, and their SSH fingerprints (unique IDs) --- if this changes, SSH complains a lot as it could be \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{Man-in-the-middle attack}
 		\item File \texttt{$\sim$/.ssh/authorized\_keys} contains public keys allowing logging to the machine
 		\item \texttt{~/.ssh/config} can store various settings for particular servers
+		\item SSH keys work in all applications using SSH (SFTP, SSHFS, rsync, many graphical file managers,~\ldots)
+		\item User can have various local passwords on servers, but use single SSH key to connect to them
 	\end{itemize}
 \end{frame}
 
@@ -2179,11 +2220,6 @@
     # Connect as usually
     ssh user@remote.server.cz
 	\end{bashcode}
-	\vfill
-	\begin{itemize}
-		\item SSH keys work in all applications using SSH (SFTP, SSHFS, rsync, many graphical file managers,~\ldots)
-		\item User can have various local passwords on servers, but use single SSH key to connect to them
-	\end{itemize}
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Network tasks}
@@ -2278,13 +2314,13 @@
     # "--" stops reading parameters for parallel
     nl longfile | parallel -qk --pipe --block 20M -- grep "WORD TEXT" # or
     nl longfile | parallel -k --pipe --block 20M -- grep '"WORD TEXT"'
-    # Convert all WAV files into OGG
-    parallel -X oggenc ::: *.wav # -X parse as many parameters as possible
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{GNU Parallel examples II}
 	\begin{bashcode}
+    # Convert all WAV files into OGG
+    parallel -X oggenc ::: *.wav # -X parse as many parameters as possible
     # Run in parallel commands from command list file (list of commands)
     parallel < command_list.txt # (each command on one line) or
     parallel :::: command_list.txt
@@ -2296,6 +2332,11 @@
     # next slide) with starting and ending date and time
     find . -name '*.nexus' -print | parallel 'echo -e "Start: $(date)\n" >
       {}.log && mb {} | tee -a {}.log && echo "End: $(date)" >> {}.log'
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{GNU Parallel examples III and tasks}
+	\begin{bashcode}
 	\end{bashcode}
 	\vfill
 	\begin{block}{Tasks}
@@ -2367,7 +2408,7 @@
     # Check status of cron daemon (it must run), start/stop/enable/disable
     systemctl status/start/stop/enable/disable cron.service
     crontab -l # List user's cron tasks
-    crontab -e # Edit user's cron tasks:
+    crontab -e # Edit user's cron tasks (separate columns by spaces):
     # Minute, Hour, Day in month, Month, Day in week, Command(absolute path)
     # 0-59    0-23  1-31          1-12   0-6 starting with Sunday (WTF?)
       *       *     *             *      *            /usr/bin/command
@@ -2376,7 +2417,6 @@
       0       11    *             *      0    # Every Sunday, 12:00
       30      3     */2           *      *    # Every second day, 4:31
       */15    *     *             *      0,4  # At Sun and Fri every 15 min
-    # Columns are separated by any number of spaces
 	\end{bashcode}
 \end{frame}
 
@@ -2404,7 +2444,7 @@
 
 \begin{frame}{It \textbf{is} important to select \textbf{good} text editor\ldots}
 	\begin{center}
-		\includegraphics[width=\textwidth-3cm]{real_programmers.png}
+		\includegraphics[width=\textwidth-4.5cm]{real_programmers.png}
 	\end{center}
 	\begin{flushright}
 		\url{https://xkcd.com/378/}
@@ -2458,10 +2498,7 @@
     mac2unix textfile # Convert text file from old Mac to UNIX EOL
     unix2dos --help # More information about usage, include encoding
     # Converts encoding of input file (ISO-8859-2) to outfile in UTF-8
-    iconv -f ISO-8859-2 -t UTF-8 infile.txt > outfile.txt
-    iconv -l # List of available encoding to convert
-    iconv --help # More information about usage
-    enca -h # See usage of another encoding tool
+    enca -h # See usage
     recode CP1250..UTF-8 textfile # Convert encoding from CP-1250 to UTF-8
     recode ../CR-LF textfile # Convert EOL from UNIX to Windows
     recode --help # More information about usage; recode is deprecated
@@ -2476,18 +2513,17 @@
 
 \begin{frame}[fragile]{Read text file}
 	\begin{bashcode}
-    cat # Read or join (using redirects) files
-        # -n adds line numbers, -v prints non-printable characters like EOL
+    cat # Read or join (using redirects) files; 'cat --help' for options
     cat long_text.txt # Print content of text file
     cat textfile1 >> textfile2 # Append textfile1 to the end of textfile2
     nl long_text.txt # Like cat -n, prints textfile with line numbers
     tac textfile # Like cat, but prints lines in reverse order
     more long_text.txt # When textfile is long, prints screen by screen
                        # (space for next screen, q to quit)
-    less long_text.txt # Better version of more - you can scroll up and
-                       # down by PgUp, PgDown, arrows, searching by / (type
-                       # searched string, hit Enter, n for next, twice ESC
-                       # to quit), q to quit viewing (also used by man)
+    # Better version of more - you can scroll up and down by PgUp, PgDown,
+    # arrows, searching by / (type searched string, hit Enter, n for next,
+    # twice ESC to quit), q to quit viewing (also used by man)
+    less long_text.txt
     fmt long_text.txt # Basic formatting of text - joining of commented
                       # lines, line breaks to break too long lines, ...
     fmt textfile > formatted_file # Save output of fmt into new file
@@ -2499,7 +2535,7 @@
 
 \subsection{Extractions}
 
-\begin{frame}[fragile]{Get part of text file (by lines)}
+\begin{frame}[fragile]{Get part of text file (by lines) I}
 	\begin{bashcode}
     head -n N textfile # Print first N lines from textfile
     tail -n N textfile # Print last N lines from textfile
@@ -2519,7 +2555,11 @@
     grep -ls user /etc/* # -l print files with pattern, -s suppress errors
     grep "longer text" textfile # Extract whole phrase
 	\end{bashcode}
-	\vfill
+\end{frame}
+
+\begin{frame}[fragile]{Get part of text file (by lines) II}
+	\begin{bashcode}
+	\end{bashcode}
 	\begin{itemize}
 		\item Grep supports regular expressions, slide \ref{regexp}
 	\end{itemize}
@@ -2551,7 +2591,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Examples of usage of head, grep and cut with our data}
+\begin{frame}[fragile]{Examples of usage of head, grep and cut with our data I}
 	\begin{bashcode}
     head long_text.txt # Beginning of the file
     # Extract names of FASTA sequences
@@ -2570,6 +2610,11 @@
     # Extract from FASTA file only sequence (discard sequence names) and
     # save result in seq.txt
     grep -v "^>" Oxalis_HybSeq_nrDNA_selection_alignment.fasta > seq.txt
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Examples of usage of head, grep and cut with our data II}
+	\begin{bashcode}
     # Save names of oxalis* JPG files into list_oxalis_photo.txt and see it
     ls -1 *oxalis*.jpg > list_oxalis_photo.txt && cat list_oxalis_photo.txt
 	\end{bashcode}
@@ -2613,13 +2658,13 @@
     awk '{print $1"\t"length($2)"\t"$2}' awk_test_file.tab
     # If field (column) 2 contains exactly 100.0%, print whole line ($0)
     awk '{if($2=="100.0%"){print $0}}' cut_awk_test_file.tsv
-    # Field 1 is numeric (less then 5 digits) - add leading zeroes
-    awk '{printf "%05d\n", $1;}' awk_test_file.tab
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{AWK examples II}
 	\begin{bashcode}
+    # Field 1 is numeric (less then 5 digits) - add leading zeroes
+    awk '{printf "%05d\n", $1;}' awk_test_file.tab
     # As previous, but add leading zeroes to field 1 and print whole line
     awk '{$1=sprintf("%05d", $1); print $0}' awk_test_file.tab
     # Field 6 is numeric, select lines where field 6 is higher than 200
@@ -2635,6 +2680,11 @@
     # every 4th line contains the DNA sequence) print its length (bzcat
     # prints content of file compressed by bzip2)
     bzcat Oxalis_hirta_R1.fastq.bz2 | awk 'NR%4==2{ print length($0) }'
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{AWK examples III}
+	\begin{bashcode}
     # If sequence is longer that 500 bp (length of field 2), print its name
     # (field 1) like this "Seq. name: TAB the sequence name (ID)"
     awk '{if(length($2)>500){print "Seq. name:\t" $1}}' awk_test_file.tab
@@ -2643,7 +2693,7 @@
 
 \subsection{Manipulations}
 
-\begin{frame}[fragile]{Sorting}
+\begin{frame}[fragile]{Sorting I}
 	\begin{bashcode}
     sort file # Sorting is influenced by locale setting (e.g. Czech "ch")
     LC_ALL=C sort ... # To force use of English locale use
@@ -2662,6 +2712,11 @@
     uniq -c textfile # Add number of occurrences before each line
     uniq -d textfile # Print only repeated lines
     uniq -i textfile # Ignore case (not case sensitive)
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Sorting II}
+	\begin{bashcode}
     uniq -s N textfile # Skip first N characters
     uniq -u textfile # Print only not-repeated lines
 	\end{bashcode}
@@ -2699,12 +2754,14 @@
 		\item Option -\texttt{s} separates multiple files (otherwise lines in multiple files are calculated as one stream)
 		\item Option -\texttt{n} use to be used when deleting lines or printing only specific lines to suppress other lines (see examples)
 		\item See manuals \url{https://www.gnu.org/software/sed/manual/} and \url{https://www.grymoire.com/Unix/sed.html}
-		\item Various parameters, modificators, operators can be combined\ldots
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Sed examples I}
 	\label{sedex}
+	\begin{itemize}
+		\item Various parameters, modificators, operators can be combined\ldots
+	\end{itemize}
 	\begin{bashcode}
     sed 'operator/FindToReplace/Replace/modificator' textfile > newtextfile
     # Search and replace ("s") all occurrences ("g") of "find" by "replace"
@@ -2721,15 +2778,15 @@
     # Convert sequences in tabular format into FASTA (place ">" to the
     # beginning of the line, replace TAB "\t" by newline "\n")
     sed 's/^/>/' awk_test_file.tab | sed 's/\t/\n/' > seq.fasta
-    # Convert FASTQ sequences into FASTA (on every 4th line, starting with
-    # line 1 replace "@" by ">", print every 4th line, starting by line 2)
-    bzcat Oxalis_hirta_R1.fastq.bz2 | sed -n '1~4s/^@/>/p;2~4p' > seq.fasta
-    sed -i 's/find/replace/g' directory/* # Process all files in directory
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Sed examples II}
 	\begin{bashcode}
+    # Convert FASTQ sequences into FASTA (on every 4th line, starting with
+    # line 1 replace "@" by ">", print every 4th line, starting by line 2)
+    bzcat Oxalis_hirta_R1.fastq.bz2 | sed -n '1~4s/^@/>/p;2~4p' > seq.fasta
+    sed -i 's/find/replace/g' directory/* # Process all files in directory
     # Convert all capital letters into lower
     sed 's/[A-Z]/\L&/g' inputtextfile > outputtextfile # And vice versa:
     sed 's/[a-z]/\U&/g' inputtextfile > outputtextfile
@@ -2743,16 +2800,16 @@
     ls -l | sed 's/\([0-9]\+\)/size:\t\1b/2' | sed 's/[[:blank:]]\+/\t/g'
     head long_text.txt | sed '/^$/d' # Delete blank (empty) lines
     head long_text.txt | sed '6d' # Delete 6th line
-    sed 's/ *$//' # Delete extra spaces on the end of lines
-    sed '/GUI/d' # Delete all whole lines containing "GUI"
-    sed 's/GUI//g' # Delete all occurrences of "GUI" (not whole lines)
-    sed '4 i\Linux is great.' diff_test_file_1.txt # Insert to 4th line
-    sed '3 a\Linux is great.' diff_test_file_1.txt # Insert after 3rd line
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Sed examples III}
 	\begin{bashcode}
+    sed 's/ *$//' # Delete extra spaces on the end of lines
+    sed '/GUI/d' # Delete all whole lines containing "GUI"
+    sed 's/GUI//g' # Delete all occurrences of "GUI" (not whole lines)
+    sed '4 i\Linux is great.' diff_test_file_1.txt # Insert to 4th line
+    sed '3 a\Linux is great.' diff_test_file_1.txt # Insert after 3rd line
     # Insert text to the beginning of the 3rd line (compare with previous)
     # "^" is beginning of line, $ end ('$/...' last line)
     sed '3s/^/INSERT/' diff_test_file_1.txt
@@ -2764,6 +2821,11 @@
     # Escaping - replace dot by comma (dot means any single character)
     sed 's/\./,/g' diff_test_file_1.txt # \ escapes following character
     sed 's/./,/g' diff_test_file_1.txt # Compare with the previous example
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Sed examples IV}
+	\begin{bashcode}
     # Replace any of characters within [...] by some pattern
     sed 's/[abcd]/X/g' diff_test_file_1.txt # Compare with reverse case:
     sed 's/[^abcd]/X/g' diff_test_file_1.txt # "[^...]" means anything else
@@ -2800,7 +2862,7 @@
 
 \subsection{Compressed text}
 
-\begin{frame}[fragile]{Variants of basic commands for processing of compressed text files}
+\begin{frame}{Variants of basic commands for processing of compressed text files I}
 	\begin{itemize}
 		\item Many tools are able to directly handle files (i.e. single text files) compressed by \texttt{gzip}
 		\item For files compressed by \texttt{gzip} use \texttt{zcat} (instead of \texttt{cat}), \texttt{zdiff} (instead of \texttt{diff}), \texttt{zegrep} (instead of \texttt{egrep}), \texttt{zfgrep} (instead of \texttt{fgrep}), \texttt{zless} (instead of \texttt{less}), \texttt{zmore} (instead of \texttt{more}),~\ldots
@@ -2809,7 +2871,9 @@
 		\item Sometimes these variants are used automatically when user works with compressed file
 		\item \texttt{mc} can also do the job
 	\end{itemize}
-	\vfill
+\end{frame}
+
+\begin{frame}[fragile]{Variants of basic commands for processing of compressed text files II}
 	\begin{bashcode}
     # Extract lines with grep
     zgrep FORMAT arabidopsis.vcf.gz
@@ -2829,18 +2893,16 @@
 		\item See also \href{https://www.computerhope.com/unix/udiff.htm}{guide with examples}, česky \href{https://blog.root.cz/petrkrcmar/diff-jak-cist-vystup-z-porovnani-souboru/}{příklady na diff} a~\href{https://www.root.cz/clanky/nastroje-pro-porovnani-obsahu-dvou-textovych-souboru/}{porovnání dvou textových souborů}
 	\end{itemize}
 	\begin{center}
-		\includegraphics[height=5cm]{kompare.png}
+		\includegraphics[height=4.5cm]{kompare.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}[fragile]{comm and diff}
 	\begin{bashcode}
     cat diff_test_file_1.txt diff_test_file_2.txt # See and use examples
-    # Compare two sorted columns
+    # Compare two sorted columns: 1st column - lines only in textfile1; 2nd
+    # column - lines only in textfile2; 3rd column - lines in both files
     comm textfile1 textfile2
-      # 1st column - lines only in textfile1
-      # 2nd column - lines only in textfile2
-      # 3rd column - lines in both files
     # Don't show 2nd column (similarly -1, -3)
     comm -2 diff_test_file_1.txt diff_test_file_2.txt
     # Show differences between text files
@@ -3063,7 +3125,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Grep and sed examples}
+\begin{frame}[fragile]{Grep and sed examples I}
 	\begin{bashcode}
     # Extract sequences with at least 5 A bases in line
     grep "A\{5,\}" Oxalis_HybSeq_nrDNA_selection_alignment.fasta
@@ -3081,6 +3143,11 @@
     sed -e 's/^/<strong>/' -e 's/^[[:graph:]]\+/&<\/strong>/' long_text.txt
     # How many times is each word in the text
     grep -o "\<[[:alpha:]]\+\>" long_text.txt | sort | uniq -ic | less
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Grep and sed examples II}
+	\begin{bashcode}
     # List all Internet web links
     grep -o "http[a-zA-Z0-9\.()/:\-]\+" long_text.txt
 	\end{bashcode}
@@ -3139,8 +3206,7 @@
     function MyNewFunction2 {
       echo "The sum is $(("$1" + "$2"))."
       }
-    # Use it in the script
-    ...
+    # Use it in the script as any other command
     MyNewFunction2 5 8 # For example
     ...
 	\end{bashcode}
@@ -3196,7 +3262,6 @@
     echo "Those parameters were supplied: $*"
     #  "$0" is available every time and contains script path
     echo "Path to the scrip is: \"$0\""
-    echo
     exit
 	\end{bashcode}
 	\vfill
@@ -3263,7 +3328,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Ensuring user interactively provides correct input (function)}
+\begin{frame}[fragile]{Ensuring user interactively provides correct input (function) I}
 	\begin{bashcode}
     # Regular expression to check if the provided input is a~number
     NUMBER='^[0-9]+$' # From beginning (^) to end ($) only numbers
@@ -3281,6 +3346,11 @@
              fi # End of the conditional evaluation
         done # End of the while cycles
       } # Read variable is in $INPUT
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Ensuring user interactively provides correct input (function) II}
+	\begin{bashcode}
     # Replace line 4 of interactive2.sh by (similarly for line 6)
     checkinput
     V1=$INPUT
@@ -3302,16 +3372,19 @@
       # This should be every time last possibility - any other input
       # User is then notified he entered nonsense and gets some help
       *) # Any other input
-        echo "Wrong option!"
+        echo "Wrong option! "
         echo "Usage: 'd' or 'disk' for available disk space or 'u' or"
+    # Ends on next slide...
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Notes to previous script}
+	\begin{bashcode}
         echo "  'uptime' for computer uptime"
         exit 1;; # In this case, exit with error code 1
       esac
     exit
 	\end{bashcode}
-\end{frame}
-
-\begin{frame}{Notes to previous script}
 	\begin{itemize}
 		\item First make \texttt{interactive3.sh} executable and launch it via e.g. \texttt{./interactive3.sh d} or \texttt{./interactive3.sh uptime} or so
 		\item Function \texttt{case} has basic checking of input available --- as last parameter use \texttt{*)} --- any other input except those defined above will produce some warning message, error or so
@@ -3338,8 +3411,6 @@
       fi # "=~" means testing if $1 fits to regular expression in $NUMBER
     if [[ ! $1 =~ $NUMBER ]]; then # Is parameter 1 number?
       echo "Parameter 1 is not an integer!"
-      usagehelp # The function to print help
-      fi
     # Continues on next slide...
 	\end{bashcode}
 \end{frame}
@@ -3347,6 +3418,8 @@
 \begin{frame}[fragile]{Provide parameters, verify them and behave accordingly II}
 	\begin{bashcode}
     # Remaining part from previous slide...
+      usagehelp # The function to print help
+      fi
     if [[ ! $3 =~ $NUMBER ]]; then # Is parameter 3 number?
       echo "Parameter 3 is not an integer!"
       usagehelp # The function to print help
@@ -3362,11 +3435,13 @@
       esac
     exit
 	\end{bashcode}
-	\vfill
-	\hrule
-	\vfill
+\end{frame}
+
+\begin{frame}[fragile]{Provide parameters, verify them and behave accordingly III}
 	\begin{bashcode}
-    chmod +x interactive4.sh && ./interactive4.sh 7 plus 5 # For example...
+    # Make in executable and run it...
+    chmod +x interactive4.sh
+    ./interactive4.sh 7 plus 5 # For example...
 	\end{bashcode}
 	\vfill
 \end{frame}
@@ -3413,7 +3488,6 @@
              echo "  integer ranging from 10 to 300!"
              exit 1
             fi
-          ;; # End of this option
     # ...continues on following slide...
 	\end{bashcode}
 \end{frame}
@@ -3421,6 +3495,7 @@
 \begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) III}
 	\begin{bashcode}
     # ...continuing from previous slide...
+          ;; # End of this option (see previous slide)
         ?)
           echo "Invalid option(s)!"
           echo "See \"$0 -h\" for usage options."
@@ -3435,15 +3510,16 @@
       exit 1
       fi
     if [ -z "$VALUE" ]; then
-      echo "Warning! Value for \"-a\" was not provided! Using default (10)."
-      VALUE=10
-      fi # ...ends on following slide...
+    # ...ends on following slide...
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) IV}
 	\begin{bashcode}
     # ...continuing from previous slide...
+      echo "Warning! Value for \"-a\" was not provided! Using default (10)."
+      VALUE=10
+      fi
     # Do the job...
     for I in $(seq 1 $VALUE); do # Repeat task number of times ($VALUE x)
       echo -ne "Cycle $I...\r" # Write number of cycle and return cursor to
@@ -3460,17 +3536,20 @@
 	\begin{itemize}
 		\item Script \texttt{interactive5.sh} contains complete example
 	\end{itemize}
-	\vfill
+\end{frame}
+
+\begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) V}
 	\begin{bashcode}
     # Start with displaying help
     ./interactive5.sh -h # Or ./interactive5.sh -v
     # Try it as common command line tool
     ./interactive5.sh -i input.txt -o output.txt -a 50
-    ./interactive5.sh -o out.txt -a 50 -i input.txt # Order doesn't matter
+    # Order of parameters doesn't matter
+    ./interactive5.sh -o out.txt -a 50 -i input.txt
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Simple providing of input file}
+\begin{frame}[fragile]{Simple providing of input file I}
 	\begin{bashcode}
     #!/bin/bash
     # We expect exactly one parameter
@@ -3488,8 +3567,20 @@
     echo "The file has $(wc -l "$1" | cut -d ' ' -f 1) lines."
     echo "Making backup of the file $1..."
     cp "$1" "$1".bak || { echo "Error! Making backup of $1 failed!"; exit 1; }
+    # Ends on next slide...
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Simple providing of input file II}
+	\begin{bashcode}
+    # The end from previous slide
     echo "Done!"
     exit
+	\end{bashcode}
+	\vfill
+	\hrule
+	\vfill
+	\begin{bashcode}
     # Use the script with some text file...
     ./interactive6.sh long_text.txt
 	\end{bashcode}
@@ -3503,8 +3594,7 @@
     if condition; then
         commands
       fi
-    # Two branches - when condition is met and when not
-    if condition; then
+    if condition; then # Two branches - when condition is met and when not
         commands1 # condition is TRUE
       else
         commands2 # condition is FALSE - all other cases
@@ -3612,7 +3702,7 @@
 
 \subsection{Loops}
 
-\begin{frame}[fragile]{For cycles}
+\begin{frame}[fragile]{For cycles I}
 	\begin{bashcode}
     # Ways how to declare number of repetitions
     for I in $(seq 1 10); do echo $I; done # "seq" is outdated
@@ -3627,6 +3717,11 @@
       convert $JPGF -resize 100x100 thumbs-$JPGF
       echo "File thumbs-$file created"
       done
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{For cycles II}
+	\begin{bashcode}
     for ...; do # Start cycles as you need
       command1 # command1 will be executed in any case
       if (condition); then # Set some condition to skip command2
@@ -3636,7 +3731,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{While and until cycles}
+\begin{frame}[fragile]{While and until cycles I}
 	\begin{bashcode}
     # while cycle is evaluating condition and if it is equal to 0 (TRUE)
     # the cycle body is launched, repeatedly while the condition is met
@@ -3654,6 +3749,11 @@
     while read TEXTLINE; do # Run cycles on text file
       commands... # TEXTLINE contains in each cycle one line of the file
       done < text_file_to_process.txt
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{While and until cycles II}
+	\begin{bashcode}
     while :; do echo "Press CTRL+C to exit..."; done # Infinite loop
     for (( ; ; )) ; do echo "Press CTRL+C to exit..."; done # Infinite loop
 	\end{bashcode}
@@ -3819,12 +3919,12 @@
 
 \begin{frame}{Graphical package managers I}{Ubuntu Software, and Synaptic and text-based Aptitude for all DEB-based distributions}
 	\begin{center}
-		\includegraphics[width=\textwidth-2cm]{software_managers_ubuntu_deb.png}
+		\includegraphics[width=\textwidth-4cm]{software_managers_ubuntu_deb.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{Graphical package managers II}{GNOME Software in Fedora and YaST in openSUSE}
-	\includegraphics[width=\textwidth]{software_managers_fedora_suse.png}
+	\includegraphics[width=\textwidth-2cm]{software_managers_fedora_suse.png}
 	\begin{itemize}
 		\item Practically every common general distribution has some graphical tool\ldots{ }Explore it\ldots
 	\end{itemize}
@@ -3882,7 +3982,7 @@
 
 \begin{frame}[fragile]{Compilation of RAxML}
 	\begin{itemize}
-		\item Available from \url{https://github.com/stamatak/standard-RAxML} (cite \href{https://academic.oup.com/bioinformatics/article/30/9/1312/238053}{Stamakis 2014})
+		\item Available from \url{https://github.com/stamatak/standard-RAxML}
 		\item Before compilation check \href{https://github.com/stamatak/standard-RAxML/blob/master/README}{README}
 		\item This example does not require to run \texttt{make install}, it does not have extra dependencies for compilation, it requires specifying of particular source file by \texttt{make}~-\texttt{f} (there are multiple \texttt{GCC} files, no one main)
 	\end{itemize}
@@ -3987,7 +4087,7 @@
 
 \begin{frame}{winefile, winetricks and winecfg}
 	\begin{center}
-		\includegraphics[width=\textwidth-1.5cm]{wine.png}
+		\includegraphics[width=\textwidth-3.5cm]{wine.png}
 	\end{center}
 \end{frame}
 
@@ -4071,11 +4171,11 @@
 \begin{frame}{File transfers to MetaCentrum}
 	\begin{itemize}
 		\item Graphical applications: \href{https://www.gftp.org/}{gFTP}, \href{https://filezilla-project.org/}{FileZilla} or from most of file managers
-		\item Protocol is SSH/SSH2/SFTP/SCP, port 22, server is selected \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontend's} address (e.g. \texttt{tarkil.metacentrum.cz}) --- it is recommendable to use all the time same front end
-		\item All servers are accessible under domain \texttt{*.metacentrum.cz}: \texttt{skirit}, \texttt{perian}, \texttt{onyx}, \texttt{zuphux} (located in Brno), \texttt{alfrid}, \texttt{nympha}, \texttt{minos} (in Pilsen), and \texttt{tarkil} (in Prague) --- so that e.g. \texttt{tarkil.grid.cesnet.cz} is synonymous to \texttt{tarkil.metacentrum.cz}
+		\item Protocol is SSH/SSH2/SFTP/SCP, port 22, server is selected \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontend's} address (e.g. \texttt{tarkil.metacentrum.cz}) --- select any and keep using it
+		\item All servers are accessible under domain \texttt{*.metacentrum.cz}: \texttt{skirit}, \texttt{perian}, \texttt{onyx}, \texttt{zuphux} (located in Brno), \texttt{alfrid}, \texttt{nympha}, \texttt{minos} (in Pilsen), \texttt{tarkil} (in Prague), and \texttt{tilia} (in Průhonice) --- so that e.g. \texttt{tarkil.grid.cesnet.cz} is synonymous to \texttt{tarkil.metacentrum.cz}
 		\item See slide \ref{transfers} and following to command-line transfers of files
 	\end{itemize}
-	\includegraphics[width=\textwidth]{gftp.png}
+	\includegraphics[width=\textwidth-1cm]{gftp.png}
 \end{frame}
 
 \subsection{Tasks}
@@ -4098,17 +4198,14 @@
     cp -a "$DATADIR"/"$WORKDIR"/* "$SCRATCHDIR"/ || exit 1 # If fails, exit
     # Change working directory - script goes to the directory where
     # calculations are done
-    cd "$SCRATCHDIR"/ || exit 1 # If it fails, exit script
+    # Ends on following slide...
 	\end{bashcode}
-	\vfill
-	Ends on following slide\ldots
-	\vfill
 \end{frame}
 
 \begin{frame}[fragile]{Basic skeleton of script running tasks II}
-	\ldots begins on previous slide\ldots
-	\vfill
 	\begin{bashcode}
+    # ...begins on previous slide...
+    cd "$SCRATCHDIR"/ || exit 1 # If it fails, exit script
     # Prepare calculations - load required application modules
     # See https://wiki.metacentrum.cz/wiki/Kategorie:Applications
     # Every application module is loaded by "module add XXX"
@@ -4289,25 +4386,23 @@
 \end{frame}
 
 \begin{frame}{MetaCentrum task}
-	\begin{block}{Now work on MetaCentrum\ldots}
-		\begin{enumerate}
-			\item Upload to any MetaCentrum fronted files \texttt{metacentrum\_oxalis.sh} and \texttt{oxalis\_assembly\_6235.aln.fasta} from \texttt{scripts\_data}.
-			\item See \texttt{metacentrum\_oxalis.sh}, be sure you know what it is doing, that you understand every command there.
-			\item If needed, edit \texttt{metacentrum\_oxalis.sh} (e.g. correct paths).
-			\item Submit the task via \texttt{qsub}.
-			\item Monitor the task with \texttt{qstat}.
-			\item Login with SSH to computing node where the task is running, go to \texttt{\$SCRATCHDIR} and see its progress. Look at output of \texttt{ps ux}. What does it say?
-			\item Wait for the task to be done and explore output.
-			\item If you encounter any error, try to find its source and fix it.
-		\end{enumerate}
-	\end{block}
+	\begin{enumerate}
+		\item Upload to any MetaCentrum fronted files \texttt{metacentrum\_oxalis.sh} and \texttt{oxalis\_assembly\_6235.aln.fasta} from \texttt{scripts\_data}.
+		\item See \texttt{metacentrum\_oxalis.sh}, be sure you know what it is doing, that you understand every command there.
+		\item If needed, edit \texttt{metacentrum\_oxalis.sh} (e.g. correct paths).
+		\item Submit the task via \texttt{qsub} and .
+		\item Monitor the task with \texttt{qstat}.
+		\item Login with SSH to computing node where the task is running, go to \texttt{\$SCRATCHDIR} and see its progress. Look at output of \texttt{ps ux}. What does it say?
+		\item Wait for the task to be done and explore output.
+		\item If you encounter any error, try to find its source and fix it.
+	\end{enumerate}
 \end{frame}
 
 \subsection{Graphical connection}
 
 \begin{frame}[fragile]{Graphical interactive task}
 	\begin{itemize}
-		\item See information at \url{https://wiki.metacentrum.cz/wiki/Remote_desktop}
+		\item See \url{https://wiki.metacentrum.cz/wiki/Remote_desktop}
 	\end{itemize}
 	\begin{bashcode}
     screen # Secure we can log off in the meantime
@@ -4331,7 +4426,7 @@
 
 \begin{frame}{Running VNC}
 	\begin{center}
-		\includegraphics[width=\textwidth-1cm]{vnc.png}
+		\includegraphics[width=\textwidth-3cm]{vnc.png}
 	\end{center}
 \end{frame}
 
@@ -4459,11 +4554,11 @@
 				\item Very convenient
 				\item Keeping work structured
 				\item Separation of tasks
-				\item Keeping more versions of the project in parallel
+				\item Keeping more versions of the project
 			\end{itemize}
 		\end{itemize}
 		\begin{center}
-			\includegraphics[height=6.5cm]{git.png}
+			\includegraphics[height=5cm]{git.png}
 		\end{center}
 		\begin{flushright}
 			\begin{footnotesize}
@@ -4494,12 +4589,12 @@
     # If you did not start by cloning, add connection to server
     git remote add origin <location> # Do only once on the beginning
     # <location> can be remote server or local path
-    git remote add origin . # For repository within working directory
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Working with Git --- branching and getting changes}
 	\begin{bashcode}
+    git remote add origin . # For repository within working directory
     # Push changes into the repository (regardless where it is)
     git push origin master # See further for selection of branches
     # Making new branch and switching to it
@@ -4515,15 +4610,15 @@
     git branch
     # Download news from central server
     git fetch
-    # Update local repository to the newest version from central repository
-    git pull # Fetch and merge remote changes (before commit)
-    # Merge another branch into the current one
-    git merge <branch>
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Working with Git --- tags, logs and settings}
 	\begin{bashcode}
+    # Update local repository to the newest version from central repository
+    git pull # Fetch and merge remote changes (before commit)
+    # Merge another branch into the current one
+    git merge <branch>
     # In case of conflict, git shows editor and user must fix it manually
     git add <file with conflict> # Needed to re-add conflicting file
     # To see changes before merging
@@ -4537,6 +4632,11 @@
     # Discard all local changes
     git fetch origin # Overwrite local changes
     git reset --hard origin/master # If local repository is broken...
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Working with Git --- tags, logs and settings}
+	\begin{bashcode}
     gitk # Graphical interface
     git config color.ui true # Set output to be colored
     git config format.pretty oneline # Nicer log output
@@ -4586,7 +4686,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{SystemD usage}
+\begin{frame}[fragile]{SystemD usage (few examples)}
 	\begin{bashcode}
     # List installed services and their status
     systemctl list-units --type service
@@ -4605,7 +4705,6 @@
     journalctl -b
     # Time and date information and management
     timedatectl
-    # And much more...
 	\end{bashcode}
 \end{frame}
 
