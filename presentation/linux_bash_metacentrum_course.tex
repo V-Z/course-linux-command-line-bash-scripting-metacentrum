@@ -71,11 +71,11 @@
 \AfterEndEnvironment{bashcode}{\par\vspace{-0.5em}}
 
 % Fixing space before and after multicols region
-\BeforeBeginEnvironment{multicols}{\vspace{-0.75em}}
+\BeforeBeginEnvironment{multicols}{\vspace{-0.5em}}
 \AfterEndEnvironment{multicols}{\par\vspace{-0.5em}}
 
 % Fixing space before and after itemize region
-\BeforeBeginEnvironment{itemize}{\vspace{-0.5em}}
+\BeforeBeginEnvironment{itemize}{\vspace{-0.25em}}
 \AfterEndEnvironment{itemize}{\vspace{-0.25em}}
 
 % Default language
@@ -111,9 +111,9 @@
 \begin{frame}{The course information}
 	\label{materials}
 	\begin{itemize}
-		\item The course page: \url{https://trapa.cz/en/course-linux-command-line-2020}
+		\item The course page: \url{https://trapa.cz/en/course-linux-command-line-2021}
 		\begin{itemize}
-			\item Česky: \url{https://trapa.cz/cs/kurz-prikazove-radky-linuxu-2020}
+			\item Česky: \url{https://trapa.cz/cs/kurz-prikazove-radky-linuxu-2021}
 		\end{itemize}
 		\item Subject in SIS: \url{https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=MB120C23}
 		\begin{itemize}
@@ -151,7 +151,7 @@
 	\begin{multicols}{2}
 		\begin{itemize}
 			\item If you do not have Linux installed, download and install VirtualBox from \url{https://www.virtualbox.org/}
-			\item Download openSUSE Leap 15.2 Linux distribution for this course from \url{ftp://botany.natur.cuni.cz/openSUSE_Leap_courses.ova} ($\sim$5~GB)
+			\item Download openSUSE Leap 15.2 Linux distribution for this course from \url{https://botany.natur.cuni.cz/zeisek/openSUSE_Leap_courses.ova} ($\sim$4.9~GB)
 			\item Launch VirtualBox and go to menu \textbf{File | Import appliance\ldots} to import it. When done, launch it (\textbf{Start})
 		\end{itemize}
 		\includegraphics[height=6cm]{virtualbox.png}
@@ -392,7 +392,7 @@
 		\item \href{https://kde.org/}{KDE} --- one of the most common, feature extremely rich, basically \enquote{Windows-like} (can be changed)
 		\item \href{https://www.gnome.org/}{GNOME} --- one of the most common, relatively simplistic interface, but still feature rich, \enquote{Mac-like}
 		\item \href{https://xfce.org/}{XFCE} --- lightweight version of older GNOME --- for older computers or users not willing to be disturbed by graphical effects, basically \enquote{Mac-like} looking, but panels can be moved to \enquote{Windows style}
-		\item \href{https://developer.linuxmint.com/projects/cinnamon-projects.html}{Cinnamon} --- remake of GNOME to look more like Windows\ldots
+		\item \href{https://cinnamon-spices.linuxmint.com/}{Cinnamon} --- remake of GNOME to look more like Windows\ldots
 		\item And much more\ldots
 		\item Choose what you like --- doesn't matter much which one\ldots
 	\end{itemize}
@@ -1157,7 +1157,7 @@
 		\item Terminal emulator
 		\begin{itemize}
 			\item Application used to get the \enquote{terminal} and work in command line
-			\item Every GUI has some --- \href{https://konsole.kde.org/}{Konsole}, \href{https://yakuake.kde.org/}{Yakuake}, \href{https://invisible-island.net/xterm/}{XTerm}, \href{https://wiki.gnome.org/Apps/Terminal}{Gnome Terminal}, \href{http://guake.org/}{Guake}, \href{https://docs.xfce.org/apps/terminal/start}{XFCE Terminal}, \href{https://wiki.lxde.org/en/LXTerminal}{LxTerminal},~\ldots
+			\item Every GUI has some --- \href{https://konsole.kde.org/}{Konsole}, \href{https://apps.kde.org/en/yakuake}{Yakuake}, \href{https://invisible-island.net/xterm/}{XTerm}, \href{https://wiki.gnome.org/Apps/Terminal}{Gnome Terminal}, \href{http://guake.org/}{Guake}, \href{https://docs.xfce.org/apps/terminal/start}{XFCE Terminal}, \href{https://wiki.lxde.org/en/LXTerminal}{LxTerminal},~\ldots
 			\item Commonly allow appearance customization --- font, colors, background, style of notifications,~\ldots
 			\item Launch as many copies as you need (usually allow tabs for easier work)
 		\end{itemize}
@@ -2063,7 +2063,7 @@
 		\item Telnet --- old deprecated insecure predecessor of SSH, never ever use it (port 23), only low-quality electronics still sometimes use it
 		\item FTP --- file transfer protocol --- outdated, no encryption (port 21), slowly replaced by FTPS or SFTP/SCP
 		\begin{itemize}
-			\item Sometimes used only for download, e.g. \url{ftp://ftp.ebi.ac.uk/pub/} or \url{ftp://botany.natur.cuni.cz/}
+			\item Sometimes used only for download, e.g. \url{ftp://ftp.ebi.ac.uk/pub/}
 		\end{itemize}
 		\item FTPS --- FTP with added connection encryption for higher security (port 21), common
 		\item SFTP --- FTP over SSH --- common, secure (port 22), slide~\ref{transfers}
@@ -2475,7 +2475,7 @@
 	\begin{multicols}{4}
 		\begin{itemize}
 			\item \href{https://kate-editor.org/}{Kate}
-			\item \href{https://kde.org/applications/utilities/kwrite/}{KWrite}
+			\item \href{https://apps.kde.org/en/kwrite}{KWrite}
 			\item \href{https://www.vim.org/}{Vim}
 			\item \href{https://en.wikipedia.org/wiki/Emacs}{GNU Emacs}
 			\item \href{https://www.geany.org/}{Geany}
@@ -2888,7 +2888,7 @@
 
 \begin{frame}{Comparisons}
 	\begin{itemize}
-		\item Graphically compare two files by e.g. \href{https://kde.org/applications/development/org.kde.kompare}{Kompare}, \href{https://sourcegear.com/diffmerge/}{DiffMerge}, \href{https://meldmerge.org/}{Meld},~\ldots
+		\item Graphically compare two files by e.g. \href{https://apps.kde.org/en/kompare}{Kompare}, \href{https://sourcegear.com/diffmerge/}{DiffMerge}, \href{https://meldmerge.org/}{Meld},~\ldots
 		\item Most common is usage of GNU diffutils (next slide), see manual \url{https://www.gnu.org/software/diffutils/manual/}
 		\item See also \href{https://www.computerhope.com/unix/udiff.htm}{guide with examples}, česky \href{https://blog.root.cz/petrkrcmar/diff-jak-cist-vystup-z-porovnani-souboru/}{příklady na diff} a~\href{https://www.root.cz/clanky/nastroje-pro-porovnani-obsahu-dvou-textovych-souboru/}{porovnání dvou textových souborů}
 	\end{itemize}
@@ -3119,7 +3119,7 @@
 		\item Implementation in \texttt{vim}, \texttt{sed}, \texttt{grep}, \texttt{awk} and \texttt{perl} and among various UNIX systems is almost same, but not identical\ldots
 		\item \textbf{grep}, \textbf{sed} and \textbf{vim} \alert{require escaping} of \alert{\texttt{+}}, \alert{\texttt{?}}, \alert{\texttt{\{}}, \alert{\texttt{\}}}, \alert{\texttt{(}} and \alert{\texttt{)}} by backslash \alert{\texttt{\textbackslash}} (e.g. \texttt{\textbackslash +}) --- \textbf{egrep} (extended version, launched as \texttt{grep}~-\texttt{E \ldots} or \texttt{egrep \ldots}), \textbf{sed} with extended reg exp (\texttt{sed}~-\texttt{r}) and \textbf{perl} \alert{not}
 		\item Read \url{https://en.wikibooks.org/wiki/Regular_Expressions}, \url{https://www.grymoire.com/Unix/Regular.html}, \url{https://www.regular-expressions.info/}; česky \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{https://www.root.cz/serialy/regularni-vyrazy/} a~\url{https://www.regularnivyrazy.info/}
-		\item Manuals for \href{https://www.gnu.org/software/grep/manual/}{Grep}, Vim, \href{https://www.gnu.org/software/sed/manual/}{Sed}, \href{https://www.gnu.org/software/gawk/manual/}{Awk}, \href{https://en.wikibooks.org/wiki/Perl_Programming}{Perl} (\href{https://en.wikibooks.org/wiki/Perl_6_Programming}{newer Perl~6 Raku}),~\ldots
+		\item Manuals for \href{https://www.gnu.org/software/grep/manual/}{Grep}, Vim, \href{https://www.gnu.org/software/sed/manual/}{Sed}, \href{https://www.gnu.org/software/gawk/manual/}{Awk}, \href{https://en.wikibooks.org/wiki/Perl_Programming}{Perl} (\href{https://en.wikibooks.org/wiki/Raku_Programming}{newer Perl~6 Raku}),~\ldots
 		\item See sed examples, slide~\ref{sedex}; and next slide
 		\item macOS has by default very outdated version of \texttt{sed} and another tools --- it does not have all advanced features --- users need to install e.g. \texttt{gnu-sed} formulae from \href{https://brew.sh/}{Homebrew} (slide~\ref{homebrew})
 	\end{itemize}
@@ -3224,7 +3224,7 @@
 		\item \alert{\texttt{\$@}} --- same as \texttt{\$*}, but each parameter is a~quoted string --- the parameters are passed on intact, without interpretation or expansion, each parameter in the argument list is seen as a~separate word, should be quoted (i.e. something like \texttt{"\$@"})
 		\item \alert{\texttt{\$\$}} --- process ID (PID) of the script itself
 		\item \alert{\texttt{\$?}} --- Exit status of previous command, function, or the script itself
-		\item \href{https://www.tldp.org/LDP/abs/html/internalvariables.html}{See more variables\ldots}
+		\item \href{https://tldp.org/LDP/abs/html/internalvariables.html}{See more variables\ldots}
 	\end{itemize}
 \end{frame}
 
@@ -3843,7 +3843,7 @@
 			\item And many more\ldots
 		\end{itemize}
 		\item Distributions use to provide convenient simple update applet notifying about awaiting updates
-		\item There use to be web services to look for packages, also from other sources --- \href{https://software.opensuse.org/search}{openSUSE}, \href{https://www.debian.org/distrib/packages\#search_packages}{Debian}, \href{https://packages.ubuntu.com/}{Ubuntu} (+ \href{https://launchpad.net/ubuntu/+search}{Launchpad} and \href{https://launchpad.net/ubuntu/+ppas}{PPAs}), \href{https://apps.fedoraproject.org/packages/}{Fedora},~\ldots
+		\item There use to be web services to look for packages, also from other sources --- \href{https://software.opensuse.org/explore}{openSUSE}, \href{https://www.debian.org/distrib/packages\#search_packages}{Debian}, \href{https://packages.ubuntu.com/}{Ubuntu} (+ \href{https://launchpad.net/ubuntu/+search}{Launchpad} and \href{https://launchpad.net/ubuntu/+ppas}{PPAs}), \href{https://apps.fedoraproject.org/packages/}{Fedora},~\ldots
 		\item The task is always same, the exact work-flow and commands more or less differ among distributions\ldots
 		\item Tools like Android Google Play, Apple Store or Windows Store are inspired from Linux\ldots
 	\end{itemize}
@@ -4126,12 +4126,12 @@
 			\item To use MetaCentrum fill registration form \url{https://metavo.metacentrum.cz/en/application/form}
 			\item To use data storage fill registration form \url{https://einfra.cesnet.cz/perun-registrar-fed/?vo=storage}
 			\item After registration for MetaCentrum, user can join MetaCloud via \url{https://perun.metacentrum.cz/fed/registrar/?vo=meta&group=metacloud}
-			\item Users not having access to \href{https://www.eduid.cz/en/index}{EduID} have to register first at HostelID \url{http://hostel.eduid.cz/en/index.html}
+			\item Users not having access to \href{https://www.eduid.cz/en/index}{EduID} have to register first at \href{https://www.eduid.cz/cs/hostel}{HostelID} (available only in Czech)
 		\end{itemize}
 		\item Information about data storage \url{https://du.cesnet.cz/en/start} contains detailed usage instructions
 		\item Information about MetaCentrum \url{https://www.metacentrum.cz/en/}
 		\item Information about MetaCloud \url{https://wiki.metacentrum.cz/wiki/Kategorie:Clouds}
-		\item Most of practical information for users are at wiki \url{https://wiki.metacentrum.cz/w/index.php?&setlang=en}
+		\item Most of practical information for users are at wiki \url{https://wiki.metacentrum.cz/wiki/Main_Page}
 	\end{itemize}
 \end{frame}
 
@@ -4142,7 +4142,7 @@
 		\item Manage your user account at \url{http://metavo.metacentrum.cz/en/myaccount/}
 		\item Personal view on actual resources and running tasks is at \url{https://metavo.metacentrum.cz/pbsmon2/person}
 		\item List of available applications \url{https://wiki.metacentrum.cz/wiki/Kategorie:Applications}
-		\item It has 9~\href{https://wiki.metacentrum.cz/wiki/Frontend}{front ends} where users log and thousands of computers doing the calculations --- they are not accessed directly to run task
+		\item It has 11~\href{https://wiki.metacentrum.cz/wiki/Frontend}{front ends} where users log and thousands of computers doing the calculations --- they are not accessed directly to run task
 		\item Most of computers are running \href{https://www.debian.org/}{Debian GNU/Linux}
 	\end{itemize}
 \end{frame}
@@ -4151,7 +4151,7 @@
 
 \begin{frame}[fragile]{MetaCentrum usage}
 	\begin{itemize}
-		\item User can transfer data on one of \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontends} (next slide) by e.g. \texttt{scp} or \href{https://winscp.net/}{WinSCP} from Windows or \href{https://filezilla-project.org/}{FileZilla} from anywhere
+		\item User can transfer data on one of \href{https://wiki.metacentrum.cz/wiki/Frontend}{front ends} (next slide) by e.g. \texttt{scp} or \href{https://winscp.net/}{WinSCP} from Windows or \href{https://filezilla-project.org/}{FileZilla} from anywhere
 		\item Same credentials are used for all front ends, for SSH login as well as file transmissions
 	\end{itemize}
 	\vfill
@@ -4170,8 +4170,8 @@
 
 \begin{frame}{File transfers to MetaCentrum}
 	\begin{itemize}
-		\item Graphical applications: \href{https://www.gftp.org/}{gFTP}, \href{https://filezilla-project.org/}{FileZilla} or from most of file managers
-		\item Protocol is SSH/SSH2/SFTP/SCP, port 22, server is selected \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontend's} address (e.g. \texttt{tarkil.metacentrum.cz}) --- select any and keep using it
+		\item Graphical applications: e.g. \href{https://filezilla-project.org/}{FileZilla} or from most of file managers
+		\item Protocol is SSH/SSH2/SFTP/SCP, port 22, server is selected \href{https://wiki.metacentrum.cz/wiki/Frontend}{front end's} address (e.g. \texttt{tarkil.metacentrum.cz}) --- select any and keep using it
 		\item All servers are accessible under domain \texttt{*.metacentrum.cz}: \texttt{skirit}, \texttt{perian}, \texttt{onyx}, \texttt{zuphux} (located in Brno), \texttt{alfrid}, \texttt{nympha}, \texttt{minos} (in Pilsen), \texttt{tarkil} (in Prague), and \texttt{tilia} (in Průhonice) --- so that e.g. \texttt{tarkil.grid.cesnet.cz} is synonymous to \texttt{tarkil.metacentrum.cz}
 		\item See slide \ref{transfers} and following to command-line transfers of files
 	\end{itemize}
@@ -4230,7 +4230,7 @@
 
 \begin{frame}[fragile]{Launching of tasks}
 	\begin{itemize}
-		\item \url{https://wiki.metacentrum.cz/wiki/How_to_compute/Requesting_resources}
+		\item \url{https://wiki.metacentrum.cz/wiki/Beginners_guide} and \url{https://wiki.metacentrum.cz/wiki/Categorized_list_of_topics}
 		\item Personal view \url{https://metavo.metacentrum.cz/pbsmon2/person} has nice overview of available resources and tasks and allows comfortable construction of submission command
 	\end{itemize}
 	\vfill
@@ -4293,7 +4293,7 @@
 		\item Every user has certain \href{https://metavo.metacentrum.cz/pbsmon2/users/}{priority} highered by \href{https://wiki.metacentrum.cz/wiki/Usage_rules/Acknowledgement}{acknowledgments} in publications to MetaCentrum and lowered by intensive usage of the service (the usage is calculated from past month)
 		\item After submission of the task, check in \href{https://metavo.metacentrum.cz/pbsmon2/queues/jobsQueued}{the queue} in which state it is --- sometimes it can't start because of impossible combination of resources or so
 		\item User can \href{https://metavo.metacentrum.cz/pbsmon2/nodes/physical}{check load of machines}
-		\item For more options read \url{https://wiki.metacentrum.cz/wiki/How_to_compute/Requesting_resources}
+		\item For more options read \url{https://wiki.metacentrum.cz/wiki/About_scheduling_system}
 		\begin{itemize}
 			\item Request special CPU (AMD, graphical,~\ldots), e.g. CPU with AVX2 -\texttt{l~select=cpu\_flag=avx2}
 			\item SSD local storage (e.g. -\texttt{l~scratch\_ssd=1gb})
@@ -4360,10 +4360,6 @@
 \end{frame}
 
 \begin{frame}[fragile]{Interactive tasks}
-	\begin{itemize}
-		\item See information at \url{https://wiki.metacentrum.cz/wiki/How_to_compute/Interactive_jobs}
-	\end{itemize}
-	\vfill
 	\begin{bashcode}
     # Secure we can log off in the meantime
     screen # Or tmux
@@ -4373,6 +4369,7 @@
     # Wait for job to start..
     cd $SCRATCHDIR # Go to $SCRATCHDIR - work there
     # After we get the interactive task, we are on new server
+    # Do needed work...
     hostname # See where we are - we can connect to that server directly
     ssh USER@given.server.cz # User name and password are the same
                              # Server address is output from "hostname"
@@ -4417,7 +4414,7 @@
                 # Including address, port and password to connect
 	\end{bashcode}
 	\begin{itemize}
-		\item Launch your favorite VNC client (\href{https://kde.org/applications/internet/krdc/}{KRDC}, \href{https://www.tightvnc.com/}{TightVNC},~\ldots) and use credentials from above output to connect
+		\item Launch your favorite VNC client (\href{https://apps.kde.org/en/krdc}{KRDC}, \href{https://www.tightvnc.com/}{TightVNC}, \href{https://tigervnc.org/}{TigerVNC}~\ldots) and use credentials from above output to connect
 		\item Work as on normal Linux desktop\ldots
 		\item With \texttt{screen} we can disconnect as usually
 		\item It provides limited amount of resources, not suitable for big tasks
@@ -4491,7 +4488,7 @@
 		\item Older (nowadays not so common) version controlling systems is Subversion (SVN), there are many more (Bazaar, Mercurial,~\ldots)
 		\item Probably the best textbook for Git is \href{https://git-scm.com/book/en/v2}{Chacon's Pro Git}
 		\begin{itemize}
-			\item Dostupná i~\href{https://git-scm.com/book/cs/v2}{česky} (včetně \href{https://knihy.nic.cz/}{prvního vydání})
+			\item Dostupná i~\href{https://git-scm.com/book/cs/v2}{česky} (včetně \href{https://knihy.nic.cz/\#ProGit}{prvního vydání})
 		\end{itemize}
 		\item Changes and their history is stored in repository (local or network, shared or private) --- it is possible to view any historical state and differences between any versions
 		\item It is possible to trace who and when did what
@@ -4562,7 +4559,7 @@
 		\end{center}
 		\begin{flushright}
 			\begin{footnotesize}
-				\href{https://git-scm.com/book/en/v2/Getting-Started-Git-Basics}{https://git-scm.com/}, \href{https://nvie.com/posts/a-successful-git-branching-model/}{https://nvie.com/}
+				\href{https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control}{https://git-scm.com/}, \href{https://nvie.com/posts/a-successful-git-branching-model/}{https://nvie.com/}
 			\end{footnotesize}
 		\end{flushright}
 	\end{multicols}
@@ -4737,7 +4734,7 @@
 		\item BASH full reference manual \url{https://www.gnu.org/software/bash/manual/} (advanced)
 		\item Debian (general handbook) \url{https://www.debian.org/doc/manuals/debian-reference/ch01.en.html}
 		\item Guide to Unix \url{https://en.wikibooks.org/wiki/Guide_to_Unix}
-		\item BASH for beginners \url{https://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html} (the site has plenty of good resources)
+		\item BASH for beginners \url{https://tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html} (the site has plenty of good resources)
 		\item Grymoire for UNIX wizards \url{https://www.grymoire.com/Unix/}
 		\item BASH Guide for Beginners \url{http://linuxcourse.rutgers.edu/documents/Bash-Beginners-Guide/}
 		\item Linux tutorial \url{https://ryanstutorials.net/linuxtutorial/}
@@ -4746,7 +4743,7 @@
 		\item Česky
 		\begin{itemize}
 			\item Učebnice Linuxu \url{https://www.abclinuxu.cz/ucebnice}
-			\item Příkazová řádka Ubuntu \url{http://wiki.ubuntu.cz/syst\%C3\%A9m/p\%C5\%99\%C3\%ADkazov\%C3\%A1_\%C5\%99\%C3\%A1dka/termin\%C3\%A1l}
+			\item Příkazová řádka Ubuntu \url{https://wiki.ubuntu.cz/syst\%C3\%A9m/p\%C5\%99\%C3\%ADkazov\%C3\%A1_\%C5\%99\%C3\%A1dka/termin\%C3\%A1l}
 			\item Příkazová řádka Fedory \url{https://wiki.mojefedora.cz/domains/wiki.mojefedora.cz/doku.php?id=navody:prirucka:prompt}
 		\end{itemize}
 	\end{itemize}
@@ -4798,7 +4795,7 @@
 		\item Do not hesitate to ask on the forum or contact developers, preferably through some public forum or mailing list, they usually respond quickly and helpfully\ldots{ }--- they wish their software to be working and useful
 		\item \href{https://www.startpage.com/}{Uncle Google} is your friend here (\textit{\enquote{how to XXX in BASH/Linux}})\ldots
 		\item Plenty of bigger projects have their own web fora or e-mail conferences --- search for it to ask on right place
-		\item In Linux/OSS world, e-mail conferences and \href{https://en.wikipedia.org/wiki/Internet_Relay_Chat}{IRC} are sometimes more popular, than web forums --- try them
+		\item In Linux/OSS world, e-mail conferences are sometimes more popular, than web forums or various social networks --- try them
 		\item If you find a~bug, report it according to instructions given by the project
 		\item Bioinformatics is discussed on \href{https://www.biostars.org/}{Biostars} (including various related programming issues)
 		\item Plenty of software packages have bug (issue) trackers (e.g. on GitHub) to report any problem with the software and discuss --- search them on software homepage
@@ -4811,7 +4808,7 @@
 		\item Homepage \url{https://www.opensuse.org/}
 		\item Wiki (knowledge base) \url{https://en.opensuse.org/Main_Page}
 		\item Documentation \url{https://doc.opensuse.org/}
-		\item News \url{https://news.opensuse.org/}, developers' blogs \url{https://lizards.opensuse.org/}, aggregation of blogs \url{https://planet.opensuse.org/}
+		\item News \url{https://news.opensuse.org/}, blogs \url{https://planet.opensuse.org/}
 		\item Forums \url{https://forums.opensuse.org/}
 		\item Mailing lists \url{https://lists.opensuse.org/}
 		\item Community \url{https://opensuse-community.org/}, short community guide \url{https://opensuse-guide.org/}
@@ -4916,8 +4913,8 @@
 		\end{itemize}
 		\item Ubuntu \url{https://www.ubuntu.cz/}
 		\begin{itemize}
-			\item Wiki \url{http://wiki.ubuntu.cz/}
-			\item Fórum \url{http://forum.ubuntu.cz/}
+			\item Wiki \url{https://wiki.ubuntu.cz/}
+			\item Fórum \url{https://forum.ubuntu.cz/}
 		\end{itemize}
 		\item Fedora \url{https://mojefedora.cz/}
 		\begin{itemize}
