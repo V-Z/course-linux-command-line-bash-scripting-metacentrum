@@ -154,19 +154,19 @@
 			\item Download openSUSE Leap 15.2 Linux distribution for this course from \url{https://botany.natur.cuni.cz/zeisek/openSUSE_Leap_courses.ova} ($\sim$4.9~GB)
 			\item Launch VirtualBox and go to menu \textbf{File | Import appliance\ldots} to import it. When done, launch it (\textbf{Start})
 		\end{itemize}
-		\includegraphics[height=6cm]{virtualbox.png}
+		\includegraphics[height=6.5cm]{virtualbox.png}
 	\end{multicols}
 \end{frame}
 
 \begin{frame}{Enjoy learning virtual machine for the course}
 	\begin{center}
-		\includegraphics[width=\textwidth-4.5cm]{opensuse_leap_course.png}
+		\includegraphics[height=6.5cm]{opensuse_leap_course.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{VirtualBox shared folder I}{VirtualBox can be configured to share folder with host operating system}
 	\begin{center}
-		\includegraphics[width=\textwidth-6cm]{virtualbox_shared_folder_1.png}
+		\includegraphics[height=6cm]{virtualbox_shared_folder_1.png}
 	\end{center}
 \end{frame}
 
@@ -176,7 +176,7 @@
 	\end{bashcode}
 	\vfil
 	\begin{center}
-		\includegraphics[width=\textwidth-5cm]{virtualbox_shared_folder_2.png}
+		\includegraphics[height=5.5cm]{virtualbox_shared_folder_2.png}
 	\end{center}
 	\vfill
 \end{frame}
@@ -197,7 +197,7 @@
 				\item Nowadays prevailing over \enquote{old} UNIX systems, used in many devices from tiny embedded toys to huge data centers
 				\item Try to provide same quality as paid systems, but (mostly) for free
 			\end{itemize}
-			\item Many courts about copyrights, parts of code, patents --- USA allow software patents, EU not --- GNU, Linux, BSD, etc. try to ensure to have only code not covered by any patents to avoid possible courts
+			\item Many courts about copyrights, parts of code, patents (USA allow software patents, EU not) --- GNU, Linux, BSD, etc. try to ensure to have only code not covered by any patents to avoid possible courts
 		\end{itemize}
 		\item \href{https://www.gnu.org/}{GNU}
 		\begin{itemize}
@@ -207,10 +207,11 @@
 			\item Generally set of basic system tools --- working with many kernels (Linux, BSD*, macOS,~\ldots), also present in many commercial paid UNIX systems
 			\item Source code is free and open --- anyone can study it (Security!), report bugs, contribute, modify, share it,~\ldots
 			\item GNU General Public License (GPL) --- free spirit of open-source --- license, idea, how to share software
+			\item Inspired open public software development --- crucial for our usage of Linux \& al.
 		\end{itemize}
 		\item \href{https://en.wikipedia.org/wiki/Linux}{Linux}
 		\begin{itemize}
-			\item First version of kernel written by Linus Torvalds in Helsinki in 1991
+			\item First version of kernel (core of the system) written by Linus Torvalds in Helsinki in 1991
 			\item Kernel was in principle inspired by various UNIX systems and using GNU tools for standard work
 			\item Quickly became popular --- anyone can take it and use for any needs, adopt (modify it), etc.
 			\item Used in small embedded (commonly network) devices, mobile devices (book readers, Android,~\ldots), personal computers, servers (from home level to biggest data centers),~\ldots
@@ -218,6 +219,7 @@
 			\item Anyone can contribute --- not only code, also documentation, design, translations,~\ldots
 			\item Most of people working with UNIX are using Linux (or macOS)
 		\end{itemize}
+		\item GNU and Linux are two important (but not sole) pieces of building set forming modern operating system
 	\end{itemize}
 \end{frame}
 
@@ -242,7 +244,7 @@
 			\item Mainly special servers, paid
 			\item \href{https://distrowatch.com/search.php?ostype=Solaris}{Several community-based variants} freely available
 		\end{itemize}
-		\item Command line usage is nearly same across UN*X systems (all follow same standards)
+		\item Command line usage is nearly same across UN*X systems --- all follow same standards, use more or less same set of tools
 	\end{itemize}
 \end{frame}
 
@@ -270,8 +272,8 @@
 \begin{frame}[allowframebreaks]{Free and open-source software --- (F)OSS}
 	\begin{itemize}
 		\item \textbf{Free like freedom of speech, \alert{not} like free beer!}
+		\item Open-source --- source code can be seen by the holder of the license (not necessary by everyone)
 		\item Not every OSS (generally less strict conditions) has to be \textbf{F}OSS (you can do with it (almost) whatever you like) --- source code might be available under some circumstance (only to look), but modification and/or reuse of the code prohibited (and then it is not \textbf{free})
-		\item Open-source --- source code can be seen by the holder of the license
 		\item \href{https://www.gnu.org/licenses/gpl-3.0.html}{GNU GPL} (\enquote{\href{https://www.gnu.org/copyleft/}{copyleft}}) --- probably most common OSS license, strict, viral --- derived code has to keep the license --- surprisingly not fully \enquote{free} as it doesn't allow changes of license
 		\item \href{https://www.gnu.org/licenses/lgpl-3.0.en.html}{LGPL} --- Lesser GPL --- more permissive
 		\item \href{https://en.wikipedia.org/wiki/BSD_licenses}{BSD license} --- permissive --- allow derived code to became closed-source (commonly used by e.g. Apple macOS, Safari browser, small electronics,~\ldots)
@@ -281,7 +283,10 @@
 	\begin{block}{Spirit of FOSS}
 		\begin{itemize}
 			\item Orientation might be tricky, but practical output for users is same --- \textbf{the software can be independently checked for bugs, backdoor, malware, can be improved and under some circumstances, new software can be derived, and usually, it is available for free}
-			\item \alert{Aim is to \enquote{liberate} software to keep open sharing of ideas, mutual improve and security control} --- although the point is clear, there are debates how to reach it\ldots
+			\item \alert{Aim is to \enquote{liberate} software to keep open sharing of ideas, mutual improve and security control}
+			\begin{itemize}
+				\item Although the point is clear, there are debates how to reach it\ldots
+			\end{itemize}
 		\end{itemize}
 	\end{block}
 	\begin{itemize}
@@ -293,6 +298,8 @@
 			\item User can learn from the software (from the code), new software can be developed on top of it
 			\item Easier to find and trace bugs
 			\item Security --- no back doors
+			\item Bugs (problems) in the code can fixed by nearly anyone
+			\item Often available for free
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -344,7 +351,7 @@
 
 \begin{frame}{Linux kernel and other parts around it}
 	\begin{center}
-		\includegraphics[width=\textwidth-5cm]{linux_kernel_ubiquity.png}
+		\includegraphics[height=6cm]{linux_kernel_ubiquity.png}
 	\end{center}
 	\vfil
 	\url{https://en.wikipedia.org/wiki/Linux_distribution}
@@ -353,7 +360,7 @@
 
 \begin{frame}{Extremely simplified adaptive radiation of Linux distributions}
 	\begin{center}
-		\includegraphics[width=\textwidth-3.5cm]{linux_fylogen_2.png}
+		\includegraphics[height=5.5cm]{linux_fylogen_2.png}
 	\end{center}
 	\vfil
 	\url{https://en.wikipedia.org/wiki/List_of_Linux_distributions} and \url{https://distrowatch.com/} ($\sim$850 distributions, $\sim$250 active)
@@ -368,7 +375,7 @@
 		\begin{itemize}
 			\item \href{https://www.debian.org/}{Debian} --- one of oldest and most common, especially on servers
 			\item \href{https://ubuntu.com/}{Ubuntu} (nowadays probably the most popular on PCs and notebooks) and derivatives --- \href{https://kubuntu.org/}{Kubuntu}, \href{https://xubuntu.org/}{Xubuntu}, \href{https://lubuntu.net/}{Lubuntu},~\ldots~(according to GUI used --- most of the system is same)
-			\item \href{https://linuxmint.com/}{Mint} --- Based on Ubuntu as well as Debian, very user-friendly
+			\item \href{https://linuxmint.com/}{Mint} --- Based on Ubuntu as well as Debian, user-friendly, popular
 			\item \href{https://www.kali.org/}{Kali}, \href{https://knopper.net/knoppix/index-en.html}{KNOPPIX}, \href{https://elementary.io/}{elementaryOS},~\ldots
 		\end{itemize}
 		\item \href{https://distrowatch.com/search.php?package=RPM}{Red Hat (RPM) based}
@@ -388,11 +395,11 @@
 \begin{frame}{Graphical User Interfaces (GUI)}{More like \enquote{Mac-style}, \enquote{Windows-style} or something else? Feature rich or minimalistic?}
 	\begin{itemize}
 		\item Most of GUIs are available for most of common distributions --- one is picked as default and \enquote{only} color style is different
-		\item \href{https://code.launchpad.net/unity}{Unity} --- originally developed by Ubuntu (discontinued, now community based), \enquote{Mac-style}
-		\item \href{https://kde.org/}{KDE} --- one of the most common, feature extremely rich, basically \enquote{Windows-like} (can be changed)
+		\item \href{https://kde.org/}{KDE} --- one of the most common, feature extremely rich, basically \enquote{Windows-like} (can be changed), extremely versatile
 		\item \href{https://www.gnome.org/}{GNOME} --- one of the most common, relatively simplistic interface, but still feature rich, \enquote{Mac-like}
 		\item \href{https://xfce.org/}{XFCE} --- lightweight version of older GNOME --- for older computers or users not willing to be disturbed by graphical effects, basically \enquote{Mac-like} looking, but panels can be moved to \enquote{Windows style}
 		\item \href{https://cinnamon-spices.linuxmint.com/}{Cinnamon} --- remake of GNOME to look more like Windows\ldots
+		\item \href{https://code.launchpad.net/unity}{Unity} --- originally developed by Ubuntu (discontinued, now community based), \enquote{Mac-style}
 		\item And much more\ldots
 		\item Choose what you like --- doesn't matter much which one\ldots
 	\end{itemize}
@@ -400,7 +407,7 @@
 
 \begin{frame}{Ubuntu with GNOME} % TODO Update print screen, add more
 	\begin{center}
-		\includegraphics[width=\textwidth-4cm]{ubuntu.png}
+		\includegraphics[height=6.5cm]{ubuntu.png}
 	\end{center}
 \end{frame}
 
@@ -430,13 +437,13 @@
 
 \begin{frame}{XFCE in Xubuntu, openSUSE, Fedora and Linux Mint} % TODO Update print screen
 	\begin{center}
-		\includegraphics[width=\textwidth-4cm]{xfce.png}
+		\includegraphics[height=6.5cm]{xfce.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{Dolphin (KDE file manager) --- default for openSUSE (inset) and after tuning in the same distribution\ldots} % TODO Update print screen
 	\begin{center}
-		\includegraphics[width=\textwidth-4.5cm]{dolphin.png}
+		\includegraphics[height=6cm]{dolphin.png}
 	\end{center}
 \end{frame}
 
@@ -466,7 +473,7 @@
 		\item Linux subsystem in MS Windows 10 Store
 		\begin{itemize}
 			\item To install follow \url{https://docs.microsoft.com/windows/wsl/about}
-			\item Only for command-line applications, does not aim to GUI
+			\item Version 1 only for command-line applications, version 2 should allow GUI (experimental)
 			\item Has some problems with paths, text files, so sometimes it is not usable very well\ldots
 		\end{itemize}
 		\item Cygwin
@@ -523,7 +530,7 @@
 	\begin{itemize}
 		\item Physical disk (piece of hardware) has at least 1~partition --- division seen in Windows as \enquote{disks} (\texttt{C}, \texttt{D},~\ldots) and mounted directory in UNIX
 		\item MBR --- older description of disk division, up to 4~primary partitions (OS typically requires at leas one to run), one can be extended and contain more partitions, disks up to 2~TB
-		\item GPT --- newer, no relevant limits, requires UEFI (replacement of BIOS --- responsible for computer to start in newer computers)
+		\item GPT --- newer, no relevant limits, requires UEFI (replacement of BIOS --- responsible of start of nowadays computers)
 		\item If unsure what to do, high probability to break it\ldots
 		\item Blank new partition has to be formatted to desired file system according to use and target operating system
 		\item Linux distributions have easy graphical tools to manage disk partitions (e.g. \href{https://gparted.org/}{GParted})
@@ -563,26 +570,26 @@
 	\begin{itemize}
 		\item Work in command line or use graphical tool like \href{https://gparted.org/}{GParted}\ldots
 		\item All commands require root privileges (slide~\ref{root})
-		\item \texttt{fdisk} -\texttt{l} lists disks and partitions
+		\item \texttt{fdisk -l} lists disks and partitions
 		\item To manage disk partitioning use \texttt{fdisk /dev/sdX} or \texttt{gdisk /dev/sdX}
 		\item When hard drive is partitioned, partitions must be formatted in next step
-		\item Commands \texttt{mkfs.*} create various FS, common syntax is \texttt{mkfs.XXX} -\texttt{parameters /dev/sdXY}, where sdXY is particular disk partition
+		\item Commands \texttt{mkfs.*} create various FS, common syntax is \texttt{mkfs.XXX -parameters /dev/sdXY}, where sdXY is particular disk partition
 		\item Parameters can set label and various settings of behavior of the disk partition, check \texttt{man mkfs.XXX}
 		\item To check FS for errors use \texttt{fsck.XXX /dev/sdXY} (according to respective FS)
 		\begin{itemize}
 			\item The filesystem must be unmounted when checking it
 			\item XFS uses \texttt{xfs\_repair /dev/sdXY}
-			\item Btrfs uses \texttt{btrfs check /dev/sdXY}, if it is unmountable, \texttt{btrfs-zero-log /dev/XY} use to help, last instance is \texttt{btrfs check} -{-}\texttt{repair /dev/sdXY} (dangerous operation)
-			\item If Btrfs is mountable, but there are various FS errors and/or performance issues, \texttt{btrfs scrub start} -\texttt{Bdf /mount/point}, \texttt{btrfs filesystem defragment} -\texttt{r} -\texttt{v /mount/point} and \texttt{btrfs balance start} -\texttt{v /mount/point} --- manual running can take long time and strongly slow down the computer
+			\item Btrfs uses \texttt{btrfs check /dev/sdXY}, if it is unmountable, \texttt{btrfs-zero-log /dev/XY} use to help, last instance is \texttt{btrfs check -{-}repair /dev/sdXY} (dangerous operation)
+			\item If Btrfs is mountable, but there are various FS errors and/or performance issues, \texttt{btrfs scrub start -Bdf /mount/point}, \texttt{btrfs filesystem defragment -r -v /mount/point} and \texttt{btrfs balance start -v /mount/point} --- manual running can take long time and strongly slow down the computer
 		\end{itemize}
-		\item \texttt{tune2fs} -\texttt{parameters /dev/sdXY} can set various parameters to influence behavior of disk (labels and more) partition
-		\item \texttt{hdparm} -\texttt{parameters /dev/sdX} can set advanced hardware parameters of hard drive
+		\item \texttt{tune2fs -parameters /dev/sdXY} can set various parameters to influence behavior of disk (labels and more) partition
+		\item \texttt{hdparm -parameters /dev/sdX} can set advanced hardware parameters of hard drive
 		\item The most convenient is using graphical tools available in all distributions\ldots
 		\begin{itemize}
-			\item In \href{https://en.opensuse.org/Portal:YaST}{openSUSE there is YaST} administrative module --- from command line launch \texttt{yast} -{-}\texttt{qt partitioner} for graphical or \texttt{yast disk} for text-based version
+			\item In \href{https://en.opensuse.org/Portal:YaST}{openSUSE there is YaST} administrative module --- from command line launch \texttt{yast -{-}qt partitioner} for graphical or \texttt{yast disk} for text-based version
 			\item All distributions have graphical tools like \href{https://gparted.org/}{GParted} where it is possible to comfortable manage disks
 		\end{itemize}
-		\item \texttt{df} -\texttt{h} shows available/occupied space on disks/partitions, but because of special features of Btrfs it doesn't show every time correct values for this FS --- it is better to use \texttt{btrfs filesystem df /mount/point} (\texttt{/mount/point} use to be the most commonly \texttt{/})
+		\item \texttt{df -h} shows available/occupied space on disks/partitions, but because of special features of Btrfs it doesn't show every time correct values for this FS --- it is better to use \texttt{btrfs filesystem df /mount/point} (\texttt{/mount/point} use to be the most commonly \texttt{/})
 		\item On UNIX FS, defragmentation and another maintenance tasks use to be done in background when computer is idling --- unless there is at least $\sim$20\% of free space on the device, this is not any problem and there are no performance issues
 		\item \alert{Users must be sure what they are doing, otherwise system can be damaged}
 	\end{itemize}
@@ -613,7 +620,7 @@
 	\begin{itemize}
 		\item Mounting and unmounting of devices require root privileges
 		\item In modern desktop Linux distributions, mounting is done automatically and media are visible mostly in \texttt{/media} or \texttt{/run/media}
-		\item In Linux, physical disks are named from \texttt{sda} to \texttt{sdz}, each disk has partitions (at least one) numbered from \texttt{1}, e.g. \texttt{sda1}, \texttt{sda2}, \texttt{sdb1},~\ldots{ }--- all are in \texttt{/dev} (e.g. \texttt{/dev/sdc3})
+		\item In Linux, physical disks are named from \texttt{sda} to \texttt{sdz}, each disk has partitions (at least one) numbered from \texttt{1}, (\texttt{sda1}, \texttt{sda2}, \texttt{sdb1},~\ldots), all are in \texttt{/dev} (\texttt{/dev/sdc3})
 	\end{itemize}
 	\begin{bashcode}
     eject # Open CD/DVD drive
@@ -674,10 +681,9 @@
     su USER # Became USER (USER's password is required)
     sudo -i # For trusted users, became root (asks for user's password)
             # User has to be listed in /etc/sudoers
-    sudo somecommand # Launch somecommand with root's privileges
-                     # Can be restricted for particular commands
-                     # /etc/sudoers can contain special settings for
-                     # particular users and/or groups
+    sudo somecommand # Launch somecommand with root's privileges - can be
+                     # restricted for particular commands; /etc/sudoers can
+                     # contain special settings for particular users/groups
     cat /etc/passwd # See all users (including system users)
 	\end{bashcode}
 \end{frame}
@@ -688,7 +694,7 @@
 	\begin{itemize}
 		\item It is similar also in another UN*X systems
 		\item Top directory \enquote{\texttt{/}} --- \enquote{root}
-		\item Everything else (including disks and network shares) are mounted in subdirectories (\texttt{/...})
+		\item Everything else (including disks and network shares) are mounted in subdirectories (\texttt{/\ldots})
 		\item \texttt{/bin} --- very basic command line utilities
 		\item \texttt{/boot} --- bootloader responsible for start of system
 		\item \texttt{/dev} --- devices --- representations of disks, CD, RAM, USB devices,~\ldots
@@ -696,7 +702,7 @@
 		\item \alert{\texttt{/home}} --- users' homes
 		\item \texttt{/lib}, \texttt{/lib64} --- basic system libraries (32 and 64bits)
 		\item \texttt{/lost+found} --- feature of FS, after crash and recovery of FS, restored files are there
-		\item \alert{\texttt{/media}} --- attached disks (USB flash,~\ldots) usually appear there (might be in \texttt{/var/run/media}) --- subdirectories are automatically created when device is plugged and disappears when unplugged
+		\item \alert{\texttt{/media}} --- attached disks (USB flash,~\ldots) usually appear there (might be in \texttt{/var/run/media} or  \texttt{/var/media}) --- subdirectories are automatically created when device is plugged and disappears when unplugged
 		\item \texttt{/mnt} --- usually manually mounted file systems (but they can be mounted elsewhere according to needs)
 		\item \texttt{/opt} --- optional, usually locally compiled software
 		\item \texttt{/proc} --- dynamic information about system processes
@@ -727,7 +733,7 @@
 		\item \texttt{cron*} --- cron automatically repeatedly runs tasks
 		\item \texttt{fstab} --- description of FS mounted during startup
 		\item \texttt{group} --- list of users and groups
-		\item \texttt{passwd} --- basic settings for new users (home directory, default shell,~\ldots)
+		\item \texttt{passwd} --- basic settings for users (home directory, default shell,~\ldots)
 		\item \texttt{resolv.conf} ---  DNS settings (part of basic networking)
 		\item \texttt{shadow} --- users passwords in encrypted form
 		\item \texttt{skel} --- basic directories and configuration for new users
@@ -769,7 +775,7 @@
 				\item Easy to transfer to another system
 				\item Easily comparable among users/versions/systems
 			\end{itemize}
-			\item UNIX command line tools are the most powerful when processing text files (of any sort, e.g. genetic data)
+			\item UNIX command line tools are the most powerful when processing text files (of any sort, e.g. also genetic data)
 		\end{itemize}
 		\item When transferring to and from Windows, be aware of EOL and encoding (slide~\ref{eolenc})!
 		\item FAT32 (commonly used for USB flash disks) has limits to maximal file size ($\sim4$~GB) and range of characters allowed in file name is limited (slide~\ref{fs}), it doesn't support UNIX permissions (breaks executability of scripts)
@@ -797,7 +803,7 @@
     rm * # What would be removed? :-) Solution: rm \* or rm '*'
 	\end{bashcode}
 	\begin{itemize}
-		\item Files and directories starting by \alert{dot} (\texttt{.}) are hidden by default (typically user settings and application data in user home)
+		\item Files and directories starting by \alert{dot} (\texttt{.} --- \texttt{.xxx\ldots}) are hidden by default (typically user settings and application data in user home)
 	\end{itemize}
 	\begin{bashcode}
     touch .hiddenfile # Let's make empty text file hidden by default
@@ -817,8 +823,8 @@
 	\end{bashcode}
 	\vfill
 	\begin{itemize}
-		\item Regular file --- ordinary file, marked by dash (\texttt{--})
-		\item Directory --- in UNIX special type of file, marked by \texttt{d}
+		\item Regular file --- ordinary file, marked by dash (\texttt{-}) on beginning
+		\item Directory --- in UNIX special type of file, marked by \texttt{d} on beginning
 		\item Symbolic link (symlink, \enquote{soft link}) --- points to another place, marked by \texttt{l}, slide \ref{links}
 		\item Hard link --- just another name for existing file, no special symbol, slide \ref{links}
 		\item Block and character device --- in \texttt{/dev}, representations of devices (hard disks, terminals,~\ldots), marked by \texttt{b} or \texttt{c} respectively
@@ -868,9 +874,9 @@
 		\item Group can have just one member --- the user
 		\item System usually shows names of groups and users, but important are IDs (numbers): GID and UID
 		\item Commands \texttt{chown} to change owner requires root privileges
-		\item Commands \texttt{chgrp} to change group commonly requires root privileges --- user has to be member of particular group to be able to change ownership to it (if not, \texttt{root} must do it)
+		\item Commands \texttt{chgrp} to change group often requires root privileges --- user has to be member of particular group to be able to change ownership to it (if not, \texttt{root} must do it)
 		\item Information about users and groups and their IDs are in \texttt{/etc/group} and \texttt{/etc/passwd}
-		\item Ownership (and permissions, slide~\ref{permissions}) are important especially on servers with plenty of users
+		\item Ownership (and permissions, slide~\ref{permissions}) are important especially on servers with plenty of users (e.g. on MetaCentrum)
 		\item It is not possible to add particular permissions for particular user on one file --- there must be special group or ACL must be used (slide~\ref{acl})
 	\end{itemize}
 \end{frame}
@@ -888,8 +894,8 @@
     id # Display UID and GIDs of current user
     # New owner or group can be defined as name or ID
     chown newowner:newgroup files # Change owner and group
-    chown -R newowner files # Recursively (-R) change owner
-    chgrp -R newgroup files # Recursively (-R) change group
+    chown -R newowner files # Recursively (with subdirectories) change owner
+    chgrp -R newgroup files # Recursively (with subdirectories) change group
     chown --help # Or 'man chown' for more options
     chgrp --help # Or 'man chgrp' for more options
 	\end{bashcode}
@@ -906,13 +912,13 @@
 	\begin{center}
 		\begin{tabular}{llll}
 			\textbf{Permission} & \textbf{Number} & \textbf{Directory} & \textbf{File}\\
-			r & 4 & Read content & Read content\\
-			w & 2 & Write into it & Write into it\\
-			x & 1 & Enter it & Launch application
+			r & 4 & Read directory content & Read file content\\
+			w & 2 & Write into it (add/remove items) & Write into it, modify, delete it\\
+			x & 1 & Enter it & Launch application (scrip)
 		\end{tabular}
 	\end{center}
 	\begin{itemize}
-		\item \texttt{rwxrw}-\texttt{r}-{-} --- 3$\times$3 characters for permissions for owner of the file/directory, group it is belonging to, and other users (\texttt{d} on beginning marks directories, \texttt{l} links, \texttt{+} ACL, slide \ref{acl})
+		\item \texttt{rwxrw-r-{-}} --- 3$\times$3 characters for permissions for owner of the file/directory, group it is belonging to, and other users (\texttt{d} on beginning marks directories, \texttt{l} links, \texttt{+} ACL, slide \ref{acl})
 		\item \texttt{764} --- same as above --- numbers for each role are summed --- first one is for owner, second for group and last for others
 		\item Executable scripts and binaries \textbf{require} executable permission (\texttt{x}, e.g. \texttt{chmod +x} or \texttt{chmod u+x})
 	\end{itemize}
@@ -930,9 +936,9 @@
     drwxr-xr-x  41 vojta users    4096 27. pro 09.55 bin
     # Only owner can read, write and enter the directory, others nothing; 700:
     drwx------  58 vojta users    4096 17. pro 15.45 .config
-    # Link, everyone can do everything; 777:
+    # Link, everyone can seemingly do everything; 777:
     lrwxrwxrwx   1 vojta users      37 20. jan 09.33 .lyxpipe.in ->
-      /tmp/kde-vojta/kilemj7d3E/.lyxpipe.in
+      /tmp/kde-vojta/kilemj7d3E/.lyxpipe.in # Check permissions of target!
     # Executable (application) - everyone can launch it, but only owner can
     # write into the file (change or delete); 755:
     -rwxr-xr-x   1 vojta users    2187 27. nov 13.10 strap.sh*
@@ -969,11 +975,11 @@
 	\label{acl}
 	\begin{itemize}
 		\item By default, it is not possible to give specific permission to the user who is not owner, nor member of group owning the file
-		\item In ext4 FS it has to be turned on manually (usually it is by default), it is part of Btrfs, XFS and ZFS
+		\item In ext4 FS it has to be turned on manually (usually it is by default), it is part of Btrfs, XFS and ZFS --- it is not available on every computer/server
 		\item Command \texttt{getfacl} lists those extra permissions, \texttt{setfacl} sets
-		\item \alert{When in use, \enquote{basic} tools listing permissions (e.g. \texttt{ls}~-\texttt{l}, ACL in use is marked by \texttt{+} after permissions --- next slide) sometimes do not show correct result and permissions may work unexpectedly}
+		\item \alert{When in use, \enquote{basic} tools listing permissions (e.g. \texttt{ls -l}, ACL in use is marked by \texttt{+} after permissions --- next slide) sometimes do not show correct result and permissions may work unexpectedly}
 		\item Important especially in network environment with many users
-		\item If intensively used, \texttt{ls} -\texttt{l} sometimes doesn't show correct permissions
+		\item If intensively used, \texttt{ls -l} sometimes doesn't show correct permissions (see next slide)
 		\item If not in use on server (like e.g. on CESNET data storage), relatively high number of groups is required to be able to correctly setup sharing permissions
 	\end{itemize}
 \end{frame}
@@ -986,7 +992,7 @@
     # group: zeisek # Correct
     user::rwx       # Correct
     user:nasik:r-x  # This is not seen from 'ls -l' output below!
-    group::r-x      # This group has only one memebr, this is fine
+    group::r-x      # This group has only one member, this is fine
     mask::r-x
     other::---      # Correct
     ls -l FILE # Compare this and previous output (This might be wrong!):
@@ -1003,7 +1009,7 @@
 \begin{frame}{Set default permissions for new files}
 	\begin{itemize}
 		\item \texttt{umask} sets implicit permissions for newly created files for user
-		\item Syntax is similar to \texttt{chmod}, but reverse (e.g. \texttt{027} keeps all rights for owner, for group only reading and nothing for others)
+		\item Syntax is similar to \texttt{chmod}, but reverse (e.g. \texttt{027} keeps all rights for owner, for group removes writing and nothing left for others)
 		\begin{itemize}
 			\item \texttt{umask} number \textbf{removes} certain permissions
 		\end{itemize}
@@ -1063,7 +1069,7 @@
 			\item Windows/DOS: CR+LF (\texttt{\textbackslash r\textbackslash n})
 			\item Mac v. < 9: CR (\texttt{\textbackslash r}) (Mac up to 9~wasn't UN*X, since OS~X it is)
 		\end{itemize}
-		\item Good text editor can open correctly any EOL, but for example execution of script written in Windows will probably fail on Linux
+		\item Good text editor can open correctly any EOL, but for example execution of script written in Windows will probably fail on Linux if it has wrong EOL
 		\item Different systems use different encoding
 		\begin{itemize}
 			\item UNIX: mainly UTF-8 (Unicode, universal), UTF-16 for Asian languages
@@ -1093,7 +1099,7 @@
 			\item Type \texttt{/} and then type text to search and hit Enter to search --- next hit by \texttt{n}, quit search by ESC (twice)
 			\item Command \texttt{info} more advanced --- type \texttt{?} for help
 		\end{itemize}
-		\item Parameters can be combined, order doesn't matter (same variants: \texttt{ls}~-\texttt{la}; \texttt{ls}~-\texttt{al}; \texttt{ls}~-\texttt{a}~-\texttt{l}; \texttt{ls}~-\texttt{l}~-\texttt{a})
+		\item Parameters can be combined, order doesn't matter (same variants: \texttt{ls -la}; \texttt{ls -al}; \texttt{ls -a -l}; \texttt{ls -l -a})
 		\item \enquote{Long} parameters (-{-}\texttt{XXX}) must stay separated
 		\item Commands must be in PATH (slide~\ref{PATH}) --- actual directory isn't
 		\begin{itemize}
@@ -1179,8 +1185,8 @@
 		\item \texttt{screen} is solution --- virtual terminals
 		\item Launch \texttt{screen} to start new screen terminal, read some info, confirm by \textbf{Space key} or \textbf{Enter}
 		\item To detach from the screen press \texttt{Ctrl+A, D} --- screen is still running in background --- you can even log off
-		\item To return back to running screen use \texttt{screen} -\texttt{r} --- if only one screen is running, you get back to it
-		\item If more screens are running, use \texttt{screen} -\texttt{r 1234} (the number is seen from \texttt{screen} -\texttt{r})
+		\item To return back to running screen use \texttt{screen -r} --- if only one screen is running, you get back to it
+		\item If more screens are running, use \texttt{screen -r 1234} (the number is seen from \texttt{screen -r})
 		\item To cancel running screen press \texttt{Ctrl+D} (or type \texttt{exit} or \texttt{logout})
 	\end{itemize}
 \end{frame}
@@ -1248,7 +1254,7 @@
 	\begin{block}{Tasks}
 		\begin{enumerate}
 			\item Login via SSH to \texttt{vyuka.natur.cuni.cz} and launch \texttt{screen}.
-			\item Run commands \texttt{pwd}, \texttt{whoami} and \texttt{ls} -\texttt{la}. What do they show?
+			\item Run commands \texttt{pwd}, \texttt{whoami} and \texttt{ls -la}. What do they show?
 			\item Detach from screen and logout from the server.
 			\item Login again to the server. Is it same or different process? Why?
 			\item Reattach to the screen --- same state as before logout from server.
@@ -1588,7 +1594,7 @@
 		\item BASH itself doesn't recognize regular expressions --- its wildcards have some of functions of regular expressions (from slide~\ref{regexp}) and can look similarly, but behave differently --- Do not confuse!
 		\item \texttt{?} --- Replaces any single character
 		\item \texttt{*} --- Replaces any number of any characters (\texttt{ls a*} lists all files starting with \enquote{a})
-		\item \texttt{[]} --- Range or a~list --- \texttt{[abcdef]} and \texttt{[a}-\texttt{f]} are same
+		\item \texttt{[]} --- Range or a~list --- \texttt{[abcdef]} and \texttt{[a-f]} are same
 		\item \texttt{[!\ldots]} --- Reverse previous case (\texttt{!}) --- any character except those listed
 		\item \texttt{\{\}} --- Expansion (terms inside are separated by commas \texttt{,}) --- all possible combinations (see next slide for examples)
 		\item \texttt{\textbackslash} --- Escapes following character and it doesn't have its special meaning (e.g. \texttt{\textbackslash *} means literally asterisk \texttt{*} and not \enquote{any number of any characters} as usually)
@@ -1791,7 +1797,7 @@
 		\item \alert{\texttt{;}} --- second command is launched regardless exit status of the first one: \texttt{kshfskcbd; hostname}
 		\item \alert{\texttt{\textbraceleft\ldots\textbraceright}} --- commands within curl brackets are launched as one block
 		\item \alert{\texttt{||}} --- second command is launched when first command fails (has non zero exit status):\\\texttt{cd newdir || \textbraceleft~mkdir newdir \&\& cd newdir; \textbraceright}
-		\item \alert{\texttt{|}} --- pipe --- redirects standard output of one command into standard input of second command: compare \texttt{mount} and \texttt{mount | column} -\texttt{t}
+		\item \alert{\texttt{|}} --- pipe --- redirects standard output of one command into standard input of second command: compare \texttt{mount} and \texttt{mount | column -t}
 		\item Behavior in shells other than bash might be little bit different
 	\end{itemize}
 \end{frame}
@@ -2166,7 +2172,7 @@
 
 \begin{frame}[fragile]{Synchronization with rsync}
 	\begin{itemize}
-		\item \texttt{rsync} has huge amount of possibilities (see \texttt{man rsync} or \texttt{rsync}~-\texttt{h})
+		\item \texttt{rsync} has huge amount of possibilities (see \texttt{man rsync} or \texttt{rsync -h})
 		\item Works locally as well as over network
 		\item It transmits only changes --- very efficient
 		\item Suitable for local as well as network backup
@@ -2998,23 +3004,23 @@
 \begin{frame}{Emacs basics}
 	\begin{itemize}
 		\item Feature-rich ecosystem --- not only text editor, also file manager, debugger, integrated development environment, extra plugins are available,~\ldots
-		\item Keyboard commands are noted as e.g. \texttt{C}-\texttt{x}, where \enquote{\texttt{C}} stands for (mostly) \texttt{Ctrl} key, \texttt{M}-\texttt{x}, where \enquote{\texttt{M}} stands mostly for \texttt{Alt} key (\texttt{Meta}), sometimes for \texttt{Win} key
+		\item Keyboard commands are noted as e.g. \texttt{C-x}, where \enquote{\texttt{C}} stands for (mostly) \texttt{Ctrl} key, \texttt{M-x}, where \enquote{\texttt{M}} stands mostly for \texttt{Alt} key (\texttt{Meta}), sometimes for \texttt{Win} key
 	\end{itemize}
 	\begin{multicols}{2}
 		\begin{itemize}
-			\item \texttt{C}-\texttt{h C}-\texttt{h} help (twice \texttt{Ctrl~+~H})
-			\item \texttt{C}-\texttt{x C}-\texttt{c} quit (\texttt{X}-\texttt{g} for particular buffer, etc.)
-			\item \texttt{C}-\texttt{x C}-\texttt{f} open file
-			\item \texttt{C}-\texttt{x C}-\texttt{s} save file
-			\item \texttt{C}-\texttt{x C}-\texttt{w} save file as
-			\item \texttt{C}-\texttt{\_} undo
-			\item \texttt{C}-\texttt{s} search forwards
-			\item \texttt{C}-\texttt{r} search backwards
-			\item \texttt{C}-\texttt{left} move one word left
-			\item \texttt{C}-\texttt{right} move one word right
-			\item \texttt{C}-\texttt{up} move one paragraph up
-			\item \texttt{C}-\texttt{down} move one paragraph down
-			\item \texttt{M}-\texttt{\%} search and replace pattern
+			\item \texttt{C-h C-h} help (twice \texttt{Ctrl~+~H})
+			\item \texttt{C-x C-c} quit (\texttt{X-g} for particular buffer, etc.)
+			\item \texttt{C-x C-f} open file
+			\item \texttt{C-x C-s} save file
+			\item \texttt{C-x C-w} save file as
+			\item \texttt{C-\_} undo
+			\item \texttt{C-s} search forwards
+			\item \texttt{C-r} search backwards
+			\item \texttt{C-left} move one word left
+			\item \texttt{C-right} move one word right
+			\item \texttt{C-up} move one paragraph up
+			\item \texttt{C-down} move one paragraph down
+			\item \texttt{M-\%} search and replace pattern
 		\end{itemize}
 	\end{multicols}
 \end{frame}
@@ -3100,24 +3106,24 @@
 		\item \alert{\texttt{|}} --- either the preceding or following reg exp can be matched (alternation)
 		\item \alert{\texttt{\textbackslash(\ldots\textbackslash)}} --- remembered group reg exp (numbered, starting with 1) --- can be called by \alert{\textbackslash\textit{n}}, where \textit{n} is number of the group (starting with 1)
 		\item \alert{\texttt{\textbackslash$<$}}, \alert{\texttt{\textbackslash$>$}} --- word boundaries
-		\item \alert{\texttt{[[:alnum:]]}} --- alphanumerical characters (includes white space), same like \alert{\texttt{[a}-\texttt{zA}-\texttt{Z0}-\texttt{9]}}
-		\item \alert{\texttt{[[:alpha:]]}} --- alphabetic characters, like \alert{\texttt{[a}-\texttt{zA}-\texttt{Z]}}
+		\item \alert{\texttt{[[:alnum:]]}} --- alphanumerical characters (includes white space), same like \alert{\texttt{[a-zA-Z0-9]}}
+		\item \alert{\texttt{[[:alpha:]]}} --- alphabetic characters, like \alert{\texttt{[a-zA-Z]}}
 		\item \alert{\texttt{[[:blank:]]}} --- space and TAB
 		\item \alert{\texttt{[[:cntrl:]]}} --- control characters
-		\item \alert{\texttt{[[:digit:]]}} --- numeric characters, like \alert{\texttt{[0}-\texttt{9]}}
+		\item \alert{\texttt{[[:digit:]]}} --- numeric characters, like \alert{\texttt{[0-9]}}
 		\item \alert{\texttt{[[:graph:]]}} --- printable and visible (non-space) characters
-		\item \alert{\texttt{[[:lower:]]}} --- lowercase characters, like \alert{\texttt{[a}-\texttt{z]}}
+		\item \alert{\texttt{[[:lower:]]}} --- lowercase characters, like \alert{\texttt{[a-z]}}
 		\item \alert{\texttt{[[:print:]]}} --- printable characters (includes white space)
 		\item \alert{\texttt{[[:punct:]]}} --- punctuation characters
 		\item \alert{\texttt{[[:space:]]}} --- white space characters
-		\item \alert{\texttt{[[:upper:]]}} --- uppercase characters, like \alert{\texttt{[A}-\texttt{Z]}}
+		\item \alert{\texttt{[[:upper:]]}} --- uppercase characters, like \alert{\texttt{[A-Z]}}
 		\item \alert{\texttt{[[:xdigit:]]}} --- hexadecimal digits
 		\item \alert{\texttt{\textasciicircum\$}} --- blank line
 		\item \alert{\texttt{\textasciicircum.*\$}} --- entire line whatever it is
 		\item \alert{\texttt{ +}} --- one or more spaces (there is space before plus)
 		\item \alert{\texttt{\&}} --- content of pattern that was matched
 		\item Implementation in \texttt{vim}, \texttt{sed}, \texttt{grep}, \texttt{awk} and \texttt{perl} and among various UNIX systems is almost same, but not identical\ldots
-		\item \textbf{grep}, \textbf{sed} and \textbf{vim} \alert{require escaping} of \alert{\texttt{+}}, \alert{\texttt{?}}, \alert{\texttt{\{}}, \alert{\texttt{\}}}, \alert{\texttt{(}} and \alert{\texttt{)}} by backslash \alert{\texttt{\textbackslash}} (e.g. \texttt{\textbackslash +}) --- \textbf{egrep} (extended version, launched as \texttt{grep}~-\texttt{E \ldots} or \texttt{egrep \ldots}), \textbf{sed} with extended reg exp (\texttt{sed}~-\texttt{r}) and \textbf{perl} \alert{not}
+		\item \textbf{grep}, \textbf{sed} and \textbf{vim} \alert{require escaping} of \alert{\texttt{+}}, \alert{\texttt{?}}, \alert{\texttt{\{}}, \alert{\texttt{\}}}, \alert{\texttt{(}} and \alert{\texttt{)}} by backslash \alert{\texttt{\textbackslash}} (e.g. \texttt{\textbackslash +}) --- \textbf{egrep} (extended version, launched as \texttt{grep -E \ldots} or \texttt{egrep \ldots}), \textbf{sed} with extended reg exp (\texttt{sed -r}) and \textbf{perl} \alert{not}
 		\item Read \url{https://en.wikibooks.org/wiki/Regular_Expressions}, \url{https://www.grymoire.com/Unix/Regular.html}, \url{https://www.regular-expressions.info/}; česky \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{https://www.root.cz/serialy/regularni-vyrazy/} a~\url{https://www.regularnivyrazy.info/}
 		\item Manuals for \href{https://www.gnu.org/software/grep/manual/}{Grep}, Vim, \href{https://www.gnu.org/software/sed/manual/}{Sed}, \href{https://www.gnu.org/software/gawk/manual/}{Awk}, \href{https://en.wikibooks.org/wiki/Perl_Programming}{Perl} (\href{https://en.wikibooks.org/wiki/Raku_Programming}{newer Perl~6 Raku}),~\ldots
 		\item See sed examples, slide~\ref{sedex}; and next slide
@@ -3614,19 +3620,19 @@
 	\begin{itemize}
 		\item \enquote{\texttt{[} \ldots~\texttt{]}} (always keep space around it --- inside) is function to evaluate expressions (alternatively use command \texttt{test})
 		\begin{itemize}
-			\item \texttt{if [ "\$VAR"} -\texttt{eq 25 ]} or \texttt{test \$VAR} -\texttt{eq 25}
+			\item \texttt{if [ "\$VAR" -eq 25 ]} or \texttt{test \$VAR -eq 25}
 			\item \texttt{if [ "\$VAR" == "value" ]; \ldots}
 			\begin{itemize}
 				\item Escaping variables and values by double quotes (\texttt{"}\ldots\texttt{"}) is recommended (to be sure), but not strictly required all the time
 			\end{itemize}
-			\item \texttt{if [ !} -\texttt{f regularfile ];} \ldots --- reverted condition (\texttt{!})
+			\item \texttt{if [ ! -f regularfile ];} \ldots --- reverted condition (\texttt{!})
 			\item Single-bracket conditions --- file, string, or arithmetic conditions
 			\item Double-bracket syntax --- enhanced
 			\begin{itemize}
 				\item Allow usage of regular expressions and globing patterns
 				\item Word splitting is prevented --- \texttt{\$STRINGVAR} can contain spaces
-				\item Expanding file names --- \texttt{if [[} -\texttt{a *.sh ]]} (variant with only one bracket doesn't work when there are multiple sh files)
-				\item Allows more detailed test, e.g. \texttt{if [[ \$num} -\texttt{eq 3 \&\& "\$STRINGVAR" == XXX ]] \ldots}
+				\item Expanding file names --- \texttt{if [[ -a *.sh ]]} (variant with only one bracket doesn't work when there are multiple sh files)
+				\item Allows more detailed test, e.g. \texttt{if [[ \$num -eq 3 \&\& "\$STRINGVAR" == XXX ]] \ldots}
 			\end{itemize}
 		\end{itemize}
 		\item -\texttt{eq} --- Equal to
@@ -3645,8 +3651,8 @@
 		\item \texttt{\$STR1 == \$STR2} --- True if both strings are equal
 		\item \texttt{\$STR} --- True if string \texttt{\$STR} is assigned a~value and is not null
 		\item \texttt{\$STR1 != \$STR2} --- True if both strings are unequal
-		\item -\texttt{a} --- Performs the \texttt{AND} function (\texttt{[ \ldots} -\texttt{a \ldots~]} or \texttt{[ \ldots~] \&\& [ \ldots~]})
-		\item -\texttt{o} --- Performs the \texttt{OR} function (\texttt{[ \ldots} -\texttt{o \ldots~]} or \texttt{[ \ldots~] || [ \ldots~]})
+		\item -\texttt{a} --- Performs the \texttt{AND} function (\texttt{[ \ldots -a \ldots~]} or \texttt{[ \ldots~] \&\& [ \ldots~]})
+		\item -\texttt{o} --- Performs the \texttt{OR} function (\texttt{[ \ldots -o \ldots~]} or \texttt{[ \ldots~] || [ \ldots~]})
 		\item Do not confuse globing patterns and regular expressions when using \texttt{[[ \ldots~]]}
 		\begin{itemize}
 			\item Shell globing: \texttt{if [[ "\$STRINGVAR" \textbf{==} ?[sS]tring* ]]; then} --- \texttt{?} represents single character \texttt{[]} any character inside and \texttt{*} zero or more characters
@@ -3863,7 +3869,7 @@
 		\item \texttt{zypper up} --- update
 		\item \texttt{zypper dup} -- upgrade to newer release of whole distribution
 		\item \texttt{zypper se \textit{term}} --- search \textit{term}
-		\item \texttt{zypper} \texttt{pa} -{-}\texttt{orphaned} -{-}\texttt{unneeded} --- list packages, which can be safely removed
+		\item \texttt{zypper} \texttt{pa -{-}orphaned -{-}unneeded} --- list packages, which can be safely removed
 		\item \texttt{yast sw\_single} --- interactive manager
 		\item \texttt{zypper lr} --- list repositories
 		\item \texttt{zypper ar \textit{repository}} --- add \textit{repository} (URL of remote \texttt{*.repo} file)
@@ -3889,16 +3895,16 @@
 		\item \texttt{aptitude} --- interactive manager
 		\item \texttt{cat /etc/apt/sources.list} --- list repositories
 		\item \texttt{nano /etc/apt/sources.list} --- add/remove/edit repositories
-		\item \texttt{dpkg}-\texttt{*}, \texttt{apt}-\texttt{*} commands for other tasks
+		\item \texttt{dpkg-*}, \texttt{apt-*} commands for other tasks
 		\item \texttt{aptitude} is used in similar way as \texttt{apt} (e.g. \texttt{aptitude install \textit{package}},~\ldots)
-		\item Similar tasks can be done with \texttt{apt}, \texttt{apt}-\texttt{get}, or \texttt{aptitude}
-		\item \texttt{man aptitude}, \texttt{man apt}-\texttt{XXX} (e.g. \texttt{man apt}), \texttt{man dpkg}-\texttt{XXX}, \texttt{man apt} --- usage help
+		\item Similar tasks can be done with \texttt{apt}, \texttt{apt-get}, or \texttt{aptitude}
+		\item \texttt{man aptitude}, \texttt{man apt-XXX} (e.g. \texttt{man apt}), \texttt{man dpkg-XXX}, \texttt{man apt} --- usage help
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Package management in command line in RedHat, Fedora, CENTOS and derivatives (basic commands)}
 	\begin{itemize}
-		\item Root password is required: use \texttt{sudo\ldots} or \texttt{su}~-
+		\item Root password is required: use \texttt{sudo\ldots} or \texttt{su~-}
 		\item Package name \texttt{*.rpm}
 		\item \texttt{dnf install \textit{package}} --- install \textit{package}
 		\item \texttt{dnf remove \textit{package}} --- remove \textit{package}
@@ -3909,8 +3915,8 @@
 		\item \texttt{dnf info \textit{package}} --- get information about \textit{package}
 		\item \texttt{dnf repolist} --- list repositories
 		\item \texttt{dnf config-manager} --- manage repositories and another settings
-		\item \texttt{rpm} -\texttt{Uvh \textit{package}.rpm} --- install locally downloaded \texttt{\textit{package}.rpm}
-		\item \texttt{rpm} -\texttt{e \textit{package}} --- remove \textit{package}
+		\item \texttt{rpm -Uvh \textit{package}.rpm} --- install locally downloaded \texttt{\textit{package}.rpm}
+		\item \texttt{rpm -e \textit{package}} --- remove \textit{package}
 		\item \texttt{rpm*} commands for other tasks
 		\item In older releases of Fedora, RedHat and CENTOS, \texttt{yum} is used instead of \texttt{dnf} in nearly identical way
 		\item \texttt{man dnf} (or \texttt{man dnf}), \texttt{man rpm} --- usage help
@@ -3964,7 +3970,7 @@
 		\item You need to install compilation tools for your distribution and programming languages you are going to use
 		\item Commonly, extra dependencies are required to compile the application
 		\begin{itemize}
-			\item Packages for compilation use to end with -\texttt{dev} or -\texttt{devel} (e.g. if the software requires package \texttt{zlib} to run, install also its developmental version \texttt{zlib}-\texttt{dev(el)} to be able to compile it)
+			\item Packages for compilation use to end with -\texttt{dev} or -\texttt{devel} (e.g. if the software requires package \texttt{zlib} to run, install also its developmental version \texttt{zlib-dev(el)} to be able to compile it)
 			\item All requirements should be listed in README or INSTALL documents of particular package --- user must install them manually\ldots
 		\end{itemize}
 	\end{itemize}
@@ -3984,7 +3990,7 @@
 	\begin{itemize}
 		\item Available from \url{https://github.com/stamatak/standard-RAxML}
 		\item Before compilation check \href{https://github.com/stamatak/standard-RAxML/blob/master/README}{README}
-		\item This example does not require to run \texttt{make install}, it does not have extra dependencies for compilation, it requires specifying of particular source file by \texttt{make}~-\texttt{f} (there are multiple \texttt{GCC} files, no one main)
+		\item This example does not require to run \texttt{make install}, it does not have extra dependencies for compilation, it requires specifying of particular source file by \texttt{make -f} (there are multiple \texttt{GCC} files, no one main)
 	\end{itemize}
 	\begin{bashcode}
     mkdir raxml # Create working directory
@@ -4004,7 +4010,7 @@
 \begin{frame}[fragile]{Compilation of SAMtools}
 	\begin{itemize}
 		\item See \url{http://www.htslib.org/download/}
-		\item Ensure packages \texttt{zlib} and \texttt{zlib}-\texttt{dev(el) }are installed --- required for running and compilation, see \href{https://github.com/samtools/samtools/blob/master/INSTALL}{INSTALL} and \href{https://github.com/samtools/samtools/blob/master/README}{README}
+		\item Ensure packages \texttt{zlib} and \texttt{zlib-dev(el) }are installed --- required for running and compilation, see \href{https://github.com/samtools/samtools/blob/master/INSTALL}{INSTALL} and \href{https://github.com/samtools/samtools/blob/master/README}{README}
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
@@ -4285,7 +4291,7 @@
 		\item Disk space is relatively free resource, user can ask more to have some reserve (e.g. -\texttt{l~scratch\_local=10gb} to request 10~GB)
 		\item Specify how many physical computer(s) you are going to use (e.g. -\texttt{l~select=1} for one machine) and number of CPU threads on each machine (e.g. -\texttt{l~select=1:ncpus=8} for 1~machine with 8~cores or -\texttt{l~select=2:ncpus=4} for 2~machines, each with 4~CPU threads)
 		\begin{itemize}
-			\item It use to be necessary to specify correct number of threads for the application (e.g. \texttt{parallel}~-\texttt{j 4}) --- the application sees all CPUs on the machine, but can't use them
+			\item It use to be necessary to specify correct number of threads for the application (e.g. \texttt{parallel -j 4}) --- the application sees all CPUs on the machine, but can't use them
 			\item If the application consumes less than required, the system temporarily lowers priority for future tasks, if it try to use more, it will be very slowed down or killed by the server
 			\item If using more physical machines, ensure correct settings of e.g. MPI (see documentation for respective software you are using)
 		\end{itemize}
