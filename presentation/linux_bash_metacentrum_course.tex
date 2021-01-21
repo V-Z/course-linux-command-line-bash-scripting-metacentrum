@@ -37,7 +37,7 @@
 
 % Other packages
 \usepackage{multicol}
-\usepackage{tabularx}
+\usepackage{array}
 
 % In-line higlighting
 \usepackage{soul}
@@ -1091,7 +1091,7 @@
 \begin{frame}{Launching commands and scripts}
 	\begin{itemize}
 		\item Parameters of commands are separated by space and preceded by one or two dash(es)
-		\item Parameter -\texttt{h} or -{-}\texttt{help} usually gives help for particular command
+		\item Parameter \texttt{-h} or \texttt{-{-}help} usually gives help for particular command
 		\item Getting help with \texttt{man} command
 		\begin{itemize}
 			\item \texttt{man somecommand}
@@ -1100,8 +1100,8 @@
 			\item Command \texttt{info} more advanced --- type \texttt{?} for help
 		\end{itemize}
 		\item Parameters can be combined, order doesn't matter (same variants: \texttt{ls -la}; \texttt{ls -al}; \texttt{ls -a -l}; \texttt{ls -l -a})
-		\item \enquote{Long} parameters (-{-}\texttt{XXX}) must stay separated
-		\item Commands must be in PATH (slide~\ref{PATH}) --- actual directory isn't
+		\item \enquote{Long} parameters (\texttt{-{-}XXX}) must stay separated
+		\item Commands (applications) must be in PATH (slide~\ref{PATH}) --- actual directory isn't
 		\begin{itemize}
 			\item If the script is is current directory, use \texttt{./script.sh} or full path
 		\end{itemize}
@@ -1114,9 +1114,9 @@
 	\begin{itemize}
 		\item macOS contains outdated versions of many command line utilities with limited functionality comparing to what we are going to use (what is available in modern Linux distributions)
 		\item Several projects provide Linux style way of installation and update of various (not only) command line tools, probably the best is \href{https://brew.sh/}{Homebrew}
-		\item Homebrew contains also plenty of scientific packages, there is also specialized similar \href{https://brewsci.github.io/homebrew-bio/}{source for bioinformatics}
+		\item Homebrew contains also plenty of scientific packages, there is also specialized similar \href{https://brewsci.github.io/homebrew-bio/}{source for bioinformatics} (and another sciences)
 		\item Tools installed via Homebrew are installed into \texttt{/usr/local} not to interact with system packages
-		\item Derived project is \href{https://docs.brew.sh/Homebrew-on-Linux}{Linuxbrew} (works also on Windows subsystem for Linux) useful especially for installation of special (scientific) software unavailable in main Linux repositories (software resources)
+		\item Derived project is \href{https://docs.brew.sh/Homebrew-on-Linux}{Linuxbrew} (works also on Windows subsystem for Linux) useful especially for installation of some special (scientific) software unavailable in main Linux repositories (software resources)
 	\end{itemize}
 \end{frame}
 
@@ -1172,7 +1172,7 @@
 
 \begin{frame}{The command line can has various look and feel\ldots}{Change colors, font size, etc. for your terminal to like it more and work comfortably}
 	\begin{center}
-		\includegraphics[width=\textwidth-4.5cm]{terminals.png}
+		\includegraphics[height=6cm]{terminals.png}
 	\end{center}
 \end{frame}
 
@@ -1197,8 +1197,7 @@
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
-    # Start new tmux session
-    tmux
+    tmux # Start new tmux session
     # Or name the new session (useful if there are more sessions)
     tmux new -s SomeName
     # Detach from the session by Ctrl+B, D
@@ -1214,6 +1213,7 @@
 	\begin{itemize}
 		\item Get help by \texttt{Ctrl+B, ?} (\texttt{Q} to quit)
 		\item Split window by \texttt{Ctrl+B, \%} and navigate between them by \texttt{Ctrl+B, L/R arrow}
+		\item It has plenty of options
 	\end{itemize}
 \end{frame}
 
@@ -1233,7 +1233,7 @@
 		\end{bashcode}
 		\vfill
 		\begin{itemize}
-			\item Toy server: user names \texttt{cu01} --- \texttt{cu20}
+			\item Toy server: user names \texttt{cu01}--\texttt{cu20}
 		\end{itemize}
 		\vfill
 		\begin{bashcode}
@@ -1286,7 +1286,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{Nice BASH features for easier work (selection)}
+\begin{frame}[allowframebreaks]{Nice BASH features for easier work (selection)} % TODO Add more BASH features
 	\begin{itemize}
 		\item Arrows up and down list in the history of commands
 		\item List whole history by command \texttt{history}
@@ -1294,14 +1294,14 @@
 		\item \texttt{TAB} --- list command and files starting by typed characters
 		\item \texttt{Home}/\texttt{End} --- go to beginning/end of the line
 		\item \texttt{Ctrl+L} --- clear screen (like \texttt{clear} command)
-		\item \texttt{Ctrl+Shift+C}/\texttt{V} --- copy/paste the text
+		\item \texttt{Ctrl+Shift+C}/\texttt{V} --- copy/paste the text from terminal emulator
 		\item \texttt{Ctrl+C} --- cancel running task
 		\item \texttt{Ctrl+D} --- log out (like commands \texttt{exit} or \texttt{logout})
 		\item \texttt{Ctrl+U} --- move text before cursor into clipboard
 		\item \texttt{Ctrl+K} --- move text after cursor into clipboard
 		\item \texttt{Ctrl+left/right arrow} --- skip words
 		\item \texttt{Ctrl+T} --- flip current and left character
-		\item \texttt{Ctrl+X+E} --- start text editor in current directory
+		\item \texttt{Ctrl+X+E} --- start text editor (default, defined in \texttt{$\sim$/.bashrc}) in current directory
 	\end{itemize}
 \end{frame}
 
@@ -1343,19 +1343,21 @@
 	\begin{bashcode}
     # Define new alias
     alias ll="ls -l"
-    # Since now, instead of "ls -l" we can write just "ll"
-    # To make the change above permanent, write it into ~/.profile or
-    # ~/.bash_profile or ~/.bashrc and reload the configuration by e.g.
-    source ~/.bashrc # to reload BASH settings
-    # If there are many aliases, they can be stored e.g. in ~/.alias
-    test -s ~/.alias && . ~/.alias || true # Check for extra alias file
+	\end{bashcode}
+	\begin{itemize}
+		\item Can be stored in \texttt{$\sim$/.bashrc} (or \texttt{$\sim$/.profile} or \texttt{$\sim$/.bash\_profile})
+		\item If there are plenty of them, aliases can go to \texttt{$\sim$/.alias} and \texttt{$\sim$/.bashrc} then contain \texttt{test -s $\sim$/.alias \&\& . $\sim$/.alias || true}
+	\end{itemize}
+	\begin{bashcode}
+    # After adding new aliases to ~/.bashrc or ~/.alias or so reload it
+    source ~/.bashrc # Reload BASH settings to load newly aliases
     # Popular aliases
+    eval "$(dircolors -b)" # Make output of ls colored
     alias ls="ls --color=auto" # Make output of ls colored
     alias l="ls -la" # Long list (add details) with hidden files
-    # Popular settings in ~/.bashrc (influencing bash, not other shells)
     alias grep='grep --color=auto' # Enable color in grep
-    # Always human readable output of df (disk free)
-    alias df='df -h'
+    alias df='df -h' # Always human readable output of df (disk free)
+    # Add aliases pointing to software installed outside PATH, ...
 	\end{bashcode}
 \end{frame}
 
@@ -1363,8 +1365,20 @@
 	\begin{bashcode}
     # Easier history listing
     alias his="history | grep" # Use e.g. 'his ls' to list last 'ls' usage
-    # Add aliases pointing to software installed outside PATH, ...
+    # Add ~/.local/bin to PATH (directories with commands and scripts)
+    export PATH=$PATH:~/.local/bin
+    # Colored GCC warnings and errors when compiling from source code
+    export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;
+      32:locus=01:quote=01' # No spaces, single line
+    # Some applications read the EDITOR variable to determine your favourite
+    # text editor. Select e.g. nano, emacs, vim, ...
+    export EDITOR=nano
 	\end{bashcode}
+	\begin{itemize}
+		\item \texttt{$\sim$/.bashrc} can contain anything (technically it's just BASH script), functions, whatever needed
+		\item \texttt{$\sim$/.bashrc} commonly contain definitions of variables
+		\item Other shells than BASH (KSH, ZSH,~\ldots) have their own configuration files
+	\end{itemize}
 \end{frame}
 
 \subsection{Directories}
@@ -1387,6 +1401,7 @@
        # Try parameters -l, -a, -1, -F, -h (with -l or -s), --help
     rm -r # Recursive delete - remove also non-empty directories
     mv from to # Move files/directories (also for renaming)
+    mv docs to/sub/directory/ # Move 'docs' to 'to/sub/directory/'
 	\end{bashcode}
 \end{frame}
 
@@ -1394,9 +1409,21 @@
 	\begin{bashcode}
     cp from to # Copy, -r (recursive, including subdirectories)
                # -a (keeps all attributes), -v (verbose)
+    # Copy 'XXX' (recursively with subdirectories and everything) in the
+    # upper directory into 'sub/directory/'
+    cp -a ../XXX sub/directory/
+    # Copy 'doc.txt' from home directory into current directory
+    cp ~/doc.txt . # Dot stands for current directory
     file somefile # Information about questioned file (what it is, ...)
     xdg-open somefile # Open file by graphical application as in GUI
 	\end{bashcode}
+\begin{itemize}
+	\item When using \texttt{cd}, \texttt{cp}, \texttt{mv}, \ldots use \texttt{<TAB><TAB>} key suggesting matching names of files and directories and save repeated and unneeded typing
+	\item In command line, \textbf{user is always in some directory} --- \alert{it's crucial to train fluent moving among directories and manipulation with files}
+	\begin{itemize}
+		\item If lost among directories, run \texttt{pwd} to find out current directory and \texttt{ls} to see what is around
+	\end{itemize}
+\end{itemize}
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Tasks on the remote server}
@@ -1415,9 +1442,12 @@
 		\item Create other directory, see it and then remove (\texttt{rmdir}).
 		\item Can you access directories of another users? Why? If yes, what are your permissions there? Explain it.
 		\item What are some permissions in \texttt{/}? Why?
+		\item Define some alias (by running \texttt{alias} command, not by edit of \texttt{$\sim$/.bashrc}) and use it.
 		\item Create directory in your home directory and share it with another user so she/he can write there anything (using e.g. \texttt{touch somefile} or \texttt{mkdir somedirectory}) (work e.g. in pairs). Use everywhere as restricted permissions as possible. Can you figure out solution with or without ACL (slide~\ref{acl})?
 		\item Practice moving between \texttt{/home/scripts\_data} and your home directory. Use \texttt{cd} and \texttt{TAB}.
 		\item Within \texttt{/home/scripts\_data} list by single command only \texttt{jpg} and \texttt{txt} files.
+		\item Create in your home directory new directory \texttt{scripts} and copy there with single command all shell scripts (\texttt{*.sh}) files from \texttt{/home/scripts\_data}
+		\item Copy anywhere into your home \texttt{/home/scripts\_data} and by single command remove all \texttt{jpg} and \texttt{sh} files there.
 	\end{enumerate}
 \end{frame}
 
@@ -1441,48 +1471,40 @@
 
 \subsection{Archives}
 
-\begin{frame}{Compressing files into archives}
+\begin{frame}{Compressing and decompressing archives}
 	\begin{center}
-		\begin{tabular}{llll}
-			\textbf{Archive} & \textbf{Compressing command}\\
-			*.tar & tar cvf archive.tar file1 file2\\
-			*.tar.gz\alert{/}*.tgz & tar czvf archive.tar.gz\alert{/}.tgz file1 file2\\
-			*.tar.bz\alert{/}*.tbz\alert{/}*.tar.bz2 & tar cjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2 file1 file2\\
-			*.tar.xz & tar cvf - file1 file2 | lzma > archive.tar.xz\\
-			*.gz & gzip file\\
-			*.bz2 & bzip2 file\\
-			*.xz & lzma file\\
-			*.zip & zip -r archive.zip file1 file2\\
-			*.rar & rar a archive.rar file1 file2
+		\begin{tabular}{m{2.25cm}m{6.3cm}m{5.3cm}}
+			\textbf{Archive} & \textbf{Compressing command} & \textbf{Decompressing command}\\
+			*.tar & tar cvf archive.tar file1 file2 file3 & tar xvf archive.tar\\
+			*.tar.gz\alert{/} *.tgz & tar czvf archive.tar.gz\alert{/}.tgz file1 file2 & tar xzvf archive.tar.gz\alert{/}.tgz\\
+			*.tar.bz\alert{/} *.tbz\alert{/} *.tar.bz2 & tar cjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2 file1 file2 file3 file4 & tar xjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2\\
+			*.tar.xz & tar cvJf archive.tar.xz file1 file2 file4 & tar xvJf archive.tar.xz\\
+			*.tar.lzma & tar cvf - file1 file2 file3 file4 | lzma > archive.tar.lzma & lzcat archive.tar.lzma | tar xvf -\\
+			*.gz & gzip file & gunzip archive.gz\\
+			*.bz2 & bzip2 file & bunzip2 archive.bz2\\
+			*.xz & xz -zv file & xz -d archive.xz\\
+			*.lzma & lzma file & unlzma archive.lzma\\
+			*.zip & zip -r archive.zip file1 file2 & unzip archive.zip\\
+			*.rar & rar a archive.rar file1 file2 & unrar x archive.rar
 		\end{tabular}
 	\end{center}
-	\begin{itemize}
-		\item \texttt{gzip}, \texttt{bzip2} and \texttt{lzma} are able to pack only one file --- use them together with \texttt{tar} to pack multiple files (when used \textbf{without} \texttt{tar} \alert{move} file into archive)
-		\item \texttt{lzma} has excellent compression, but can be very slow
-	\end{itemize}
 \end{frame}
 
 \begin{frame}{Compressing and decompressing archives}
+	\begin{itemize}
+		\item \texttt{gzip}, \texttt{bzip2}, \texttt{xz} and \texttt{lzma} are able to pack only one file --- use them together with \texttt{tar} to pack multiple files (when used \textbf{without} \texttt{tar} they \alert{move} file into archive)
+		\item In Linux, \texttt{gzip} (and less \texttt{bzip2}) are the most commonly used
+		\item Rar is not used at Linux/UNIX at all
+		\item Zip is probably the most portable between Linux/UNIX and Windows
+		\item \texttt{lzma} and \texttt{xz} have excellent compression, but can be very slow, use similar algorithm, often confused
+	\end{itemize}
+		\hfill
 	\begin{center}
-		\begin{tabular}{llll}
-			\textbf{Archive} & \textbf{Decompressing command}\\
-			*.tar & tar xvf archive.tar\\
-			*.tar.gz\alert{/}*.tgz & tar xzvf archive.tar.gz\alert{/}.tgz\\
-			*.tar.bz\alert{/}*.tbz\alert{/}*.tar.bz2 & tar xjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2\\
-			*.tar.xz & lzcat archive.tar.xz | tar xvf -\\
-			*.gz & gunzip archive.gz\\
-			*.bz2 & bunzip2 archive.bz2\\
-			*.xz & unlzma archive.xz\\
-			*.zip & unzip archive.zip\\
-			*.rar & unrar x archive.rar
-		\end{tabular}
-		\hfill
 		\includegraphics[height=1.75cm]{tar.png}
-		\begin{flushright}
-			\url{https://xkcd.com/1168/}
-		\end{flushright}
-		\hfill
 	\end{center}
+	\begin{flushright}
+		\url{https://xkcd.com/1168/}
+	\end{flushright}
 \end{frame}
 
 \begin{frame}{Tasks with archives}
@@ -1493,8 +1515,8 @@
 		\item Compare sizes of original files and compressed outputs.
 		\item Which compression tool seems to be the best? In terms of compressing ratio and time needed for compression.
 		\item Is more effective compression of text files or images? Why?
-		\item Why is even plain \texttt{tar} (without compression, it requires \texttt{gzip}, \texttt{bzip2} or \texttt{lzma} to add compression) useful with FAT disks?
-		\item Search the Internet to find out how to unpack \texttt{rar} or \texttt{arj} archives from command line.
+		\item Why is even plain \texttt{tar} (without compression, it requires \texttt{gzip}, \texttt{bzip2}, \texttt{xz} or \texttt{lzma} to add compression) useful with FAT disks?
+		\item Search the Internet to find out how to unpack \texttt{arj} archives from command line.
 	\end{enumerate}
 \end{frame}
 
@@ -1535,13 +1557,13 @@
 		\item -\texttt{exec} runs some command with results (some operation, not just listing)
 		\begin{itemize}
 			\item All following arguments are argument of the command until \enquote{\texttt{;}} is encountered
-			\item \texttt{\{\}} is replaced by the current file name being processed
+			\item \texttt{'\{\}'} is replaced by the current file name being processed
 			\item Those constructs might require protection by escape (\enquote{\textbackslash}) or quotes not to be expanded by shell
 		\end{itemize}
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Find examples (apply some of them to the toy data) I}
+\begin{frame}[fragile]{Find examples I}{Apply some (or something similar) of them to the toy data}
 	\begin{bashcode}
     # Find in /home/$USER/ all JPG files containing string "oxalis"
     find /home/$USER/ -name "*oxalis*.jpg" -print
@@ -1555,19 +1577,30 @@
     find ~/Documents -name "*.r" -print | xargs grep -nH DNA # Or
     find ~/Documents -name "*.r" -exec grep -nH DNA '{}' \;
     # How many directories are there in the books directory
-    find books/ -type d -print | wc -l # wc -l calculate lines
+    find books/ -type d -print | wc -l # wc -l calculates lines
     # Change permissions of all files within "files" directory to 640
     find files/ -type f -exec chmod 640 '{}' \;
-    # Find all executable files within current directory and list them
-    find . -executable -type f -print
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Find examples (apply some of them to the toy data) II}
+\begin{frame}[fragile]{Find examples II}{Apply some (or something similar) of them to the toy data}
 	\begin{bashcode}
-    find doc/ -type d -empty -execdir rmdir '{}' \; # Delete empty dirs
-    man find # See another options. Much more...
+    # Find all executable files within current directory and list them
+    find . -executable -type f -print
+    # Delete empty directories within 'doc' directory
+    find doc/ -type d -empty -execdir rmdir '{}' \;
+    # Copy all *.sh files from /home to ~/scripts
+    find /home -name "*.sh" -exec cp '{}' ~/scripts/
+    # Search for file long_text.txt (exact name) in your home directory
+    find ~ -name long_text.txt -type f -print
+    # Find in current directory files from 1 to 100 MB
+    find . -type f -size +1M -size -100M
+    # See another options. Much more...
+    man find
 	\end{bashcode}
+	\begin{itemize}
+		\item \texttt{find} is extremely versatile and useful tool
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Searching tasks}
