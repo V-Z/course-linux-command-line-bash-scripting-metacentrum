@@ -2493,7 +2493,7 @@
 	\begin{itemize}
 		\item As UNIX configuration and outputs (logs,~\ldots) are mostly saved as relatively simple text files, manipulations of any type with text files is one of the most common tasks
 		\begin{itemize}
-			\item Similar situation is for molecular data --- input/output data use to be text files with simple structure
+			\item Similar situation is for e.g. molecular data --- input/output data use to be text files with simple structure
 		\end{itemize}
 		\item One of the most powerful features of BASH
 		\item Some operations are complicated (e.g. complex manipulations with columns, various calculations) it is necessary to use AWK or Perl (probably the most advanced language working with text)
@@ -2559,12 +2559,12 @@
     unix2mac textfile # Convert text file from UNIX to old Mac EOL
     dos2unix textfile # Convert text file from Windows to UNIX EOL
     mac2unix textfile # Convert text file from old Mac to UNIX EOL
-    unix2dos --help # More information about usage, include encoding
-    # Converts encoding of input file (ISO-8859-2) to outfile in UTF-8
     enca -h # See usage
-    recode CP1250..UTF-8 textfile # Convert encoding from CP-1250 to UTF-8
-    recode ../CR-LF textfile # Convert EOL from UNIX to Windows
-    recode --help # More information about usage; recode is deprecated
+    enca file.txt # Detects encoding of file.txt
+    enca -x utf8 file.txt # Convert file.txt into UTF-8
+    # Converts encoding of input file (ISO-8859-2) to outfile in UTF-8
+    iconv -f ISO-8859-2 -t UTF-8 infile.txt > outfile.txt
+    iconv -l # List of available encoding to convert
 	\end{bashcode}
 	\begin{itemize}
 		\item macOS uses same encoding and EOL as Linux (and rest of UNIX world), so there are no problems with compatibility
@@ -2579,7 +2579,7 @@
     cat # Read or join (using redirects) files; 'cat --help' for options
     cat long_text.txt # Print content of text file
     cat textfile1 >> textfile2 # Append textfile1 to the end of textfile2
-    nl long_text.txt # Like cat -n, prints textfile with line numbers
+    nl long_text.txt # Like 'cat -n', prints textfile with line numbers
     tac textfile # Like cat, but prints lines in reverse order
     more long_text.txt # When textfile is long, prints screen by screen
                        # (space for next screen, q to quit)
@@ -2590,8 +2590,8 @@
     fmt long_text.txt # Basic formatting of text - joining of commented
                       # lines, line breaks to break too long lines, ...
     fmt textfile > formatted_file # Save output of fmt into new file
-    wc long_text.txt # lines, words and bytes in text file
-                     # wc -l for only lines, -m for characters, -w for words
+    wc long_text.txt # Calculates lines, words and bytes in text file; 'wc -l'
+                     # for only lines, '-m' for characters, '-w' for words
     mc # It has text viewer (F3) and editor (F4)
 	\end{bashcode}
 \end{frame}
@@ -2600,14 +2600,28 @@
 
 \begin{frame}[fragile]{Get part of text file (by lines) I}
 	\begin{bashcode}
+    # head and tail are very convenient to quickly check file structure
     head -n N textfile # Print first N lines from textfile
     tail -n N textfile # Print last N lines from textfile
     head -n-N textfile # Print textfile without last N lines
     tail -n+N textfile # Print textfile from Nth line to the end
     # Split text file on selected pattern - creates new files xxXY
-    csplit textfile '/pattern/' '{*}' # pattern itself is inside '/___/'
     # Pattern can be regular expression - set it carefully
     # {*} says to repeat operation as many times as possible
+    csplit textfile '/pattern/' '{*}' # pattern itself is inside '/___/'
+    # Split text file by lines into multiple files
+    # e.g. suffix will be of length 5 (-a 5), suffix will be numeric (-d),
+    # list.txt will be split every 10 lines (-l 10) and output names will
+    # start by 'lists_'
+    split -a 5 -d -l 10 list.txt lists_
+    split -t ... # Split by separator, not by newline
+    # Both csplit and split are very versatile, see their help
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Get part of text file (by lines) II}
+	\begin{bashcode}
+    grep --help # See plenty of options
     grep -parameters pattern textfile # Write lines containing pattern
     grep user /etc/passwd # Write all lines in passwd containing user
     cat /etc/passwd | grep user # Same as above
@@ -2617,11 +2631,6 @@
     grep -q ... # quiet - no output (only T/F) - good for testing in scripts
     grep -ls user /etc/* # -l print files with pattern, -s suppress errors
     grep "longer text" textfile # Extract whole phrase
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Get part of text file (by lines) II}
-	\begin{bashcode}
 	\end{bashcode}
 	\begin{itemize}
 		\item Grep supports regular expressions, slide \ref{regexp}
@@ -2659,6 +2668,8 @@
     head long_text.txt # Beginning of the file
     # Extract names of FASTA sequences
     grep "^>" Oxalis_HybSeq_nrDNA_selection_alignment.fasta
+    # How many sequences are there?
+    grep -c "^>" Oxalis_HybSeq_nrDNA_selection_alignment.fasta
     # Extract every FASTA sequence containing "AAAAAA" and name of
     # respective FASTA sequence
     grep -n -B 1 AAAAAA Oxalis_HybSeq_nrDNA_selection_alignment.fasta
@@ -2667,20 +2678,26 @@
     # second column (separated by TAB)
     tail -n+2 cut_awk_test_file.tsv | cut -f 2 | less
     # Number of occurrences of word "Gregor" in file long_text.txt
-    grep -o Gregor long_text.txt | wc -l # Or just
-    grep -c Gregor long_text.txt
+    grep Gregor long_text.txt | wc -l # Number of matching lines
+    grep -c Gregor long_text.txt # Number of occurrences
     ls -1 *.sh | wc -l # How many BASH script are in current directory
-    # Extract from FASTA file only sequence (discard sequence names) and
-    # save result in seq.txt
-    grep -v "^>" Oxalis_HybSeq_nrDNA_selection_alignment.fasta > seq.txt
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Examples of usage of head, grep and cut with our data II}
 	\begin{bashcode}
+    # Extract from FASTA only sequences (discard sequence names) into seq.txt
+    grep -v "^>" Oxalis_HybSeq_nrDNA_selection_alignment.fasta > seq.txt
     # Save names of oxalis* JPG files into list_oxalis_photo.txt and see it
     ls -1 *oxalis*.jpg > list_oxalis_photo.txt && cat list_oxalis_photo.txt
 	\end{bashcode}
+	\begin{block}{Tasks}
+		\begin{enumerate}
+			\item How many samples of \textit{Oxalis hirta} are in \texttt{Oxalis\_HybSeq\_nrDNA\_selection\_alignment.fasta}?
+			\item From \texttt{Oxalis\_HybSeq\_nrDNA\_selection\_alignment.fasta} extract only sequences of \textit{Oxalis hirta} and save them into \texttt{oxalis\_hirta.fasta}.
+			\item From \texttt{Oxalis\_HybSeq\_nrDNA\_selection\_alignment.fasta} extract only sequences of \textit{Oxalis amblyosepala} and \textit{O. gracilis} and save them into \texttt{oxalis\_spp.fasta}.
+		\end{enumerate}
+	\end{block}
 \end{frame}
 
 \subsection{AWK}
@@ -2697,13 +2714,13 @@
 	\vfill
 	\begin{bashcode}
     awk 'regexp { commands parameters }' file # General syntax
-    # Print last column (separated by tab, built-in variable $NF)
-    awk '{print $NF}' cut_awk_test_file.tsv
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{AWK examples I}
 	\begin{bashcode}
+    # Print last column (separated by tab, built-in variable $NF)
+    awk '{print $NF}' cut_awk_test_file.tsv
     # Select 2nd column ($2; separated by tab)
     awk '{print $2}' cut_awk_test_file.tsv
     # Print columns 3 and 2 (in this order)
@@ -2719,13 +2736,13 @@
     awk '{print ">"$1"\n"$2}' awk_test_file.tab | less -S
     # Print field 1, TAB (\t), length of field 2, TAB and field 2
     awk '{print $1"\t"length($2)"\t"$2}' awk_test_file.tab
-    # If field (column) 2 contains exactly 100.0%, print whole line ($0)
-    awk '{if($2=="100.0%"){print $0}}' cut_awk_test_file.tsv
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{AWK examples II}
 	\begin{bashcode}
+    # If field (column) 2 contains exactly 100.0%, print whole line ($0)
+    awk '{if($2=="100.0%"){print $0}}' cut_awk_test_file.tsv
     # Field 1 is numeric (less then 5 digits) - add leading zeroes
     awk '{printf "%05d\n", $1;}' awk_test_file.tab
     # As previous, but add leading zeroes to field 1 and print whole line
@@ -2737,20 +2754,24 @@
     # Precede each line by its line number for all files together, with TAB
     # (i.e. print line number (NR) and then whole original line ($0))
     awk '{print NR "\t" $0}' diff_test_file_*
-    # substitute "a" with "XXX" ONLY for lines which contain "The"
+    # Substitute "a" with "XXX" ONLY for lines which contain "The"
     awk '/The/{gsub(/a/, "XXX")}; 1' diff_test_file_1.txt
-    # For every 4th line starting from line 2 of FASTQ file (from line 2
-    # every 4th line contains the DNA sequence) print its length (bzcat
-    # prints content of file compressed by bzip2)
-    bzcat Oxalis_hirta_R1.fastq.bz2 | awk 'NR%4==2{ print length($0) }'
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{AWK examples III}
 	\begin{bashcode}
+    # For every 4th line starting from line 2 of FASTQ file (from line 2
+    # every 4th line contains the DNA sequence) print its length (bzcat
+    # prints content of file compressed by bzip2)
+    bzcat Oxalis_hirta_R1.fastq.bz2 | awk 'NR%4==2{ print length($0) }'
     # If sequence is longer that 500 bp (length of field 2), print its name
     # (field 1) like this "Seq. name: TAB the sequence name (ID)"
     awk '{if(length($2)>500){print "Seq. name:\t" $1}}' awk_test_file.tab
+    # Extract from awk_test_file.tab sequences over 500 bp, sort theme by name
+    # and save them as FASTA file
+    awk '{if(length($2)>500){print $0}}' scripts_data/awk_test_file.tab | \
+      sort -n | sed 's/^/>/' | sed 's/[[:blank:]]\+/\n/g' > 500bp.fasta
 	\end{bashcode}
 \end{frame}
 
@@ -2760,8 +2781,9 @@
 	\begin{bashcode}
     sort file # Sorting is influenced by locale setting (e.g. Czech "ch")
     LC_ALL=C sort ... # To force use of English locale use
-    sort -d textfile # Take into account only spaces and alphanumerical
-                     # characters (ignore any other)
+    # Take into account only spaces and alphanumerical characters (ignore
+    # any other)
+    sort -d textfile 
     sort -r textfile # Reverse order
     sort -f textfile # Ignore character case (not case sensitive)
     sort -m textfile1 textfile2 # Merge already sorted text files
@@ -2770,22 +2792,32 @@
     bzcat Oxalis_hirta_R1.fastq.bz2 | awk 'NR%4==2{print $0}' | sort -u
     sort -b textfile # Ignore leading blanks (space on beginning of line)
     sort -k 2 -n cut_awk_test_file.tsv # Sort according to 2nd field
-    uniq textfile # Filters following identical lines - only unique are
-                  # printed (to get unique lines from whole file, sort it)
-    uniq -c textfile # Add number of occurrences before each line
-    uniq -d textfile # Print only repeated lines
-    uniq -i textfile # Ignore case (not case sensitive)
+    # Filters following identical lines - only unique are printed (to get
+    #  unique lines from whole file, sort it)
+    uniq textfile
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Sorting II}
 	\begin{bashcode}
+    uniq -c textfile # Add number of occurrences before each line
+    uniq -d textfile # Print only repeated lines
+    uniq -i textfile # Ignore case (not case sensitive)
     uniq -s N textfile # Skip first N characters
     uniq -u textfile # Print only not-repeated lines
+    # How many times is each taxon presented in
+    #  Oxalis_HybSeq_nrDNA_selection_alignment.fasta
+    grep -o "Oxalis_[a-z]\+" Oxalis_HybSeq_nrDNA_selection_alignment.fasta \
+      | sort | uniq -c | sort -r
+    # Find sizes of directories in /home (ignore errors caused by restricted
+    # permissions) and sort output according to sizes
+    du -sh /home/* 2>/dev/null | sort -h | sed 's/\/home\///'
+    # Sort *.sh scripts according to number of lines
+    wc -l *.sh | head -n-1 | sort -bn
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Replacements --- tr}
+\begin{frame}[fragile]{Replacements with tr}
 	\begin{itemize}
 		\item \texttt{tr} replaces or deletes characters from standard input and writes result to standard output --- use pipes and/or redirects
 	\end{itemize}
@@ -2811,11 +2843,11 @@
 
 \begin{frame}{Replacements with sed}
 	\begin{itemize}
-		\item \texttt{sed} supports regular expressions, see slide \ref{regexp} (same as in \texttt{grep} and \texttt{vim}), with parameter -\texttt{r} can use extended regular expressions (do not confuse --- the syntax is slightly different, richer)
-		\item Output is written to standard output --- use pipes, redirects or -\texttt{i} to modify the file in place (without printing of output)
+		\item \texttt{sed} supports regular expressions, see slide \ref{regexp} (same as in \texttt{grep} and \texttt{vim}), with parameter \texttt{-r} can use extended regular expressions (do not confuse --- the syntax is slightly different, richer)
+		\item Output is written to standard output --- use pipes, redirects or \texttt{-i} to modify the file in place (without printing of output)
 		\item macOS has old outdated versions of \texttt{grep}, \texttt{sed} and other tools (richness of regular expressions is poor) --- use versions from \href{http://brew.sh/}{Homebrew} (slide~\ref{homebrew}) or search Internet how to modify the patterns\ldots
-		\item Option -\texttt{s} separates multiple files (otherwise lines in multiple files are calculated as one stream)
-		\item Option -\texttt{n} use to be used when deleting lines or printing only specific lines to suppress other lines (see examples)
+		\item Option \texttt{-s} separates multiple files (otherwise lines in multiple files are calculated as one stream)
+		\item Option \texttt{-n} use to be used when deleting lines or printing only specific lines to suppress other lines (see examples)
 		\item See manuals \url{https://www.gnu.org/software/sed/manual/} and \url{https://www.grymoire.com/Unix/sed.html}
 	\end{itemize}
 \end{frame}
@@ -2896,7 +2928,17 @@
                         # standard output (no need for redirects and pipes)
     ls -l | sed 's/[0-9]\{4,\}/BIG!/' # Replace 4 or more digits by "BIG!"
     sed -E ... ; sed -r ... # Use extended regular expressions (see further)
+    # Remove blank space (spaces or tabs) on beginning of each line
+    sed 's/^[[:blank:]]\+//'
+    # Remove suffix from names of *.sh files - compare variants
+    ls -1 *.sh | sed 's/\.sh$//' # Note '$' to ensure end of line
+    ls -1 *.sh
+    find . -name "*.sh" | sed 's/^\.\///;s/\.sh//' # Note chaining patterns
+    find . -name "*.sh"  # It searches also in subdirectories
 	\end{bashcode}
+	\begin{itemize}
+		\item Sed does not perform well on multi-line patterns --- better is to use AWK or Perl
+	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Joining}
@@ -2930,7 +2972,7 @@
 		\item Many tools are able to directly handle files (i.e. single text files) compressed by \texttt{gzip}
 		\item For files compressed by \texttt{gzip} use \texttt{zcat} (instead of \texttt{cat}), \texttt{zdiff} (instead of \texttt{diff}), \texttt{zegrep} (instead of \texttt{egrep}), \texttt{zfgrep} (instead of \texttt{fgrep}), \texttt{zless} (instead of \texttt{less}), \texttt{zmore} (instead of \texttt{more}),~\ldots
 		\item For files compressed by \texttt{bzip2} use \texttt{bzcat}, \texttt{bzdiff}, \texttt{bzegrep}, \texttt{bzfgrep}, \texttt{bzless}, \texttt{bzmore},~\ldots
-		\item For files compressed by \texttt{lzma} use \texttt{lzcat}, \texttt{lzdiff}, \texttt{lzegrep}, \texttt{lzfgrep}, \texttt{lzgrep}, \texttt{lzless}, \texttt{lzmore},~\ldots
+		\item For files compressed by \texttt{lzma} or \texttt{lzma2} (\texttt{xz}, \texttt{lzma}) use \texttt{lzcat}, \texttt{lzdiff}, \texttt{lzegrep}, \texttt{lzfgrep}, \texttt{lzgrep}, \texttt{lzless}, \texttt{lzmore},~\ldots
 		\item Sometimes these variants are used automatically when user works with compressed file
 		\item \texttt{mc} can also do the job
 	\end{itemize}
@@ -2940,11 +2982,20 @@
 	\begin{bashcode}
     # Extract lines with grep
     zgrep FORMAT arabidopsis.vcf.gz
+    # 'less -S' displays long lines without indent (use R/L arrows to move),
+    # zless doesn't have such option - use as follows:
+    zcat arabidopsis.vcf.gz | less -S
     # Display file compressed by bzip2
     bzless Oxalis_hirta_R2.fastq.bz2
     # Get end of the file
     bzcat Oxalis_hirta_R2.fastq.bz2 | tail
+    # Get number of lines
+    bzcat Oxalis_hirta_R2.fastq.bz2 | wc -l
 	\end{bashcode}
+	\begin{itemize}
+		\item Not all commands to work with text have variant to work with compressed files\ldots
+		\item Variants to work with compressed files sometimes don't have all options\ldots
+	\end{itemize}
 \end{frame}
 
 \subsection{Comparisons}
@@ -3000,6 +3051,7 @@
 	\begin{itemize}
 		\item Saves difference between two files --- it can be later used as template to modify original file
 		\item Single patch file can contain changes from multiple files
+		\item Patch format from \texttt{diff -u} is common way how to send someone changes, improvements,~\ldots
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
@@ -3015,7 +3067,7 @@
 
 \begin{frame}[fragile]{Command line text editors}
 	\begin{itemize}
-		\item \texttt{nano}, \texttt{pico} and \texttt{mc} are very simple, just for very basic text editing in command line or until you learn \texttt{vim} (graphical version is \textbf{gVim}) or \texttt{emacs} (graphical version is also available, just search for \textbf{Emacs} in your distribution software manager)
+		\item \texttt{nano}, \texttt{pico} and \texttt{mc} are very simple, just for very basic text editing in command line or until you learn \texttt{vim} (graphical version is \textbf{gVim}) or \texttt{emacs} (graphical versions are also available, just search for \textbf{Emacs} in your distribution software manager)
 		\item You can work most of the time in graphical editors (slide \ref{editors})
 		\item Emacs and Vim are extremely rich, but having completely different approach --- when you get use to one, you can't use the another
 	\end{itemize}
@@ -3045,11 +3097,11 @@
 		\begin{itemize}
 			\item \texttt{F2} to save, \texttt{F10} to quit, \texttt{F1} to help, \texttt{F9} for top menu (navigate with arrows, cancel with double \texttt{Esc}), it is possible to use mouse
 		\end{itemize}
-		\item \textbf{Emacs} use huge number of commands with \texttt{Ctrl} key
+		\item \textbf{Emacs} use huge number of commands with \texttt{Ctrl} key (basics on next slide)
 		\begin{itemize}
 			\item See \url{https://www.gnu.org/software/emacs/tour/}, \url{https://tuhdo.github.io/emacs-tutor.html} and \url{http://www.jesshamrick.com/2012/09/10/absolute-beginners-guide-to-emacs/}
 		\end{itemize}
-		\item The most common is \textbf{Vim}
+		\item The most common (but very complex and specific) is \textbf{Vim}
 		\begin{itemize}
 			\item See \url{https://vim-adventures.com/} to play a~game and learn Vim
 		\end{itemize}
@@ -3082,10 +3134,10 @@
 	\end{multicols}
 \end{frame}
 
-\begin{frame}{Vim}{Vim has three different working modes} % TODO Update Vim usage
+\begin{frame}{Vim}{Vim has three different working modes}
 	\label{vim}
 	\begin{enumerate}
-		\item \textbf{\enquote{Normal}} --- nothing is displayed in bottom left corner, every key has some meaning (next slide)
+		\item \textbf{\enquote{Normal}} --- nothing is displayed in bottom left corner, every key has some meaning (next slide) --- very powerful manipulations with text
 		\begin{itemize}
 			\item \texttt{i} or \texttt{Insert} key to enter \textit{insert mode}, \texttt{:} to enter \textit{command mode}
 		\end{itemize}
@@ -3094,14 +3146,14 @@
 	\end{enumerate}
 	\begin{itemize}
 		\item See documentation \url{https://vim.fandom.com/wiki/Vim_Tips_Wiki}, \url{https://www.vim.org/docs.php}; česky \url{http://www.nti.tul.cz/~satrapa/docs/vim/}
-		\item For interactive learning try \url{https://vim-adventures.com/} (\alert{Task:} Play it for a while.:) or command \texttt{vimtutor}
+		\item For interactive learning try \url{https://vim-adventures.com/} (\alert{Task:} Play it for a while.:-) or command \texttt{vimtutor}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Normal and command Vim modes}
 	\begin{multicols}{2}
 		\begin{itemize}
-			\item \textbf{Normal mode}
+			\item \textbf{Normal mode} (press \texttt{ESC})
 			\begin{itemize}
 				\item \texttt{dd} cut current line
 				\item \texttt{r} replace single character below cursor (type then character to be placed instead of the original one)
@@ -3113,13 +3165,14 @@
 				\item \texttt{u} to undo last change(s)
 				\item \texttt{/ToSearch} search \enquote{ToSearch} (once press \texttt{Enter}, \texttt{n} for next occurrence, quit with \texttt{Esc})
 			\end{itemize}
-			\item \textbf{Command mode}
+			\item \textbf{Command mode} (press \texttt{ESC :})
 			\begin{itemize}
 				\item \texttt{w} write file
 				\item \texttt{q} quit
 				\item \texttt{q!} quit and discard changes
-				\item \texttt{\%s/...} to search and replace as in \texttt{sed}
+				\item \texttt{\%s/\ldots} to search and replace as in \texttt{sed}
 				\item \texttt{syntax on/off} turn syntax highlight on/off
+				\item \texttt{set nu} show line numbers
 			\end{itemize}
 		\end{itemize}
 	\end{multicols}
@@ -3138,6 +3191,7 @@
 			\item Manipulate the text --- flip, reformat, replace,~\ldots
 			\item Syntax is variable among programming languages and applications
 			\item There are commonly more solutions for one task
+			\item Well supported in \texttt{grep}, \texttt{sed}, \texttt{vim}, \texttt{emacs},~\ldots
 			\item Probably the most advanced is Perl
 		\end{itemize}
 		\vfill
@@ -3152,7 +3206,7 @@
 		\item \alert{\texttt{*}} --- any number of characters/occurrences of pattern (including 0)
 		\item \alert{\texttt{+}} --- one or more occurrences of the preceding reg exp
 		\item \alert{\texttt{?}} --- zero or one occurrences of the preceding reg exp
-		\item \alert{\texttt{[\ldots]}} --- any character in the brackets
+		\item \alert{\texttt{[\ldots]}} --- any character in the brackets (can be list like \texttt{[abcd]} or range like \texttt{[a-kxz4-8\_-]})
 		\item \alert{\texttt{[\textasciicircum\ldots]}} --- reverse case --- all characters except newline and those listed in brackets
 		\item \alert{\texttt{\textasciicircum}} --- first character of reg exp --- beginning of the line
 		\item \alert{\texttt{\$}} --- last character of reg exp --- end of the line
@@ -3163,24 +3217,25 @@
 		\item \alert{\texttt{|}} --- either the preceding or following reg exp can be matched (alternation)
 		\item \alert{\texttt{\textbackslash(\ldots\textbackslash)}} --- remembered group reg exp (numbered, starting with 1) --- can be called by \alert{\textbackslash\textit{n}}, where \textit{n} is number of the group (starting with 1)
 		\item \alert{\texttt{\textbackslash$<$}}, \alert{\texttt{\textbackslash$>$}} --- word boundaries
-		\item \alert{\texttt{[[:alnum:]]}} --- alphanumerical characters (includes white space), same like \alert{\texttt{[a-zA-Z0-9]}}
-		\item \alert{\texttt{[[:alpha:]]}} --- alphabetic characters, like \alert{\texttt{[a-zA-Z]}}
+		\item \alert{\texttt{[[:alnum:]]}} --- alphanumerical characters (includes white space), same like \texttt{[a-zA-Z0-9]}
+		\item \alert{\texttt{[[:alpha:]]}} --- alphabetic characters, like \texttt{[a-zA-Z]}
 		\item \alert{\texttt{[[:blank:]]}} --- space and TAB
 		\item \alert{\texttt{[[:cntrl:]]}} --- control characters
-		\item \alert{\texttt{[[:digit:]]}} --- numeric characters, like \alert{\texttt{[0-9]}}
+		\item \alert{\texttt{[[:digit:]]}} --- numeric characters, like \texttt{[0-9]}
 		\item \alert{\texttt{[[:graph:]]}} --- printable and visible (non-space) characters
-		\item \alert{\texttt{[[:lower:]]}} --- lowercase characters, like \alert{\texttt{[a-z]}}
+		\item \alert{\texttt{[[:lower:]]}} --- lowercase characters, like \texttt{[a-z]}
 		\item \alert{\texttt{[[:print:]]}} --- printable characters (includes white space)
 		\item \alert{\texttt{[[:punct:]]}} --- punctuation characters
 		\item \alert{\texttt{[[:space:]]}} --- white space characters
-		\item \alert{\texttt{[[:upper:]]}} --- uppercase characters, like \alert{\texttt{[A-Z]}}
+		\item \alert{\texttt{[[:upper:]]}} --- uppercase characters, like \texttt{[A-Z]}
 		\item \alert{\texttt{[[:xdigit:]]}} --- hexadecimal digits
 		\item \alert{\texttt{\textasciicircum\$}} --- blank line
 		\item \alert{\texttt{\textasciicircum.*\$}} --- entire line whatever it is
 		\item \alert{\texttt{ +}} --- one or more spaces (there is space before plus)
 		\item \alert{\texttt{\&}} --- content of pattern that was matched
 		\item Implementation in \texttt{vim}, \texttt{sed}, \texttt{grep}, \texttt{awk} and \texttt{perl} and among various UNIX systems is almost same, but not identical\ldots
-		\item \textbf{grep}, \textbf{sed} and \textbf{vim} \alert{require escaping} of \alert{\texttt{+}}, \alert{\texttt{?}}, \alert{\texttt{\{}}, \alert{\texttt{\}}}, \alert{\texttt{(}} and \alert{\texttt{)}} by backslash \alert{\texttt{\textbackslash}} (e.g. \texttt{\textbackslash +}) --- \textbf{egrep} (extended version, launched as \texttt{grep -E \ldots} or \texttt{egrep \ldots}), \textbf{sed} with extended reg exp (\texttt{sed -r}) and \textbf{perl} \alert{not}
+		\item \textbf{grep}, \textbf{sed} and \textbf{vim} \alert{require escaping} of \alert{\texttt{+}}, \alert{\texttt{?}}, \alert{\texttt{\{}}, \alert{\texttt{\}}}, \alert{\texttt{(}} and \alert{\texttt{)}} by backslash \alert{\texttt{\textbackslash}} (e.g. \texttt{\textbackslash +})
+		\item \textbf{egrep} (extended version, launched as \texttt{grep -E \ldots} or \texttt{egrep \ldots}), \textbf{sed} with extended reg exp (\texttt{sed -r}) and \textbf{perl} \alert{not} (simply e.g. \texttt{+})
 		\item Read \url{https://en.wikibooks.org/wiki/Regular_Expressions}, \url{https://www.grymoire.com/Unix/Regular.html}, \url{https://www.regular-expressions.info/}; česky \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{https://www.root.cz/serialy/regularni-vyrazy/} a~\url{https://www.regularnivyrazy.info/}
 		\item Manuals for \href{https://www.gnu.org/software/grep/manual/}{Grep}, Vim, \href{https://www.gnu.org/software/sed/manual/}{Sed}, \href{https://www.gnu.org/software/gawk/manual/}{Awk}, \href{https://en.wikibooks.org/wiki/Perl_Programming}{Perl} (\href{https://en.wikibooks.org/wiki/Raku_Programming}{newer Perl~6 Raku}),~\ldots
 		\item See sed examples, slide~\ref{sedex}; and next slide
@@ -3195,7 +3250,7 @@
     # Extract DNA sequence string ATCG or ATGC
     grep "ATCG\|ATGC" Oxalis_HybSeq_nrDNA_selection_alignment.fasta
     # Get quality of Illumina reads mapping to reference in genomic VCF
-    zcat arabidopsis.vcf.gz | grep -o "MQ=[[:digit:]]\+"
+    zcat arabidopsis.vcf.gz | grep -o "MQ=[[:digit:]]\+" | sed 's/^MQ=//'
     # How many times there is a direct speech (text between "...")
     grep -o '\"[[:upper:]][a-zA-Z0-9,\.\?\! ]\+\"' long_text.txt | wc -l
     # Add after dot on the end of the line by extra line break
@@ -3214,15 +3269,14 @@
     # List all Internet web links
     grep -o "http[a-zA-Z0-9\.()/:\-]\+" long_text.txt
 	\end{bashcode}
-\end{frame}
-
-% \subsection{} % TODO Add text tasks
-%
-% \begin{frame}{Text tasks}
-% 	\begin{enumerate}
-% 		\item 
-% 	\end{enumerate}
-% \end{frame}
+		\begin{block}{Tasks}
+			\begin{enumerate}
+				\item Remove "\texttt{S}" codes, replace underscore by dot and space (\texttt{. }), and capitalize initial "\texttt{o}" in FASTA names in \texttt{oxalis\_assembly\_6235.aln.fasta}, e.g. from \texttt{>o\_annae\_S499} to \texttt{>O. annae}.
+				\item Extract from \texttt{arabidopsis.vcf.gz} values of \texttt{DP} (only numbers), sort them and print on single line, separated by commas.
+				\item Determine, which sequence of \texttt{Oxalis\_HybSeq\_nrDNA\_selection\_alignment.fasta} has the longest block of missing data (\texttt{N}) or spaces (\texttt{-}).
+			\end{enumerate}
+		\end{block}
+	\end{frame}
 
 \section{Scripting}
 
@@ -4732,7 +4786,7 @@
 		\item In Linux, most common is \href{https://wiki.freedesktop.org/www/Software/systemd/}{SystemD}, less common older init scripts and RC scripts
 		\item macOS and various BSD and other systems have different methods
 		\item Used to manage system services like networking, cron, web server, database,~\ldots
-		\item \alert{Read documentation for your distribution first!}
+		\item \alert{Read documentation of your distribution first!}
 		\item Most of actions require root authentication
 	\end{itemize}
 	\vfill
@@ -4817,6 +4871,7 @@
 	\begin{itemize}
 		\item \alert{Never ever} ask simple silly lazy questions you can quickly find in manual or web
 		\item People on mailing lists and forums respond volunteerly in their spare free time --- do not waste it --- be polite, brief and informative
+		\item Imagine you should answer --- which information do you need?
 		\item Be as specific and exact as possible
 		\begin{itemize}
 			\item Write \alert{exactly} what you did (\enquote{It doesn't work!} is useless\ldots)
@@ -4833,17 +4888,15 @@
 			\item There are plenty of reasons some software doesn't work --- usage/data author didn't expect, unsupported version of operating system, author's mistake, user's mistake, unexpected interaction with another software,~\ldots
 			\item Authors wish their software to be useful --- constructive feedback, reporting bugs and wishes is welcomed, but it must be provided in the way useful for the developer
 		\end{itemize}
-		\item Imagine you should answer --- which information do you need?
 		\item Try to find the best place to ask your question --- specific forum for particular distribution or software use to be the best option
 		\item Learning command line is like learning foreign language --- it takes time\ldots
 		\item \alert{Reading documentation is not wasting of time!}
-		\item Plenty of software packages have bug (issue) trackers (e.g. on GitHub) to report any problem with the software and discuss --- search them on software homepage
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Main general fora}
 	\begin{block}{Question must have certain form!}
-			Before asking, \alert{ensure your question is in answerable form} (previous slide).
+			Before asking, \alert{ensure your question is in answerable form} (previous slides).
 		\begin{itemize}
 			\item Sloppily asked question can't be answered at all\ldots
 			\item Check documentation, manuals and search the Internet before asking
@@ -4855,12 +4908,12 @@
 		\item UNIX forum \url{https://unix.stackexchange.com/}
 		\item Forum for administrators \url{https://superuser.com/}
 		\item Questions mainly (not only) related to servers \url{https://serverfault.com/}
-		\item Do not hesitate to ask on the forum or contact developers, preferably through some public forum or mailing list, they usually respond quickly and helpfully\ldots{ }--- they wish their software to be working and useful
 		\item \href{https://www.startpage.com/}{Uncle Google} is your friend here (\textit{\enquote{how to XXX in BASH/Linux}})\ldots
+		\item Bioinformatics is discussed on \href{https://www.biostars.org/}{Biostars} (including various related programming issues)
+		\item Do not hesitate to ask on the forum or contact developers, preferably through some public forum or mailing list, they usually respond quickly and helpfully\ldots{ }--- they wish their software to be working and useful
 		\item Plenty of bigger projects have their own web fora or e-mail conferences --- search for it to ask on right place
 		\item In Linux/OSS world, e-mail conferences are sometimes more popular, than web forums or various social networks --- try them
 		\item If you find a~bug, report it according to instructions given by the project
-		\item Bioinformatics is discussed on \href{https://www.biostars.org/}{Biostars} (including various related programming issues)
 		\item Plenty of software packages have bug (issue) trackers (e.g. on GitHub) to report any problem with the software and discuss --- search them on software homepage
 		\item Programming languages like R or Python have their own discussion fora, commonly specific for particular field
 	\end{itemize}
