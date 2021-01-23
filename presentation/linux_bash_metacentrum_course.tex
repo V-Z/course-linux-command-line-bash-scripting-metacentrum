@@ -4601,7 +4601,7 @@
 
 \begin{frame}[allowframebreaks]{Git and version control}
 	\begin{itemize}
-		\item \href{https://git-scm.com/}{Git} is \href{https://en.wikipedia.org/wiki/Version_control}{version controlling} system --- it traces changes among all versions --- absolutely crucial for any software development
+		\item \href{https://git-scm.com/}{Git} is \href{https://en.wikipedia.org/wiki/Version_control}{version controlling} system (nowadays the most common) --- it traces changes among all versions --- absolutely crucial for any software development
 		\item Older (nowadays not so common) version controlling systems is Subversion (SVN), there are many more (Bazaar, Mercurial,~\ldots)
 		\item Probably the best textbook for Git is \href{https://git-scm.com/book/en/v2}{Chacon's Pro Git}
 		\begin{itemize}
@@ -4610,27 +4610,22 @@
 		\item Changes and their history is stored in repository (local or network, shared or private) --- it is possible to view any historical state and differences between any versions
 		\item It is possible to trace who and when did what
 		\item Branching and merging of branches helps with making of big changes
+		\begin{itemize}
+			\item When new branch is created, it contains copy of current state
+			\item User selects in which branch she/he is working, the branches are diverging, user can commit in every branch independently
+			\item Commits in various branches can be compared and branches can be merged again
+			\item Key feature of Git --- branches are useful when user starts to work on any big change in the project (the \enquote{main} part is intact while developers can freely work on major change)
+		\end{itemize}
 		\item Users work on a project in some directory as usually and from time to time commit local changes to stagging (temporal area) and then push them to remote or local repository (directory storing all Git history of particular project, can be anywhere)
 		\item Every commit is checkpoint in the history
 		\begin{itemize}
 			\item Can be tagged (named), e.g. particular released version of software, or project stage
 			\item User can compare any two commits or commit and current state
 		\end{itemize}
-		\item Code can be branched
-		\begin{itemize}
-			\item When new branch is created, it contains copy of current state
-			\item User selects in which branch she/he is working, the branches are diverging, user can commit in every branch independently
-			\item Commits in various branches can be compared and branches can be merged again
-			\item Key feature of Git --- branches are useful when user starts to work on any big change in the project
-		\end{itemize}
 		\item Stagging area serves as local \enquote{container} of changes to be pushed to central Git repository (or to be modified, discarded)
-		\begin{itemize}
-			\item It is very hard to do any change in the central Git repository (e.g. to remove accidentaly pushed file or change description)
-		\end{itemize}
 		\item Central repository keeps whole history of the project
 		\begin{itemize}
 			\item Every user has full copy of the central Git repository --- can be large
-			\item Can be placed on some server, network disk, in the local computer,~\ldots
 		\end{itemize}
 		\item Git was developed by Linus to trace development of Linux kernel, now it is probably the most used version control tool, used also by Microsoft to trace development of Windows :-)
 	\end{itemize}
@@ -4641,11 +4636,12 @@
 		\item \href{https://github.com/}{GitHub} is currently probably the most popular platform to host development of open-source projects, see \href{https://help.github.com/}{documentation}
 		\item Probably second most common on-line service providing Git repository is \href{https://about.gitlab.com/}{GitLab}
 		\begin{itemize}
-			\item User can create an account on GitLab (as on GitHub), or download and install GitLab system on own server
+			\item User can create an account on GitLab (as on GitHub), or download and install GitLab system on own server (like \href{https://sorbus.ibot.cas.cz/en/gitlab}{we did})
 		\end{itemize}
 		\item \href{https://sourceforge.net/}{SourceForge} used to be more popular in the past, still harbours plenty of interesting projects
+		\item Others are e.g. \href{https://bitbucket.org/}{Bitbucket}, \href{https://www.codebasehq.com/}{Codebase},~\ldots
 		\item For on-line services, many tools are available only for paying customers
-		\item All such services provide Git repositories accessible through standard tools (from command line, see further; or from some special application)
+		\item All such services provide Git repositories accessible through standard tools (from command line, see further; or from some special application), through web browser
 		\begin{itemize}
 			\item Exact usage might differ from standard Git, check respective help pages first
 		\end{itemize}
@@ -4686,11 +4682,15 @@
 
 \begin{frame}[fragile]{Working with Git --- start and sending changes}
 	\begin{bashcode}
-    # Create a new repository for new project (in empty directory)
-    git init # No need when cloning from existing repository
     # Create a new central repository (e.g. on a server) in empty directory
     git init --bare
-    # Or checkout (make a copy) for another local or remote repository
+    # Create a new repository for new project (in empty directory)
+    git init # No need when cloning from existing repository
+    # If you did not start by cloning, add connection to server
+    git remote add origin <location> # Do only once on the beginning
+    # <location> can be remote server or local path
+    git remote add origin . # For repository within working directory
+    # Or checkout (make a copy) of existing local or remote repository
     git clone /path/to/local/repository # Locally mounted repository
     git clone username@host:/path/to/remote/repository # Over SSH
     git clone https://github.com/V-Z/course-linux-command-line-bash-
@@ -4698,17 +4698,13 @@
     # Add files to trace with Git
     # Ignored files (or patterns) can be listed in .gitignore file
     git add <files> # Or "git add *"
-    # Commit changes to prepare then to send to repository
-    git commit -m "Message..."
-    # If you did not start by cloning, add connection to server
-    git remote add origin <location> # Do only once on the beginning
-    # <location> can be remote server or local path
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Working with Git --- branching and getting changes}
 	\begin{bashcode}
-    git remote add origin . # For repository within working directory
+    # Commit changes to prepare them to send to repository
+    git commit -m "Message..."
     # Push changes into the repository (regardless where it is)
     git push origin master # See further for selection of branches
     # Making new branch and switching to it
@@ -4722,12 +4718,12 @@
     git push origin <branch>
     # List branches (current is marked by asterisk on the beginning)
     git branch
-    # Download news from central server
-    git fetch
+    # Download news from central server (work of colleagues, etc.)
+    git fetch # Downloaded to stagging, not applied yet to local files
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Working with Git --- tags, logs and settings}
+\begin{frame}[fragile]{Working with Git --- tags, logs and more}
 	\begin{bashcode}
     # Update local repository to the newest version from central repository
     git pull # Fetch and merge remote changes (before commit)
@@ -4749,7 +4745,13 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Working with Git --- tags, logs and settings}
+\begin{frame}[fragile]{Working with Git --- settings and more}
+	\begin{itemize}
+		\item Basically repeat in \texttt{git} \texttt{add}, \texttt{commit} and \texttt{push} to get your work to the repository, and \texttt{fetch} and \texttt{pull} to download news from central repository
+		\item \texttt{diff} to see local changes
+		\item \texttt{log} and \texttt{branch} show history and branches
+		\item \texttt{branch} and \texttt{merge} for branching code and merging changes back to master (main) branch
+	\end{itemize}
 	\begin{bashcode}
     gitk # Graphical interface
     git config color.ui true # Set output to be colored
