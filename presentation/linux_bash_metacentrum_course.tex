@@ -1640,14 +1640,14 @@
 	\begin{bashcode}
     echo a{p,c,d,b}e # ape ace ade abe - all combinations
     echo {a,b,c}{d,e,f} # ad ae af bd be bf cd ce cf - all combinations
-    ls *.{jpg,jpeg,png} # expansion to *.jpg *.jpeg *.png, same as
+    ls *.{jpg,jpeg,png} # Expansion to *.jpg *.jpeg *.png, same as:
     ls *.jpg *.jpeg *.png
-    ls scripts_data/*_R[12].fastq.bz2
+    ls scripts_data/*_R[12].fastq.bz2 # Same as *_R1.fastq.bz2 *_R2.fastq.bz2
 	\end{bashcode}
 	\vfill
 	\begin{itemize}
 		\item Text in single quotes (\texttt{'\ldots'}) preserves the literal value of each character within the quotes
-		\item Text in double quotes (\texttt{"\ldots"}) preserves the literal value of all characters within the quotes, with the exception of dollar (\texttt{\textdollar}), back tick (\texttt{\textasciigrave}) and back slash (\texttt{\textbackslash})
+		\item Text in double quotes (\texttt{"\ldots"}) preserves the literal value of all characters within the quotes except of dollar (\texttt{\textdollar}), back tick (\texttt{\textasciigrave}) and back slash (\texttt{\textbackslash}) --- handling variables
 		\item A~double quote may be quoted within double quotes by preceding it with a~backslash (\texttt{\textbackslash"} means literally \enquote{double quote})
 		\item Text between back ticks (\texttt{\textasciigrave\ldots\textasciigrave}) or within \texttt{\$(\ldots)} will be evaluated and then used as command or argument (see next slide for examples)
 	\begin{itemize}
@@ -1674,34 +1674,15 @@
 			\item \texttt{USER} --- user name
 			\item And many more, commonly specific for particular server
 		\end{itemize}
-		\item Names start with \texttt{\$}, e.g. \texttt{\$HOME}, but declaration is without \texttt{\$}, e.g. \texttt{MYVAR='XXX'}
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{BASH expressions}
-	\label{variables}
-	\begin{bashcode}
-    # Many operands have special meaning in BASH - must be escaped
-    echo $((5 < 7)) # Is 5 smaller than 7? TRUE (1)
-    echo $((3 > 4)) # Is 3 greater than 4? FALSE (0)
-    echo $((16 / 3)) # Division (without decimal part)
-    echo $((12 % 5)) # What remains after aritmetic division
-    x=$((1 + 6)) # Result will be in 'x' - save output into variable $x
-    echo $x # See content of $x
-    x=1 # Set x to 1
-    y=$x+1 # Will this add 1? Why?
-    echo $y # See result
-    y=$(($x + 1)) # Will this work? Why?
-    echo $y # Result
-    echo $(expr length "MetaCentrum and Linux") # Get length of chain
-    # String of 5 characters starting at position 10 of the text
-    echo $(expr substr "MetaCentrum and Linux" 10 5)
-    # Does 1st chain contain 2nd chain (how long)? Get position of first hit
-    echo $(expr index "GNU Linux" "Linux") # If no overlap, return value is 0
-	\end{bashcode}
-\end{frame}
-
 \begin{frame}[fragile]{Work with variables}
+	\label{variables}
+	\begin{itemize}
+		\item Names start with \texttt{\$}, e.g. \texttt{\$HOME}, but declaration is without \texttt{\$}, e.g. \texttt{MYVAR='XXX'}
+		\item Variable defined within shell session, script, function, etc. will disappear as soon as the session, script, function, etc. is terminated --- it must be exported, defined in \texttt{$\sim$/.bashrc} or so to be preserved
+	\end{itemize}
 	\begin{bashcode}
     printenv # Get all environmental variables and their values
     export -p # Get all exported variables and their values
@@ -1718,16 +1699,50 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}{Expressions and variables notes}
+\begin{frame}[fragile]{How quotes influence reading of variable content I}
 	\begin{itemize}
-		\item \texttt{expr} works with various operands (see \texttt{man expr}) --- it used to be utilised also for simple computations, \texttt{\$((\ldots))} is now preferred
-		\item Exported variables will be lost when logging off
-		\item To make variables permanent, add \texttt{export} commands into \texttt{$\sim$/.profile} or \texttt{$\sim$/.bash\_profile}, or \texttt{$\sim$/.bashrc} (according to shell and its settings)
-		\item \enquote{\texttt{$\sim$}} means home directory
+		\item As soon as variable value (content) should contain anything else than plain Latin characters and numbers, or should combine with another variable, be careful\ldots
 	\end{itemize}
+	\begin{bashcode}
+    A=abcdef # Set new variable (no special characters allowed)
+    echo $A # See variable's content
+    abcdef # It works
+    echo '$A' # Single quotes preserve literal value
+    $A # We see variable's name, not its content
+    echo "$A" # Double quotes preserve literal value, except $, `, \
+    abcdef # This also works
+    echo `$A` # Text between back ticks is evaluated and launched
+    abcdef: command not found # There is no command "abcdef"...
+    echo $($A) # Same as `...`, this is now recommended way, `...` is legacy
+    echo "Hi, dear $USER" # Compare this and following command...
+    echo 'Hi, dear $USER' # Single quotes do not evaluate variables
+    A=abcde # OK
+    echo $A # abcde
+	\end{bashcode}
 \end{frame}
 
-\begin{frame}{The PATH variable}
+\begin{frame}[fragile]{How quotes influence reading of variable content II}
+	\begin{bashcode}
+    B=abcd$e # The content will be "abcde + $e" or "abcd" (if $e is missing)
+    echo $B # abcd
+    C=abcd\$e # \ escapes next character - it is loosing its special meaning
+    echo $C # abcd$e
+    D='abcd$e' # '...' keep literal value of the content
+    echo $D # abcd$e
+    # Next command breaks shell - incomplete quotes " - pres then Ctrl+C
+    E=ab"cde # The variable should contain incomplete quotes ", it fails
+    echo $E # Nothing - empty
+    F=ab\"cde # \ escapes next character - it is loosing its special meaning
+    echo $F # ab"cde
+    G='ab"cde' # '...' keep literal value of the content
+    echo $G # ab"cde
+    H=abc$(echo $USER)de # See $USER to see what will be inserted in $(...)
+    echo $H # abcvojtade # To add output of command into the variable
+    I='...' # Needed if $I should contain spaces, quotes, `, $, ...
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{The PATH variable}
 	\label{PATH}
 	\begin{itemize}
 		\item Lists directories (separated by colon \texttt{:}) where the current shell searches for commands
@@ -1735,17 +1750,12 @@
 		\item In case there are two commands with the same name (e.g. \texttt{/bin/somecommand} and \texttt{/usr/bin/somecommand}), the order of directories in \texttt{\$PATH} matters --- the first occurrence is used, any possible later ignored
 		\item Computing clusters (like MetaCentrum) use to have special command (e.g. \texttt{module}) to load particular software (including particular version) by extending user's \texttt{\$PATH}
 	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Working with PATH variable}
 	\begin{bashcode}
-    # See the $PATH variable
-    echo $PATH # Sample output is on the next line:
+    echo $PATH # See the $PATH variable. Sample output is on the next line:
     /home/$USER/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin:/sbin:/usr/sbin
     # Adding new directory to $PATH
     export PATH=$PATH:/some/new/directory # Ensure to add original $PATH
-    # Do not do it in the following way - it would overwrite $PATH, and
-    # there would be only the new directory (not the original content)!
+    # Do not overwrite $PATH - there would be only the new directory 
     export PATH=/some/new/directory # Wrong! Old $PATH is missing!
 	\end{bashcode}
 \end{frame}
@@ -1771,53 +1781,41 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}{Variables and quotes and more I}
+% TODO Add manipulation with variables like ${VAR%...}
+
+\begin{frame}[fragile]{BASH expressions}
+	\begin{bashcode}
+    # Many operands have special meaning in BASH - must be escaped
+    echo $((5 < 7)) # Is 5 smaller than 7? TRUE (1)
+    echo $((3 > 4)) # Is 3 greater than 4? FALSE (0)
+    echo $((16 / 3)) # Division (without decimal part)
+    echo $((12 % 5)) # What remains after aritmetic division
+    x=$((1 + 6)) # Result will be in 'x' - save output into variable $x
+    echo $x # See content of $x
+    x=1 # Set x to 1
+    y=$x+1 # Will this add 1? Why?
+    echo $y # See result
+    y=$(($x + 1)) # Will this work? Why?
+    echo $y # Result
+    echo $(expr length "MetaCentrum and Linux") # Get length of chain
+    # String of 5 characters starting at position 10 of the text
+    echo $(expr substr "MetaCentrum and Linux" 10 5)
+    # Does 1st chain contain 2nd chain (how long)? Get position of first hit
+    echo $(expr index "GNU Linux" "Linux") # If no overlap, return value is 0
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}{Notes about variables, expressions and quotes and more}
 	\label{varquotes}
 	\begin{itemize}
+		\item \texttt{expr} works with various operands (see \texttt{man expr}) --- it used to be utilised also for simple computations, \texttt{\$((\ldots))} is now preferred
+		\item Exported variables will be lost when logging off
+		\item To make variables permanent, add \texttt{export} commands into \texttt{$\sim$/.profile} or \texttt{$\sim$/.bash\_profile}, or \texttt{$\sim$/.bashrc} (according to shell and its settings)
+		\item \enquote{\texttt{$\sim$}} means home directory
 		\item \alert{\texttt{\textdollar}} marks variables
 		\item \alert{\texttt{\textbackslash}} escapes following character --- it will not have its special meaning (space to separate arguments,~\ldots{ }--- next slide)
 		\item If variable is going to contain any special character (\texttt{?}, \texttt{.}, \texttt{*},~\ldots), the value must be quoted --- \texttt{"\ldots"} allow escaping of special character or inclusion of another variables, \texttt{'\ldots'} keeps absolutely literal value
 	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Variables and quotes and more II}{How quotes influence reading of variable content}
-	\begin{bashcode}
-    A=abcdef # Set new variable (no special characters allowed)
-    echo $A # See variable's content
-    abcdef # It works
-    echo '$A' # Single quotes preserve literal value
-    $A # We see variable's name, not its content
-    echo "$A" # Double quotes preserve literal value, except $, `, \
-    abcdef # This also works
-    echo `$A` # Text between back ticks is evaluated and launched
-    abcdef: command not found # There is no command "abcdef"...
-    echo $($A) # Same as `...`, this is now recommended way, `...` is legacy
-    echo "Hi, dear $USER" # Compare this and following command...
-    echo 'Hi, dear $USER' # Single quotes do not evaluate variables
-    A=abcde # OK
-    echo $A # abcde
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{How quotes influence reading of variable content}
-	\begin{bashcode}
-    B=abcd$e # The content will be "abcde + $e" or "abcd" (if $e is missing)
-    echo $B # abcd
-    C=abcd\$e # \ escapes next character - it is loosing its special meaning
-    echo $C # abcd$e
-    D='abcd$e' # '...' keep literal value of the content
-    echo $D # abcd$e
-    # Next command breaks shell - incomplete quotes " - pres then Ctrl+C
-    E=ab"cde # The variable should contain incomplete quotes ", it fails
-    echo $E # Nothing - empty
-    F=ab\"cde # \ escapes next character - it is loosing its special meaning
-    echo $F # ab"cde
-    G='ab"cde' # '...' keep literal value of the content
-    echo $G # ab"cde
-    H=abc$(echo $USER)de # See $USER to see what will be inserted in $(...)
-    echo $H # abcvojtade # To add output of command into the variable
-    I='...' # Needed if $I should contain spaces, quotes, `, $, ...
-	\end{bashcode}
 \end{frame}
 
 \subsection[Chaining]{Input, output and their redirecting}
@@ -1829,15 +1827,25 @@
 		\item \alert{\texttt{\&\&}} --- second command is launched only when first command exits without error (exits with status \texttt{0}): \texttt{mkdir NewDir \&\& cd NewDir}
 		\item \alert{\texttt{;}} --- second command is launched regardless exit status of the first one: \texttt{kshfskcbd; hostname}
 		\item \alert{\texttt{\textbraceleft\ldots\textbraceright}} --- commands within curl brackets are launched as one block
+		\begin{itemize}
+			\item Closing bracket \texttt{\textbraceright} must be either on new line or preceded by semicolon (\texttt{\ldots{ }; \textbraceright})
+		\end{itemize}
 		\item \alert{\texttt{||}} --- second command is launched when first command fails (has non zero exit status):\\\texttt{cd newdir || \textbraceleft~mkdir newdir \&\& cd newdir; \textbraceright}
+		\begin{itemize}
+			\item Easy way how to do something when previous command fails, either exit script (\texttt{\ldots{ }|| exit 1}) or somehow fix it (see above), report problem (\texttt{\ldots{ }|| \textbraceleft echo \enquote{It failed!} \&\& exit 1; \textbraceright}) or so
+		\end{itemize}
 		\item \alert{\texttt{|}} --- pipe --- redirects standard output of one command into standard input of second command: compare \texttt{mount} and \texttt{mount | column -t}
+		\begin{itemize}
+			\item Chains commands, basic redirecting method --- common e.g. for various data parsing
+			\item One of key features for commands and scripts processing scientific data (e.g. \texttt{bwa mem \ldots{ }| samtools view -bu | samtools sort -o sample.bam})
+		\end{itemize}
 		\item Behavior in shells other than bash might be little bit different
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Standard input and output and redirects}
 	\begin{itemize}
-		\item Standard input (\texttt{stdin}) is standard place where software takes input (keyboard and terminal) and writes results to standard output (\texttt{stdout}) --- typically monitor
+		\item Standard input (\texttt{stdin}) is standard place where software takes input (keyboard and terminal) and writes results to standard output (\texttt{stdout}) --- typically monitor (or file)
 		\item Standard error output (\texttt{stderr}) is target of error messages --- typically also monitor (but can be log file or so)
 		\item \alert{\texttt{\textgreater}} redirects output into new place (file, device, another command,~\ldots)
 	\end{itemize}
@@ -1863,7 +1871,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Redirects and pipes}
+\begin{frame}[fragile]{Redirects of input/output}
 	\label{pipe}
 	\begin{itemize}
 		\item \texttt{/dev/null} --- \enquote{black hole} --- can discard anything
@@ -1901,37 +1909,31 @@
     echo "error" > /dev/stderr
     command 2> /dev/stderr # Errors go to standard error log
 	\end{bashcode}
-	\begin{itemize}
-		\item \texttt{|} --- pipe --- basic redirecting method --- standard output of one command to standard input of another command
-	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Redirects of standard input and output I}
-	\begin{block}{Tasks with redirects of standard input/output}
-		\begin{itemize}
-			\item Try everything on this and following slide. Is it clear what happens?
-			\item Be sure to understand the redirects and differences among the variants.
-			\item Try to figure out some other example regarding your practical needs.
-		\end{itemize}
-	\end{block}
-	\vfill
+\begin{frame}[fragile]{Redirects of standard input and output I}{Common way how to save output of some command(s)}
 	\begin{bashcode}
-    # Write directory listing into text file
     # If file directory_listing.txt exists, will be overwritten
     ls -la > directory_listing.txt
     cat directory_listing.txt # See result (same as running "ls -la")
     # If file directory_listing.txt exists, new content will be appended
     ls -la >> directory_listing.txt # See result 'cat directory_listing.txt'
     # We are outputting 'ls -lh' to 'awk' and not to screen, printing only
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Redirects of standard input and output II}{Try everything and be sure to understand}
-	\begin{bashcode}
     # selected columns, and parsing with 'column -t' for tabular display
     ls -lh # Compare outputs of the 3 commands starting with 'ls -lh'
     ls -lh | awk '{ print $NF, " ", $5}' # See further more info about awk
     ls -lh | awk '{ print $NF, " ", $5}' | column -t
+	\end{bashcode}
+	\begin{block}{Tasks with redirects of standard input/output}
+		\begin{enumerate}
+			\item Try everything on this and following slide, be sure to understand the redirects.
+			\item Try to figure out some other example regarding your practical needs.
+		\end{enumerate}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Redirects of standard input and output II}
+	\begin{bashcode}
     # Add error output to the end of standard output file
     # Note: In the examples below command "commandX" does not exist -
     # it produces error "command not found" to be recorded by the log
@@ -1944,11 +1946,6 @@
     # Compare two following commands. What is the difference?
     { commandX; ls; } > outputfile.log 2>&1 # Inspect outputfile.log
     { commandX; ls; } >> outputfile.log 2>&1 # Inspect outputfile.log
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Redirects of standard input and output III}{Try everything and be sure to understand}
-	\begin{bashcode}
     # Add error output to the error log text file
     command >> outputfile.log 2>error.log # Example:
     { commandX; ls; } >> outputfile.txt 2>error.log
@@ -1983,23 +1980,36 @@
 	\begin{bashcode}
     # How many FASTQ reads are there in the file
     cat file.fastq | echo "$(("$(wc -l)" / 4))"
+    # Count number of *.FNA or *.fasta files in current directory
+    find . -maxdepth 1 -name "*.FNA" -o -name "*.fasta" | wc -l
+    # Same as above, saving output to the file
+    echo -e "Hey, ${USER}, Number of FASTA files:\t$(find . -maxdepth 1 \
+      -name "*.FNA" -o -name "*.fasta" | wc -l)"
+    # Compressing all *.fq or *.fastq files in parallel using all CPU threads
+    find . -name "*.f*q" -print | parallel bzip2 -v9 '{}'
+    # Statistics using BCFtools for all *.vcf.gz files in current directory
+    echo "Statistics of SNPs in VCF files using bcftools"
+    for VCFGZ in *.vcf.gz; do
+      echo "Processing ${VCFGZ} at $(date)"
+      bcftools stats --threads 2 -F reference.fasta "${VCFGZ}" > \
+        ${VCFGZ%.vcf.gz}.stats.txt || exit 1
+      echo
+      done
 	\end{bashcode}
 \end{frame}
 
 \subsection[HW, sys and ps]{Information and processes}
 
-\begin{frame}[fragile]{Which system are we using? I}
+\begin{frame}[fragile]{Which system are we using?}
 	\begin{bashcode}
     uname -a # Information about Linux kernel (version, ...)
     lsb_release -a # Information about Linux distribution release
     cat /etc/os-release # Similar to above command
-    lscpu # Information about CPU
-    cat /proc/cpuinfo # Raw list of information about CPU
+    lscpu # Information about CPU; better than 'cat /proc/cpuinfo'
     lsusb # List of devices on USB
     lspci # List of PCI devices (graphic card, network card, ...)
     lspci | grep -i vga # Get information about graphical card
-    lshw # Complete list of hardware
-    lshw -C memory # Information about RAM
+    lshw # Complete list of hardware; e.g. 'lshw -C memory' for RAM
     hwinfo # Complete list of hardware
     hwinfo --network # Information about network devices
     free -h # Available memory (RAM) and swap, -h for nice units
@@ -2007,11 +2017,6 @@
     lsmod # List loaded kernel modules
     uptime # How long is the system running, number of users, average load
     date # Date and time - plenty of options for formatting
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Which system are we using? II}
-	\begin{bashcode}
     mount # Information about mounted file systems
     findmnt # Display mounted devices in tree structure
 	\end{bashcode}
@@ -2019,16 +2024,18 @@
 
 \begin{frame}[fragile]{Processes --- every running program has its own process ID}
 	\begin{bashcode}
+    top # Listing of processes, quit using "q"
     htop # Nice listing of processes (better version of top), quit using "q"
+         # Allows also termination of processes etc.
     pstree # See running processes with child processes, recursively
-    pgrep application # Return PID (process ID) of application
     ps # processes related to actual terminal
     ps ux # All user's processes
     ps aux # All processes
+    pgrep application # Return PID (process ID) of application
     # kill (terminate) process by name or process ID (PID)
     # Find which PID has application to terminate
     pgrep geany
-    14639
+    14639 # Process ID (PID) of respective process
     # Kill (stop by SIGTERM) selected application according to above PID
     kill -SIGTERM 14639 # SIGTERM is "nice" termination, SIGKILL "brutal"
     kill -SIGTERM $(pgrep geany) # Two above commands in one step; note $()
@@ -2053,19 +2060,29 @@
     passwd # Change password
     passwd USER # Change USER's password
     groups # List your groups
+    # If user is added into new group, changes will be effective since
+    # next login
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Users}
+\begin{frame}[fragile]{Users and groups}
+	\begin{itemize}
+		\item These commands to manage users and groups do not have to work on all systems - depends on authentication methods used
+		\item Commands modifying users and groups require root authentication
+	\end{itemize}
 	\begin{bashcode}
-    # Following commands to manage users and groups do not have to work
-    # on all systems - depends on authentication methods used
-    useradd newuser # Add new user
-    usermod --help # Modify user, see possible modifications
-    userdel user # Delete user
-    groupadd newgroup # Add new group
-    groupmod --help # Modify group, see possible modifications
-    groupdel group # Delete group
+    # Add new user
+    useradd new_user_name
+    # Modify user, see possible modifications
+    usermod --help
+    # Delete user
+    userdel user_name
+    # Add new group
+    groupadd new_group_name
+    # Modify group, see possible modifications
+    groupmod --help
+    # Delete group
+    groupdel group_name
 	\end{bashcode}
 \end{frame}
 
@@ -2099,8 +2116,8 @@
 		\begin{itemize}
 			\item Plenty of other protocols can run over SSH (SFTP, SCP, SSHFS, rsync,~\ldots)
 		\end{itemize}
-		\item Telnet --- old deprecated insecure predecessor of SSH, never ever use it (port 23), only low-quality electronics still sometimes use it
-		\item FTP --- file transfer protocol --- outdated, no encryption (port 21), slowly replaced by FTPS or SFTP/SCP
+		\item Telnet --- old deprecated insecure predecessor of SSH, never ever use it (port 23), only low-quality electronics still sometimes use it for administrative access
+		\item FTP --- file transfer protocol --- outdated, no encryption (port 21), slowly replaced by FTPS (FTP secured) or SFTP/SCP (based on SSH)
 		\begin{itemize}
 			\item Sometimes used only for download, e.g. \url{ftp://ftp.ebi.ac.uk/pub/}
 		\end{itemize}
@@ -2108,10 +2125,13 @@
 		\item SFTP --- FTP over SSH --- common, secure (port 22), slide~\ref{transfers}
 		\item SCP --- secure copy --- uses SSH, but has restricted possibilities, common, secure (port 22), slide~\ref{transfers}
 		\item NFS --- network file share/server --- very common in UNIX world (commonly used e.g. by CESNET MetaCentrum and \href{https://du.cesnet.cz/en/navody/nfs/start}{data storage} --- \href{https://du.cesnet.cz/cs/navody/nfs/start}{česky}), commonly used to permanently connect to network server, share directories, etc. (port 20049), slide~\ref{netfs}
+		\begin{itemize}
+			\item NFS connection must be set up by administrator
+		\end{itemize}
 		\item webDAV --- file transfer over web (using WWW server) --- not so common, but good (port 80 or 443 --- same as WWW), slide~\ref{netfs}
 		\begin{itemize}
 			\item Accompanied by calDav and cardDav to share calendars and address books over the network
-			\item Used e.g. by ownCloud/nextCloud (also \href{https://du.cesnet.cz/en/navody/owncloud/start}{provided by CESNET} --- \href{https://du.cesnet.cz/cs/navody/owncloud/start}{česky}) --- tool to synchronize and share files etc, similar to Dropbox or Google Drive
+			\item Used e.g. by ownCloud/nextCloud (also \href{https://du.cesnet.cz/en/navody/owncloud/start}{provided by CESNET} --- \href{https://du.cesnet.cz/cs/navody/owncloud/start}{česky}) --- tool to synchronize and share files etc, similar to Dropbox, OneDrive or Google Drive
 		\end{itemize}
 		\item SAMBA --- UNIX connection to Microsoft network shares (port 5445), slide~\ref{netfs}
 		\item web --- \enquote{The Internet} for most of users (port 80 or encrypted 443)
@@ -2131,21 +2151,15 @@
     traceroute www.metacentrum.cz # Get route (path) to the host
     mtr hostname # Combines ping and traceroute, quit with "q"
     ip a s # Information about all network devices (MAC, IP address, ...)
-    ifconfig -a # Older version of above command
-    iwconfig # List of wireless network interfaces
-    ip r # Show routes
-    nc -vz web.natur.cuni.cz 22 # Does SSH work on the host?
-      # verbose (-v), scan (-z), host, port number (22 for SSH, can be any)
+    ip r s # Show routes
+    # Does SSH work on the host? Verbose (-v), scan (-z), host, port number
+    # (22 for SSH, can be any)
+    nc -vz web.natur.cuni.cz 22
     man nc # See for more information; "nc" is alias for "netcat"
     netstat -atn # Information about all network connections
     netstat -ntplu # Show open TCP/UDP ports
     netstat -anp # Show active connections
     netstat -h # See for explanation of 3 above examples
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Basic network information and testing II}
-	\begin{bashcode}
     # If using nmap at faculty, firewall disconnects you for 10 minutes!
     nmap -r someserver.cz # Scan someserver.cz for opened ports
     nmap botany.natur.cuni.cz --script ssh-hostkey # See SSH key
@@ -2160,6 +2174,9 @@
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
+    # Mounting remote server over SSH (sshfs package must be installed)
+    sshfs USER@vyuka.natur.cuni.cz:/some/dir /local/mount/point
+    fusermount -u /local/mount/point # Disconnect SSHF
     # Mount Windows server (requires packages samba and cifs)
     mount.cifs //windows.server.cz/Some/Directory /mnt/win -o \
       credentials=/path/to/password.file,uid=USER,gid=GROUP
@@ -2167,9 +2184,6 @@
     username=user.name
     password=TopSecretPassword1
     domain=DOMAINNAME
-    # Mounting remote server over SSH (sshfs package must be installed)
-    sshfs USER@vyuka.natur.cuni.cz:/some/dir /local/mount/point
-    fusermount -u /mount/point # Disconnect SSHF
     # Mount NFS share (NFS is common protocol in UNIX world)
     mount -t nfs some.server.cz:/shared/directory /local/directory
     # Mount webDAV folder (requires package davfs2 to be installed)
@@ -2181,6 +2195,7 @@
 \begin{frame}[fragile]{Transferring files from/to remote server}
 	\label{transfers}
 	\begin{itemize}
+		\item On server side, same files can be accessible (shared) by more methods
 		\item \texttt{curlftpfs} allows mount FTP as local directory, but FTP is outdated, insecure and not constructed to that usage\ldots
 	\end{itemize}
 	\vfill
@@ -2199,7 +2214,6 @@
 	\vfill
 	\begin{itemize}
 		\item \texttt{rsync} is synchronization tool (commonly used for backups) able to connect to remote server (next slide)
-		\item On server side, same files can be accessible (shared) by more methods
 	\end{itemize}
 \end{frame}
 
@@ -2210,7 +2224,7 @@
 		\item It transmits only changes --- very efficient
 		\item Suitable for local as well as network backup
 		\item Network address for rsync is written in same way as for \texttt{scp}
-		\item -{-}\texttt{delete} delete in target location files which are not in source location any more
+		\item -{-}\texttt{delete} delete in target location files which are not in source location anymore
 		\item -{-}\texttt{progress} show progress percentage for every file
 		\item -{-}\texttt{exclude=*.jpg} skip JPG files
 		\item For incremental backups use e.g. \texttt{duplicity}
@@ -2232,12 +2246,13 @@
 			\item Public key is typically in \texttt{$\sim$/.ssh/id\_*.pub} file(s) (according to selected cipher) and are copied to target servers
 			\item Private key is unlocked by password and it then allows to login to any server having the public key
 			\item Having only public key is not enough to login, private key without password is still not enough, but user must be sure private key is kept securely and not lost or stolen
+			\item When running it, \texttt{ssh-keygen} asks bunch of questions --- unless having special needs, keep defaults (hit Enter), using password for key is optional
 		\end{itemize}
 		\item File \texttt{$\sim$/.ssh/known\_hosts} contain servers you have ever connect to, and their SSH fingerprints (unique IDs) --- if this changes, SSH complains a lot as it could be \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{Man-in-the-middle attack}
 		\item File \texttt{$\sim$/.ssh/authorized\_keys} contains public keys allowing logging to the machine
 		\item \texttt{~/.ssh/config} can store various settings for particular servers
 		\item SSH keys work in all applications using SSH (SFTP, SSHFS, rsync, many graphical file managers,~\ldots)
-		\item User can have various local passwords on servers, but use single SSH key to connect to them
+		\item User can have various local passwords on servers, but use single SSH key to connect to all of them
 	\end{itemize}
 \end{frame}
 
@@ -2250,7 +2265,7 @@
     ssh-keygen -t ed25519 # Same security as ecdsa, higher performance
     # Empty (no) passphrase will connect to server without password
     # Copy public key to remote server (private key must be kept locally)
-    ssh-copy-id user@remote.server.cz # or
+    ssh-copy-id user@remote.server.cz
     # Now, public key is on the server and private key in local computer is
     # unlocking the connection
     # Unlock the key (no need in some distributions or if there is no
@@ -2306,7 +2321,7 @@
 		\item Faculty information are \href{https://www.natur.cuni.cz/fakulta/cit/web-aplikace/webhosting}{only in Czech}
 		\item It is Linux server running Debian
 		\item Connect with SSH/SFTP/SCP to \texttt{web.natur.cuni.cz}
-		\item Mainly used for webhosting, user's address will have form \texttt{https://web.natur.cuni.cz/$\sim$loginname/}, user can \href{https://helpdesk.natur.cuni.cz/servlet/HelpdeskDynamic?eid=Rozcestnik}{apply} for another URL
+		\item Mainly used for webhosting, user's address will have form \texttt{https://web.natur.cuni.cz/$\sim$loginname/}, user can \href{https://helpdesk.natur.cuni.cz/servlet/HelpdeskDynamic?eid=Rozcestnik}{apply} for another URL, for space for some projects,~\ldots
 		\item Every department also has dedicated space there, it can be used for various web projects, address can be discussed with \href{https://www.natur.cuni.cz/fakulta/cit/lide}{IT department}
 		\item Personal web can be placed in \texttt{public\_html} within home folder
 		\item Users can \href{https://helpdesk.natur.cuni.cz/servlet/HelpdeskDynamic?eid=Rozcestnik}{apply} for MySQL database or special settings
@@ -2319,7 +2334,7 @@
 \begin{frame}{Parallelisation with GNU Parallel}
 	\begin{itemize}
 		\item \href{https://www.gnu.org/software/parallel/}{GNU Parallel} can distribute task among CPU threads of one computer, or even among different computers in network
-		\item It is not effective for short/small tasks
+		\item It is not (so) effective for short/small tasks
 		\item Important operands (for more see \texttt{man parallel})
 		\begin{itemize}
 			\item \texttt{\{\}} --- input line --- whole line read from input source (typically standard input)
@@ -2330,7 +2345,6 @@
 			\item \texttt{:::} --- use arguments from command line instead of stdin (::: is placed after the command and before the argument)
 			\item \texttt{::::} --- read from argument files
 			\item -\texttt{j} --- number of jobs --- if not provided, \texttt{parallel} will use all available CPU threads
-			\item See examples on next slides
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -2343,6 +2357,7 @@
     find . -name '*.jpg' -print | parallel convert -resize 500x500 \
       -quality 75 '{}' '{.}-small.jpg' # or
     parallel convert -resize 25% '{}' '{.}-small.jpg' ::: *.jpg
+    convert --help # See help of 'convert' from ImageMagick set
     # Find WORD in huge text file (named "longfile" here) - this works
     # but it is not possible to get line number (file is red in blocks)
     parallel --pipe --block 10M -- grep --color=always WORD < longfile
@@ -2360,6 +2375,8 @@
 	\begin{bashcode}
     # Convert all WAV files into OGG
     parallel -X oggenc ::: *.wav # -X parse as many parameters as possible
+    # Decompress all *.bz2 files in 'archive' directory using 2 CPU threads
+    parallel -j 2 -X bunzip2 -v ::: archive/*.bz2
     # Run in parallel commands from command list file (list of commands)
     parallel < command_list.txt # (each command on one line) or
     parallel :::: command_list.txt
@@ -2367,15 +2384,21 @@
     find . -name '*.txt' -print | parallel 'cat block_to_be_added.txt >> {}'
     # Replace particular text in multiple files with sed and GNU Parallel
     find . -name '*.txt' -print | parallel 'sed -i "s/XXX/YYY/g" {}'
-    # Launch MrBayes for multiple nexus files and create log file (see also
-    # next slide) with starting and ending date and time
+    # Launch MrBayes for multiple nexus files and create log file with
+    # starting and ending date and time
     find . -name '*.nexus' -print | parallel 'echo -e "Start: $(date)\n" >
       {}.log && mb {} | tee -a {}.log && echo "End: $(date)" >> {}.log'
+    # 'tee' copies output of the program into given log file
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{GNU Parallel examples III and tasks}
 	\begin{bashcode}
+    # Create BCFtools statistics for all *.vcf.gz files
+    find . -name "*.vcf.gz" | parallel "echo '{/}' && bcftools stats -F \
+      reference.fasta '{}' > '{.}'.stats.txt"
+    # Note that 'find' searches also in subdirectories
+    parallel --help # Basic help for GNU Parallel
 	\end{bashcode}
 	\vfill
 	\begin{block}{Tasks}
@@ -2383,6 +2406,7 @@
 			\item Resize using \texttt{parallel} photos \texttt{foto\_oxalis\_*.jpg} to 1000x1000~px.
 			\item Convert all above JPG files to PNG.
 			\item Use several options how to run \texttt{parallel}.
+			\item Think about some example solving your practical task where GNU Parallel would be helpful.
 		\end{enumerate}
 	\end{block}
 \end{frame}
@@ -2403,7 +2427,7 @@
 	\begin{bashcode}
     # tee (-a for append to existing file) records output of any application
     command | tee record.txt # tee will record whole output of command
-    tee record.txt | command # tee will record user input
+    tee record.txt | command # tee will record user input (NO command output)
     # If software reads commands from user, we can reuse record next time:
     command < record.txt # Empty lines are interpreted as Enter key
                          # Each line is used whenever command waits for new
