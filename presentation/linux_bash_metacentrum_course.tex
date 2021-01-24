@@ -1551,10 +1551,10 @@
 	\end{bashcode}
 	\begin{itemize}
 		\item First \texttt{find}'s parameter is location to search --- absolute or relative, \enquote{\texttt{.}} means current directory (the only compulsory parameter)
-		\item -\texttt{type} for only directories \texttt{d} or only files \texttt{f} (without this parameter, files as well as directories are looked for)
-		\item -\texttt{name} of the searched files/directories supports wildcards (\texttt{*}, \texttt{?} and \texttt{[\ldots]}), see globing (slide~\ref{globbing})
-		\item -\texttt{print} is default action --- prints list of results
-		\item -\texttt{exec} runs some command with results (some operation, not just listing)
+		\item \texttt{-type} for only directories \texttt{d} or only files \texttt{f} (without this parameter, files as well as directories are looked for)
+		\item \texttt{-name} of the searched files/directories supports wildcards (\texttt{*}, \texttt{?} and \texttt{[\ldots]}), see globing (slide~\ref{globbing})
+		\item \texttt{-print} is default action --- prints list of results
+		\item \texttt{-exec} runs some command with results (some operation, not just listing)
 		\begin{itemize}
 			\item All following arguments are argument of the command until \enquote{\texttt{;}} is encountered
 			\item \texttt{'\{\}'} is replaced by the current file name being processed
@@ -2344,7 +2344,7 @@
 			\item \texttt{\{/.\}} --- base name of input line without extension
 			\item \texttt{:::} --- use arguments from command line instead of stdin (::: is placed after the command and before the argument)
 			\item \texttt{::::} --- read from argument files
-			\item -\texttt{j} --- number of jobs --- if not provided, \texttt{parallel} will use all available CPU threads
+			\item \texttt{-j} --- number of jobs --- if not provided, \texttt{parallel} will use all available CPU threads
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -4303,8 +4303,8 @@
 			\item Massive computations --- \href{https://www.cesnet.cz/services/massive-computations-metacentrum/?lang=en}{MetaCentrum}
 			\item Large \href{https://www.cesnet.cz/services/data-storage/?lang=en}{data storage}
 			\item \href{https://www.cesnet.cz/services/filesender/?lang=en}{FileSender} to be able to send up to 1.9~TB file
-			\item \href{https://www.metacentrum.cz/en/Sluzby/Cloud/}{Cloud} --- computing (HPC) cloud similar to e.g. Amazon Elastic Compute Cloud (EC2) or Google Compute Engine
-			\item \href{https://www.cesnet.cz/services/owncloud/?lang=en}{ownCloud} to backup and/or sync data across devices (default capacity is 100~GB, user may ask for more) --- similar to e.g. Dropbox
+			\item \href{https://www.metacentrum.cz/en/Sluzby/Cloud/}{Cloud} --- computing (HPC) cloud similar to e.g. Amazon Elastic Compute Cloud (EC2), Google Compute Engine or Microsoft Azure
+			\item \href{https://www.cesnet.cz/services/owncloud/?lang=en}{ownCloud} to backup and/or sync data across devices (default capacity is 100~GB, user may ask for more) --- similar to e.g. Dropbox, Google Drive or Microsoft OneDrive
 			\begin{itemize}
 				\item It is possible to connect by webDAV to ownCloud (slide \ref{transfers}) --- many applications support it
 				\item It is possible to share calendars and/or address books via calDav and cardDav among devices and/or people
@@ -4324,21 +4324,19 @@
 			\item Users not having access to \href{https://www.eduid.cz/en/index}{EduID} have to register first at \href{https://www.eduid.cz/cs/hostel}{HostelID} (available only in Czech)
 		\end{itemize}
 		\item Information about data storage \url{https://du.cesnet.cz/en/start} contains detailed usage instructions
-		\item Information about MetaCentrum \url{https://www.metacentrum.cz/en/}
+		\item Information about MetaCentrum \url{https://www.metacentrum.cz/en/} and wiki \url{https://wiki.metacentrum.cz/wiki/Main_Page} (main information for users containing all needed documentation)
 		\item Information about MetaCloud \url{https://wiki.metacentrum.cz/wiki/Kategorie:Clouds}
-		\item Most of practical information for users are at wiki \url{https://wiki.metacentrum.cz/wiki/Main_Page}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{MetaCentrum}
-	\begin{itemize}
 		\item Also available is Galaxy \url{https://galaxy.metacentrum.cz/galaxy/} (same login as to MetaCentrum) --- web based bioinformatics framework (more information at \href{https://wiki.metacentrum.cz/wiki/Galaxy}{wiki})
-		\item Current state and usage as available at \url{https://metavo.metacentrum.cz/en/}
+		\item Current state and usage of resources is available at \url{https://metavo.metacentrum.cz/en/}
 		\item Manage your user account at \url{http://metavo.metacentrum.cz/en/myaccount/}
 		\item Personal view on actual resources and running tasks is at \url{https://metavo.metacentrum.cz/pbsmon2/person}
 		\item List of available applications \url{https://wiki.metacentrum.cz/wiki/Kategorie:Applications}
-		\item It has 11~\href{https://wiki.metacentrum.cz/wiki/Frontend}{front ends} where users log and thousands of computers doing the calculations --- they are not accessed directly to run task
+		\item MetaCentrum has 11~\href{https://wiki.metacentrum.cz/wiki/Frontend}{frontends} where users log and thousands of computers doing the calculations --- they are not accessed directly to run task
 		\item Most of computers are running \href{https://www.debian.org/}{Debian GNU/Linux}
+		\begin{itemize}
+			\item Basic usage as with any other Linux server --- SSH \& command line\ldots
+			\item Tasks are mainly submitted via scripts (see following slides)
+		\end{itemize}
 	\end{itemize}
 \end{frame}
 
@@ -4346,8 +4344,8 @@
 
 \begin{frame}[fragile]{MetaCentrum usage}
 	\begin{itemize}
-		\item User can transfer data on one of \href{https://wiki.metacentrum.cz/wiki/Frontend}{front ends} (next slide) by e.g. \texttt{scp} or \href{https://winscp.net/}{WinSCP} from Windows or \href{https://filezilla-project.org/}{FileZilla} from anywhere
-		\item Same credentials are used for all front ends, for SSH login as well as file transmissions
+		\item User can transfer data on one of \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontends} (next slide; or data storage) by e.g. \texttt{scp} or \href{https://winscp.net/}{WinSCP} from Windows or \href{https://filezilla-project.org/}{FileZilla} from anywhere
+		\item Same credentials are used for all frontends, for SSH login as well as file transmissions
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
@@ -4365,12 +4363,14 @@
 
 \begin{frame}{File transfers to MetaCentrum}
 	\begin{itemize}
-		\item Graphical applications: e.g. \href{https://filezilla-project.org/}{FileZilla} or from most of file managers
-		\item Protocol is SSH/SSH2/SFTP/SCP, port 22, server is selected \href{https://wiki.metacentrum.cz/wiki/Frontend}{front end's} address (e.g. \texttt{tarkil.metacentrum.cz}) --- select any and keep using it
+		\item Graphical applications: e.g. \href{https://filezilla-project.org/}{FileZilla} or from most of Linux file managers
+		\item Protocol is SSH/SSH2/SFTP/SCP, port 22, server is selected \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontend's} address (e.g. \texttt{tarkil.metacentrum.cz}) --- select any and keep using it
 		\item All servers are accessible under domain \texttt{*.metacentrum.cz}: \texttt{skirit}, \texttt{perian}, \texttt{onyx}, \texttt{zuphux} (located in Brno), \texttt{alfrid}, \texttt{nympha}, \texttt{minos} (in Pilsen), \texttt{tarkil} (in Prague), and \texttt{tilia} (in Průhonice) --- so that e.g. \texttt{tarkil.grid.cesnet.cz} is synonymous to \texttt{tarkil.metacentrum.cz}
 		\item See slide \ref{transfers} and following to command-line transfers of files
 	\end{itemize}
-	\includegraphics[width=\textwidth-1cm]{gftp.png}
+	\begin{center}
+		\includegraphics[height=2.5cm]{gftp.png}
+	\end{center}
 \end{frame}
 
 \subsection{Tasks}
@@ -4382,45 +4382,43 @@
     # Set data directories
     WORKDIR="my_data_dir" # Or something else
     DATADIR="/storage/praha1/home/$LOGNAME" # Or other storage
-    # There is directory /storage/praha1/home/USER/my_data_dir
-    # (in this case) containing all the data needed for calculations
-    # Clean-up of SCRATCH (it is temporal directory created by server)
-    # - the commands will be launched on the end when the job is done
+    # There is directory /storage/praha1/home/USER/my_data_dir (in this case)
+    # containing all the data needed for calculations
+    # Clean-up of SCRATCH (it is temporal directory created by server) - the
+    # commands will be launched on the end when the job is done
     trap 'clean_scratch' TERM EXIT
     trap 'cp -a "$SCRATCHDIR" "$DATADIR"/ && clean_scratch' TERM
-    # Prepare the task - copy all needed files from working directory
-    # into particular computer which will finally do the calculations
-    cp -a "$DATADIR"/"$WORKDIR"/* "$SCRATCHDIR"/ || exit 1 # If fails, exit
     # Change working directory - script goes to the directory where
     # calculations are done
+    cd "$SCRATCHDIR"/ || exit 1 # If it fails, exit script
+    # Prepare the task - copy all needed files from working directory into
+    # particular computer which will finally do the calculations
     # Ends on following slide...
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Basic skeleton of script running tasks II}
 	\begin{bashcode}
-    # ...begins on previous slide...
-    cd "$SCRATCHDIR"/ || exit 1 # If it fails, exit script
+    # ...begins on previous slide
+    cp -a "$DATADIR"/"$WORKDIR"/* "$SCRATCHDIR"/ || exit 1 # If it fails, exit
     # Prepare calculations - load required application modules
     # See https://wiki.metacentrum.cz/wiki/Kategorie:Applications
     # Every application module is loaded by "module add XXX"
     module add parallel # In this (example) case GNU Parallel and MrBayes
     module add mrbayes-3.2.6
     # Launch the analysis - calculate MrBayes for multiple files
-    # Note Parallel will distribute task among 8 CPU threads (-j 8),
-    # so that qsub must in this case contain select=1:ncpus=8 (see further)
+    # Note Parallel will distribute task among 8 CPU threads (-j 8), so that
+    # qsub must in this case contain select=1:ncpus=8 (see further)
     find . -name "*.nexus" -print | parallel -j 8 'mb {} | tee -a {}.log'
     # Copy results back to home directory
     cp -a "$SCRATCHDIR" "$DATADIR"/"$WORKDIR" || export CLEAN_SCRATCH=false
     # This is all needed, the script is ready to be launched...
     exit
 	\end{bashcode}
-	\vfill
 	\begin{itemize}
 		\item Make \texttt{metacentrum.sh} executable and modify it to fit your needs\ldots
 		\item If it was written on Windows, convert EOL (and encoding)\ldots
 	\end{itemize}
-	\vfill
 \end{frame}
 
 \begin{frame}[fragile]{Launching of tasks}
@@ -4433,7 +4431,7 @@
     # We will run up to 5 days (120 hours), require one physical computer
     # with 8 CPU threads, 24 GB of RAM, 10 GB of disk space and we get all
     # information mails (for abort, beginning, exit)
-    qsub -l walltime=120:0:0 -l select=1:ncpus=8:mem=24gb:scratch_local=10gb
+    qsub -l walltime=120:0:0 -l select=1:ncpus=8:mem=24gb:scratch_local=10gb \
       -m abe metacentrum.sh
     # Check how the task is running (above web) and
     qstat -u $USER # Information about $USER's jobs (queued and running)
@@ -4468,31 +4466,31 @@
 	\begin{itemize}
 		\item Specify needed time
 		\begin{itemize}
-			\item Always \texttt{hours:minutes:seconds}, so e.g. for 4~weeks use -\texttt{l~walltime=672:0:0} (28~$\cdot$~24), for two days and 12 hours -\texttt{l~walltime=60:0:0}
+			\item Always \texttt{hours:minutes:seconds}, so e.g. for 4~weeks use \texttt{-l~walltime=672:0:0} (28~$\cdot$~24), for two days and 12 hours \texttt{-l~walltime=60:0:0}
 			\item User \href{mailto:meta@cesnet.cz}{may ask} to prolong the walltime --- it is needed to write in advance
 		\end{itemize}
-		\item Ask for as much RAM as you need (e.g. -\texttt{l~mem=8gb} to request 8~GB)
+		\item Ask for as much RAM as you need (e.g. \texttt{-l~mem=8gb} to request 8~GB)
 		\begin{itemize}
 			\item If the task is going to require more, than allowed, system kills it\ldots
-			\item If user doesn't use all required RAM, the system temporarily lowers priority for future tasks
-			\item It can be hard to estimate\ldots
+			\item If user doesn't use all required RAM, the system temporarily lowers priority for future tasks (RAM is limiting resource, do not waste it)
+			\item It can be hard to estimate (no easy general advice to estimate needs for particular task)\ldots
 		\end{itemize}
-		\item Disk space is relatively free resource, user can ask more to have some reserve (e.g. -\texttt{l~scratch\_local=10gb} to request 10~GB)
-		\item Specify how many physical computer(s) you are going to use (e.g. -\texttt{l~select=1} for one machine) and number of CPU threads on each machine (e.g. -\texttt{l~select=1:ncpus=8} for 1~machine with 8~cores or -\texttt{l~select=2:ncpus=4} for 2~machines, each with 4~CPU threads)
+		\item Disk space is relatively free resource, user can ask more to have some reserve (e.g. \texttt{-l~scratch\_local=10gb} to request 10~GB)
+		\item Specify how many physical computer(s) you are going to use (e.g. \texttt{-l~select=1} for one machine) and number of CPU threads on each machine (e.g. \texttt{-l~select=1:ncpus=8} for 1~machine with 8~cores or \texttt{-l~select=2:ncpus=4} for 2~machines, each with 4~CPU threads)
 		\begin{itemize}
 			\item It use to be necessary to specify correct number of threads for the application (e.g. \texttt{parallel -j 4}) --- the application sees all CPUs on the machine, but can't use them
 			\item If the application consumes less than required, the system temporarily lowers priority for future tasks, if it try to use more, it will be very slowed down or killed by the server
 			\item If using more physical machines, ensure correct settings of e.g. MPI (see documentation for respective software you are using)
 		\end{itemize}
-		\item If requesting e-mails (e.g. -\texttt{m abe} to get mail about abort, beginning and exit of the task) and submitting plenty of tasks by some script, it can result in hundreds of mails --- receiving mail servers don't like it\ldots
-		\item Every user has certain \href{https://metavo.metacentrum.cz/pbsmon2/users/}{priority} highered by \href{https://wiki.metacentrum.cz/wiki/Usage_rules/Acknowledgement}{acknowledgments} in publications to MetaCentrum and lowered by intensive usage of the service (the usage is calculated from past month)
-		\item After submission of the task, check in \href{https://metavo.metacentrum.cz/pbsmon2/queues/jobsQueued}{the queue} in which state it is --- sometimes it can't start because of impossible combination of resources or so
+		\item If requesting e-mails (e.g. \texttt{-m abe} to get mail about abort, beginning and exit of the task) and submitting plenty of tasks by some script, it can result in plentoy of mails\ldots
+		\item Every user has certain \href{https://metavo.metacentrum.cz/pbsmon2/users/}{priority} increased by \href{https://wiki.metacentrum.cz/wiki/Usage_rules/Acknowledgement}{acknowledgments} in publications to MetaCentrum and lowered by intensive usage of the service (the usage is calculated from past month)
+		\item After submission of the task, check in \href{https://metavo.metacentrum.cz/pbsmon2/queues/jobsQueued}{the queue} in which state it is --- sometimes it can't start because of impossible combination of requested resources or so
 		\item User can \href{https://metavo.metacentrum.cz/pbsmon2/nodes/physical}{check load of machines}
 		\item For more options read \url{https://wiki.metacentrum.cz/wiki/About_scheduling_system}
 		\begin{itemize}
-			\item Request special CPU (AMD, graphical,~\ldots), e.g. CPU with AVX2 -\texttt{l~select=cpu\_flag=avx2}
-			\item SSD local storage (e.g. -\texttt{l~scratch\_ssd=1gb})
-			\item Request particular location, ...
+			\item Request special CPU (AMD, graphical,~\ldots), e.g. CPU with AVX2 \texttt{-l~select=cpu\_flag=avx2}
+			\item SSD local storage (e.g. \texttt{-l~scratch\_ssd=1gb})
+			\item Request particular location,~\ldots
 			\item \url{https://metavo.metacentrum.cz/pbsmon2/qsub_pbspro} helps with preparation of \texttt{qsub} command
 		\end{itemize}
 	\end{itemize}
@@ -4515,6 +4513,13 @@
 			\item Make some trials and try to estimate\ldots
 			\item There are very different CPUs available (with different speeds) --- it is possible to require particular CPU type (but it reduces number of available nodes\ldots)
 		\end{itemize}
+		\item Problems with CPU and memory
+		\begin{itemize}
+			\item Hard to estimate\ldots
+			\item Some applications allow setting number of CPU threads --- check documentation
+			\item If using Java application, it often helps to request one more CPU thread for Java itself
+			\item Limiting memory is problematic, e.g. Java allows \texttt{java -Xmx8g -jar \ldots}, some applications also --- check documentation
+		\end{itemize}
 	\end{itemize}
 \end{frame}
 
@@ -4526,22 +4531,20 @@
 		\item It is not possible to directly modify running task, but at least check (and possibly modify) input data and see outputs
 	\end{itemize}
 	\begin{bashcode}
-    # From MetaCentrum front end login to respective node running the task
+    # From any MetaCentrum frontend login to respective node running the task
     ssh exec_host # No need to specify user name; e.g. mandos9
     # Go to SCRATCH directory
-    cd SCRATCHDIR # e.g. /scratch/gunnera/job_1234567.arien-pro.ics.muni.cz
+    cd SCRATCHDIR # e.g. /scratch/USER/job_1234567.arien-pro.ics.muni.cz/
     # There are working data of currently running task...
     # Check whatever you need...
-    tee # Command recording outputs or software, normal output of software
-        # is written into log, which is unavailable until the task is over
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}{Running R tasks on MetaCentrum}
 	\begin{itemize}
-		\item There are no R packages, user must create local package library and provide path
+		\item There are only some R packages, to get more create own package library and use it in scripts
 		\item \alert{Be careful about paths!}
-		\item In the \texttt{metacentrum.sh} script load R \texttt{module add R-3.3.1-intel} and start R script as usually \texttt{R CMD BATCH script.r}
+		\item In the \texttt{metacentrum.sh} script load R \texttt{module add R-4.0.0-gcc} and start R script as usually \texttt{R CMD BATCH script.r}
 	\end{itemize}
 	\begin{enumerate}
 		\item Login to selected front node via SSH
@@ -4560,11 +4563,12 @@
     screen # Or tmux
     # Again launch qsub according to actual needs
     # Note "-I" for interactive session and missing script name
-    qsub -I -l walltime=2:0:0 -l select=1:ncpus=1:mem=2gb:scratch_local=1gb
-    # Wait for job to start..
+    qsub -I -l walltime=1:0:0 -l select=1:ncpus=1:mem=1gb:scratch_local=1gb
+    # Wait for job to start... User automatically gets to the computing node
     cd $SCRATCHDIR # Go to $SCRATCHDIR - work there
     # After we get the interactive task, we are on new server
     # Do needed work...
+    # When done, be sure to copy results to the storage
     hostname # See where we are - we can connect to that server directly
     ssh USER@given.server.cz # User name and password are the same
                              # Server address is output from "hostname"
@@ -4577,12 +4581,14 @@
 	\end{itemize}
 \end{frame}
 
+\subsection{}
+
 \begin{frame}{MetaCentrum task}
 	\begin{enumerate}
 		\item Upload to any MetaCentrum fronted files \texttt{metacentrum\_oxalis.sh} and \texttt{oxalis\_assembly\_6235.aln.fasta} from \texttt{scripts\_data}.
 		\item See \texttt{metacentrum\_oxalis.sh}, be sure you know what it is doing, that you understand every command there.
 		\item If needed, edit \texttt{metacentrum\_oxalis.sh} (e.g. correct paths).
-		\item Submit the task via \texttt{qsub} and .
+		\item Submit the task via \texttt{qsub}.
 		\item Monitor the task with \texttt{qstat}.
 		\item Login with SSH to computing node where the task is running, go to \texttt{\$SCRATCHDIR} and see its progress. Look at output of \texttt{ps ux}. What does it say?
 		\item Wait for the task to be done and explore output.
@@ -4600,8 +4606,8 @@
     screen # Secure we can log off in the meantime
     # Again launch qsub according to actual needs
     # Note "-I" for interactive session and missing script name
-    qsub -I -l walltime=2:0:0 -l select=1:ncpus=1:mem=2gb:scratch_local=1gb
-    # Wait for job to start..
+    qsub -I -l walltime=1:0:0 -l select=1:ncpus=1:mem=1gb:scratch_local=1gb
+    # Wait for job to start... User automatically gets to the computing node
     # After we get the interactive task, we are on new server
     module add gui # We need to add GUI module
     gui start # Start GUI (see above link for details)
@@ -4610,15 +4616,14 @@
 	\end{bashcode}
 	\begin{itemize}
 		\item Launch your favorite VNC client (\href{https://apps.kde.org/en/krdc}{KRDC}, \href{https://www.tightvnc.com/}{TightVNC}, \href{https://tigervnc.org/}{TigerVNC}~\ldots) and use credentials from above output to connect
-		\item Work as on normal Linux desktop\ldots
-		\item With \texttt{screen} we can disconnect as usually
+		\item Work as on normal Linux desktop (ensure to work in \texttt{\$SCRATCHDIR})\ldots
 		\item It provides limited amount of resources, not suitable for big tasks
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Running VNC}
 	\begin{center}
-		\includegraphics[width=\textwidth-3cm]{vnc.png}
+		\includegraphics[height=6.5cm]{vnc.png}
 	\end{center}
 \end{frame}
 
@@ -4627,11 +4632,14 @@
 \begin{frame}{CESNET data storage}
 	\begin{itemize}
 		\item Read documentation \url{https://du.cesnet.cz/} and connection instructions \url{https://du.cesnet.cz/en/navody/sluzby/start}
+		\item Generally, it is possible to connect via FTPS, NFS, SAMBA (Windows network drive), SCP/SFTP or SSH --- more options how to get to same resource
 		\item See slide~\ref{CESNET} for general information and \ref{transfers} for connecting information
-		\item Generally, it is possible to connect via FTPS, NFS, SAMBA (Windows network drive), SCP/SFTP or SSH
 		\item After logging via SSH, it is possible to work as on any other server
-		\item Users get information about selected storage location and paths after registration (there are three locations, user get space on one of them)
-		\item All storage locations are accessible from any MetaCentrum front node via directories in \texttt{/storage} (e.g. \texttt{/storage/ostrava2-archive/tape\_tape/VO\_cuni\_prf\_...})
+		\item Users get information about selected storage location and paths after registration (there are several locations, user get space on one of them)
+		\begin{itemize}
+			\item There are plenty of storages, be careful where you are connecting to and what is the path --- e.g. when connecting directly to \texttt{du4.cesnet.cz}, paths are \texttt{/tape\_tape/\ldots}, from any other MetaCentrum node \texttt{\textbf{/storage/ostrava2-archive}/tape\_tape/\ldots}
+		\end{itemize}
+		\item All storage locations are accessible from any MetaCentrum front node via directories in \texttt{/storage} (e.g. \texttt{/storage/ostrava2-archive/tape\_tape/VO\_\ldots})
 	\end{itemize}
 \end{frame}
 
@@ -4661,7 +4669,7 @@
 	\end{bashcode}
 \end{frame}
 
-% \subsection{Cloud} % TODO MetaCloud
+% \subsection{MetaCloud} % TODO MetaCloud
 %
 % \begin{frame}{MetaCloud}
 % 	\begin{itemize}
