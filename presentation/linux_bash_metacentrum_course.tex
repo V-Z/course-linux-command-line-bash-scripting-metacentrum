@@ -3331,10 +3331,10 @@
 
 \subsection{BASH variables}
 
-\begin{frame}{Special variables available in the script (selection)}
+\begin{frame}{Special BASH internal variables available in the script (selection)}
 	\begin{itemize}
 		\item These variables can be used within script e.g. to parse arguments provided by the user
-		\item \alert{\texttt{\$1}},~\ldots~(number from \texttt{1} up to number of parameters) --- individual positional parameters (see further for example)
+		\item \alert{\texttt{\$1}},~\ldots~(number from \texttt{1} up to number of parameters) --- individual positional parameters (see further examples)
 		\item \alert{\texttt{\$0}} --- path of the starting script
 		\item \alert{\texttt{\$\#}} --- number of command-line arguments
 		\item \alert{\texttt{\$*}} --- all of the positional parameters, seen as a~single word, must be quoted (i.e. \texttt{"\$*"})
@@ -3361,6 +3361,7 @@
 			\item Script can behave unexpectedly, returning very weird results, damage data
 			\item Internal functions/commands can return error messages, which are hard to understand
 			\item Attacker can e.g. modify web content (\href{https://en.wikipedia.org/wiki/Cross-site_scripting}{XSS},~\ldots), obtain private data, root privileges,~\ldots
+			\item Applies also to scientific data --- wrong input use to have unexpected outcomes\ldots
 		\end{itemize}
 		\item Programmer should always check if user input is correct, filter it
 	\end{itemize}
@@ -3462,16 +3463,33 @@
               echo "Try again (the number):" # Ask user for new input value
              fi # End of the conditional evaluation
         done # End of the while cycles
-      } # Read variable is in $INPUT
+      } # Read variable is in INPUT
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Ensuring user interactively provides correct input (function) II}
 	\begin{bashcode}
     # Replace line 4 of interactive2.sh by (similarly for line 6)
-    checkinput
+    ...
+    checkinput # Use function declared on previous slide
     V1=$INPUT
+    ...
+    checkinput # Recycle the function to read next variable
+    V2=$INPUT
+    ...
 	\end{bashcode}
+	\vfill
+	\hrule
+	\vfill
+	\begin{itemize}
+		\item User can provide as arguments\ldots
+		\begin{itemize}
+			\item Input/output data names
+			\item Parameters for running whatever analysis --- can be passed to some scientific software within script or so
+			\item Which branch of the code to run
+			\item \ldots
+		\end{itemize}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Provide named parameters}
@@ -3491,13 +3509,13 @@
       *) # Any other input
         echo "Wrong option! "
         echo "Usage: 'd' or 'disk' for available disk space or 'u' or"
+        echo "  'uptime' for computer uptime"
     # Ends on next slide...
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Notes to previous script}
 	\begin{bashcode}
-        echo "  'uptime' for computer uptime"
         exit 1;; # In this case, exit with error code 1
       esac
     exit
@@ -3516,7 +3534,7 @@
     #!/bin/bash
     # From the beginning (^) to the end ($) at least one (+) number ([0-9])
     NUMBER='^[0-9]+$'
-    function usagehelp { # Function to print help - we will use it twice
+    function usagehelp { # Function to print help - we will use it four times
       echo "Usage: number1 plus/minus/product/quotient number2"
       echo "Use plus for sum, minus for difference, product"
       echo "  for multiplication or quotient for quotient."
@@ -3561,6 +3579,15 @@
     ./interactive4.sh 7 plus 5 # For example...
 	\end{bashcode}
 	\vfill
+	\begin{itemize}
+		\item Note that we can evaluate input parameters in any order
+		\item Compare syntax styling of \texttt{case} on previous slide and in script file \texttt{interactive4.sh}
+		\begin{itemize}
+			\item Each option can be on single line, or on multiple lines
+			\item For each \texttt{case} option there can be any number of commands
+			\item There can be any number of \texttt{case} options --- convenient way how to evaluate multiple options in single step
+		\end{itemize}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) I}
@@ -3573,7 +3600,7 @@
 	\begin{bashcode}
     #!/bin/bash
     # All provided values are evaluated in while cycles...
-    while getopts "hvi:o:a:" INITARGS; do
+    while getopts "hvi:o:a:" INITARGS; do # Switches are -h -v -i -o -a
     case "$INITARGS" in # $INITARGS contains the parameters to evaluate
       h|v) # Accept parameters "-h" or "-v" for help
         echo "Usage options..."
@@ -3626,7 +3653,6 @@
       echo "See \"$0 -h\" for help usage..."
       exit 1
       fi
-    if [ -z "$VALUE" ]; then
     # ...ends on following slide...
 	\end{bashcode}
 \end{frame}
@@ -3634,6 +3660,7 @@
 \begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) IV}
 	\begin{bashcode}
     # ...continuing from previous slide...
+    if [ -z "$VALUE" ]; then
       echo "Warning! Value for \"-a\" was not provided! Using default (10)."
       VALUE=10
       fi
@@ -3643,20 +3670,27 @@
            # the beginning of the line to overwrite the number in next step
       sleep 1s # Wait 1 second - just for fun ;-)
       # Do the task - append input to the output - note usage of variables
-      cat "$INPUTFILE" >> "$OUTPUTFILE" # Do the task - append inp to output
+      cat "$INPUTFILE" >> "$OUTPUTFILE" # Do the task - append into to output
       done
     echo -ne "\n" # Reset cursor to new line
     echo "Done!"
     exit
 	\end{bashcode}
-	\vfill
-	\begin{itemize}
-		\item Script \texttt{interactive5.sh} contains complete example
-	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) V}
+	\begin{itemize}
+		\item Script \texttt{interactive5.sh} contains complete example
+		\item This is the classical way how to use UNIX switches used in most of commands
+		\item \texttt{while} loop encapsulating \texttt{case} ensures we evaluate all provided parameters regardless their number or order
+		\begin{itemize}
+			\item Be prepared that user can use the arguments in any combination and orded (e.g. calling \texttt{-h} together with any other switch) --- avoid in code doing several things at once
+		\end{itemize}
+	\end{itemize}
+	\vfill
 	\begin{bashcode}
+    # Make it executable
+    chmod +x interactive5.sh
     # Start with displaying help
     ./interactive5.sh -h # Or ./interactive5.sh -v
     # Try it as common command line tool
@@ -3683,21 +3717,29 @@
     echo "Size of the file is $(du -sh "$1" | cut -f 1)."
     echo "The file has $(wc -l "$1" | cut -d ' ' -f 1) lines."
     echo "Making backup of the file $1..."
-    cp "$1" "$1".bak || { echo "Error! Making backup of $1 failed!"; exit 1; }
     # Ends on next slide...
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Simple providing of input file II}
 	\begin{bashcode}
-    # The end from previous slide
+    # ...the end from previous slide
+    # Copy file to backup (*.bak). If it succeeds, report it, if it fails
+    # exit with error (still handling single variable $1)
+    { cp "$1" "$1".bak && echo "Backup saved as $1".bak; } || \
+      { echo "Error! Making backup of $1 failed!"; exit 1; }
     echo "Done!"
     exit
 	\end{bashcode}
 	\vfill
-	\hrule
+	\begin{itemize}
+		\item Common way for simple scripts --- do something with single input file
+		\item Note lines 4 and 5 above --- common way to report success as well as handle failure
+	\end{itemize}
 	\vfill
 	\begin{bashcode}
+    # Make it executable
+    chmod +x interactive6.sh
     # Use the script with some text file...
     ./interactive6.sh long_text.txt
 	\end{bashcode}
@@ -3729,14 +3771,17 @@
 
 \begin{frame}[allowframebreaks]{Evaluation of conditions}
 	\begin{itemize}
-		\item \enquote{\texttt{[} \ldots~\texttt{]}} (always keep space around it --- inside) is function to evaluate expressions (alternatively use command \texttt{test})
+		\item Basic method to branch code --- do something according to certain condition
+		\item Very versatile, usually there are more options how to write desired conditioning
+		\item Avoid long chaining of conditions using \texttt{elif} statement (previous slide) --- susceptible to mistakes, hard to debug
+		\item \enquote{\texttt{[~\ldots~]}} (always keep space around it --- inside) is function to evaluate expressions (alternatively use command \texttt{test})
 		\begin{itemize}
 			\item \texttt{if [ "\$VAR" -eq 25 ]} or \texttt{test \$VAR -eq 25}
 			\item \texttt{if [ "\$VAR" == "value" ]; \ldots}
 			\begin{itemize}
-				\item Escaping variables and values by double quotes (\texttt{"}\ldots\texttt{"}) is recommended (to be sure), but not strictly required all the time
+				\item Escaping variables and values by double quotes (\texttt{"\ldots"}) is recommended (to be sure), but not strictly required all the time
 			\end{itemize}
-			\item \texttt{if [ ! -f regularfile ];} \ldots --- reverted condition (\texttt{!})
+			\item \texttt{if [ ! -f regularfile ];} \ldots --- \texttt{!} reverts condition
 			\item Single-bracket conditions --- file, string, or arithmetic conditions
 			\item Double-bracket syntax --- enhanced
 			\begin{itemize}
@@ -3746,28 +3791,29 @@
 				\item Allows more detailed test, e.g. \texttt{if [[ \$num -eq 3 \&\& "\$STRINGVAR" == XXX ]] \ldots}
 			\end{itemize}
 		\end{itemize}
-		\item -\texttt{eq} --- Equal to
-		\item -\texttt{lt} --- Less than
-		\item -\texttt{gt} --- Greater than
-		\item -\texttt{ge} --- Greater than or equal to
-		\item -\texttt{le} --- Less than or equal to
-		\item -\texttt{f \$FILE} --- True if \texttt{\$FILE} exists and is a~regular file
-		\item -\texttt{r \$FILE} --- True if \texttt{\$FILE} exists and is readable
-		\item -\texttt{w \$FILE} --- True if \texttt{\$FILE} exists and is writable
-		\item -\texttt{x \$FILE} --- True if \texttt{\$FILE} exists and is executable
-		\item -\texttt{d \$FILE} --- True if \texttt{\$FILE} exists and is a~directory
-		\item -\texttt{s \$FILE} --- True if \texttt{\$FILE} exists and has a~size greater than zero
-		\item -\texttt{n \$STR} --- True if string \texttt{\$STR} is not a~null (empty) string
-		\item -\texttt{z \$STR} --- True if string \texttt{\$STR} is a~null string
+		\item \texttt{-eq} --- Equal to (like \texttt{==})
+		\item \texttt{-lt} --- Less than
+		\item \texttt{-gt} --- Greater than
+		\item \texttt{-ge} --- Greater than or equal to
+		\item \texttt{-le} --- Less than or equal to
+		\item \texttt{-f \$FILE} --- True if \texttt{\$FILE} exists and is a~regular file (not link or so)
+		\item \texttt{-r \$FILE} --- True if \texttt{\$FILE} exists and is readable
+		\item \texttt{-w \$FILE} --- True if \texttt{\$FILE} exists and is writable
+		\item \texttt{-x \$FILE} --- True if \texttt{\$FILE} exists and is executable
+		\item \texttt{-d \$FILE} --- True if \texttt{\$FILE} exists and is a~directory
+		\item \texttt{-s \$FILE} --- True if \texttt{\$FILE} exists and has a~size greater than zero
+		\item \texttt{-n \$STR} --- True if string \texttt{\$STR} is not a~null (empty) string
+		\item \texttt{-z \$STR} --- True if string \texttt{\$STR} is a~null string
 		\item \texttt{\$STR1 == \$STR2} --- True if both strings are equal
 		\item \texttt{\$STR} --- True if string \texttt{\$STR} is assigned a~value and is not null
 		\item \texttt{\$STR1 != \$STR2} --- True if both strings are unequal
-		\item -\texttt{a} --- Performs the \texttt{AND} function (\texttt{[ \ldots -a \ldots~]} or \texttt{[ \ldots~] \&\& [ \ldots~]})
-		\item -\texttt{o} --- Performs the \texttt{OR} function (\texttt{[ \ldots -o \ldots~]} or \texttt{[ \ldots~] || [ \ldots~]})
-		\item Do not confuse globing patterns and regular expressions when using \texttt{[[ \ldots~]]}
+		\item \texttt{-a} --- Performs the \texttt{AND} function (\texttt{[~\ldots~-a~\ldots~]} or \texttt{[~\ldots~] \&\& [~\ldots~]})
+		\item \texttt{-o} --- Performs the \texttt{OR} function (\texttt{[~\ldots~-o~\ldots~]} or \texttt{[~\ldots~] || [~\ldots~]})
+		\item Do not confuse globing patterns and regular expressions when using \texttt{[[~\ldots~]]}
 		\begin{itemize}
-			\item Shell globing: \texttt{if [[ "\$STRINGVAR" \textbf{==} ?[sS]tring* ]]; then} --- \texttt{?} represents single character \texttt{[]} any character inside and \texttt{*} zero or more characters
-			\item Regular expressions: \texttt{if [[ "\$STRINGVAR" \textbf{=$\sim$} .[sS]tring.* ]]; then} --- \texttt{.} represents single character (\texttt{?} would be zero or one occurrence of preceding expression), \texttt{[]} any character inside and \texttt{.*} zero or more occurrences of any single characters
+			\item \textbf{Shell globing:} \texttt{if [[ "\$STRINGVAR" \alert{==} ?[sS]tring* ]]; then} --- \texttt{?} represents single character \texttt{[]} any character inside and \texttt{*} zero or more characters
+			\item \textbf{Regular expressions:} \texttt{if [[ "\$STRINGVAR" \alert{=$\sim$} .[sS]tring.* ]]; then} --- \texttt{.} represents single character (\texttt{?} would be zero or one occurrence of preceding expression), \texttt{[]} any character inside and \texttt{.*} zero or more occurrences of any single characters
+			\item Same expression is interpreted in different ways
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -3819,26 +3865,42 @@
 
 \subsection{Loops}
 
-\begin{frame}[fragile]{For cycles I}
+\begin{frame}[fragile]{For loops I}
+	\begin{itemize}
+		\item \texttt{for} loops are available in practically every programming language
+		\item BASH allows plenty of variants how to declare repetitions
+		\item In \texttt{for} loop we know in advance number of repeats --- numerical sequence, list of files,~\ldots
+		\item Common way how to do same operation with multiple files
+	\end{itemize}
 	\begin{bashcode}
     # Ways how to declare number of repetitions
+    # Variable $I contains in every repeat number from 1 to 10 - number of
+    # respective repeat
     for I in $(seq 1 10); do echo $I; done # "seq" is outdated
     for I in 1 2 3 4 5 6 7 8 9 10; do echo $I; done
     for I in {1..10}; do echo $I; done
     for (( I=1; I<=10; I++ )); do echo $I; done
-    # One line for cycle for resizing of images (another option, as above)
+    # One line for cycle for resizing of multiple images
+    # Variable $JPGF contains in every repeat one-by-one name of input file
+    # processed in the respective turn
     for JPGF in *.jpg; do convert $JPGF -resize 100x100 thumbs-$JPGF; done
-    # More commands in a block
-    for JPGF in $(ls -1 *.jpg); do
-      echo "Processing JPG $JPGF"
-      convert $JPGF -resize 100x100 thumbs-$JPGF
-      echo "File thumbs-$file created"
-      done
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{For cycles II}
+\begin{frame}[fragile]{For loops II}
+	\begin{itemize}
+		\item Basic way to process more files
+	\end{itemize}
 	\begin{bashcode}
+    # More commands in a block
+    for JPGF in *.jpg; do
+      echo "Processing JPG $JPGF"
+      file $JPGF # Get information about currently processed file
+      convert $JPGF -resize 100x100 thumbs-$JPGF
+      echo "File thumbs-$JPGF created"
+      done
+    # Passing through each loop can be influenced using conditions and
+    # subsequent skipping of rest of the loop
     for ...; do # Start cycles as you need
       command1 # command1 will be executed in any case
       if (condition); then # Set some condition to skip command2
@@ -3848,7 +3910,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{While and until cycles I}
+\begin{frame}[fragile]{While and until loops I}
 	\begin{bashcode}
     # while cycle is evaluating condition and if it is equal to 0 (TRUE)
     # the cycle body is launched, repeatedly while the condition is met
@@ -3859,20 +3921,34 @@
     until condition; do
       commands
       done
-    while ...; do # Start cycles as you need
-      commands...
-      if [condition]; then # If something happens
-        break; fi # End up the cycles and continue by following commands
-    while read TEXTLINE; do # Run cycles on text file
-      commands... # TEXTLINE contains in each cycle one line of the file
-      done < text_file_to_process.txt
+    # Compare differences between while (more common) and until loops
+    I=0 # Assign initial value
+    # Repeat while I is lower or equal 10; in every step increment I by 1
+    while [ $I -le 10 ]; do echo "Value: $I"; I=$(($I + 1)); done
+    I=20 # Assign initial value
+    # Repeat until I is lower then 10; in every step decrement I by 1
+    until [ $I -lt 10 ]; do echo "Value: $I"; I=$(($I - 1)); done
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{While and until cycles II}
+\begin{frame}[fragile]{While and until loops II}
 	\begin{bashcode}
-    while :; do echo "Press CTRL+C to exit..."; done # Infinite loop
-    for (( ; ; )) ; do echo "Press CTRL+C to exit..."; done # Infinite loop
+    # 'continue' skips to another look turn, 'break' terminates running
+    # of whole loop (no further turns) and skips to following commands
+    while ...; do # Start cycles as you need
+      commands...
+      if [condition]; then # If something happens
+        break # End up the cycles and continue by following commands
+        fi
+    # While loops are popular to process every line of input file
+    # The text file use to contain e.g. list of files to process (if for
+    # whatever reason 'for' loop construction is impractical)
+    while read TEXTLINE; do # Run cycles on every line of text file
+      commands... # TEXTLINE contains in each cycle one line of the file
+      done < text_file_to_process.txt
+    # Infinite loops - common when waiting for some condition to proceed
+    while :; do echo "Press CTRL+C to exit..."; done
+    for (( ; ; )) ; do echo "Press CTRL+C to exit..."; done
 	\end{bashcode}
 \end{frame}
 
@@ -4870,6 +4946,7 @@
 		\item Linux tutorial \url{https://ryanstutorials.net/linuxtutorial/}
 		\item Getting Started with BASH \url{https://www.hypexr.org/bash_tutorial.php}
 		\item Bash Guide \url{https://mywiki.wooledge.org/BashGuide}
+		\item TutorialKart \url{https://www.tutorialkart.com/bash-shell-scripting}
 		\item Česky
 		\begin{itemize}
 			\item Učebnice Linuxu \url{https://www.abclinuxu.cz/ucebnice}
