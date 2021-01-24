@@ -4011,13 +4011,13 @@
 			\item System has list of applications available
 			\item Updates and bug fixes are installed for all applications using one interface (GUI or command line) --- very reliable
 			\item Packages are digitally signed --- security
-			\item User can set custom repositories to get new packages
+			\item User can set custom repositories to get more package resources
 			\item Repositories can be added whenever needed --- check documentation for your distribution (at least basic \enquote{how-to})
 		\end{itemize}
-		\item The most different task among distributions
+		\item The most different task among Linux distributions
 		\item Packages have dependencies --- required shared libraries and so on --- use package manager and try to avoid downloading packages from the internet outside repositories
 		\item \alert{Read manual for your distribution!}
-		\item Package is basically an archive and system has configured directories where to unpack it --- binaries are commonly in \texttt{/usr/bin/}, shared libraries in \texttt{/usr/lib} and \texttt{/sr/lib64}, data in \texttt{/var},~\ldots
+		\item Package is basically an archive and system has configured directories where to unpack it --- binaries are commonly in \texttt{/usr/bin/}, shared libraries in \texttt{/usr/lib} and \texttt{/usr/lib64}, data in \texttt{/var},~\ldots
 		\item User should not care where parts of packages go to --- system is taking the care --- user can only damage it
 		\item Shared libraries are installed automatically whenever required
 		\item As all files are placed in standard defined directories, it is very simple to use them also for another applications
@@ -4025,7 +4025,7 @@
 		\item Common distributions use to provide convenient graphical tool to manage software
 		\begin{itemize}
 			\item Ubuntu Software Center
-			\item Synaptic --- feature rich, graphical, advances, for any DEB distribution
+			\item Synaptic --- feature rich, graphical, advances, for any DEB distribution (Debian, Ubuntu, Mint,~\ldots)
 			\item Aptitude --- feature rich, command-line, advanced, for any DEB distribution (more advanced version of Apt)
 			\item DPKG --- low-level, any DEB-based distribution
 			\item YaST Software for openSUSE (feature rich, graphical as well as command-line)
@@ -4048,21 +4048,23 @@
 
 \begin{frame}[allowframebreaks]{Package management in command line in openSUSE and SLE (basic commands)}
 	\begin{itemize}
-		\item Root password is required: use \texttt{sudo\ldots} or \texttt{su}~-
+		\item Root password is required: use \texttt{sudo\ldots} or \texttt{su~-}
 		\item Package name \texttt{*.rpm}
 		\item \texttt{zypper in \textit{package}} --- install \textit{package}
 		\item \texttt{zypper rm \textit{package}} --- remove \textit{package}
 		\item \texttt{zypper ref} --- refresh repositories
 		\item \texttt{zypper up} --- update
 		\item \texttt{zypper dup} -- upgrade to newer release of whole distribution
+		\item \texttt{zypper ps -s} -- check which running applications (including SystemD services) should be restarted after update of packages
 		\item \texttt{zypper se \textit{term}} --- search \textit{term}
-		\item \texttt{zypper} \texttt{pa -{-}orphaned -{-}unneeded} --- list packages, which can be safely removed
+		\item \texttt{zypper pa -{-}orphaned -{-}unneeded} --- list packages, which can be safely removed
 		\item \texttt{yast sw\_single} --- interactive manager
 		\item \texttt{zypper lr} --- list repositories
 		\item \texttt{zypper ar \textit{repository}} --- add \textit{repository} (URL of remote \texttt{*.repo} file)
 		\item \texttt{zypper rr \textit{repository}} --- remove \textit{repository} (name according to \texttt{zypper lr})
 		\item \texttt{zypper mr \textit{repository}} --- modify \textit{repository} (see \texttt{man zypper} first or use \texttt{yast sw\_single})
 		\item \texttt{zypper pa \textit{package}} --- get information about particular \textit{package} or another query (e.g. list of dependencies, see \texttt{man zypper})
+		\item \texttt{rpmconfigcheck} --- check which configuration files in \texttt{/etc} have new version after update of some software --- compare respective configuration files with new \texttt{*.rpmnew} files
 		\item \texttt{rpm*} commands for other tasks
 		\item \texttt{man zypper}, \texttt{man rpm} --- usage help
 	\end{itemize}
@@ -4070,7 +4072,7 @@
 
 \begin{frame}[allowframebreaks]{Package management in command line in Debian/Ubuntu and derivatives (basic commands)}
 	\begin{itemize}
-		\item Root password is required: use \texttt{sudo\ldots} or \texttt{su}~-
+		\item Root password is required: use \texttt{sudo\ldots} or \texttt{su~-}
 		\item Package name \texttt{*.deb}
 		\item \texttt{apt install \textit{package}} --- install \textit{package}
 		\item \texttt{apt remove \textit{package}} --- remove \textit{package}
@@ -4085,7 +4087,7 @@
 		\item \texttt{dpkg-*}, \texttt{apt-*} commands for other tasks
 		\item \texttt{aptitude} is used in similar way as \texttt{apt} (e.g. \texttt{aptitude install \textit{package}},~\ldots)
 		\item Similar tasks can be done with \texttt{apt}, \texttt{apt-get}, or \texttt{aptitude}
-		\item \texttt{man aptitude}, \texttt{man apt-XXX} (e.g. \texttt{man apt}), \texttt{man dpkg-XXX}, \texttt{man apt} --- usage help
+		\item \texttt{man aptitude}, \texttt{man apt-XXX}, \texttt{man dpkg-XXX}, \texttt{man apt} --- usage help
 	\end{itemize}
 \end{frame}
 
@@ -4106,18 +4108,18 @@
 		\item \texttt{rpm -e \textit{package}} --- remove \textit{package}
 		\item \texttt{rpm*} commands for other tasks
 		\item In older releases of Fedora, RedHat and CENTOS, \texttt{yum} is used instead of \texttt{dnf} in nearly identical way
-		\item \texttt{man dnf} (or \texttt{man dnf}), \texttt{man rpm} --- usage help
+		\item \texttt{man dnf} (or \texttt{man yum}), \texttt{man rpm} --- usage help
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Graphical package managers I}{Ubuntu Software, and Synaptic and text-based Aptitude for all DEB-based distributions}
 	\begin{center}
-		\includegraphics[width=\textwidth-4cm]{software_managers_ubuntu_deb.png}
+		\includegraphics[height=6cm]{software_managers_ubuntu_deb.png}
 	\end{center}
 \end{frame}
 
 \begin{frame}{Graphical package managers II}{GNOME Software in Fedora and YaST in openSUSE}
-	\includegraphics[width=\textwidth-2cm]{software_managers_fedora_suse.png}
+	\includegraphics[height=5.5cm]{software_managers_fedora_suse.png}
 	\begin{itemize}
 		\item Practically every common general distribution has some graphical tool\ldots{ }Explore it\ldots
 	\end{itemize}
@@ -4137,7 +4139,7 @@
 
 \begin{frame}[fragile]{Basics of compilation}
 	\begin{itemize}
-		\item Some software is distributed only as source code written in languages like C or C++ --- user has to compile it to get binary executable
+		\item Some software is distributed only as source code (e.g. downloaded from GitHub) written in languages like C or C++ --- user has to compile it to get binary executable
 		\item Compilation creates binary specific for particular operating system and hardware platform --- can be tuned for optimal performance
 		\item Interpreted languages like Bash, Perl, Python or Java don't have to be compiled (but it is possible) --- they need their interpreter to run, relative easily portable among hardware platforms and OS
 		\item Applications requiring compilation usually have good instructions
@@ -4157,8 +4159,8 @@
 		\item You need to install compilation tools for your distribution and programming languages you are going to use
 		\item Commonly, extra dependencies are required to compile the application
 		\begin{itemize}
-			\item Packages for compilation use to end with -\texttt{dev} or -\texttt{devel} (e.g. if the software requires package \texttt{zlib} to run, install also its developmental version \texttt{zlib-dev(el)} to be able to compile it)
-			\item All requirements should be listed in README or INSTALL documents of particular package --- user must install them manually\ldots
+			\item Packages for compilation use to end with \texttt{-dev} or \texttt{-devel} (e.g. if the software requires package \texttt{zlib} to run, install also its developmental version \texttt{zlib-dev(el)} to be able to compile it)
+			\item All requirements should be listed in README and/or INSTALL documents of particular package --- user must install them manually\ldots
 		\end{itemize}
 	\end{itemize}
 	\vfill
@@ -4167,7 +4169,7 @@
     zypper in -t pattern devel_basis devel_C_C++
     # Debian, Ubuntu and derivatives like Linux Mint and others
     apt-get install build-essential # Or "aptitude install build-essential"
-    # Red Hat, CENTOS, Fedora and derivatives (2 options)
+    # Red Hat, CENTOS, Fedora and derivatives (2 options - dnf or yum)
     dnf groupinstall "Development Tools" "C Development Tools and Libraries"
     yum groupinstall "Development Tools" "C Development Tools and Libraries"
 	\end{bashcode}
@@ -4197,7 +4199,7 @@
 \begin{frame}[fragile]{Compilation of SAMtools}
 	\begin{itemize}
 		\item See \url{http://www.htslib.org/download/}
-		\item Ensure packages \texttt{zlib} and \texttt{zlib-dev(el) }are installed --- required for running and compilation, see \href{https://github.com/samtools/samtools/blob/master/INSTALL}{INSTALL} and \href{https://github.com/samtools/samtools/blob/master/README}{README}
+		\item Ensure packages \texttt{zlib} and \texttt{zlib-dev(el)} are installed --- required for running and compilation, see \href{https://github.com/samtools/samtools/blob/master/INSTALL}{INSTALL} and \href{https://github.com/samtools/samtools/blob/master/README}{README}
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
@@ -4205,14 +4207,14 @@
       samtools-1.10.tar.bz2 # Download SAMtools
     tar xjvf samtools-1.10.tar.bz2 # Unpack the archive
     cd samtools-1.10/ # Go to the unpacked directory
-    ./configure # Configure settings for compilation
     ./configure --help # See various configuring options
+    ./configure # Configure settings for compilation (default settings)
     ./configure --without-curses # Compile without ncurses support
     make # Compile the software - check if there is error
          # Ensure developmental files for zlib (and ncurses) are available
-    make install # Copy products into final location - default /usr/local
-    make prefix=/where/to/install install # Install into custom location
-    make prefix=/home/$USER/bin install # Binary is in /home/$USER/bin/bin
+    sudo make install # Copy products into final location - default /usr/local
+    sudo make prefix=/where/to/install install # Install into custom location
+    make prefix=/home/$USER/bin install # Binary into /home/$USER/bin/bin
     make clean # Cleanup - final files are already in the destination
 	\end{bashcode}
 \end{frame}
@@ -4250,7 +4252,7 @@
 			\item They must be written in portable language like Java or script like Perl, Python or BASH
 			\item Otherwise we need an emulator --- not everything works
 		\end{itemize}
-		\item Windows 10 has \href{https://docs.microsoft.com/windows/wsl/install-win10}{possibility to run Linux applications}, other option (for more Windows versions) is \href{https://www.cygwin.com/}{Cygwin} (application must be specially compiled to support Cygwin)
+		\item Windows 10 has \href{https://docs.microsoft.com/windows/wsl/install-win10}{possibility to run Linux applications}, other option (for more Windows versions) is \href{https://www.cygwin.com/}{Cygwin} (application must be specially compiled to work on Cygwin)
 		\item To run Windows applications on Linux use \href{https://www.winehq.org/}{Wine}
 		\begin{itemize}
 			\item Search for packages named \texttt{wine} and install it
@@ -4274,14 +4276,14 @@
 			\item For many Windows-only applications there are fully comparable alternatives
 		\end{itemize}
 		\item Some applications do not work under Wine (from various reasons), some complex packages are \href{https://www.codeweavers.com/}{supported commercially} (I~have no experience with it)
-		\item Wine is well compatible with rest of the Linux hosting system, it is considerable to install Windows in e.g. VirtualBox (or another virtualization platform), if needed
+		\item Wine is well compatible with rest of the Linux hosting system, but it is also considerable to install Windows in e.g. VirtualBox (or another virtualization platform), if needed
 	\end{itemize}
-\end{frame}
-
-\begin{frame}{winefile, winetricks and winecfg}
 	\begin{center}
-		\includegraphics[width=\textwidth-3.5cm]{wine.png}
+		\includegraphics[height=3.25cm]{wine.png}
 	\end{center}
+	\begin{flushright}
+		\texttt{winefile}, \texttt{winetricks} and \texttt{winecfg}
+	\end{flushright}
 \end{frame}
 
 \section{MetaCentrum}
