@@ -1170,7 +1170,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{The command line can has various look and feel\ldots}{Change colors, font size, etc. for your terminal to like it more and work comfortably}
+\begin{frame}{The command line can have various look and feel\ldots}{Change colors, font size, etc. for your terminal to like it more and work comfortably}
 	\begin{center}
 		\includegraphics[height=6cm]{terminals.png}
 	\end{center}
@@ -1184,7 +1184,7 @@
 		\item Sometimes number of connections to the server is limited
 		\item \texttt{screen} is solution --- virtual terminals
 		\item Launch \texttt{screen} to start new screen terminal, read some info, confirm by \textbf{Space key} or \textbf{Enter}
-		\item To detach from the screen press \texttt{Ctrl+A, D} --- screen is still running in background --- you can even log off
+		\item To detach from the screen press \texttt{Ctrl+A, D} (quickly press \texttt{Ctrl+A}, release, press \texttt{D}) --- screen is still running in background --- you can even log off
 		\item To return back to running screen use \texttt{screen -r} --- if only one screen is running, you get back to it
 		\item If more screens are running, use \texttt{screen -r 1234} (the number is seen from \texttt{screen -r})
 		\item To cancel running screen press \texttt{Ctrl+D} (or type \texttt{exit} or \texttt{logout})
@@ -1484,8 +1484,7 @@
 			*.bz2 & bzip2 file & bunzip2 archive.bz2\\
 			*.xz & xz -zv file & xz -d archive.xz\\
 			*.lzma & lzma file & unlzma archive.lzma\\
-			*.zip & zip -r archive.zip file1 file2 & unzip archive.zip\\
-			*.rar & rar a archive.rar file1 file2 & unrar x archive.rar
+			*.zip & zip -r archive.zip file1 file2 & unzip archive.zip
 		\end{tabular}
 	\end{center}
 \end{frame}
@@ -1509,14 +1508,14 @@
 
 \begin{frame}{Tasks with archives}
 	\begin{enumerate}
-		\item Compress (and decompress) text file \texttt{Oxalis\_HybSeq\_nrDNA\_selection\_} \texttt{alignment.fasta} (target enrichment sequencing data of South African \textit{Oxalis}) from \texttt{scripts\_data} with various compressing tools.
+		\item Compress (and decompress) text file \texttt{Oxalis\_HybSeq\_nrDNA\_selection\_} \texttt{alignment.fasta} from \texttt{scripts\_data} with various compressing tools.
 		\item Compare sizes of original file and compressed outputs.
 		\item Compress (and decompress) all \texttt{foto\_oxalis\_*.jpg} (\textit{Oxalis} photos) together from \texttt{scripts\_data} with various compressing tools.
 		\item Compare sizes of original files and compressed outputs.
 		\item Which compression tool seems to be the best? In terms of compressing ratio and time needed for compression.
 		\item Is more effective compression of text files or images? Why?
 		\item Why is even plain \texttt{tar} (without compression, it requires \texttt{gzip}, \texttt{bzip2}, \texttt{xz} or \texttt{lzma} to add compression) useful with FAT disks?
-		\item Search the Internet to find out how to unpack \texttt{arj} archives from command line.
+		\item Search the Internet to find out how to unpack \texttt{arj} and \texttt{rar} archives from command line.
 	\end{enumerate}
 \end{frame}
 
@@ -1599,7 +1598,8 @@
     man find
 	\end{bashcode}
 	\begin{itemize}
-		\item \texttt{find} is extremely versatile and useful tool
+		\item \texttt{find} is extremely versatile and useful tool --- master it
+		\item \texttt{-print} is default action --- if it is missing and there is no other actions, results are printed to the screen
 	\end{itemize}
 \end{frame}
 
@@ -1832,7 +1832,7 @@
 		\end{itemize}
 		\item \alert{\texttt{||}} --- second command is launched when first command fails (has non zero exit status):\\\texttt{cd newdir || \textbraceleft~mkdir newdir \&\& cd newdir; \textbraceright}
 		\begin{itemize}
-			\item Easy way how to do something when previous command fails, either exit script (\texttt{\ldots{ }|| exit 1}) or somehow fix it (see above), report problem (\texttt{\ldots{ }|| \textbraceleft echo \enquote{It failed!} \&\& exit 1; \textbraceright}) or so
+			\item Easy way how to do something when previous command fails, either exit script (\texttt{\ldots{ }|| exit 1}) or somehow fix it (see above), report problem (\texttt{\ldots{ }|| \textbraceleft echo "It failed!" \&\& exit 1; \textbraceright}) or so
 		\end{itemize}
 		\item \alert{\texttt{|}} --- pipe --- redirects standard output of one command into standard input of second command: compare \texttt{mount} and \texttt{mount | column -t}
 		\begin{itemize}
@@ -1960,7 +1960,7 @@
     # sequenced) in genomic VCF with multiple individuals
     zcat arabidopsis.vcf.gz | grep -o "DP=[0-9]\+" | sort | less
     # Convert DNA sequence from FASTQ to FASTA (two of many options)
-    # (discard FASTQ quality scores and keep only the sequence and its name)
+    # Discard FASTQ quality scores and keep only the sequence and its name
     bzcat Oxalis_hirta_R1.fastq.bz2 | sed -n '1~4s/^@/>/p;2~4p' > \
       Oxalis_hirta_R1.fasta
     bzcat Oxalis_hirta_R2.fastq.bz2 | awk '{if(NR%4==1)
@@ -3484,7 +3484,7 @@
 	\begin{itemize}
 		\item User can provide as arguments\ldots
 		\begin{itemize}
-			\item Input/output data names
+			\item Input/output data file names
 			\item Parameters for running whatever analysis --- can be passed to some scientific software within script or so
 			\item Which branch of the code to run
 			\item \ldots
@@ -3516,6 +3516,7 @@
 
 \begin{frame}[fragile]{Notes to previous script}
 	\begin{bashcode}
+    # ...end from previous slide
         exit 1;; # In this case, exit with error code 1
       esac
     exit
@@ -4297,14 +4298,14 @@
 \begin{frame}[allowframebreaks]{CESNET and MetaCentrum}
 	\label{CESNET}
 	\begin{itemize}
-		\item \href{https://www.cesnet.cz/?lang=en}{CESNET} is organization of Czech universities, Academy of Science and other organizations taking care about Czech backbone Internet, one of world leading institutions of this type
-		\item CESNET provides various \href{https://www.cesnet.cz/services/?lang=en}{services}
+		\item \href{https://www.cesnet.cz/?lang=en}{CESNET} (\href{https://www.cesnet.cz/}{česky}) is organization of Czech universities, Academy of Science and other organizations taking care about Czech backbone Internet, one of world leading institutions of this type
+		\item CESNET provides various \href{https://www.cesnet.cz/services/?lang=en}{services} (\href{https://www.cesnet.cz/sluzby/}{česky})
 		\begin{itemize}
-			\item Massive computations --- \href{https://www.cesnet.cz/services/massive-computations-metacentrum/?lang=en}{MetaCentrum}
-			\item Large \href{https://www.cesnet.cz/services/data-storage/?lang=en}{data storage}
-			\item \href{https://www.cesnet.cz/services/filesender/?lang=en}{FileSender} to be able to send up to 1.9~TB file
-			\item \href{https://www.metacentrum.cz/en/Sluzby/Cloud/}{Cloud} --- computing (HPC) cloud similar to e.g. Amazon Elastic Compute Cloud (EC2), Google Compute Engine or Microsoft Azure
-			\item \href{https://www.cesnet.cz/services/owncloud/?lang=en}{ownCloud} to backup and/or sync data across devices (default capacity is 100~GB, user may ask for more) --- similar to e.g. Dropbox, Google Drive or Microsoft OneDrive
+			\item Massive computations --- \href{https://www.cesnet.cz/services/massive-computations-metacentrum/?lang=en}{MetaCentrum} (\href{https://www.cesnet.cz/sluzby/metacentrum/}{česky})
+			\item Large \href{https://www.cesnet.cz/services/data-storage/?lang=en}{data storage} (\href{https://www.cesnet.cz/sluzby/datova-uloziste/}{česky})
+			\item \href{https://www.cesnet.cz/services/filesender/?lang=en}{FileSender} (\href{https://www.cesnet.cz/sluzby/filesender/}{česky}) to be able to send up to 1.9~TB file
+			\item \href{https://www.metacentrum.cz/en/Sluzby/Cloud/}{Cloud} (\href{https://www.metacentrum.cz/cs/Sluzby/Cloud/}{česky}) --- computing (HPC) cloud similar to e.g. Amazon Elastic Compute Cloud (EC2), Google Compute Engine or Microsoft Azure
+			\item \href{https://www.cesnet.cz/services/owncloud/?lang=en}{ownCloud} (\href{https://www.cesnet.cz/sluzby/owncloud/}{česky}) to backup and/or sync data across devices (default capacity is 100~GB, user may ask for more) --- similar to e.g. Dropbox, Google Drive or Microsoft OneDrive
 			\begin{itemize}
 				\item It is possible to connect by webDAV to ownCloud (slide \ref{transfers}) --- many applications support it
 				\item It is possible to share calendars and/or address books via calDav and cardDav among devices and/or people
@@ -4318,17 +4319,17 @@
 		\end{itemize}
 		\item Services requiring registration (and approval)
 		\begin{itemize}
-			\item To use MetaCentrum fill registration form \url{https://metavo.metacentrum.cz/en/application/form}
+			\item To use MetaCentrum fill registration form \url{https://metavo.metacentrum.cz/en/application/form} (\href{https://metavo.metacentrum.cz/cs/application/}{česky})
 			\item To use data storage fill registration form \url{https://einfra.cesnet.cz/perun-registrar-fed/?vo=storage}
 			\item After registration for MetaCentrum, user can join MetaCloud via \url{https://perun.metacentrum.cz/fed/registrar/?vo=meta&group=metacloud}
-			\item Users not having access to \href{https://www.eduid.cz/en/index}{EduID} have to register first at \href{https://www.eduid.cz/cs/hostel}{HostelID} (available only in Czech)
+			\item Users not having access to \href{https://www.eduid.cz/en/index}{EduID} (\href{https://www.eduid.cz/cs/index}{česky}) have to register first at \href{https://www.eduid.cz/cs/hostel}{HostelID} (only in Czech)
 		\end{itemize}
-		\item Information about data storage \url{https://du.cesnet.cz/en/start} contains detailed usage instructions
-		\item Information about MetaCentrum \url{https://www.metacentrum.cz/en/} and wiki \url{https://wiki.metacentrum.cz/wiki/Main_Page} (main information for users containing all needed documentation)
+		\item Information about data storage \url{https://du.cesnet.cz/en/start} (\href{https://du.cesnet.cz/cs/start}{česky}) contains detailed usage instructions
+		\item Information about MetaCentrum \url{https://www.metacentrum.cz/en/} (\href{https://www.metacentrum.cz/cs/}{česky}) and wiki \url{https://wiki.metacentrum.cz/wiki/Main_Page} (\href{https://wiki.metacentrum.cz/wiki/Hlavn\%C3\%AD_strana}{česky}) (main information for users containing all needed documentation)
 		\item Information about MetaCloud \url{https://wiki.metacentrum.cz/wiki/Kategorie:Clouds}
 		\item Also available is Galaxy \url{https://galaxy.metacentrum.cz/galaxy/} (same login as to MetaCentrum) --- web based bioinformatics framework (more information at \href{https://wiki.metacentrum.cz/wiki/Galaxy}{wiki})
-		\item Current state and usage of resources is available at \url{https://metavo.metacentrum.cz/en/}
-		\item Manage your user account at \url{http://metavo.metacentrum.cz/en/myaccount/}
+		\item Current state and usage of resources is available at \url{https://metavo.metacentrum.cz/en/} (\href{https://metavo.metacentrum.cz/cs/}{česky})
+		\item Manage your user account at \url{http://metavo.metacentrum.cz/en/myaccount/} (\href{https://metavo.metacentrum.cz/cs/myaccount/}{česky})
 		\item Personal view on actual resources and running tasks is at \url{https://metavo.metacentrum.cz/pbsmon2/person}
 		\item List of available applications \url{https://wiki.metacentrum.cz/wiki/Kategorie:Applications}
 		\item MetaCentrum has 11~\href{https://wiki.metacentrum.cz/wiki/Frontend}{frontends} where users log and thousands of computers doing the calculations --- they are not accessed directly to run task
@@ -4344,7 +4345,7 @@
 
 \begin{frame}[fragile]{MetaCentrum usage}
 	\begin{itemize}
-		\item User can transfer data on one of \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontends} (next slide; or data storage) by e.g. \texttt{scp} or \href{https://winscp.net/}{WinSCP} from Windows or \href{https://filezilla-project.org/}{FileZilla} from anywhere
+		\item User can transfer data on one of \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontends} (\href{https://wiki.metacentrum.cz/wiki/Celni_uzel}{česky}) (next slide; or data storage) by e.g. \texttt{scp} or \href{https://winscp.net/}{WinSCP} from Windows or \href{https://filezilla-project.org/}{FileZilla} from anywhere
 		\item Same credentials are used for all frontends, for SSH login as well as file transmissions
 	\end{itemize}
 	\vfill
@@ -4364,7 +4365,7 @@
 \begin{frame}{File transfers to MetaCentrum}
 	\begin{itemize}
 		\item Graphical applications: e.g. \href{https://filezilla-project.org/}{FileZilla} or from most of Linux file managers
-		\item Protocol is SSH/SSH2/SFTP/SCP, port 22, server is selected \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontend's} address (e.g. \texttt{tarkil.metacentrum.cz}) --- select any and keep using it
+		\item Protocol is SSH/SSH2/SFTP/SCP, port 22, server is selected \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontend's} (\href{https://wiki.metacentrum.cz/wiki/Celni_uzel}{česky}) address (e.g. \texttt{tarkil.metacentrum.cz}) --- select any and keep using it
 		\item All servers are accessible under domain \texttt{*.metacentrum.cz}: \texttt{skirit}, \texttt{perian}, \texttt{onyx}, \texttt{zuphux} (located in Brno), \texttt{alfrid}, \texttt{nympha}, \texttt{minos} (in Pilsen), \texttt{tarkil} (in Prague), and \texttt{tilia} (in Průhonice) --- so that e.g. \texttt{tarkil.grid.cesnet.cz} is synonymous to \texttt{tarkil.metacentrum.cz}
 		\item See slide \ref{transfers} and following to command-line transfers of files
 	\end{itemize}
@@ -4423,7 +4424,7 @@
 
 \begin{frame}[fragile]{Launching of tasks}
 	\begin{itemize}
-		\item \url{https://wiki.metacentrum.cz/wiki/Beginners_guide} and \url{https://wiki.metacentrum.cz/wiki/Categorized_list_of_topics}
+		\item See \href{https://wiki.metacentrum.cz/wiki/Beginners_guide}{beginners guide} (\href{https://wiki.metacentrum.cz/wiki/Pruvodce_pro_zacatecniky}{česky}) and \href{https://wiki.metacentrum.cz/wiki/Categorized_list_of_topics}{list of topics} (\href{https://wiki.metacentrum.cz/wiki/Rozcestnik}{česky})
 		\item Personal view \url{https://metavo.metacentrum.cz/pbsmon2/person} has nice overview of available resources and tasks and allows comfortable construction of submission command
 	\end{itemize}
 	\vfill
@@ -4631,7 +4632,7 @@
 
 \begin{frame}{CESNET data storage}
 	\begin{itemize}
-		\item Read documentation \url{https://du.cesnet.cz/} and connection instructions \url{https://du.cesnet.cz/en/navody/sluzby/start}
+		\item Read documentation \url{https://du.cesnet.cz/} and connection instructions \url{https://du.cesnet.cz/en/navody/sluzby/start} (\href{https://du.cesnet.cz/cs/navody/sluzby/start}{česky})
 		\item Generally, it is possible to connect via FTPS, NFS, SAMBA (Windows network drive), SCP/SFTP or SSH --- more options how to get to same resource
 		\item See slide~\ref{CESNET} for general information and \ref{transfers} for connecting information
 		\item After logging via SSH, it is possible to work as on any other server
@@ -4645,7 +4646,7 @@
 
 \begin{frame}[fragile]{Shared space on CESNET data storage}
 	\begin{itemize}
-		\item Users \href{https://du.cesnet.cz/en/uzivatelska_podpora/start}{can ask} for creation of shared space
+		\item Users \href{https://du.cesnet.cz/en/uzivatelska_podpora/start}{can ask} (\href{https://du.cesnet.cz/cs/uzivatelska_podpora/start}{česky}) for creation of shared space
 		\begin{itemize}
 			\item Normally, the space is private only for particular user
 			\item Groups allow more users to share data
@@ -4687,7 +4688,7 @@
 
 \begin{frame}[allowframebreaks]{Git and version control}
 	\begin{itemize}
-		\item \href{https://git-scm.com/}{Git} is \href{https://en.wikipedia.org/wiki/Version_control}{version controlling} system (nowadays the most common) --- it traces changes among all versions --- absolutely crucial for any software development
+		\item \href{https://git-scm.com/}{Git} is \href{https://en.wikipedia.org/wiki/Version_control}{version controlling} (\href{https://cs.wikipedia.org/wiki/Verzov\%C3\%A1n\%C3\%AD}{česky}) system (nowadays the most common) --- it traces changes among all versions --- absolutely crucial for any software development
 		\item Older (nowadays not so common) version controlling systems is Subversion (SVN), there are many more (Bazaar, Mercurial,~\ldots)
 		\item Probably the best textbook for Git is \href{https://git-scm.com/book/en/v2}{Chacon's Pro Git}
 		\begin{itemize}
@@ -4722,7 +4723,7 @@
 		\item \href{https://github.com/}{GitHub} is currently probably the most popular platform to host development of open-source projects, see \href{https://help.github.com/}{documentation}
 		\item Probably second most common on-line service providing Git repository is \href{https://about.gitlab.com/}{GitLab}
 		\begin{itemize}
-			\item User can create an account on GitLab (as on GitHub), or download and install GitLab system on own server (like \href{https://sorbus.ibot.cas.cz/en/gitlab}{we did})
+			\item User can create an account on GitLab (as on GitHub), or download and install GitLab system on own server (like \href{https://sorbus.ibot.cas.cz/en/gitlab}{we did}, \href{https://sorbus.ibot.cas.cz/cs/gitlab}{česky})
 		\end{itemize}
 		\item \href{https://sourceforge.net/}{SourceForge} used to be more popular in the past, still harbours plenty of interesting projects
 		\item Others are e.g. \href{https://bitbucket.org/}{Bitbucket}, \href{https://www.codebasehq.com/}{Codebase},~\ldots
