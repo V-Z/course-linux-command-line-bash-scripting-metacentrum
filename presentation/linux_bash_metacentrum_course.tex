@@ -4698,6 +4698,7 @@
     # Add files to trace with Git
     # Ignored files (or patterns) can be listed in .gitignore file
     git add <files> # Or "git add *"
+    git status # See changed files, commits in stagging, etc.
 	\end{bashcode}
 \end{frame}
 
@@ -4748,11 +4749,12 @@
 \begin{frame}[fragile]{Working with Git --- settings and more}
 	\begin{itemize}
 		\item Basically repeat in \texttt{git} \texttt{add}, \texttt{commit} and \texttt{push} to get your work to the repository, and \texttt{fetch} and \texttt{pull} to download news from central repository
-		\item \texttt{diff} to see local changes
+		\item \texttt{diff} to see local changes, \texttt{status} to see state
 		\item \texttt{log} and \texttt{branch} show history and branches
-		\item \texttt{branch} and \texttt{merge} for branching code and merging changes back to master (main) branch
+		\item \texttt{branch}, \texttt{checkout} and \texttt{merge} for branching code and merging changes back to master (main) branch
 	\end{itemize}
 	\begin{bashcode}
+    git diff # See changes in particular text files
     gitk # Graphical interface
     git config color.ui true # Set output to be colored
     git config format.pretty oneline # Nicer log output
@@ -4762,11 +4764,20 @@
 	\end{bashcode}
 \end{frame}
 
-% \begin{frame}{Git tasks} % TODO Add Git tasks
-% 	\begin{itemize}
-% 		\item 
-% 	\end{itemize}
-% \end{frame}
+\subsection{}
+
+\begin{frame}{Git tasks}
+	\begin{enumerate}
+		\item Clone over SSH repository \texttt{USER@vyuka.natur.cuni.cz:/home/dadaism} (use your credentials on the testing server) and go to \texttt{dadaism} directory.
+		\item Add some text files, edit existing text files. Do not add images or another non-text files, do not add large files.
+		\item Push your changes back to the repository.
+		\item Fetch changes done by others.
+		\item See history of changes, who did what, etc.
+		\item Use at least \texttt{git} commands \texttt{clone},\texttt{diff}, \texttt{status}, \texttt{add}, \texttt{commit}, \texttt{push}, \texttt{fetch}, \texttt{pull}, \texttt{log} and \texttt{gitk}.
+		\item You can try to play with branches --- \texttt{branch}, \texttt{checkout}, \texttt{merge}.
+		\item communicate with others to avoid conflicting edits.
+	\end{enumerate}
+\end{frame}
 
 \section{Administration}
 
