@@ -109,7 +109,6 @@
 \end{frame}
 
 \begin{frame}{The course information}
-	\label{materials}
 	\begin{itemize}
 		\item The course page: \url{https://trapa.cz/en/course-linux-command-line-2021}
 		\begin{itemize}
@@ -134,6 +133,7 @@
 \end{frame}
 
 \begin{frame}{Materials to help you\ldots}
+	\label{materials}
 	\begin{itemize}
 		\item Download the presentation from \url{https://soubory.trapa.cz/linuxcourse/linux_bash_metacentrum_course.pdf}
 		\item Download the scripts and toy data from \url{https://soubory.trapa.cz/linuxcourse/scripts_data.zip}
@@ -2144,7 +2144,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Basic network information and testing I}
+\begin{frame}[fragile]{Basic network information and testing}
 	\begin{bashcode}
     hostname # Get name of the computer
     ping web.natur.cuni.cz # Ping host. Is it alive? Cancel by Ctrl+C
@@ -2163,32 +2163,6 @@
     # If using nmap at faculty, firewall disconnects you for 10 minutes!
     nmap -r someserver.cz # Scan someserver.cz for opened ports
     nmap botany.natur.cuni.cz --script ssh-hostkey # See SSH key
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Connecting file systems on remote servers}
-	\label{netfs}
-	\begin{itemize}
-		\item Target mount point must exist before mounting
-		\item Servers can be accessed by IP address or hostname
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    # Mounting remote server over SSH (sshfs package must be installed)
-    sshfs USER@vyuka.natur.cuni.cz:/some/dir /local/mount/point
-    fusermount -u /local/mount/point # Disconnect SSHF
-    # Mount Windows server (requires packages samba and cifs)
-    mount.cifs //windows.server.cz/Some/Directory /mnt/win -o \
-      credentials=/path/to/password.file,uid=USER,gid=GROUP
-    # "password.file" contains login credentials to Windows server:
-    username=user.name
-    password=TopSecretPassword1
-    domain=DOMAINNAME
-    # Mount NFS share (NFS is common protocol in UNIX world)
-    mount -t nfs some.server.cz:/shared/directory /local/directory
-    # Mount webDAV folder (requires package davfs2 to be installed)
-    mount -t davfs https://owncloud.cesnet.cz/remote.php/webdav/ /local/dir
-    umount /mount/point # Disconnect CIFS/SAMBA, NFS, webDAV, ...
 	\end{bashcode}
 \end{frame}
 
@@ -2224,9 +2198,9 @@
 		\item It transmits only changes --- very efficient
 		\item Suitable for local as well as network backup
 		\item Network address for rsync is written in same way as for \texttt{scp}
-		\item -{-}\texttt{delete} delete in target location files which are not in source location anymore
-		\item -{-}\texttt{progress} show progress percentage for every file
-		\item -{-}\texttt{exclude=*.jpg} skip JPG files
+		\item \texttt{-{-}delete} delete in target location files which are not in source location anymore
+		\item \texttt{-{-}progress} show progress percentage for every file
+		\item \texttt{-{-}exclude=*.jpg} skip JPG files
 		\item For incremental backups use e.g. \texttt{duplicity}
 	\end{itemize}
 	\vfill
@@ -2234,6 +2208,32 @@
     rsync -arv somedirectory otherplace # All attributes, recursive, verbose
     rsync -arv localdirectory user@remote.server.cz:/remote/directory/
     rsync -arv user@remote.server.cz:/remote/data local/directory/
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Connecting file systems on remote servers}
+	\label{netfs}
+	\begin{itemize}
+		\item Target mount point must exist before mounting
+		\item Servers can be accessed by IP address or hostname
+	\end{itemize}
+	\vfill
+	\begin{bashcode}
+    # Mounting remote server over SSH (sshfs package must be installed)
+    sshfs USER@vyuka.natur.cuni.cz:/some/dir /local/mount/point
+    fusermount -u /local/mount/point # Disconnect SSHF
+    # Mount Windows server (requires packages samba and cifs)
+    mount.cifs //windows.server.cz/Some/Directory /mnt/win -o \
+      credentials=/path/to/password.file,uid=USER,gid=GROUP
+    # "password.file" contains login credentials to Windows server:
+    username=user.name
+    password=TopSecretPassword1
+    domain=DOMAINNAME
+    # Mount NFS share (NFS is common protocol in UNIX world)
+    mount -t nfs some.server.cz:/shared/directory /local/directory
+    # Mount webDAV folder (requires package davfs2 to be installed)
+    mount -t davfs https://owncloud.cesnet.cz/remote.php/webdav/ /local/dir
+    umount /mount/point # Disconnect CIFS/SAMBA, NFS, webDAV, ...
 	\end{bashcode}
 \end{frame}
 
@@ -2399,6 +2399,7 @@
       reference.fasta '{}' > '{.}'.stats.txt"
     # Note that 'find' searches also in subdirectories
     parallel --help # Basic help for GNU Parallel
+    man parallel # More information about GNU Parallel parameters
 	\end{bashcode}
 	\vfill
 	\begin{block}{Tasks}
@@ -4862,7 +4863,7 @@
 		\item See history of changes, who did what, etc.
 		\item Use at least \texttt{git} commands \texttt{clone},\texttt{diff}, \texttt{status}, \texttt{add}, \texttt{commit}, \texttt{push}, \texttt{fetch}, \texttt{pull}, \texttt{log} and \texttt{gitk}.
 		\item You can try to play with branches --- \texttt{branch}, \texttt{checkout}, \texttt{merge}.
-		\item communicate with others to avoid conflicting edits.
+		\item Communicate with others to avoid conflicting edits.
 	\end{enumerate}
 \end{frame}
 
