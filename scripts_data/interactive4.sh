@@ -19,13 +19,13 @@ if [ "$#" -ne "3" ]; then
 
 # "=~" means we are testing if $1 fits to regular expression in $NUMBER
 # Is parameter 1 number?
-if [[ ! $1 =~ $NUMBER ]]; then
+if [[ ! $1 =~ ${NUMBER} ]]; then
 	echo "Parameter 1 is not an integer!"
 	usagehelp # The function to print help
 	fi
 
 # Is parameter 3 number?
-if [[ ! $3 =~ $NUMBER ]]; then
+if [[ ! $3 =~ ${NUMBER} ]]; then
 	echo "Parameter 3 is not an integer!"
 	usagehelp # The function to print help
 	fi

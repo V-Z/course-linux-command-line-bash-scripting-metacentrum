@@ -8,19 +8,19 @@
 
 # Set data directories
 WORKDIR="my_data_dir" # Or something else
-DATADIR="/storage/praha1/home/$LOGNAME" # Or other storage
+DATADIR="/storage/praha1/home/${LOGNAME}" # Or other storage
 
 # There is directory /storage/praha1/home/$LOGNAME/my_data_dir (in this case) containing all the data needed for calculations
 
 # Clean-up of SCRATCH (it is temporal directory created by server) - the commands will be launched on the end when the job is done
 trap 'clean_scratch' TERM EXIT
-trap 'cp -a "$SCRATCHDIR" "$DATADIR"/ && clean_scratch' TERM
+trap 'cp -a "${SCRATCHDIR}" "${DATADIR}"/ && clean_scratch' TERM
 
 # Prepare the task - copy all needed files from working directory into particular computer which will finally do the calculations
-cp -a "$DATADIR"/"$WORKDIR"/* "$SCRATCHDIR"/ || exit 1 # If it fails, exit script
+cp -a "${DATADIR}"/"${WORKDIR}"/* "${SCRATCHDIR}"/ || exit 1 # If it fails, exit script
 
 # Change working directory - script goes to the directory where calculations are done
-cd "$SCRATCHDIR"/ || exit 1 # If it fails, exit script
+cd "${SCRATCHDIR}"/ || exit 1 # If it fails, exit script
 
 # Prepare calculations - load required application modules
 # See https://wiki.metacentrum.cz/wiki/Kategorie:Applications
@@ -34,7 +34,7 @@ module add mrbayes-3.2.6
 find . -name "*.nexus" -print | parallel -j 8 'mb {} | tee -a {}.log'
 
 # Copy results back to home directory
-cp -a "$SCRATCHDIR" "$DATADIR"/"$WORKDIR" || export CLEAN_SCRATCH=false
+cp -a "${SCRATCHDIR}" "${DATADIR}"/"${WORKDIR}" || export CLEAN_SCRATCH=false
 
 # This is all needed, the script is ready to be launched...
 

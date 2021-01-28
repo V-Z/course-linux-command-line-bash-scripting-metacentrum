@@ -16,8 +16,8 @@ if grep -iq avx2 /proc/cpuinfo; then # Does the CPU support AVX2?
 	fi # End of branching
 
 # Tell us the result
-echo "Using $RAXML binary."
+echo "Using ${RAXML} binary."
 
-"$RAXML" -s "$INPUT" # All the parameters as usually...
+"${RAXML}" -s "${INPUT}" # All the parameters as usually...
 
 exit

@@ -11,8 +11,8 @@ function checkinput {
 	while :
 		do # Star of the body of the cycles
 			read -r INPUT # Here the input from keyboard is received
-			if [[ $INPUT =~ $NUMBER ]]; then # Test if $INPUT is a number
-				echo "OK, input value is $INPUT."
+			if [[ ${INPUT} =~ ${NUMBER} ]]; then # Test if $INPUT is a number
+				echo "OK, input value is ${INPUT}."
 				break # We have correct value, we can break the cycle and continue
 				else # What to do if the user did not provide correct value
 					echo "Error! You provided wrong value!" # Tell the user
@@ -24,18 +24,18 @@ function checkinput {
 echo "Please, input first value to sum and press 'Enter'"
 # Use the function to read the input
 checkinput
-V1=$INPUT
+V1="${INPUT}"
 
 # Start of while cycles - run until correct input is provided
 
 echo "Please, input second value to sum and press 'Enter'"
 # Use the function to read the input
 checkinput
-V2=$INPUT
+V2="${INPUT}"
 
 echo
 
-echo "Sum of two numbers $V1 and $V2 is $(("V1" + "V2"))."
+echo "Sum of two numbers ${V1} and ${V2} is $(("V1" + "V2"))."
 
 echo
 

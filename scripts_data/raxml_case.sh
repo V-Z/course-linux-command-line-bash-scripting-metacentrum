@@ -7,7 +7,7 @@ INPUT="$1" # Specification of input file
 # Determine which CPU is available and which binary use then
 CPUFLAGS=$(grep -i flags /proc/cpuinfo | uniq)
 
-case "$CPUFLAGS" in
+case "${CPUFLAGS}" in
 	*avx2*|*AVX2*) # Does the CPU support AVX2?
 		RAXML='raxmlHPC-AVX2' # Select appropriate binary
 		;;
@@ -23,8 +23,8 @@ case "$CPUFLAGS" in
 	esac # End of branching
 
 # Tell us the result
-echo "Using $RAXML binary."
+echo "Using ${RAXML} binary."
 
-"$RAXML" -s "$INPUT" # All the parameters as usually...
+"${RAXML}" -s "${INPUT}" # All the parameters as usually...
 
 exit
