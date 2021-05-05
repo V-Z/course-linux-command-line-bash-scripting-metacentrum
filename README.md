@@ -11,7 +11,11 @@ Bude-li se kurzu účastnit alespoň jeden člověk nemluvící česky, kurz bud
 * Informace o kurzu: <https://trapa.cz/cs/kurz-prikazove-radky-linuxu-2021>
 * Kurz ve studijním informačním systému: <https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=MB120C23>
 * Materiály ke kurzu: <https://soubory.trapa.cz/linuxcourse/>
-* Kontakt na autora: <https://trapa.cz/cs/kontakt>
+* Kontakt na autora: <https://trapa.cz/cs/contakt>
+
+## Licence
+
+Viz `LICENSE.md` a <https://creativecommons.org/licenses/by-nc-sa/4.0/deed.cs>
 
 ---
 
@@ -31,4 +35,8 @@ If there is at least one participant not speaking Czech, the course will be in E
 * Course in Study Information System: <https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=MB120C23>
 * Course materials: <https://soubory.trapa.cz/linuxcourse/>
 * Contact author: <https://trapa.cz/en/contact>
+
+## License
+
+See `LICENSE.md` and <https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en>
 
