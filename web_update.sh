@@ -9,7 +9,7 @@ rsync -arv --exclude=*~ --progress linuxcourse laddobar:~/soubory.trapa.cz/htdoc
 echo
 
 # Copy also presentation and scripts and data (pack and Copy)
-if [ "$1" == "all" ]; then
+if [[ "$1" == "all" ]]; then
 	# Copy presentation
 	echo "Syncing presentation"
 	echo

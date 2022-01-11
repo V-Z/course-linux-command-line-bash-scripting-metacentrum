@@ -8,7 +8,7 @@ Kurz poběží turnusově 4 dny, přičemž 3 dny poběží výuka a poslední d
 
 Bude-li se kurzu účastnit alespoň jeden člověk nemluvící česky, kurz bude anglicky.
 
-* Informace o kurzu: <https://trapa.cz/cs/kurz-prikazove-radky-linuxu-2021>
+* Informace o kurzu: <https://trapa.cz/cs/kurz-prikazove-radky-linuxu-2022>
 * Kurz ve studijním informačním systému: <https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=MB120C23>
 * Materiály ke kurzu: <https://soubory.trapa.cz/linuxcourse/>
 * Kontakt na autora: <https://trapa.cz/cs/contakt>
@@ -31,7 +31,7 @@ The course will be taught 4 days, while 3 days are for teaching and last day is 
 
 If there is at least one participant not speaking Czech, the course will be in English. 
 
-* Information about the course: <https://trapa.cz/en/course-linux-command-line-2021>
+* Information about the course: <https://trapa.cz/en/course-linux-command-line-2022>
 * Course in Study Information System: <https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=MB120C23>
 * Course materials: <https://soubory.trapa.cz/linuxcourse/>
 * Contact author: <https://trapa.cz/en/contact>

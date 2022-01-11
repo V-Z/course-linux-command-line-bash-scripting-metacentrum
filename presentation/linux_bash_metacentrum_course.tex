@@ -54,7 +54,7 @@
 % Syntax higlight
 \usepackage{minted}
 \usemintedstyle{vim} % Styles are listed by pygmentize -L styles; languages are listed by pygmentize -L lexers
-\newminted{bash}{linenos, fontsize=\footnotesize, bgcolor=Beige, fontfamily=tt, gobble=4, numbersep=-6pt}
+\newminted{bash}{linenos, fontsize=\footnotesize, bgcolor=Beige, fontfamily=tt, gobble=4, numbersep=-3pt}
 % Change line number style
 \renewcommand{\theFancyVerbLine}{
 	\sffamily
@@ -90,7 +90,7 @@
 \title{Linux, command line \& MetaCentrum}
 \subtitle{Use of Linux command line not only for CESNET's MetaCentrum}
 \titlegraphic{\includegraphics[width=1cm]{tux.png}}
-\date{January 25 to 27, 2021}
+\date{January 17 to 20, 2022}
 
 \begin{document}
 
@@ -110,9 +110,9 @@
 
 \begin{frame}{The course information}
 	\begin{itemize}
-		\item The course page: \url{https://trapa.cz/en/course-linux-command-line-2021}
+		\item The course page: \url{https://trapa.cz/en/course-linux-command-line-2022}
 		\begin{itemize}
-			\item Česky: \url{https://trapa.cz/cs/kurz-prikazove-radky-linuxu-2021}
+			\item Česky: \url{https://trapa.cz/cs/kurz-prikazove-radky-linuxu-2022}
 		\end{itemize}
 		\item Subject in SIS: \url{https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=MB120C23}
 		\begin{itemize}
@@ -151,7 +151,7 @@
 	\begin{multicols}{2}
 		\begin{itemize}
 			\item If you do not have Linux installed, download and install VirtualBox from \url{https://www.virtualbox.org/}
-			\item Download openSUSE Leap 15.2 Linux distribution for this course from \url{https://botany.natur.cuni.cz/zeisek/openSUSE_Leap_courses.ova} ($\sim$4.9~GB)
+			\item Download openSUSE Leap 15.3 Linux distribution for this course from \url{https://botany.natur.cuni.cz/zeisek/openSUSE_Leap_courses.ova} ($\sim$4.6~GB)
 			\item Launch VirtualBox and go to menu \textbf{File | Import appliance\ldots} to import it. When done, launch it (\textbf{Start})
 		\end{itemize}
 		\includegraphics[height=6.5cm]{virtualbox.png}
@@ -237,7 +237,7 @@
 			\item Still very popular especially on servers, for special purposes, etc.
 			\item License allows closing of the code --- used by Apple macOS kernel, PlayStation firmware,~\ldots
 			\item Installation and management is for beginners usually harder than Linux, everything must be done manually, not so common as Linux anymore
-			\item E.g. \href{https://www.freebsd.org/}{FreeBSD}, \href{https://www.dragonflybsd.org/}{DragonFly BSD}, \href{https://www.openbsd.org/}{OpenBSD}, \href{https://www.freenas.org/}{FreeNAS} (for storage servers),~\ldots
+			\item E.g. \href{https://www.freebsd.org/}{FreeBSD}, \href{https://www.dragonflybsd.org/}{DragonFly BSD}, \href{https://www.openbsd.org/}{OpenBSD}, \href{https://www.truenas.com/}{TrueNAS} (for storage servers),~\ldots
 		\end{itemize}
 		\item \href{https://en.wikipedia.org/wiki/Solaris_(operating_system)}{Solaris} --- commercial, not very common
 		\begin{itemize}
@@ -374,7 +374,7 @@
 		\item \href{https://distrowatch.com/search.php?package=DEB}{Debian (DEB) based}
 		\begin{itemize}
 			\item \href{https://www.debian.org/}{Debian} --- one of oldest and most common, especially on servers
-			\item \href{https://ubuntu.com/}{Ubuntu} (nowadays probably the most popular on PCs and notebooks) and derivatives --- \href{https://kubuntu.org/}{Kubuntu}, \href{https://xubuntu.org/}{Xubuntu}, \href{https://lubuntu.net/}{Lubuntu},~\ldots~(according to GUI used --- most of the system is same)
+			\item \href{https://ubuntu.com/}{Ubuntu} (nowadays probably the most popular on PCs and notebooks) and derivatives --- \href{https://kubuntu.org/}{Kubuntu}, \href{https://xubuntu.org/}{Xubuntu}, \href{https://lubuntu.me/}{Lubuntu},~\ldots~(according to GUI used --- most of the system is same)
 			\item \href{https://linuxmint.com/}{Mint} --- Based on Ubuntu as well as Debian, user-friendly, popular
 			\item \href{https://www.kali.org/}{Kali}, \href{https://knopper.net/knoppix/index-en.html}{KNOPPIX}, \href{https://elementary.io/}{elementaryOS},~\ldots
 		\end{itemize}
@@ -443,7 +443,7 @@
 
 \begin{frame}{Dolphin (KDE file manager) --- default for openSUSE (inset) and after tuning in the same distribution\ldots} % TODO Update print screen
 	\begin{center}
-		\includegraphics[height=6cm]{dolphin.png}
+		\includegraphics[height=5.75cm]{dolphin.png}
 	\end{center}
 \end{frame}
 
@@ -499,7 +499,7 @@
 		\item You can change GUI (or its design) without change of distribution, it use to be highly configurable
 		\item Applications are still same --- no difference in Firefox across distributions --- keep your settings when changing distribution
 		\item Everyone using Android is using Linux --- install some terminal emulator there :-)
-		\item Special use --- \href{https://www.freenas.org/}{FreeNAS} for home as well as business file servers, \href{https://partedmagic.com/}{Parted Magic} and/or \href{https://www.system-rescue-cd.org/}{SystemRescueCD} to repair broken system (disk failure) and save data,~\ldots
+		\item Special use --- \href{https://www.truenas.com/}{TrueNAS} for home as well as business file servers, \href{https://partedmagic.com/}{Parted Magic} and/or \href{https://www.system-rescue.org/}{SystemRescue} to repair broken system (disk failure) and save data,~\ldots
 	\end{itemize}
 \end{frame}
 
@@ -1163,7 +1163,7 @@
 		\item Terminal emulator
 		\begin{itemize}
 			\item Application used to get the \enquote{terminal} and work in command line
-			\item Every GUI has some --- \href{https://konsole.kde.org/}{Konsole}, \href{https://apps.kde.org/en/yakuake}{Yakuake}, \href{https://invisible-island.net/xterm/}{XTerm}, \href{https://wiki.gnome.org/Apps/Terminal}{Gnome Terminal}, \href{http://guake.org/}{Guake}, \href{https://docs.xfce.org/apps/terminal/start}{XFCE Terminal}, \href{https://wiki.lxde.org/en/LXTerminal}{LxTerminal},~\ldots
+			\item Every GUI has some --- \href{https://konsole.kde.org/}{Konsole}, \href{https://apps.kde.org/yakuake}{Yakuake}, \href{https://invisible-island.net/xterm/}{XTerm}, \href{https://wiki.gnome.org/Apps/Terminal}{Gnome Terminal}, \href{http://guake.org/}{Guake}, \href{https://docs.xfce.org/apps/terminal/start}{XFCE Terminal}, \href{https://wiki.lxde.org/en/LXTerminal}{LxTerminal},~\ldots
 			\item Commonly allow appearance customization --- font, colors, background, style of notifications,~\ldots
 			\item Launch as many copies as you need (usually allow tabs for easier work)
 		\end{itemize}
@@ -2317,7 +2317,7 @@
 
 \begin{frame}{Faculty web server}
 	\begin{itemize}
-		\item Login requires same credentials as to \href{https://cas.cuni.cz/}{CAS} (login name, no ISIC number)
+		\item Login requires same credentials as to \href{https://ldapuser.cuni.cz/}{CAS} (login name, no ISIC number)
 		\item Faculty information are \href{https://www.natur.cuni.cz/fakulta/cit/web-aplikace/webhosting}{only in Czech}
 		\item It is Linux server running Debian
 		\item Connect with SSH/SFTP/SCP to \texttt{web.natur.cuni.cz}
@@ -2539,11 +2539,11 @@
 	\begin{multicols}{4}
 		\begin{itemize}
 			\item \href{https://kate-editor.org/}{Kate}
-			\item \href{https://apps.kde.org/en/kwrite}{KWrite}
+			\item \href{https://apps.kde.org/kwrite}{KWrite}
 			\item \href{https://www.vim.org/}{Vim}
 			\item \href{https://en.wikipedia.org/wiki/Emacs}{GNU Emacs}
 			\item \href{https://www.geany.org/}{Geany}
-			\item \href{http://bluefish.openoffice.nl/}{Bluefish}
+			\item \href{https://bluefish.openoffice.nl/}{Bluefish}
 			\item \href{https://wiki.gnome.org/Apps/Gedit}{Gedit}
 			\item \href{https://notepad-plus-plus.org/}{Notepad++}
 			\item \href{https://www.sublimetext.com/}{Sublime}
@@ -3003,7 +3003,7 @@
 
 \begin{frame}{Comparisons}
 	\begin{itemize}
-		\item Graphically compare two files by e.g. \href{https://apps.kde.org/en/kompare}{Kompare}, \href{https://sourcegear.com/diffmerge/}{DiffMerge}, \href{https://meldmerge.org/}{Meld},~\ldots
+		\item Graphically compare two files by e.g. \href{https://apps.kde.org/kompare}{Kompare}, \href{https://sourcegear.com/diffmerge/}{DiffMerge}, \href{https://meldmerge.org/}{Meld},~\ldots
 		\item Most common is usage of GNU diffutils (next slide), see manual \url{https://www.gnu.org/software/diffutils/manual/}
 		\item See also \href{https://www.computerhope.com/unix/udiff.htm}{guide with examples}, česky \href{https://blog.root.cz/petrkrcmar/diff-jak-cist-vystup-z-porovnani-souboru/}{příklady na diff} a~\href{https://www.root.cz/clanky/nastroje-pro-porovnani-obsahu-dvou-textovych-souboru/}{porovnání dvou textových souborů}
 	\end{itemize}
@@ -4038,7 +4038,7 @@
 			\item And many more\ldots
 		\end{itemize}
 		\item Distributions use to provide convenient simple update applet notifying about awaiting updates
-		\item There use to be web services to look for packages, also from other sources --- \href{https://software.opensuse.org/explore}{openSUSE}, \href{https://www.debian.org/distrib/packages\#search_packages}{Debian}, \href{https://packages.ubuntu.com/}{Ubuntu} (+ \href{https://launchpad.net/ubuntu/+search}{Launchpad} and \href{https://launchpad.net/ubuntu/+ppas}{PPAs}), \href{https://apps.fedoraproject.org/packages/}{Fedora},~\ldots
+		\item There use to be web services to look for packages, also from other sources --- \href{https://software.opensuse.org/explore}{openSUSE}, \href{https://www.debian.org/distrib/packages\#search_packages}{Debian}, \href{https://packages.ubuntu.com/}{Ubuntu} (+ \href{https://launchpad.net/ubuntu/+search}{Launchpad} and \href{https://launchpad.net/ubuntu/+ppas}{PPAs}), \href{https://packages.fedoraproject.org/}{Fedora},~\ldots
 		\item The task is always same, the exact work-flow and commands more or less differ among distributions\ldots
 		\item Tools like Android Google Play, Apple Store or Windows Store are inspired from Linux\ldots
 	\end{itemize}
@@ -4129,8 +4129,8 @@
 
 \begin{frame}{Manuals for package management}
 	\begin{itemize}
-		\item openSUSE and SUSE Linux Enterprise: \url{https://doc.opensuse.org/documentation/leap/startup/html/book.opensuse.startup/part-reference-software.html} and \url{https://en.opensuse.org/Portal:Zypper}
-		\item Red Hat, Fedora, CENTOS, Scientific Linux and others: \url{http://yum.baseurl.org/} and newer \url{https://fedoraproject.org/wiki/DNF}
+		\item openSUSE and SUSE Linux Enterprise: \url{https://doc.opensuse.org/documentation/leap/startup/html/book-startup/part-reference-software.html} and \url{https://en.opensuse.org/Portal:Zypper}
+		\item Red Hat, Fedora, CENTOS, Scientific Linux and others: \url{http://yum.baseurl.org/} and newer \url{https://docs.fedoraproject.org/en-US/quick-docs/dnf/}
 		\item Debian (and derivatives): \url{https://www.debian.org/doc/manuals/debian-reference/ch02.en.html} and \url{https://wiki.debian.org/PackageManagement}
 		\item Ubuntu (and derivatives): \url{https://help.ubuntu.com/stable/ubuntu-help/addremove.html} and \url{https://help.ubuntu.com/community/AptGet/Howto}
 		\item And another distributions\ldots
@@ -4200,7 +4200,7 @@
 
 \begin{frame}[fragile]{Compilation of SAMtools}
 	\begin{itemize}
-		\item See \url{http://www.htslib.org/download/}
+		\item See \url{https://www.htslib.org/download/}
 		\item Ensure packages \texttt{zlib} and \texttt{zlib-dev(el)} are installed --- required for running and compilation, see \href{https://github.com/samtools/samtools/blob/master/INSTALL}{INSTALL} and \href{https://github.com/samtools/samtools/blob/master/README}{README}
 	\end{itemize}
 	\vfill
@@ -4227,16 +4227,16 @@
 	\begin{itemize}
 		\item \href{https://www.java.com/}{Java} is probably the most portable language working on any operating system --- the only condition is to install \href{https://en.wikipedia.org/wiki/Java_virtual_machine}{Java virtual machine (JVM)}
 		\item Linux usually use \href{https://openjdk.java.net/}{OpenJDK} --- search for packages named \texttt{*openjdk*}
-		\item Let's download e.g. \href{http://tree.bio.ed.ac.uk/software/figtree/}{FigTree} from \url{http://tree.bio.ed.ac.uk/download.php?id=96&num=3}
+		\item Let's download e.g. \href{http://tree.bio.ed.ac.uk/software/figtree/}{FigTree} from \url{https://github.com/rambaut/figtree/releases}
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
     # Go to directory where you downloaded it
     cd directory/with/downloaded/figtree
     # Decompress downloaded archive
-    tar zxvf FigTree_v1.4.3.tgz
+    tar zxvf FigTree_v1.4.4.tgz
     # Go to created directory
-    cd FigTree_v1.4.3/
+    cd FigTree_v1.4.4/
     ls * # List files, also in subdirectories
     # Launch it (command java launches *.jar files)
     java -jar lib/figtree.jar
@@ -4254,7 +4254,7 @@
 			\item They must be written in portable language like Java or script like Perl, Python or BASH
 			\item Otherwise we need an emulator --- not everything works
 		\end{itemize}
-		\item Windows 10 has \href{https://docs.microsoft.com/windows/wsl/install-win10}{possibility to run Linux applications}, other option (for more Windows versions) is \href{https://www.cygwin.com/}{Cygwin} (application must be specially compiled to work on Cygwin)
+		\item Windows has since v. 10 \href{https://docs.microsoft.com/windows/wsl/install}{possibility to run Linux applications}, other option (for more Windows versions) is \href{https://www.cygwin.com/}{Cygwin} (application must be specially compiled to work on Cygwin)
 		\item To run Windows applications on Linux use \href{https://www.winehq.org/}{Wine}
 		\begin{itemize}
 			\item Search for packages named \texttt{wine} and install it
@@ -4617,7 +4617,7 @@
                 # Including address, port and password to connect
 	\end{bashcode}
 	\begin{itemize}
-		\item Launch your favorite VNC client (\href{https://apps.kde.org/en/krdc}{KRDC}, \href{https://www.tightvnc.com/}{TightVNC}, \href{https://tigervnc.org/}{TigerVNC}~\ldots) and use credentials from above output to connect
+		\item Launch your favorite VNC client (\href{https://apps.kde.org/krdc}{KRDC}, \href{https://www.tightvnc.com/}{TightVNC}, \href{https://tigervnc.org/}{TigerVNC}~\ldots) and use credentials from above output to connect
 		\item Work as on normal Linux desktop (ensure to work in \texttt{\$SCRATCHDIR})\ldots
 		\item It provides limited amount of resources, not suitable for big tasks
 	\end{itemize}
@@ -4949,14 +4949,13 @@
 
 \begin{frame}[allowframebreaks]{Resources to learn to work in the terminal}
 	\begin{itemize}
-		\item openSUSE (general handbook) \url{https://doc.opensuse.org/documentation/leap/startup/html/book.opensuse.startup/part-bash.html}
+		\item openSUSE (general handbook) \url{https://doc.opensuse.org/documentation/leap/startup/html/book-startup/part-bash.html}
 		\item Ubuntu (general handbook) \url{https://help.ubuntu.com/community/UsingTheTerminal}
 		\item BASH full reference manual \url{https://www.gnu.org/software/bash/manual/} (advanced)
 		\item Debian (general handbook) \url{https://www.debian.org/doc/manuals/debian-reference/ch01.en.html}
 		\item Guide to Unix \url{https://en.wikibooks.org/wiki/Guide_to_Unix}
 		\item BASH for beginners \url{https://tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html} (the site has plenty of good resources)
 		\item Grymoire for UNIX wizards \url{https://www.grymoire.com/Unix/}
-		\item BASH Guide for Beginners \url{http://linuxcourse.rutgers.edu/documents/Bash-Beginners-Guide/}
 		\item Linux tutorial \url{https://ryanstutorials.net/linuxtutorial/}
 		\item Getting Started with BASH \url{https://www.hypexr.org/bash_tutorial.php}
 		\item Bash Guide \url{https://mywiki.wooledge.org/BashGuide}
@@ -5052,7 +5051,7 @@
 			\item Kubuntu \url{https://kubuntu.org/}
 			\item Kubuntu forum \url{https://www.kubuntuforums.net/}
 			\item Xubuntu \url{https://xubuntu.org/}
-			\item Lubuntu \url{https://lubuntu.net/}
+			\item Lubuntu \url{https://lubuntu.me/}
 		\end{itemize}
 		\item Linux Mint \url{https://www.linuxmint.com/}
 		\begin{itemize}
@@ -5111,7 +5110,7 @@
 		\begin{itemize}
 			\item Novinky a~informace \url{https://www.openoffice.cz/}
 			\item Fórum \url{https://forum.openoffice.cz/}
-			\item Podrobná příručka \url{https://www.knihaoffice.cz/} (jedna z~vůbec nejlepších dostupných knih)
+			\item Podrobná příručka \url{https://www.root.cz/knihy/libreoffice-writer-prakticky-pruvodce/} (jedna z~vůbec nejlepších dostupných knih)
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -5181,3 +5180,5 @@
 % * Přidat víc příkladů na základní operace
 % * Přeskládat řetězení, přesměrování, globbing, proměnné, atd.
 % * Zkontrolovat syntax skriptování (hlavně v prezentaci), povyházet zastaralé konstrukce.
+% * cluster vs. grid vs. supercomputer
+% * vyhodit netstat
