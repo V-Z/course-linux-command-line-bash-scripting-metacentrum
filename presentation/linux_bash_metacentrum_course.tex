@@ -127,7 +127,7 @@
 	\begin{enumerate}
 		\item Be present whole course.
 		\item Be active --- ask and answer questions.
-		\item Write short script solving any task the student is (going to be) solving. E.g. prepare script to process student's data on MetaCentrum. Or short script to do anything the student needs to do. This will be very individual. According to topics and interests of every student. Students can of course discuss with anyone, use Internet, manuals, etc. The aim is learn how to solve real problem the student has/is going to have.
+		\item Write short script solving any task the student is (going to be) solving. E.g. prepare script to process student's data on MetaCentrum. Or short script to do anything the student needs to do. This will be very individual. According to topics and interests of every student. Students can of course discuss with anyone, use Internet, manuals, etc. The aim is to learn how to solve real problem the student has/is going to have.
 		\item Write at least one page (can be split into multiple articles) on Wikipedia about any topic discussed during the course. Again, this is very open, students can write about any topic they like. I~prefer native language of the student (typically to make larger non-English Wikipedia).
 	\end{enumerate}
 \end{frame}
@@ -153,6 +153,7 @@
 			\item If you do not have Linux installed, download and install VirtualBox from \url{https://www.virtualbox.org/}
 			\item Download openSUSE Leap 15.3 Linux distribution for this course from \url{https://botany.natur.cuni.cz/zeisek/openSUSE_Leap_courses.ova} ($\sim$4.6~GB)
 			\item Launch VirtualBox and go to menu \textbf{File | Import appliance\ldots} to import it. When done, launch it (\textbf{Start})
+			\item See also \url{https://trapa.cz/en/node/128}
 		\end{itemize}
 		\includegraphics[height=6.5cm]{virtualbox.png}
 	\end{multicols}
@@ -220,6 +221,7 @@
 			\item Most of people working with UNIX are using Linux (or macOS)
 		\end{itemize}
 		\item GNU and Linux are two important (but not sole) pieces of building set forming modern operating system
+		\item \enquote{Linux} nowadays usually mean Linux kernel + GNU basic tools  (thus correctly \enquote{GNU/Linux}) + thousands of various another applications (= \enquote{Linux distribution})
 	\end{itemize}
 \end{frame}
 
@@ -265,7 +267,8 @@
 			\item Much cheaper to shop there
 		\end{itemize}
 		\item Both have pros and cons --- depends what you wish\ldots
-		\item According to \href{https://en.wikipedia.org/wiki/The_Cathedral_and_the_Bazaar}{book by Eric S. Raymond}
+		\item Consider e.g. difference between usage of full-featured and expensive Geneious (theoretically everything you need to process genetic data) vs. searching for hundreds of tools and pipelines on the Internet (GitHub, R packages, fora,~\ldots)
+		\item According to \href{https://en.wikipedia.org/wiki/The_Cathedral_and_the_Bazaar}{book by Eric S.~Raymond}
 	\end{itemize}
 \end{frame}
 
@@ -279,6 +282,7 @@
 		\item \href{https://en.wikipedia.org/wiki/BSD_licenses}{BSD license} --- permissive --- allow derived code to became closed-source (commonly used by e.g. Apple macOS, Safari browser, small electronics,~\ldots)
 		\item \href{https://www.apache.org/licenses/}{Apache} or \href{https://www.mozilla.org/MPL/}{Mozilla} licenses etc. --- specific use in particular software
 		\item Creative Commons (CC) --- software licenses are not suitable for multimedia, text, etc. --- CC has many options (including denial of reuse of the product), see \url{https://creativecommons.org/}
+		\item And \href{https://en.wikipedia.org/wiki/Comparison_of_free_and_open-source_software_licenses}{many} \href{https://opensource.org/licenses}{more} licenses\ldots
 	\end{itemize}
 	\begin{block}{Spirit of FOSS}
 		\begin{itemize}
@@ -290,16 +294,16 @@
 		\end{itemize}
 	\end{block}
 	\begin{itemize}
-		\item And \href{https://en.wikipedia.org/wiki/Comparison_of_free_and_open-source_software_licenses}{many} \href{https://opensource.org/licenses}{more} licenses\ldots
 		\item Practical output of using open-source licenses for the user
 		\begin{itemize}
 			\item Software can be used anywhere
-			\item Software can be modified
+			\item Software can be modified --- including various fixes of older code to work properly, or to different systems
 			\item User can learn from the software (from the code), new software can be developed on top of it
 			\item Easier to find and trace bugs
-			\item Security --- no back doors
+			\item Security --- no backdoors
 			\item Bugs (problems) in the code can fixed by nearly anyone
 			\item Often available for free
+			\item Easier distribution of the software (can be copied into various repositories, like those of Linux distributions, \href{https://docs.conda.io/}{Conda} or \href{https://brew.sh/}{Homebrew})
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -467,14 +471,14 @@
 		\end{itemize}
 		\item Virtualization (slide~\ref{VBox})
 		\begin{itemize}
-			\item Requires relatively powerful computer (preferable Intel i5 or i7 or AMD Ryzen and over 4--8~GB of RAM)
+			\item Requires relatively powerful computer (preferable Intel i5 or i7 or AMD Ryzen and over 8~GB of RAM)
 			\item Install virtual machine (probably the most easy is \href{https://www.virtualbox.org/}{VirtualBox}) --- allows install and run another operating system inside host as an ordinary application --- very easy and comfortable
 		\end{itemize}
-		\item Linux subsystem in MS Windows 10 Store
+		\item Linux subsystem in MS Windows Store (Windows 10 and 11)
 		\begin{itemize}
 			\item To install follow \url{https://docs.microsoft.com/windows/wsl/about}
-			\item Version 1 only for command-line applications, version 2 should allow GUI (experimental)
-			\item Has some problems with paths, text files, so sometimes it is not usable very well\ldots
+			\item Version 1 only for command-line applications (it has some problems with paths, text files,~\ldots), version 2 should allow GUI (experimental)
+			\item Version 2 works well for most of tasks
 		\end{itemize}
 		\item Cygwin
 		\begin{itemize}
