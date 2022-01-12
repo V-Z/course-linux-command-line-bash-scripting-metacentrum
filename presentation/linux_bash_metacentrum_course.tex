@@ -516,7 +516,7 @@
 		\item Package management --- especially in command line
 		\item Development model --- conservative or experimental, fast or slow
 		\item Management of system services (how to start/stop certain services like database or web server) --- not important for daily usage for most of users
-		\item Sometimes in location of some system files --- also not important in daily usage of most of users
+		\item Sometimes in location of some system files (can be customized) --- also not important in daily usage of most of users
 		\item Kernel is almost same, applications are same and used in same way\ldots
 		\item Command line is almost same across Linux, and almost same as in other UNIX systems (macOS,~\ldots)
 	\end{itemize}
@@ -697,6 +697,7 @@
 \begin{frame}[allowframebreaks]{Directory structure in Linux}
 	\begin{itemize}
 		\item It is similar also in another UN*X systems
+		\item Directory structure in Linux is similar to macOS (but there it is bit hidden, users usually don't see everything), but very different from Windows logic
 		\item Top directory \enquote{\texttt{/}} --- \enquote{root}
 		\item Everything else (including disks and network shares) are mounted in subdirectories (\texttt{/\ldots})
 		\item \texttt{/bin} --- very basic command line utilities
@@ -720,15 +721,16 @@
 		\item \texttt{/usr} --- binaries (executable applications) and libraries of installed applications
 		\item \alert{\texttt{/var}} --- data of most of applications and services, including e.g. database data, system logs,~\ldots
 		\item \alert{\texttt{/windows}} --- if on dual boot, Windows disks are commonly mounted here
+		\item In newest Linux distributions, most of \texttt{/bin}, \texttt{/etc}, \texttt{/lib}, \texttt{/lib64} and \texttt{/sbin} are mostly in \texttt{/usr} (original locations are just links)
 		\item Can be altered, modified
-		\item E.g. MetaCentrum has storage servers in various locations accessible from front and calculation nodes in \texttt{/storage}
+		\item E.g. MetaCentrum has storage servers in various locations accessible from front ends and calculation nodes in \texttt{/storage}
 		\item Usually, work only in your home, anywhere else modify files only if you are absolutely sure what you are doing
 		\item Normal user doesn't have permission to modify files outside his directory (with exception of plugged removable media, etc.)
 		\item Try \texttt{man hier} for details
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Configuration in /etc (examples)}
+\begin{frame}{Configuration in \texttt{/etc} (examples)}
 	\begin{itemize}
 		\item Configuration of system services (servers,~\ldots) and behavior
 		\begin{itemize}
@@ -745,7 +747,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Example of configuration in /etc/ssh/sshd\_config}
+\begin{frame}[fragile]{Example of configuration in \texttt{/etc/ssh/sshd\_config}}
 	\begin{bashcode}
     # This is the ssh client system-wide configuration file.  See
     # ssh_config(5) for more information.  This file provides defaults for
@@ -840,21 +842,21 @@
 \begin{frame}[fragile]{Links}
 	\label{links}
 	\begin{itemize}
-		\item Soft links --- like links on the web --- short-cut to another place
+		\item \textbf{Symbolic (soft) links (symlinks)} --- like links on the web --- short-cut to another place
 		\begin{itemize}
 			\item When we delete link, nothing happens, when target, non-working link remains
 		\end{itemize}
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
-    ln -s source target # Source will point to target
+    ln -s target link_name # Link points to target (existing file/directory)
     ls -l bin/cinema5
     lrwxrwxrwx 1 vojta users 42 5. dub 2014 cinema5 -> # "l" marks link
-      /home/vojta/bin/cinema5-0.2.1-beta/cinema5* # "->" points to target
+      /home/vojta/bin/cinema5-0.2.1-beta/cinema5*      # "->" points to target
 	\end{bashcode}
 	\vfill
 	\begin{itemize}
-		\item Hard links --- only second name for file already presented on the disk (available only for files): \texttt{ln source target}
+		\item \textbf{Hard links} --- only second name for file already presented on the disk (available only for files): \texttt{ln target link\_name}
 		\begin{itemize}
 			\item If any one of the two files is deleted, the second remains to be fully working
 		\end{itemize}
@@ -865,8 +867,8 @@
     ls -l .bash* # Numbers in first column show links pointing to it
                  # For directories - number of items, for files = 1
     -rw------- 1 vojta users 7298 21. jan 16.43 .bash_history # One link
-    -rw-r--r-- 2 vojta users 2707 29. nov 16.21 .bashrc # Same file as below
-    -rw-r--r-- 2 vojta users 2707 29. nov 16.21 .bashrcX # Two links
+    -rw-r--r-- 2 vojta users 2707 29. nov 16.21 .bashrc       # Same as below
+    -rw-r--r-- 2 vojta users 2707 29. nov 16.21 .bashrcX      # Two links
 	\end{bashcode}
 \end{frame}
 
@@ -881,7 +883,7 @@
 		\item Commands \texttt{chgrp} to change group often requires root privileges --- user has to be member of particular group to be able to change ownership to it (if not, \texttt{root} must do it)
 		\item Information about users and groups and their IDs are in \texttt{/etc/group} and \texttt{/etc/passwd}
 		\item Ownership (and permissions, slide~\ref{permissions}) are important especially on servers with plenty of users (e.g. on MetaCentrum)
-		\item It is not possible to add particular permissions for particular user on one file --- there must be special group or ACL must be used (slide~\ref{acl})
+		\item It is not possible to add particular permissions for particular user on one file/directory --- there must be special group or ACL must be used (slide~\ref{acl})
 	\end{itemize}
 \end{frame}
 
@@ -918,13 +920,13 @@
 			\textbf{Permission} & \textbf{Number} & \textbf{Directory} & \textbf{File}\\
 			r & 4 & Read directory content & Read file content\\
 			w & 2 & Write into it (add/remove items) & Write into it, modify, delete it\\
-			x & 1 & Enter it & Launch application (scrip)
+			x & 1 & Enter it & Launch application (script)
 		\end{tabular}
 	\end{center}
 	\begin{itemize}
 		\item \texttt{rwxrw-r-{-}} --- 3$\times$3 characters for permissions for owner of the file/directory, group it is belonging to, and other users (\texttt{d} on beginning marks directories, \texttt{l} links, \texttt{+} ACL, slide \ref{acl})
 		\item \texttt{764} --- same as above --- numbers for each role are summed --- first one is for owner, second for group and last for others
-		\item Executable scripts and binaries \textbf{require} executable permission (\texttt{x}, e.g. \texttt{chmod +x} or \texttt{chmod u+x})
+		\item Executable scripts and binaries \textbf{require} executable permission (\texttt{x}, e.g. \texttt{chmod +x} or \texttt{chmod u+x}) --- not supported on FAT drives (USB sticks, memory cards,~\ldots)
 	\end{itemize}
 \end{frame}
 
@@ -957,7 +959,7 @@
 	\begin{bashcode}
     ls -l # Long list - file names and attributes
     ls -a # All, including hidden files (starting with dot)
-    ls -F # Add on the end of name / for directories and * for executable
+    ls -F # Add on the end of name "/" for directories and "*" for executable
     ls -h # Human readable size units (use with -l or -s)
     ls --color ## Colored output
     ls -laFh --color # Combine any parameters you like
@@ -975,7 +977,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}{Extending permissions --- ACL}{Access control list}
+\begin{frame}[allowframebreaks]{Extending permissions --- ACL (Access control list)}
 	\label{acl}
 	\begin{itemize}
 		\item By default, it is not possible to give specific permission to the user who is not owner, nor member of group owning the file
@@ -983,8 +985,10 @@
 		\item Command \texttt{getfacl} lists those extra permissions, \texttt{setfacl} sets
 		\item \alert{When in use, \enquote{basic} tools listing permissions (e.g. \texttt{ls -l}, ACL in use is marked by \texttt{+} after permissions --- next slide) sometimes do not show correct result and permissions may work unexpectedly}
 		\item Important especially in network environment with many users
-		\item If intensively used, \texttt{ls -l} sometimes doesn't show correct permissions (see next slide)
-		\item If not in use on server (like e.g. on CESNET data storage), relatively high number of groups is required to be able to correctly setup sharing permissions
+		\item If intensively used, \texttt{ls -l} sometimes doesn't show correct permissions (see next slide), it can be confusing and lead into various issues
+		\item If not in use on server (like e.g. on CESNET data storage in Ostrava, \texttt{du4.cesnet.cz}), relatively high number of groups is required to be able to correctly setup sharing permissions
+		\item MetaCentrum has storages and clusters connected via NFSv4 protocol (see also slide~\ref{netfs}) --- commands \texttt{getfacl} and \texttt{setfacl} do not work there, use \texttt{nfs4\_getfacl}, \texttt{nfs4\_setfacl} and \texttt{nfs4\_editfacl} instead (usage is very similar), see also \url{https://wiki.metacentrum.cz/wiki/Access_Control_Lists_on_NFSv4}
+		\item Permissions (\enquote{classical} as well as ACL) require some time to practice and master it\ldots
 	\end{itemize}
 \end{frame}
 
@@ -1006,7 +1010,7 @@
     # folder 'dokumenty/arabidopsis' (no extra group is required)
     setfacl -mR u:arabidopsis_data:r dokumenty/arabidopsis
     setfacl -R ... # Recursive (including subdirectories)
-    setfacl -b FILE # Remove all ACL from FILE
+    setfacl -b FILE # Remove all ACL from FILE (combine with -R ...)
 	\end{bashcode}
 \end{frame}
 
@@ -1020,12 +1024,11 @@
 		\item \texttt{umask 027} (or other number) is typically set in file \texttt{$\sim$/.bashrc}
 		\begin{itemize}
 			\item \texttt{$\sim$} means user's home directory
-			\item \texttt{.bashrc} is user's configuration for BASH
+			\item \texttt{.bashrc} is user's configuration for BASH (see slide~\ref{bashrc})
 		\end{itemize}
 		\item Typically used in network environment
 		\item Set with care --- new permissions will have plenty of consequences --- different are typically needed for web pages, private files, shared files,~\ldots
 		\item \texttt{umask} work recursively for all new files in user home directory --- it is not possible to set new implicit rules for particular directory
-		\item ACL can be used to set default permissions/ownership for new files in particular directory
 	\end{itemize}
 \end{frame}
 
@@ -1069,20 +1072,20 @@
 	\begin{itemize}
 		\item Windows and UNIX have different internal symbol for end of line (\href{https://en.wikipedia.org/wiki/Newline}{new line}) --- EOL
 		\begin{itemize}
-			\item UNIX: LF (\texttt{\textbackslash n})
+			\item UNIX (Linux, macOS,~\ldots): LF (\texttt{\textbackslash n})
 			\item Windows/DOS: CR+LF (\texttt{\textbackslash r\textbackslash n})
 			\item Mac v. < 9: CR (\texttt{\textbackslash r}) (Mac up to 9~wasn't UN*X, since OS~X it is)
 		\end{itemize}
-		\item Good text editor can open correctly any EOL, but for example execution of script written in Windows will probably fail on Linux if it has wrong EOL
+		\item Good text editor (slide~\ref{editors}) can open correctly any EOL, but for example execution of script written in Windows will probably fail on Linux if it has wrong EOL
 		\item Different systems use different encoding
 		\begin{itemize}
 			\item UNIX: mainly UTF-8 (Unicode, universal), UTF-16 for Asian languages
 			\item Windows: win-cp-125X (variants according to region)
 			\item Older UNIX: ISO-8859-X (variants according to region)
-			\item Other much less common (historical) types
+			\item Other much less common (historical) types\ldots
 			\item Important mainly for accented characters
 		\end{itemize}
-		\item Text editors can usually open any encoding, but automatic detection commonly fails --- set it manually
+		\item Text editors can usually open any encoding, but automatic detection commonly fails --- set it manually, see also slide~\ref{eolencoding}
 	\end{itemize}
 \end{frame}
 
@@ -1321,6 +1324,7 @@
 \end{frame}
 
 \begin{frame}[fragile]{BASH settings (popular examples)}{Write them into BASH configuration file}
+	\label{bashrc}
 	\begin{itemize}
 		\item In any text editor open \texttt{$\sim$/.bashrc} and edit it
 		\item Behavior of BASH can be set to fit user's needs
@@ -2559,6 +2563,7 @@
 \end{frame}
 
 \begin{frame}[fragile]{Converting the text}{Prevent bad display and weird errors when launching scripts}
+	\label{eolencoding}
 	\begin{bashcode}
     unix2dos textfile # Convert text file from UNIX to Windows EOL
     unix2mac textfile # Convert text file from UNIX to old Mac EOL
