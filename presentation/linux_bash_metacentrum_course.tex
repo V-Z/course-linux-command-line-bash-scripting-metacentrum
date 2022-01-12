@@ -2198,7 +2198,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Basic network information and testing} % TODO rewrite netstat examples for ss
+\begin{frame}[fragile]{Basic network information and testing} % TODO Rewrite netstat examples for ss
 	\begin{bashcode}
     hostname # Get name of the computer
     ping web.natur.cuni.cz # Ping host. Is it alive? Cancel by Ctrl+C
@@ -2615,7 +2615,7 @@
     unix2mac textfile # Convert text file from UNIX to old Mac EOL
     dos2unix textfile # Convert text file from Windows to UNIX EOL
     mac2unix textfile # Convert text file from old Mac to UNIX EOL
-    enca -h # See usage
+    enca -h # See usage - enca converts various encodings (similar to iconv)
     enca file.txt # Detects encoding of file.txt
     enca -x utf8 file.txt # Convert file.txt into UTF-8
     # Converts encoding of input file (ISO-8859-2) to outfile in UTF-8
@@ -2633,7 +2633,7 @@
 \begin{frame}[fragile]{Read text file}
 	\begin{bashcode}
     cat # Read or join (using redirects) files; 'cat --help' for options
-    cat long_text.txt # Print content of text file
+    cat long_text.txt # Print content of text file to the screen (stdout)
     cat textfile1 >> textfile2 # Append textfile1 to the end of textfile2
     nl long_text.txt # Like 'cat -n', prints textfile with line numbers
     tac textfile # Like cat, but prints lines in reverse order
@@ -2679,17 +2679,19 @@
 	\begin{bashcode}
     grep --help # See plenty of options
     grep -parameters pattern textfile # Write lines containing pattern
-    grep user /etc/passwd # Write all lines in passwd containing user
-    cat /etc/passwd | grep user # Same as above
-    grep -v user /etc/passwd # Write all lines in passwd NOT containing user
-    grep -c user /etc/passwd # Get number of lines in passwd containing user
+    grep user /etc/passwd # Write all lines in passwd file containing "user"
+    cat /etc/passwd | grep user # Same as above, common, but superfluous style
+    grep -v user /etc/passwd # Write all lines in passwd NOT containing "user"
+    grep -c user /etc/passwd # Get number of lines in passwd containing "user"
     grep -i USER /etc/passwd # -i for case insensitive
     grep -q ... # quiet - no output (only T/F) - good for testing in scripts
     grep -ls user /etc/* # -l print files with pattern, -s suppress errors
-    grep "longer text" textfile # Extract whole phrase
+    grep "longer text" textfile # Extract whole phrase (must be quoted)
 	\end{bashcode}
 	\begin{itemize}
 		\item Grep supports regular expressions, slide \ref{regexp}
+		\item Grep works per-line, multiline patterns are more or less impossible (use AWK or Perl instead) --- this is general limitation of basic tools
+		\item Grep (and sed and other tools) in macOS is outdated, missing plenty of functions --- use version from Homebrew (slide~\ref{homebrew})
 	\end{itemize}
 \end{frame}
 
@@ -2787,7 +2789,7 @@
     grep home /etc/passwd | awk -F ':' '{print $5 ", username:", $1}'
     # Separate columns by TAB, /^d/ for lines starting with "d" (only dirs)
     ls -l | awk '/^d/ { print $8 "\t" $3 }'
-    # Print on even lines ">", former column 1, new line, former column 2
+    # Print on even lines ">", former column 1, new line, former column 2:
     # 2 columns into 2 lines (create FASTA from tabular record)
     awk '{print ">"$1"\n"$2}' awk_test_file.tab | less -S
     # Print field 1, TAB (\t), length of field 2, TAB and field 2
@@ -2815,7 +2817,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{AWK examples III}
+\begin{frame}[fragile]{AWK examples III} % TODO Add more awk examples
 	\begin{bashcode}
     # For every 4th line starting from line 2 of FASTQ file (from line 2
     # every 4th line contains the DNA sequence) print its length (bzcat
@@ -2848,9 +2850,9 @@
     bzcat Oxalis_hirta_R1.fastq.bz2 | awk 'NR%4==2{print $0}' | sort -u
     sort -b textfile # Ignore leading blanks (space on beginning of line)
     sort -k 2 -n cut_awk_test_file.tsv # Sort according to 2nd field
-    # Filters following identical lines - only unique are printed (to get
-    #  unique lines from whole file, sort it)
+    # Filters following identical lines - only unique are printed
     uniq textfile
+    sort textfile | uniq # To get unique lines from whole file, sort it first
 	\end{bashcode}
 \end{frame}
 
