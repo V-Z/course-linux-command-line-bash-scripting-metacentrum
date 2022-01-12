@@ -1091,7 +1091,7 @@
 
 \section{Command line}
 
-\begin{frame}[allowframebreaks]{Command line}
+\begin{frame}[allowframebreaks]{Command line}{Practical usage of command line tools}
 	\tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
 \end{frame}
 
@@ -1103,14 +1103,14 @@
 		\begin{itemize}
 			\item \texttt{man somecommand}
 			\item Arrows to move up and down, \texttt{q} to quit
-			\item Type \texttt{/} and then type text to search and hit Enter to search --- next hit by \texttt{n}, quit search by ESC (twice)
+			\item Type \texttt{/} and then type text to search and hit Enter to search --- next hit by \texttt{n}
 			\item Command \texttt{info} more advanced --- type \texttt{?} for help
 		\end{itemize}
 		\item Parameters can be combined, order doesn't matter (same variants: \texttt{ls -la}; \texttt{ls -al}; \texttt{ls -a -l}; \texttt{ls -l -a})
 		\item \enquote{Long} parameters (\texttt{-{-}XXX}) must stay separated
 		\item Commands (applications) must be in PATH (slide~\ref{PATH}) --- actual directory isn't
 		\begin{itemize}
-			\item If the script is is current directory, use \texttt{./script.sh} or full path
+			\item If the script is is current directory (out of PATH), use \texttt{./script.sh} or full path
 		\end{itemize}
 		\item Custom scripts must have execute permission (\texttt{chmod +x script.sh})
 	\end{itemize}
@@ -1137,7 +1137,7 @@
     # Install updated basic UNIX tools
     brew install coreutils gnu-sed gawk grep bash gcc make wget dos2unix
     brew list # List of installed packages (brew formulae)
-    brew info FORMULA # Information about particular formula
+    brew info FORMULA # Information about particular formula (package)
     brew search KEYWORD # Search for applications
     brew update # Update Homebrew
     brew upgrade # Update all packages installed by Homebrew
@@ -1240,16 +1240,16 @@
 		\end{bashcode}
 		\vfill
 		\begin{itemize}
-			\item Toy server: user names \texttt{cu01}--\texttt{cu20}
+			\item Toy server: user names \texttt{courseuser01}--\texttt{courseuser15}
 		\end{itemize}
 		\vfill
 		\begin{bashcode}
-    ssh cuXY@vyuka.natur.cuni.cz
+    ssh courseuserXY@vyuka.natur.cuni.cz
 		\end{bashcode}
 		\vfill
 		\begin{itemize}
 			\item If fingerprint key changes, ssh complains a~lot --- possible \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{man in the middle attack}
-			\item From Windows use \href{https://www.putty.org/}{Putty}
+			\item From Windows use \href{https://www.putty.org/}{Putty} (see right figure)
 		\end{itemize}
 		\begin{center}
 			\includegraphics[height=6cm]{putty.png}
@@ -1293,22 +1293,30 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{Nice BASH features for easier work (selection)} % TODO Add more BASH features
+\begin{frame}[allowframebreaks]{Nice BASH features for easier work (selection)}
 	\begin{itemize}
 		\item Arrows up and down list in the history of commands
 		\item List whole history by command \texttt{history}
 		\item \texttt{Ctrl+R} --- reverse search in history --- type to search last command(s) containing typed character(s) --- repeat typing \texttt{Ctrl+R} to search deeper in history
+		\begin{itemize}
+			\item When on correct entry, hit Enter or use L/R arrow keys to edit it
+		\end{itemize}
+		\item \texttt{Ctrl+J} --- exit search
 		\item \texttt{TAB} --- list command and files starting by typed characters
-		\item \texttt{Home}/\texttt{End} --- go to beginning/end of the line
+		\item \texttt{Home}/\texttt{End} (or \texttt{Ctrl+A}/\texttt{Ctrl+E}) --- go to beginning/end of the line
 		\item \texttt{Ctrl+L} --- clear screen (like \texttt{clear} command)
 		\item \texttt{Ctrl+Shift+C}/\texttt{V} --- copy/paste the text from terminal emulator
 		\item \texttt{Ctrl+C} --- cancel running task
 		\item \texttt{Ctrl+D} --- log out (like commands \texttt{exit} or \texttt{logout})
 		\item \texttt{Ctrl+U} --- move text before cursor into clipboard
 		\item \texttt{Ctrl+K} --- move text after cursor into clipboard
+		\item \texttt{Ctrl+Y} --- paste selection from the above commands
 		\item \texttt{Ctrl+left/right arrow} --- skip words
+		\item \texttt{Ctrl+S} --- suspend output of long verbose commands (resume with \texttt{Ctrl+Q})
 		\item \texttt{Ctrl+T} --- flip current and left character
+		\item \texttt{!xx} --- launch last command starting with \texttt{xx} (use with care)
 		\item \texttt{Ctrl+X+E} --- start text editor (default, defined in \texttt{$\sim$/.bashrc}) in current directory
+		\item Can slightly differ (be limited) among various systems, terminal emulators, etc.
 	\end{itemize}
 \end{frame}
 
@@ -1326,7 +1334,7 @@
 \begin{frame}[fragile]{BASH settings (popular examples)}{Write them into BASH configuration file}
 	\label{bashrc}
 	\begin{itemize}
-		\item In any text editor open \texttt{$\sim$/.bashrc} and edit it
+		\item In any text editor open \texttt{$\sim$/.bashrc} (and/or \texttt{$\sim$/.bash\_profile}) and edit it
 		\item Behavior of BASH can be set to fit user's needs
 		\item Terminal emulators allow to set custom fonts and colors,~\ldots
 	\end{itemize}
@@ -1484,9 +1492,9 @@
 		\begin{tabular}{m{2.25cm}m{6.3cm}m{5.3cm}}
 			\textbf{Archive} & \textbf{Compressing command} & \textbf{Decompressing command}\\
 			*.tar & tar cvf archive.tar file1 file2 file3 & tar xvf archive.tar\\
-			*.tar.gz\alert{/} *.tgz & tar czvf archive.tar.gz\alert{/}.tgz file1 file2 & tar xzvf archive.tar.gz\alert{/}.tgz\\
-			*.tar.bz\alert{/} *.tbz\alert{/} *.tar.bz2 & tar cjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2 file1 file2 file3 file4 & tar xjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2\\
-			*.tar.xz & tar cvJf archive.tar.xz file1 file2 file4 & tar xvJf archive.tar.xz\\
+			*.tar.gz \alert{/} *.tgz & tar czvf archive.tar.gz\alert{/}.tgz file1 file2 & tar xzvf archive.tar.gz\alert{/}.tgz\\
+			*.tar.bz \alert{/} *.tbz \alert{/} *.tar.bz2 & tar cjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2 file1 file2 file3 file4 & tar xjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2\\
+			*.tar.xz & tar cvJf archive.tar.xz file1 file2 file3 & tar xvJf archive.tar.xz\\
 			*.tar.lzma & tar cvf - file1 file2 file3 file4 | lzma > archive.tar.lzma & lzcat archive.tar.lzma | tar xvf -\\
 			*.gz & gzip file & gunzip archive.gz\\
 			*.bz2 & bzip2 file & bunzip2 archive.bz2\\
@@ -1499,9 +1507,9 @@
 
 \begin{frame}{Compressing and decompressing archives}
 	\begin{itemize}
-		\item \texttt{gzip}, \texttt{bzip2}, \texttt{xz} and \texttt{lzma} are able to pack only one file --- use them together with \texttt{tar} to pack multiple files (when used \textbf{without} \texttt{tar} they \alert{move} file into archive)
+		\item \texttt{gzip}, \texttt{bzip2}, \texttt{xz} and \texttt{lzma} are able to \textbf{pack only one file} --- use them together with \texttt{tar} to pack multiple files (when used \textbf{without} \texttt{tar} they \alert{move} file into archive)
 		\item In Linux, \texttt{gzip} (and less \texttt{bzip2}) are the most commonly used
-		\item Rar is not used at Linux/UNIX at all
+		\item Rar and arj are not used at Linux/UNIX at all
 		\item Zip is probably the most portable between Linux/UNIX and Windows
 		\item \texttt{lzma} and \texttt{xz} have excellent compression, but can be very slow, use similar algorithm, often confused
 	\end{itemize}
@@ -1750,12 +1758,28 @@
 	\end{bashcode}
 \end{frame}
 
+\begin{frame}{How quotes influence reading of variable content III}
+	\begin{itemize}
+		\item As soon as variable contains only Latin alphanumerical characters, assignment like \texttt{MYVAR=whatever} works, but it is not recommended
+		\item If variable should contain another variable, special characters, etc, use double quotes, e.g. \texttt{WORKDIR="/home/\$USER/data"}
+		\begin{itemize}
+		 \item It might be called like \texttt{echo \$MYVAR}, but if there would be non-standard characters anywhere, it'd fail, so prefer \texttt{"\$MYVAR"} (it \textit{might} work without quotes, but don't risk it) or \texttt{"\$\textbraceleft MYVAR\textbraceright"}
+		\end{itemize}
+		\item If variable should contain any special character (including space), or you wish to be sure you keep it's literal value, use single quotes, e.g. \texttt{MYDATA='$\sim$/My Doc/exp 1/data.fsa'} (and then \texttt{"\$MYVAR"})
+		\item Similar for using variables
+		\begin{itemize}
+			\item Using \texttt{\$MYVAR} is fine if it doesn't contain anything special (but are you really sure?)
+			\item Best practice is to use \texttt{"\$\textbraceleft MYVAR\textbraceright"} as there is highest security if \texttt{MYVAR} would contain special characters, and there is room for various manipulations (see next slide)
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
 \begin{frame}[fragile]{The PATH variable}
 	\label{PATH}
 	\begin{itemize}
 		\item Lists directories (separated by colon \texttt{:}) where the current shell searches for commands
 		\item If some software is installed outside standard locations, the user must specify the full path (or update the \texttt{\$PATH})
-		\item In case there are two commands with the same name (e.g. \texttt{/bin/somecommand} and \texttt{/usr/bin/somecommand}), the order of directories in \texttt{\$PATH} matters --- the first occurrence is used, any possible later ignored
+		\item In case there are two commands with the same name (e.g. \texttt{/usr/bin/somecommand} and \texttt{/home/\$USER/bin/somecommand}), the order of directories in \texttt{\$PATH} matters --- the first occurrence is used, any possible later ignored
 		\item Computing clusters (like MetaCentrum) use to have special command (e.g. \texttt{module}) to load particular software (including particular version) by extending user's \texttt{\$PATH}
 	\end{itemize}
 	\begin{bashcode}
@@ -1789,11 +1813,30 @@
 	\end{bashcode}
 \end{frame}
 
-% TODO Add manipulation with variables like ${VAR%...}
-
-\begin{frame}[fragile]{BASH expressions}
+\begin{frame}[fragile]{Manipulating with content of variable}
+	\begin{itemize}
+		\item It is possible to change/remove extension (suffix) of variable, do simple search and replace with its content, etc. (useful in scripts e.g. for input and output files)
+		\item Search and replace syntax is related to \texttt{sed} (slide~\ref{sedex})
+	\end{itemize}
 	\begin{bashcode}
-    # Many operands have special meaning in BASH - must be escaped
+    MYVAR='oxalis_assembly_6235.aln.fasta' # Assign new variable
+    echo "$MYVAR" # See it - it works: oxalis_assembly_6235.aln.fasta
+    # Remove the '.fasta' extension
+    echo "${MYVAR%.fasta}" # oxalis_assembly_6235.aln
+    # Replace extension '.fasta' with '.fsa'
+    echo "${MYVAR%.fasta}".fsa # oxalis_assembly_6235.aln.fsa
+    # Remove any last extension
+    echo "${MYVAR%.*}" # oxalis_assembly_6235.aln
+    # Replace 'aln' within variable name with 'aligned'
+    echo "${MYVAR/aln/aligned}" # oxalis_assembly_6235.aligned.fasta
+    # More complex manipulations with variable content (try to avoid this)
+    echo "$(echo "$MYVAR" | sed 's/assembly/contig/')"
+    # sed allows usage of variables (sed "s/pattern/$SOMEVAR/")
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{BASH expressions}{Basic arithmetic operations and more with BASH}
+	\begin{bashcode}
     echo $((5 < 7)) # Is 5 smaller than 7? TRUE (1)
     echo $((3 > 4)) # Is 3 greater than 4? FALSE (0)
     echo $((16 / 3)) # Division (without decimal part)
@@ -1832,13 +1875,16 @@
 	\begin{itemize}
 		\item Key feature of BASH --- work with individual commands as with Lego to get new functionality
 		\item \alert{\texttt{\&}} --- command will be launched in background, terminal is available for next typing: \texttt{firefox \&} (when launching graphical application, hit \textbf{Enter} afterward if there is no active command line prompt)
+		\begin{itemize}
+			\item If the application has any output, it goes to the screen, so it can be bit messy\ldots
+		\end{itemize}
 		\item \alert{\texttt{\&\&}} --- second command is launched only when first command exits without error (exits with status \texttt{0}): \texttt{mkdir NewDir \&\& cd NewDir}
 		\item \alert{\texttt{;}} --- second command is launched regardless exit status of the first one: \texttt{kshfskcbd; hostname}
 		\item \alert{\texttt{\textbraceleft\ldots\textbraceright}} --- commands within curl brackets are launched as one block
 		\begin{itemize}
 			\item Closing bracket \texttt{\textbraceright} must be either on new line or preceded by semicolon (\texttt{\ldots{ }; \textbraceright})
 		\end{itemize}
-		\item \alert{\texttt{||}} --- second command is launched when first command fails (has non zero exit status):\\\texttt{cd newdir || \textbraceleft~mkdir newdir \&\& cd newdir; \textbraceright}
+		\item \alert{\texttt{||}} --- second command is launched when first command fails (has non-zero exit status):\\\texttt{cd newdir || \textbraceleft~mkdir newdir \&\& cd newdir; \textbraceright}
 		\begin{itemize}
 			\item Easy way how to do something when previous command fails, either exit script (\texttt{\ldots{ }|| exit 1}) or somehow fix it (see above), report problem (\texttt{\ldots{ }|| \textbraceleft echo "It failed!" \&\& exit 1; \textbraceright}) or so
 		\end{itemize}
@@ -1955,8 +2001,8 @@
     { commandX; ls; } > outputfile.log 2>&1 # Inspect outputfile.log
     { commandX; ls; } >> outputfile.log 2>&1 # Inspect outputfile.log
     # Add error output to the error log text file
-    command >> outputfile.log 2>error.log # Example:
-    { commandX; ls; } >> outputfile.txt 2>error.log
+    command >> outputfile.log 2> error.log # Example:
+    { commandX; ls; } >> outputfile.txt 2> error.log
     cat outputfile.txt # See results
     cat error.log # See results
 	\end{bashcode}
@@ -2152,7 +2198,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Basic network information and testing}
+\begin{frame}[fragile]{Basic network information and testing} % TODO rewrite netstat examples for ss
 	\begin{bashcode}
     hostname # Get name of the computer
     ping web.natur.cuni.cz # Ping host. Is it alive? Cancel by Ctrl+C
@@ -2167,7 +2213,7 @@
     netstat -atn # Information about all network connections
     netstat -ntplu # Show open TCP/UDP ports
     netstat -anp # Show active connections
-    netstat -h # See for explanation of 3 above examples
+    ss --help # netstat is deprecated, prefer usage of ss
     # If using nmap at faculty, firewall disconnects you for 10 minutes!
     nmap -r someserver.cz # Scan someserver.cz for opened ports
     nmap botany.natur.cuni.cz --script ssh-hostkey # See SSH key
@@ -2252,15 +2298,15 @@
 		\begin{itemize}
 			\item Private key is typically in \texttt{$\sim$/.ssh/id\_*} file(s) (according to cipher)
 			\item Public key is typically in \texttt{$\sim$/.ssh/id\_*.pub} file(s) (according to selected cipher) and are copied to target servers
-			\item Private key is unlocked by password and it then allows to login to any server having the public key
+			\item Private key is unlocked by password (might be without password) and it then allows to login to any server having the public key
 			\item Having only public key is not enough to login, private key without password is still not enough, but user must be sure private key is kept securely and not lost or stolen
-			\item When running it, \texttt{ssh-keygen} asks bunch of questions --- unless having special needs, keep defaults (hit Enter), using password for key is optional
+			\item When running it, \texttt{ssh-keygen} asks bunch of questions --- unless having special needs, keep defaults (hit Enter), using password for key is optional (but recommended)
 		\end{itemize}
-		\item File \texttt{$\sim$/.ssh/known\_hosts} contain servers you have ever connect to, and their SSH fingerprints (unique IDs) --- if this changes, SSH complains a lot as it could be \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{Man-in-the-middle attack}
+		\item File \texttt{$\sim$/.ssh/known\_hosts} contain servers you have ever connected to, and their SSH fingerprints (unique IDs) --- if this changes, SSH complains a lot as it could be \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{Man-in-the-middle attack}
 		\item File \texttt{$\sim$/.ssh/authorized\_keys} contains public keys allowing logging to the machine
-		\item \texttt{~/.ssh/config} can store various settings for particular servers
+		\item \texttt{$\sim$//.ssh/config} can store various settings for particular servers
 		\item SSH keys work in all applications using SSH (SFTP, SSHFS, rsync, many graphical file managers,~\ldots)
-		\item User can have various local passwords on servers, but use single SSH key to connect to all of them
+		\item User can have various local passwords on servers, but use single SSH key to connect to all of them, very convenient if connecting to multiple servers
 	\end{itemize}
 \end{frame}
 
@@ -2323,7 +2369,7 @@
 	\end{enumerate}
 \end{frame}
 
-\begin{frame}{Faculty web server}
+\begin{frame}{Faculty web server(s)}
 	\begin{itemize}
 		\item Login requires same credentials as to \href{https://ldapuser.cuni.cz/}{CAS} (login name, no ISIC number)
 		\item Faculty information are \href{https://www.natur.cuni.cz/fakulta/cit/web-aplikace/webhosting}{only in Czech}
@@ -2343,7 +2389,7 @@
 	\begin{itemize}
 		\item \href{https://www.gnu.org/software/parallel/}{GNU Parallel} can distribute task among CPU threads of one computer, or even among different computers in network
 		\item It is not (so) effective for short/small tasks
-		\item Important operands (for more see \texttt{man parallel})
+		\item Important operands (for more see \texttt{man parallel} and next slides)
 		\begin{itemize}
 			\item \texttt{\{\}} --- input line --- whole line read from input source (typically standard input)
 			\item \texttt{\{.\}} --- input line without extension
@@ -5190,4 +5236,3 @@
 % * Přeskládat řetězení, přesměrování, globbing, proměnné, atd.
 % * Zkontrolovat syntax skriptování (hlavně v prezentaci), povyházet zastaralé konstrukce.
 % * cluster vs. grid vs. supercomputer
-% * vyhodit netstat
