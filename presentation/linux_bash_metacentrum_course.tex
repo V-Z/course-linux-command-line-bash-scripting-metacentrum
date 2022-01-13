@@ -3042,7 +3042,7 @@
     zgrep FORMAT arabidopsis.vcf.gz
     # 'less -S' displays long lines without indent (use R/L arrows to move),
     # zless doesn't have such option - use as follows:
-    zcat arabidopsis.vcf.gz | less -S
+    zcat arabidopsis.vcf.gz | less -S # zless doesn't have the -S option...
     # Display file compressed by bzip2
     bzless Oxalis_hirta_R2.fastq.bz2
     # Get end of the file
@@ -3053,6 +3053,7 @@
 	\begin{itemize}
 		\item Not all commands to work with text have variant to work with compressed files\ldots
 		\item Variants to work with compressed files sometimes don't have all options\ldots
+		\item Sometimes it's the best to pipe \texttt{zcat}/\texttt{bzcat} and another tool
 	\end{itemize}
 \end{frame}
 
@@ -3114,10 +3115,10 @@
 	\vfill
 	\begin{bashcode}
     # Create the diff file
-    diff -u diff_test_file_1.txt diff_test_file_2.txt > difference.patch
+    diff -u diff_test_file_1.txt diff_test_file_2.txt > difference.diff
     # Apply the patch
-    patch < difference.patch # or
-    patch diff_test_file_1.txt difference.patch
+    patch < difference.diff # or
+    patch diff_test_file_1.txt difference.diff
 	\end{bashcode}
 \end{frame}
 
