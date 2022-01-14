@@ -3370,6 +3370,7 @@
 
 \begin{frame}{Scripting}{Basics of writing scripts in BASH}
 	\tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
+	Keeping correct syntax might be sometimes tricky. Use some checker helping you to fix your code, e.g. \href{https://www.shellcheck.net/}{ShellCheck} (on-line or locally \texttt{shellcheck myscript.sh}).
 \end{frame}
 
 \subsection{Basic skeleton}
@@ -3388,7 +3389,7 @@
     #!/bin/bash
     # Simple non-interactive script - no communication with user
     # only list of commands - prints user name, date and $PATH
-    echo "Hi, $USER, today is $(date) and your PATH is $PATH."
+    echo "Hi, ${USER}, today is $(date) and your PATH is ${PATH}."
     echo
     exit
 	\end{bashcode}
@@ -3400,7 +3401,7 @@
 	\begin{bashcode}
     # Declare new function within script
     function MyNewFunction1 {
-      echo "Hello, $USER from $(groups) on $HOSTNAME!"
+      echo "Hello, ${USER} from $(groups) on ${HOSTNAME}!"
       }
     # Use it in a script as any other command
     ...
@@ -3426,7 +3427,7 @@
 		\item \alert{\texttt{\$0}} --- path of the starting script
 		\item \alert{\texttt{\$\#}} --- number of command-line arguments
 		\item \alert{\texttt{\$*}} --- all of the positional parameters, seen as a~single word, must be quoted (i.e. \texttt{"\$*"})
-		\item \alert{\texttt{\$@}} --- same as \texttt{\$*}, but each parameter is a~quoted string --- the parameters are passed on intact, without interpretation or expansion, each parameter in the argument list is seen as a~separate word, should be quoted (i.e. something like \texttt{"\$@"})
+		\item \alert{\texttt{\$@}} --- same as \texttt{\$*}, but each parameter is a~quoted string --- the parameters are passed intact, without interpretation or expansion, each parameter in the argument list is seen as a~separate word, should be quoted (i.e. something like \texttt{"\$@"})
 		\item \alert{\texttt{\$\$}} --- process ID (PID) of the script itself
 		\item \alert{\texttt{\$?}} --- Exit status of previous command, function, or the script itself
 		\item \href{https://tldp.org/LDP/abs/html/internalvariables.html}{See more variables\ldots}
@@ -3492,8 +3493,8 @@
     read -r V1
     echo "Please, input second value to sum and press 'Enter'"
     read -r V2
-    echo "Sum of two numbers $V1 and $V2 is $(("V1" + "V2"))."
-    # $ is unnecessary on arithmetic variables
+    echo "Sum of two numbers ${V1} and ${V2} is $(("V1" + "V2"))."
+    # Note above that "$" is unnecessary on arithmetic variables
     echo
     exit
 	\end{bashcode}
@@ -3522,7 +3523,7 @@
     while : # Start of while cycles - run until correct input is provided
       do # Star of the body of the cycles
       read -r INPUT # Here the input from keyboard is received
-      if [[ $INPUT =~ $NUMBER ]]; then # Test if INPUT is a number
+      if [[ ${INPUT} =~ ${NUMBER} ]]; then # Test if INPUT is a number
         echo "OK, input value is $INPUT."
         break # We have correct value, we can break the cycles and continue
         else # What to do if the user did not provided correct value
@@ -3543,8 +3544,8 @@
       while :
         do # Star of the body of the cycles
           read -r INPUT # Here the input from keyboard is received
-          if [[ $INPUT =~ $NUMBER ]]; then # Test if $INPUT is a number
-            echo "OK, input value is $INPUT."
+          if [[ ${INPUT} =~ ${NUMBER} ]]; then # Test if $INPUT is a number
+            echo "OK, input value is ${INPUT}."
             break # We have correct value, we can break and continue
             else # What to do if the user did not provide correct value
               echo "Error! You provided wrong value!" # Tell the user
@@ -3560,10 +3561,10 @@
     # Replace line 4 of interactive2.sh by (similarly for line 6)
     ...
     checkinput # Use function declared on previous slide
-    V1=$INPUT
+    V1="${INPUT}"
     ...
     checkinput # Recycle the function to read next variable
-    V2=$INPUT
+    V2="${INPUT}"
     ...
 	\end{bashcode}
 	\vfill
@@ -3633,7 +3634,7 @@
       echo "Error! Requiring 3 parameters! Received $# ($*)."
       usagehelp # The function to print help
       fi # "=~" means testing if $1 fits to regular expression in $NUMBER
-    if [[ ! $1 =~ $NUMBER ]]; then # Is parameter 1 number?
+    if [[ ! $1 =~ ${NUMBER} ]]; then # Is parameter 1 number?
       echo "Parameter 1 is not an integer!"
     # Continues on next slide...
 	\end{bashcode}
@@ -3644,7 +3645,7 @@
     # Remaining part from previous slide...
       usagehelp # The function to print help
       fi
-    if [[ ! $3 =~ $NUMBER ]]; then # Is parameter 3 number?
+    if [[ ! $3 =~ ${NUMBER} ]]; then # Is parameter 3 number?
       echo "Parameter 3 is not an integer!"
       usagehelp # The function to print help
       fi
@@ -3675,7 +3676,9 @@
 			\item Each option can be on single line, or on multiple lines
 			\item For each \texttt{case} option there can be any number of commands
 			\item There can be any number of \texttt{case} options --- convenient way how to evaluate multiple options in single step
+			\item Se following slides for most common usage of \texttt{case}
 		\end{itemize}
+		\item \texttt{case} can be used anywhere in the code, not only to evaluate input parameters (as possible alternative to \texttt{if-else} branching)
 	\end{itemize}
 \end{frame}
 
@@ -3690,15 +3693,15 @@
     #!/bin/bash
     # All provided values are evaluated in while cycles...
     while getopts "hvi:o:a:" INITARGS; do # Switches are -h -v -i -o -a
-    case "$INITARGS" in # $INITARGS contains the parameters to evaluate
-      h|v) # Accept parameters "-h" or "-v" for help
-        echo "Usage options..."
-        exit # Terminate after providing help
-        ;; # End of this option
-      i) # Parameter "-i" accepts some value (e.g. "-i inputfile.txt")
-        ... # Do some checking etc...
-        INPUTFILE="$OPTARG" # $OPTARG always contains value of parameter
-        ;; # End of this option
+      case "${INITARGS}" in # $INITARGS contains the parameters to evaluate
+        h|v) # Accept parameters "-h" or "-v" for help
+          echo "Usage options..."
+          exit # Terminate after providing help
+          ;; # End of this option
+        i) # Parameter "-i" accepts some value (e.g. "-i inputfile.txt")
+          ... # Do some checking etc...
+          INPUTFILE="${OPTARG}" # $OPTARG always contains value of parameter
+          ;; # End of this option
     # ...continues on following slide...
 	\end{bashcode}
 \end{frame}
@@ -3708,14 +3711,14 @@
     # ...starts on previous slide...
         o) # Parameter "-o" accepts some value (e.g. "-o outputfile.txt")
           ... # Do some checking etc...
-          OUTPUTFILE="$OPTARG" # $OPTARG always contains value of parameter
+          OUTPUTFILE="${OPTARG}" # $OPTARG always contains value of parameter
           ;; # End of this option
         a) # Parameter "-a" accepts some value (e.g. "-a X" for number)
           # Check if provided value makes sense (integer between 10 and 300)
-          if [[ "$OPTARG" =~ ^[0-9]+$ ]] && [[ "$OPTARG" -ge 10 ]] &&
-            [[ "$OPTARG" -le 300 ]]; then # The condition is long...
-            VALUE=$OPTARG # $OPTARG always contains value of parameter
-            echo "Value is OK: $VALUE"
+          if [[ "${OPTARG}" =~ ^[0-9]+$ ]] && [[ "${OPTARG}" -ge 10 ]] &&
+            [[ "${OPTARG}" -le 300 ]]; then # The condition is long...
+            VALUE=${OPTARG} # $OPTARG always contains value of parameter
+            echo "Value is OK: ${VALUE}"
             else
              echo "Error! For parameter \"-a\" you did not provide an"
              echo "  integer ranging from 10 to 300!"
@@ -3737,7 +3740,7 @@
         esac
       done # ...the end.
     # Check if all required values are provided
-    if [[ -z "$INPUTFILE" ]] || [[ -z "$OUTPUTFILE" ]]; then
+    if [[ -z "${INPUTFILE}" ]] || [[ -z "${OUTPUTFILE}" ]]; then
       echo "Error! Name of input and/or output file was not provided!"
       echo "See \"$0 -h\" for help usage..."
       exit 1
@@ -3749,17 +3752,17 @@
 \begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) IV}
 	\begin{bashcode}
     # ...continuing from previous slide...
-    if [[ -z "$VALUE" ]]; then
+    if [[ -z "${VALUE}" ]]; then
       echo "Warning! Value for \"-a\" was not provided! Using default (10)."
       VALUE=10
       fi
     # Do the job...
-    for I in $(seq 1 $VALUE); do # Repeat task number of times ($VALUE x)
-      echo -ne "Cycle $I...\r" # Write number of cycle and return cursor to
+    for (( I=1; I<="${VALUE}"; I++ )); do # Repeat task number of times
+      echo -ne "Cycle ${I}...\r" # Write number of cycle and return cursor to
            # the beginning of the line to overwrite the number in next step
       sleep 1s # Wait 1 second - just for fun ;-)
       # Do the task - append input to the output - note usage of variables
-      cat "$INPUTFILE" >> "$OUTPUTFILE" # Do the task - append into to output
+      cat "${INPUTFILE}" >> "${OUTPUTFILE}" # Do the task - append into to output
       done
     echo -ne "\n" # Reset cursor to new line
     echo "Done!"
@@ -3822,7 +3825,7 @@
 	\end{bashcode}
 	\vfill
 	\begin{itemize}
-		\item Common way for simple scripts --- do something with single input file
+		\item Common way for simple scripts --- check input and do something with single input file
 		\item Note lines 4 and 5 above --- common way to report success as well as handle failure
 	\end{itemize}
 	\vfill
@@ -3863,21 +3866,21 @@
 		\item Basic method to branch code --- do something according to certain condition
 		\item Very versatile, usually there are more options how to write desired conditioning
 		\item Avoid long chaining of conditions using \texttt{elif} statement (previous slide) --- susceptible to mistakes, hard to debug
-		\item \enquote{\texttt{[~\ldots~]}} (always keep space around it --- inside) is function to evaluate expressions (alternatively use command \texttt{test})
+		\item \enquote{\texttt{[~\ldots~]}} (always keep space inside around it) is function to evaluate expressions
 		\begin{itemize}
-			\item \texttt{if [ "\$VAR" -eq 25 ]} or \texttt{test \$VAR -eq 25}
-			\item \texttt{if [ "\$VAR" == "value" ]; \ldots}
+			\item \texttt{if [ "\${VAR}" -eq 25 ]} or alternatively \texttt{test "\${VAR}" -eq 25} instead of \texttt{if}
+			\item \texttt{if [ "\${VAR}" == "value" ]; \ldots}
 			\begin{itemize}
 				\item Escaping variables and values by double quotes (\texttt{"\ldots"}) is recommended (to be sure), but not strictly required all the time
 			\end{itemize}
 			\item \texttt{if [ ! -f regularfile ];} \ldots --- \texttt{!} reverts condition
 			\item Single-bracket conditions --- file, string, or arithmetic conditions
-			\item Double-bracket syntax --- enhanced
+			\item Double-bracket syntax --- enhanced (now preferred)
 			\begin{itemize}
 				\item Allow usage of regular expressions and globing patterns
 				\item Word splitting is prevented --- \texttt{\$STRINGVAR} can contain spaces
 				\item Expanding file names --- \texttt{if [[ -a *.sh ]]} (variant with only one bracket doesn't work when there are multiple sh files)
-				\item Allows more detailed test, e.g. \texttt{if [[ \$num -eq 3 \&\& "\$STRINGVAR" == XXX ]] \ldots}
+				\item More detailed test, e.g. \texttt{if [[ \$num -eq 3 \&\& "\$\textbraceleft STRINGVAR\textbraceright " == XXX ]]\ldots}
 			\end{itemize}
 		\end{itemize}
 		\item \texttt{-eq} --- Equal to (like \texttt{==})
@@ -3885,23 +3888,24 @@
 		\item \texttt{-gt} --- Greater than
 		\item \texttt{-ge} --- Greater than or equal to
 		\item \texttt{-le} --- Less than or equal to
-		\item \texttt{-f \$FILE} --- True if \texttt{\$FILE} exists and is a~regular file (not link or so)
-		\item \texttt{-r \$FILE} --- True if \texttt{\$FILE} exists and is readable
-		\item \texttt{-w \$FILE} --- True if \texttt{\$FILE} exists and is writable
-		\item \texttt{-x \$FILE} --- True if \texttt{\$FILE} exists and is executable
-		\item \texttt{-d \$FILE} --- True if \texttt{\$FILE} exists and is a~directory
-		\item \texttt{-s \$FILE} --- True if \texttt{\$FILE} exists and has a~size greater than zero
-		\item \texttt{-n \$STR} --- True if string \texttt{\$STR} is not a~null (empty) string
-		\item \texttt{-z \$STR} --- True if string \texttt{\$STR} is a~null string
-		\item \texttt{\$STR1 == \$STR2} --- True if both strings are equal
-		\item \texttt{\$STR} --- True if string \texttt{\$STR} is assigned a~value and is not null
-		\item \texttt{\$STR1 != \$STR2} --- True if both strings are unequal
+		\item \texttt{-f "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is a~regular file (not link or so)
+		\item \texttt{-r "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is readable
+		\item \texttt{-w "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is writable
+		\item \texttt{-x "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is executable
+		\item \texttt{-d "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is a~directory
+		\item \texttt{-s "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and has a~size greater than zero
+		\item \texttt{-n "\$\textbraceleft STR\textbraceright "} --- True if string \texttt{\$STR} is not a~null (empty) string
+		\item \texttt{-z "\$\textbraceleft STR\textbraceright "} --- True if string \texttt{\$STR} is a~null string
+		\item \texttt{"\$\textbraceleft STR1\textbraceright " == "\$\textbraceleft STR2\textbraceright "} --- True if both strings are equal
+		\item \texttt{"\$\textbraceleft STR\textbraceright "} --- True if string \texttt{\$STR} is assigned a~value and is not null
+		\item \texttt{"\$\textbraceleft STR1\textbraceright " != "\$\textbraceleft STR2\textbraceright "} --- True if both strings are unequal
 		\item \texttt{-a} --- Performs the \texttt{AND} function (\texttt{[~\ldots~-a~\ldots~]} or \texttt{[~\ldots~] \&\& [~\ldots~]})
 		\item \texttt{-o} --- Performs the \texttt{OR} function (\texttt{[~\ldots~-o~\ldots~]} or \texttt{[~\ldots~] || [~\ldots~]})
+		\item \texttt{if} statement can test whatever returning \texttt{TRUE}/\texttt{FALSE}, commonly something like \texttt{if grep -q XXX; then \ldots} (see also further)
 		\item Do not confuse globing patterns and regular expressions when using \texttt{[[~\ldots~]]}
 		\begin{itemize}
-			\item \textbf{Shell globing:} \texttt{if [[ "\$STRINGVAR" \alert{==} ?[sS]tring* ]]; then} --- \texttt{?} represents single character \texttt{[]} any character inside and \texttt{*} zero or more characters
-			\item \textbf{Regular expressions:} \texttt{if [[ "\$STRINGVAR" \alert{=$\sim$} .[sS]tring.* ]]; then} --- \texttt{.} represents single character (\texttt{?} would be zero or one occurrence of preceding expression), \texttt{[]} any character inside and \texttt{.*} zero or more occurrences of any single characters
+			\item \textbf{Shell globing:} \texttt{if [[ "\$\textbraceleft STRINGVAR\textbraceright " \alert{==} ?[sS]tring* ]]; then} --- \texttt{?} represents single character \texttt{[]} any character inside and \texttt{*} zero or more characters
+			\item \textbf{Regular expressions:} \texttt{if [[ "\$\textbraceleft STRINGVAR\textbraceright " \alert{=$\sim$} .[sS]tring.* ]]\ldots} --- \texttt{.} represents single character (\texttt{?} would be zero or one occurrence of preceding expression), \texttt{[]} any character inside and \texttt{.*} zero or more occurrences of any single characters
 			\item Same expression is interpreted in different ways
 		\end{itemize}
 	\end{itemize}
@@ -3910,7 +3914,7 @@
 \begin{frame}[fragile]{Selecting version of RAxML according the CPU type I}
 	\begin{itemize}
 		\item \href{https://github.com/stamatak/standard-RAxML}{RAxML} can take advantage of modern CPUs to highly speed up calculations, with or without parallelisation --- every version has separated binary, user must select, see \href{https://github.com/stamatak/standard-RAxML/blob/master/README}{README}
-		\item After compilation, the script can select e.g. on remote server
+		\item After compilation, the script can select e.g. on remote server appropriate version
 		\item RAxML binaries must be in \texttt{\$PATH}
 		\item See \texttt{raxml\_if.sh} for whole script
 	\end{itemize}
@@ -3925,7 +3929,7 @@
           else # The very last option
             RAXML='raxmlHPC' # Slowest oldest CPU...
       fi # End of branching
-    "$RAXML" -s "$INPUT" # All the parameters as usually...
+    "${RAXML}" -s "${INPUT}" # All the parameters as usually...
 	\end{bashcode}
 \end{frame}
 
@@ -3938,7 +3942,7 @@
 	\begin{bashcode}
     # Determine which CPU is available and which binary use then
     CPUFLAGS=$(grep -i flags /proc/cpuinfo | uniq)
-    case "$CPUFLAGS" in
+    case "${CPUFLAGS}" in
       *avx2*|*AVX2*) # Does the CPU support AVX2?
         RAXML='raxmlHPC-AVX2';; # Select appropriate binary
       *avx*|*AVX*) # Does the CPU support AVX?
@@ -3948,7 +3952,7 @@
       *) # The very last option
         RAXML='raxmlHPC';; # Slowest oldest CPU...
       esac # End of branching
-    "$RAXML" -s "$INPUT" # All the parameters as usually...
+    "${RAXML}" -s "${INPUT}" # All the parameters as usually...
 	\end{bashcode}
 \end{frame}
 
@@ -3965,14 +3969,14 @@
     # Ways how to declare number of repetitions
     # Variable $I contains in every repeat number from 1 to 10 - number of
     # respective repeat
-    for I in $(seq 1 10); do echo $I; done # "seq" is outdated
-    for I in 1 2 3 4 5 6 7 8 9 10; do echo $I; done
-    for I in {1..10}; do echo $I; done
-    for (( I=1; I<=10; I++ )); do echo $I; done
+    for I in $(seq 1 10); do echo "${I}"; done # "seq" is outdated
+    for I in 1 2 3 4 5 6 7 8 9 10; do echo "${I}"; done
+    for I in {1..10}; do echo "${I}"; done
+    for (( I=1; I<=10; I++ )); do echo "${I}"; done
     # One line for cycle for resizing of multiple images
     # Variable $JPGF contains in every repeat one-by-one name of input file
-    # processed in the respective turn
-    for JPGF in *.jpg; do convert $JPGF -resize 100x100 thumbs-$JPGF; done
+    # (each JPG) processed in the respective turn (creates tuhmbnails th-...)
+    for JPGF in *.jpg; do convert "${JPGF}" -resize 100x100 th-"${JPGF}"; done
 	\end{bashcode}
 \end{frame}
 
@@ -3983,30 +3987,31 @@
 	\begin{bashcode}
     # More commands in a block
     for JPGF in *.jpg; do
-      echo "Processing JPG $JPGF"
-      file $JPGF # Get information about currently processed file
-      convert $JPGF -resize 100x100 thumbs-$JPGF
-      echo "File thumbs-$JPGF created"
+      echo "Processing JPG file ${JPGF}"
+      file "${JPGF}" # Get information about currently processed file
+      # Create tuhmbnail. If it fails, skip following commands
+      convert "${JPGF}" -resize 100x100 thumbs-"${JPGF}" || continue
+      echo "File thumbs-${JPGF} created"
       done
     # Passing through each loop can be influenced using conditions and
     # subsequent skipping of rest of the loop
     for ...; do # Start cycles as you need
-      command1 # command1 will be executed in any case
-      if (condition); then # Set some condition to skip command2
-        continue; fi # Go to next iteration of the loop and skip command2
-      command2
+      commands1 # commands1 will be executed in any case
+      if (condition); then # Set some condition to skip commands2
+        continue; fi # Go to next iteration of the loop and skip commands2
+      commands2
       done
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{While and until loops I}
 	\begin{bashcode}
-    # while cycle is evaluating condition and if it is equal to 0 (TRUE)
-    # the cycle body is launched, repeatedly while the condition is met
+    # while loop is evaluating condition and if it is equal to 0 (TRUE)
+    # the loop body is launched, repeatedly while the condition is met
     while condition; do
         commands
       done
-    # Like while cycle, but until condition is not equal to zero
+    # Like while loop, but until condition is NOT equal to zero (not met)
     until condition; do
       commands
       done
@@ -4022,18 +4027,18 @@
 
 \begin{frame}[fragile]{While and until loops II}
 	\begin{bashcode}
-    # 'continue' skips to another look turn, 'break' terminates running
+    # 'continue' skips to another loop turn, 'break' terminates running
     # of whole loop (no further turns) and skips to following commands
-    while ...; do # Start cycles as you need
+    while ...; do # Start loops as you need
       commands...
       if [condition]; then # If something happens
-        break # End up the cycles and continue by following commands
+        break # End up the loops and continue by following commands
         fi
     # While loops are popular to process every line of input file
     # The text file use to contain e.g. list of files to process (if for
     # whatever reason 'for' loop construction is impractical)
-    while read TEXTLINE; do # Run cycles on every line of text file
-      commands... # TEXTLINE contains in each cycle one line of the file
+    while read TEXTLINE; do # Run loops on every line of text file
+      commands... # TEXTLINE contains in each turn one line of the file
       done < text_file_to_process.txt
     # Infinite loops - common when waiting for some condition to proceed
     while :; do echo "Press CTRL+C to exit..."; done
@@ -4045,14 +4050,14 @@
 
 \begin{frame}{What is worth of scripting}
 	\begin{itemize}
-		\item \textbf{Any task you need to repeat from time to time requiring more commands} --- almost anything :-)
+		\item \textbf{Any task you need to repeat from time to time requiring more commands} --- almost anything :-) Programmers are lazy. Do not manually do work worth of trained apes.
 		\begin{itemize}
 			\item Take advantage of usage of loops, conditions, variables,~\ldots
 		\end{itemize}
 		\item Processing of multiple files
 		\begin{itemize}
 			\item Various manipulations (conversions,~\ldots)
-			\item Parsing (e.g. extracting information from multiple CSV)
+			\item Parsing (e.g. extracting information from multiple CSV or logs)
 		\end{itemize}
 		\item Repeated running of some analysis (requiring multiple steps)
 		\begin{itemize}

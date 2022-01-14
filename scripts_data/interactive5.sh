@@ -65,7 +65,7 @@ if [[ -z "${VALUE}" ]]; then
 	fi
 
 # Do the job...
-for I in $(seq 1 "${VALUE}"); do # Repeat task given number of times ($VALUE x)
+for (( I=1; I<="${VALUE}"; I++ )); do # Repeat task given number of times ($VALUE x)
 	echo -ne "Cycle ${I}...\r" # Write number of cycle and return cursor to the beginning of the line to overwrite the number in next step
 	sleep 1s # Wait 1 second - just for fun ;-)
 	cat "${INPUTFILE}" >> "${OUTPUTFILE}" # Do the task - append input to the output - note usage of variables

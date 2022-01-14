@@ -12,7 +12,7 @@ read -r V2
 
 echo "Sum of two numbers ${V1} and ${V2} is $(("V1" + "V2"))."
 
-# $ is unnecessary on arithmetic variables
+# Note above that "$" is unnecessary on arithmetic variables
 
 echo
 
