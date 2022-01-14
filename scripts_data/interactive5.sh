@@ -13,7 +13,7 @@ while getopts "hvi:o:a:" INITARGS; do
 			exit # Terminate after providing help
 			;; # End of this option
 		i) # Parameter "-i" accepts some value (e.g. "-i inputfile.txt")
-			if [ -r "${OPTARG}" ]; then # Check if the input file exists and is readable
+			if [[ -r "${OPTARG}" ]]; then # Check if the input file exists and is readable
 				echo "OK, File \"${OPTARG}\" exists and is readable. Proceeding..."
 				INPUTFILE="${OPTARG}" # $OPTARG always contains value of parameter
 				else
@@ -23,7 +23,7 @@ while getopts "hvi:o:a:" INITARGS; do
 				fi
 			;; # End of this option
 		o) # Parameter "-o" accepts some value (e.g. "-o outputfile.txt")
-			if [ -n "${OPTARG}" ]; then # Check if there is some name for output variable
+			if [[ -n "${OPTARG}" ]]; then # Check if there is some name for output variable
 				echo "OK, Name for output file was provided: \"${OPTARG}\". Proceeding..."
 				OUTPUTFILE="${OPTARG}" # $OPTARG always contains value of parameter
 				else
@@ -34,7 +34,7 @@ while getopts "hvi:o:a:" INITARGS; do
 			;; # End of this option
 		a) # Parameter "-a" accepts some value (e.g. "-a X" for number)
 			# Check if provided value makes sense (integer between 10 and 300)
-			if [[ "${OPTARG}" =~ ^[0-9]+$ ]] && [ "${OPTARG}" -ge 10 ] && [ "${OPTARG}" -le 300 ]; then # The condition is long...
+			if [[ "${OPTARG}" =~ ^[0-9]+$ ]] && [[ "${OPTARG}" -ge 10 ]] && [[ "${OPTARG}" -le 300 ]]; then # The condition is long...
 				VALUE=${OPTARG} # $OPTARG always contains value of parameter
 				echo "Value is OK: ${VALUE}"
 				else
@@ -52,14 +52,14 @@ done
 
 # Check if all required values are provided
 
-if [ -z "${INPUTFILE}" ] || [ -z "${OUTPUTFILE}" ]; then
+if [[ -z "${INPUTFILE}" ]] || [[ -z "${OUTPUTFILE}" ]]; then
 	echo "Error! Name of input and/or output file was not provided!"
 	echo "See \"$0 -h\" for help usage..."
 	echo
 	exit 1
 	fi
 
-if [ -z "${VALUE}" ]; then
+if [[ -z "${VALUE}" ]]; then
 	echo "Warning! Value for \"-a\" was not provided! Using default value of 10."
 	VALUE=10
 	fi

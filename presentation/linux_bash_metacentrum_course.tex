@@ -3600,7 +3600,7 @@
       echo "  for multiplication or quotient for quotient."
       exit 1 # End up with an error
       }
-    if [ "$#" -ne "3" ]; then # Do we have 3 parameters provided?
+    if [[ "$#" -ne "3" ]]; then # Do we have 3 parameters provided?
       echo "Error! Requiring 3 parameters! Received $# ($*)."
       usagehelp # The function to print help
       fi # "=~" means testing if $1 fits to regular expression in $NUMBER
@@ -3683,8 +3683,8 @@
           ;; # End of this option
         a) # Parameter "-a" accepts some value (e.g. "-a X" for number)
           # Check if provided value makes sense (integer between 10 and 300)
-          if [[ "$OPTARG" =~ ^[0-9]+$ ]] && [ "$OPTARG" -ge 10 ] &&
-            [ "$OPTARG" -le 300 ]; then # The condition is long...
+          if [[ "$OPTARG" =~ ^[0-9]+$ ]] && [[ "$OPTARG" -ge 10 ]] &&
+            [[ "$OPTARG" -le 300 ]]; then # The condition is long...
             VALUE=$OPTARG # $OPTARG always contains value of parameter
             echo "Value is OK: $VALUE"
             else
@@ -3708,7 +3708,7 @@
         esac
       done # ...the end.
     # Check if all required values are provided
-    if [ -z "$INPUTFILE" ] || [ -z "$OUTPUTFILE" ]; then
+    if [[ -z "$INPUTFILE" ]] || [[ -z "$OUTPUTFILE" ]]; then
       echo "Error! Name of input and/or output file was not provided!"
       echo "See \"$0 -h\" for help usage..."
       exit 1
@@ -3720,7 +3720,7 @@
 \begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) IV}
 	\begin{bashcode}
     # ...continuing from previous slide...
-    if [ -z "$VALUE" ]; then
+    if [[ -z "$VALUE" ]]; then
       echo "Warning! Value for \"-a\" was not provided! Using default (10)."
       VALUE=10
       fi
@@ -3764,12 +3764,12 @@
 	\begin{bashcode}
     #!/bin/bash
     # We expect exactly one parameter
-    if [ "$#" -ne "1" ]; then
+    if [[ "$#" -ne "1" ]]; then
       echo "Error! Exactly one parameter is required!"
       exit 1
       fi
     # Verify that file exists and is readable
-    if [ ! -r "$1" ]; then
+    if [[ ! -r "$1" ]]; then
       echo "Error! The file provided does not exist or is not readable!"
       exit 1
       fi

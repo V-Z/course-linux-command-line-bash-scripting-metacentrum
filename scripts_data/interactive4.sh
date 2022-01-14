@@ -12,7 +12,7 @@ function usagehelp {
 	}
 
 # Do we have 3 parameters provided?
-if [ "$#" -ne "3" ]; then
+if [[ "$#" -ne "3" ]]; then
 	echo "Error! Requiring 3 parameters! Received $# ($*)."
 	usagehelp # The function to print help
 	fi

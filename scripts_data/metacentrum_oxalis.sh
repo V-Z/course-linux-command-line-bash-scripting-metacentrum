@@ -16,7 +16,7 @@ trap 'cp -a "${SCRATCHDIR}" "${DATADIR}"/ && clean_scratch' TERM
 
 # Required modules
 echo "Loading module(s)"
-module add iqtree-1.6.12 || exit 1 # iqtree
+module add iqtree-1.6.12 || exit 1
 echo
 
 # Change working directory
@@ -31,7 +31,7 @@ cp -a "${DATADIR}"/"${DATAFSA}" "${SCRATCHDIR}"/ || exit 1
 echo
 
 echo "Computing gene tree from ${DATAFSA}..."
-iqtree -s "${DATAFSA}" -st DNA -nt 1 -m MFP+I+R+P -lmap ALL -cmax 1000 -nstop 1000 -alrt 10000 -bb 10000 -bnni || exit 1
+iqtree -s "${DATAFSA}" -st DNA -nt 1 -m MFP+I+R+P -lmap ALL -cmax 1000 -nstop 1000 -alrt 10000 -bb 10000 -bnni || { export CLEAN_SCRATCH='false'; exit 1; }
 echo
 
 # Copy results back to home directory

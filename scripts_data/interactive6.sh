@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # We expect exactly one parameter
-if [ "$#" -ne "1" ]; then
+if [[ "$#" -ne "1" ]]; then
 	echo "Error! Exactly one parameter is required!"
 	exit 1
 	fi
 
 # Verify that file exists and is readable
-if [ ! -r "$1" ]; then
+if [[ ! -r "$1" ]]; then
 	echo "Error! The file provided does not exist or is not readable!"
 	exit 1
 	fi
