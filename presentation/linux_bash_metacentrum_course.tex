@@ -4128,11 +4128,12 @@
 			\item RPM --- low level, any RPM-based distribution
 			\item GNOME software --- in most of distributions using GNOME
 			\item And many more\ldots
+			\item All do same task --- as soon as user master one, others are equally simple
 		\end{itemize}
 		\item Distributions use to provide convenient simple update applet notifying about awaiting updates
 		\item There use to be web services to look for packages, also from other sources --- \href{https://software.opensuse.org/explore}{openSUSE}, \href{https://www.debian.org/distrib/packages\#search_packages}{Debian}, \href{https://packages.ubuntu.com/}{Ubuntu} (+ \href{https://launchpad.net/ubuntu/+search}{Launchpad} and \href{https://launchpad.net/ubuntu/+ppas}{PPAs}), \href{https://packages.fedoraproject.org/}{Fedora},~\ldots
 		\item The task is always same, the exact work-flow and commands more or less differ among distributions\ldots
-		\item Tools like Android Google Play, Apple Store or Windows Store are inspired from Linux\ldots
+		\item Tools like Android Google Play, Apple Store or Windows Store are inspired from Linux (but terribly simplified)\ldots
 	\end{itemize}
 	\vfill
 	\begin{block}{Task}
@@ -4148,7 +4149,7 @@
 		\item \texttt{zypper rm \textit{package}} --- remove \textit{package}
 		\item \texttt{zypper ref} --- refresh repositories
 		\item \texttt{zypper up} --- update
-		\item \texttt{zypper dup} -- upgrade to newer release of whole distribution
+		\item \texttt{zypper dup} -- upgrade to newer release of whole distribution (see \href{https://en.opensuse.org/SDB:System_upgrade}{documentation})
 		\item \texttt{zypper ps -s} -- check which running applications (including SystemD services) should be restarted after update of packages
 		\item \texttt{zypper se \textit{term}} --- search \textit{term}
 		\item \texttt{zypper pa -{-}orphaned -{-}unneeded} --- list packages, which can be safely removed
@@ -4244,7 +4245,7 @@
     ./configure # Many possible parameters, settings for compilation
                 # Not required every time
     make # Basic building command, sometimes only this is required
-    make install # Final creation of binary, sometimes required
+    make install # Placing everything into correct placed, sometimes required
 	\end{bashcode}
 \end{frame}
 
@@ -4378,6 +4379,37 @@
 	\begin{flushright}
 		\texttt{winefile}, \texttt{winetricks} and \texttt{winecfg}
 	\end{flushright}
+\end{frame}
+
+\subsection{Scientific applications}
+
+\begin{frame}[allowframebreaks]{Where to get scientific applications for Linux}
+	\begin{itemize}
+		\item There is no universal simple solution
+		\item As first step look if particular package is available for your distribution
+		\begin{itemize}
+			\item DebianScience \url{https://wiki.debian.org/DebianScience} --- same packages are available also for Ubuntu, Mint and all the DEB derivatives
+			\item openSUSE Science project \url{https://en.opensuse.org/Portal:Science}
+			\item Fedora scientific packages \url{https://fedoraproject.org/wiki/Scientific_Packages_List}
+			\item Major distributions have web services (e.g. \href{https://launchpad.net/}{Launchpad} for Ubuntu or \href{https://build.opensuse.org/}{openSUSE Build Service}) where users can create their own personal repositories and package their favorite packages (like \href{https://build.opensuse.org/project/show/home:vojtaeus}{myself}) --- search\ldots
+		\end{itemize}
+		\item There are projects creating repositories with custom management system providing (among others) plenty of scientific applications
+		\begin{itemize}
+			\item Probably most known is \href{https://conda.io/}{Conda}
+			\item \href{https://docs.brew.sh/Homebrew-on-Linux}{Homebrew on Linux} is derived from macOS Homebrew, works also on WSL
+		\end{itemize}
+		\item Authors sometimes provide on homepages RPM/DEB/precompiled Java binaries/\ldots{ }--- check them first
+		\item If there is no other option, download source code and compile yourselves\ldots
+		\begin{itemize}
+			\item Always check documentation for requirements and instructions
+			\item Solving issues requires experience, can be tricky, ask for help and don't give it up
+		\end{itemize}
+		\item Scientific programming languages like R, Python, Perl, Julia, Matlab etc. have their own system to install language-specific packages
+		\begin{itemize}
+			\item Distributions sometimes provide packages at least for part of the packages of such languages --- typically at least for Python, Perl or R --- this is especially convenient for packages having plenty of complex dependencies
+		\end{itemize}
+		\item Packages in various repositories are sometimes not up-to-date with newest version released --- if so, contact maintainer of distributional package and kindly ask for update (distributional webs use to have easy ways how to do it)
+	\end{itemize}
 \end{frame}
 
 \section{MetaCentrum}
