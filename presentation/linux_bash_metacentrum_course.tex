@@ -3242,7 +3242,7 @@
 \begin{frame}{Regular expressions are useful\ldots}
 	\begin{multicols}{2}
 		\begin{center}
-			\includegraphics[height=5.5cm]{regular_expressions.png}
+			\includegraphics[height=6.5cm]{regular_expressions.png}
 		\end{center}
 		\columnbreak
 		\begin{itemize}
@@ -3251,7 +3251,7 @@
 			\item Syntax is variable among programming languages and applications
 			\item There are commonly more solutions for one task
 			\item Well supported in \texttt{grep}, \texttt{sed}, \texttt{vim}, \texttt{emacs},~\ldots
-			\item Probably the most advanced is Perl
+			\item Probably the most advanced is \href{https://www.perl.org/}{Perl}
 		\end{itemize}
 		\vfill
 		\url{https://xkcd.com/208/}
@@ -3261,6 +3261,23 @@
 \begin{frame}[allowframebreaks]{Regular expressions}
 	\label{regexp}
 	\begin{itemize}
+		\item Implementation in \texttt{vim}, \texttt{sed}, \texttt{grep}, \texttt{awk} and \texttt{perl} and among various UNIX systems is almost same, but not identical --- can be confusing\ldots
+		\item \textbf{grep}, \textbf{sed} and \textbf{vim} \alert{require escaping} of \alert{\texttt{+}}, \alert{\texttt{?}}, \alert{\texttt{\{}}, \alert{\texttt{\}}}, \alert{\texttt{(}} and \alert{\texttt{)}} by backslash \alert{\texttt{\textbackslash}} (e.g. \texttt{\textbackslash +}, see also next slides)
+		\item \textbf{egrep} (extended version, launched as \texttt{grep -E \ldots} or \texttt{egrep \ldots}), \textbf{sed} with extended reg exp (\texttt{sed -r}) and \textbf{perl} \alert{do not} require escaping (simply just e.g. \texttt{+}, not \texttt{\textbackslash +})
+		\item Mastering regular expressions require practicing -- solve practical problems and see their power
+		\item Read \url{https://en.wikibooks.org/wiki/Regular_Expressions}, \url{https://www.grymoire.com/Unix/Regular.html}, \url{https://www.regular-expressions.info/}
+		\begin{itemize}
+			\item Česky \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{https://www.root.cz/serialy/regularni-vyrazy/} a~\url{https://www.regularnivyrazy.info/}
+			\item Manuals for \href{https://www.gnu.org/software/grep/manual/}{Grep}, Vim, \href{https://www.gnu.org/software/sed/manual/}{Sed}, \href{https://www.gnu.org/software/gawk/manual/}{Awk}, \href{https://en.wikibooks.org/wiki/Perl_Programming}{Perl} (\href{https://en.wikibooks.org/wiki/Raku_Programming}{newer Perl~6 Raku}),~\ldots
+		\end{itemize}
+		\item See sed examples, slide~\ref{sedex}; and next slides
+		\item macOS has by default very outdated version of \texttt{sed} and another tools --- it does not have all advanced features --- users need to install e.g. \texttt{gnu-sed} formulae from \href{https://brew.sh/}{Homebrew} (slide~\ref{homebrew}), similarly for Grep, AWK,~\ldots
+		\item Do not confuse with shell globbing (slide~\ref{globbing}) --- regular expressions are used withing particular application (GNU Sed, GNU Grep, Perl,~\ldots), while shell globbing is in-build BASH feature
+		\begin{itemize}
+			\item Globbing as well as regular expressions match/expand particular text string (in case of globbing typically file names)
+			\item Regular expressions mostly must be quoted (\texttt{'\ldots'}) \textbf{not} to be interpreted by shell, they work mostly with \textbf{text} files (their versatility allows to use them to work with e.g. molecular data)
+		\end{itemize}
+		\item Word processors (LibreOffice,~\ldots), graphical text editors, etc. usually also support regular expression, more or less following syntax below, but sometimes bit simplified
 		\item \alert{\texttt{.}} --- any single character
 		\item \alert{\texttt{*}} --- any number of characters/occurrences of pattern (including 0)
 		\item \alert{\texttt{+}} --- one or more occurrences of the preceding reg exp
@@ -3273,8 +3290,8 @@
 		\item \alert{\texttt{\textbackslash\{n\textbackslash\}}} --- exactly \textit{n} occurrences
 		\item \alert{\texttt{\textbackslash\{n,\textbackslash\}}} --- at least \textit{n} occurrences
 		\item \alert{\texttt{\textbackslash}} --- escape following special character (e.g. \texttt{\textbackslash .} to literally search for dot and not \enquote{any single character})
-		\item \alert{\texttt{|}} --- either the preceding or following reg exp can be matched (alternation)
-		\item \alert{\texttt{\textbackslash(\ldots\textbackslash)}} --- remembered group reg exp (numbered, starting with 1) --- can be called by \alert{\textbackslash\textit{n}}, where \textit{n} is number of the group (starting with 1)
+		\item \alert{\texttt{|}} --- either the preceding or following reg exp can be matched (alternation), in \texttt{grep} etc. escape it and use as \texttt{\textbackslash |}
+		\item \alert{\texttt{\textbackslash(\ldots\textbackslash)}} --- remembered group reg exp (numbered, starting with 1) --- can be called by \alert{\textbackslash\textit{n}}, where \textit{n} is number of the group (starting with 1, see examples further)
 		\item \alert{\texttt{\textbackslash$<$}}, \alert{\texttt{\textbackslash$>$}} --- word boundaries
 		\item \alert{\texttt{[[:alnum:]]}} --- alphanumerical characters (includes white space), same like \texttt{[a-zA-Z0-9]}
 		\item \alert{\texttt{[[:alpha:]]}} --- alphabetic characters, like \texttt{[a-zA-Z]}
@@ -3292,17 +3309,13 @@
 		\item \alert{\texttt{\textasciicircum.*\$}} --- entire line whatever it is
 		\item \alert{\texttt{ +}} --- one or more spaces (there is space before plus)
 		\item \alert{\texttt{\&}} --- content of pattern that was matched
-		\item Implementation in \texttt{vim}, \texttt{sed}, \texttt{grep}, \texttt{awk} and \texttt{perl} and among various UNIX systems is almost same, but not identical\ldots
-		\item \textbf{grep}, \textbf{sed} and \textbf{vim} \alert{require escaping} of \alert{\texttt{+}}, \alert{\texttt{?}}, \alert{\texttt{\{}}, \alert{\texttt{\}}}, \alert{\texttt{(}} and \alert{\texttt{)}} by backslash \alert{\texttt{\textbackslash}} (e.g. \texttt{\textbackslash +})
-		\item \textbf{egrep} (extended version, launched as \texttt{grep -E \ldots} or \texttt{egrep \ldots}), \textbf{sed} with extended reg exp (\texttt{sed -r}) and \textbf{perl} \alert{not} (simply e.g. \texttt{+})
-		\item Read \url{https://en.wikibooks.org/wiki/Regular_Expressions}, \url{https://www.grymoire.com/Unix/Regular.html}, \url{https://www.regular-expressions.info/}; česky \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{https://www.root.cz/serialy/regularni-vyrazy/} a~\url{https://www.regularnivyrazy.info/}
-		\item Manuals for \href{https://www.gnu.org/software/grep/manual/}{Grep}, Vim, \href{https://www.gnu.org/software/sed/manual/}{Sed}, \href{https://www.gnu.org/software/gawk/manual/}{Awk}, \href{https://en.wikibooks.org/wiki/Perl_Programming}{Perl} (\href{https://en.wikibooks.org/wiki/Raku_Programming}{newer Perl~6 Raku}),~\ldots
-		\item See sed examples, slide~\ref{sedex}; and next slide
-		\item macOS has by default very outdated version of \texttt{sed} and another tools --- it does not have all advanced features --- users need to install e.g. \texttt{gnu-sed} formulae from \href{https://brew.sh/}{Homebrew} (slide~\ref{homebrew})
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Grep and sed examples I}
+	\begin{itemize}
+		\item Be sure to understand all syntax on this and following slide\ldots
+	\end{itemize}
 	\begin{bashcode}
     # Extract sequences with at least 5 A bases in line
     grep "A\{5,\}" Oxalis_HybSeq_nrDNA_selection_alignment.fasta
@@ -3318,24 +3331,40 @@
     sed -e 's/^/<p>/' -e 's/$/<\/p>/' long_text.txt | less
     # Make first word of every paragraph bold in HTML (<strong>...</strong>)
     sed -e 's/^/<strong>/' -e 's/^[[:graph:]]\+/&<\/strong>/' long_text.txt
-    # How many times is each word in the text
-    grep -o "\<[[:alpha:]]\+\>" long_text.txt | sort | uniq -ic | less
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Grep and sed examples II}
 	\begin{bashcode}
+    # How many times is each word in the text
+    grep -o "\<[[:alpha:]]\+\>" long_text.txt | sort | uniq -ic | less
     # List all Internet web links
-    grep -o "http[a-zA-Z0-9\.()/:\-]\+" long_text.txt
+    grep -o 'https\?://[a-zA-Z0-9\.()/:\-]\+' long_text.txt
+    # Convert selected letters to upper case
+    sed 's/[acegikmoqsuwy]/\U&/g' diff_test_file_1.txt
+    # From file listing (compare with 'ls -l') remove permissions and number
+    # of links on the beginning, flip user and group ownership and add labels
+    # Note usage of numbered groups
+    # Note that unmatched part o line is intact
+    ls -l | sed 's/^[[:graph:]]\+[[:blank:]]\+[0-9]\+[[:blank:]]\+
+      \([[:alnum:]]\+\)[[:blank:]]\+\([[:alnum:]]\+\)/GRP: \2\tUSR: \1/g'
+    # Create list of samples (e.g. as input in script for some application)
+    SAMPLESLIST=$(find . -name "*.jpg" | sed 's/^\.\///' | sed 's/^/-I /' | 
+      tr "\n" " ")
+    echo $SAMPLESLIST # What would be difference from quoted "$SAMPLESLIST"?
+    application $SAMPLESLIST -method X -out Y ... # Rationale of such listing
 	\end{bashcode}
-		\begin{block}{Tasks}
-			\begin{enumerate}
-				\item Remove "\texttt{S}" codes, replace underscore by dot and space (\texttt{. }), and capitalize initial "\texttt{o}" in FASTA names in \texttt{oxalis\_assembly\_6235.aln.fasta}, e.g. from \texttt{>o\_annae\_S499} to \texttt{>O. annae}.
-				\item Extract from \texttt{arabidopsis.vcf.gz} values of \texttt{DP} (only numbers), sort them and print on single line, separated by commas.
-				\item Determine, which sequence of \texttt{Oxalis\_HybSeq\_nrDNA\_selection\_alignment.fasta} has the longest block of missing data (\texttt{N}) or spaces (\texttt{-}).
-			\end{enumerate}
-		\end{block}
-	\end{frame}
+\end{frame}
+
+\begin{frame}[fragile]{Regular expressions tasks}
+	\begin{enumerate}
+		\item Remove "\texttt{S}" codes, replace underscore by dot and space (\texttt{. }), and capitalize initial "\texttt{o}" in FASTA names in \texttt{oxalis\_assembly\_6235.aln.fasta}, e.g. from \texttt{>o\_annae\_S499} to \texttt{>O. annae}.
+		\item Extract from \texttt{arabidopsis.vcf.gz} values of \texttt{DP} (only numbers), sort them and print on single line, separated by commas.
+		\item Determine, which sequence(s) of \texttt{Oxalis\_HybSeq\_nrDNA\_selection\_alignment.fasta} has block of missing data (\texttt{N}) or spaces (\texttt{-}) longer than 10~bp.
+		\item From file \texttt{cut\_awk\_test\_file.tsv} remove with \texttt{sed} column \texttt{Description} (\texttt{"Assembly of \# reads: \ldots "}).
+		\item Think about any task (manipulation with your data,~\ldots) you are (sometimes) dealing with, which could be simplified/solved by using regular expressions. Try to solve it. Discuss it with others.
+	\end{enumerate}
+\end{frame}
 
 \section{Scripting}
 
