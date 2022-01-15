@@ -723,7 +723,7 @@
 		\item \alert{\texttt{/windows}} --- if on dual boot, Windows disks are commonly mounted here
 		\item In newest Linux distributions, most of \texttt{/bin}, \texttt{/etc}, \texttt{/lib}, \texttt{/lib64} and \texttt{/sbin} are mostly in \texttt{/usr} (original locations are just links)
 		\item Can be altered, modified
-		\item E.g. MetaCentrum has storage servers in various locations accessible from front ends and calculation nodes in \texttt{/storage}
+		\item E.g. MetaCentrum has storage servers in various locations accessible from frontends and calculation nodes in \texttt{/storage}
 		\item Usually, work only in your home, anywhere else modify files only if you are absolutely sure what you are doing
 		\item Normal user doesn't have permission to modify files outside his directory (with exception of plugged removable media, etc.)
 		\item Try \texttt{man hier} for details
@@ -4466,16 +4466,49 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{Terminology and geography}
+\begin{frame}{Terminology}
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item Node (computing server) --- single computer, worker finally doing computational job
+			\item Cluster --- bunch of nodes in rack (special case storing nodes, use to contain also network switch, backup power,~\ldots{ } e.g. \href{https://sorbus.ibot.cas.cz/en/hw}{cluster in Průhonice}, \href{https://sorbus.ibot.cas.cz/cs/hw}{česky})
+			\item Grid --- clusters distributed in various places, connected into single system by fast network (e.g. \href{https://www.metacentrum.cz/en/Sluzby/Grid/}{MetaCentrum}, \href{https://www.metacentrum.cz/cs/Sluzby/Grid/}{česky})
+			\item Supercomputer --- extra powerful computer, nowadays mostly special cluster, e.g. \href{https://www.it4i.cz/}{IT4Innovations} in Ostrava
+		\end{itemize}
+		\begin{center}
+			\includegraphics[height=6.5cm]{cluster_rack.jpg}
+		\end{center}
+	\end{multicols}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Distributed topology}
 	\begin{itemize}
-		\item Node (computing server) --- single computer, worker finally doing computational job
-		\item Cluster --- bunch of nodes in rack (special case storing nodes, use to contain also network switch, backup power resource,~\ldots{ } e.g. \href{https://sorbus.ibot.cas.cz/en/hw}{cluster in Průhonice}, \href{https://sorbus.ibot.cas.cz/cs/hw}{česky})
-		\item Grid --- clusters distributed in various places, but connected into single system by fast network (e.g. \href{https://www.metacentrum.cz/en/Sluzby/Grid/}{MetaCentrum grid}, \href{https://www.metacentrum.cz/cs/Sluzby/Grid/}{česky})
-		\item Supercomputer --- extra powerful computer, nowadays mostly special cluster, e.g. \href{https://www.it4i.cz/}{IT4Innovations} in Ostrava
+		\item \href{https://metavo.metacentrum.cz/}{MetaCentrum clusters} are distributed in various Czech cities (and institutions)
+		\item Clusters use to have (at least small) storage array (accessible via \texttt{/storage/\ldots})
+		\item There are special \href{https://du.cesnet.cz/en/infrastruktura_ulozist/start}{archive storages} (\href{https://du.cesnet.cz/cs/infrastruktura_ulozist/start}{česky}) in Jihlava, Ostrava and Plzeň
+	\end{itemize}
+	\begin{center}
+		\includegraphics[width=\textwidth]{metacentrum_map.png}
+	\end{center}
+	\begin{itemize}
+		\item Users have different quota on different arrays (depending on home organization etc.)
+		\item There are 11 \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontends} (\href{https://wiki.metacentrum.cz/wiki/Celni_uzel}{česky}) where user logs via SSH and prepare computing task for submission etc. (see further)
+		\item Distributed topology might be bit confusing --- user has different home directory when logging to different frontends --- recommended is to use as few frontends and storages as possible
+		\item Some special services (like \href{https://wiki.metacentrum.cz/wiki/OnDemand}{OnDemand}) start on particular storage (here \texttt{brno3})
+		\item Generally, computing task loads data from selected storage and can start on any cluster
+		\item Orientation is plenty of storages might be sometimes tricky --- ensure where you are and where your data are supposed to be
 	\end{itemize}
 \end{frame}
 
 \subsection{Usage}
+
+\begin{frame}{Basic workflow}
+	\begin{center}
+		\includegraphics[height=5.5cm]{grid_graphics.jpg}
+	\end{center}
+	\begin{flushright}
+		From \href{https://wiki.metacentrum.cz/wiki/Beginners_guide}{Beginners guide} (\href{https://wiki.metacentrum.cz/wiki/Pruvodce_pro_zacatecniky}{česky})
+	\end{flushright}
+\end{frame}
 
 \begin{frame}[fragile]{MetaCentrum usage}
 	\begin{itemize}
@@ -4522,10 +4555,10 @@
     # Clean-up of SCRATCH (it is temporal directory created by server) - the
     # commands will be launched on the end when the job is done
     trap 'clean_scratch' TERM EXIT
-    trap 'cp -a "$SCRATCHDIR" "$DATADIR"/ && clean_scratch' TERM
+    trap 'cp -a "${SCRATCHDIR}" "${DATADIR}"/ && clean_scratch' TERM
     # Change working directory - script goes to the directory where
     # calculations are done
-    cd "$SCRATCHDIR"/ || exit 1 # If it fails, exit script
+    cd "${SCRATCHDIR}"/ || exit 1 # If it fails, exit script
     # Prepare the task - copy all needed files from working directory into
     # particular computer which will finally do the calculations
     # Ends on following slide...
@@ -4534,8 +4567,8 @@
 
 \begin{frame}[fragile]{Basic skeleton of script running tasks II}
 	\begin{bashcode}
-    # ...begins on previous slide
-    cp -a "$DATADIR"/"$WORKDIR"/* "$SCRATCHDIR"/ || exit 1 # If it fails, exit
+    # ...begins on previous slide; copy data - if it fails, exit
+    cp -a "${DATADIR}"/"${WORKDIR}"/* "${SCRATCHDIR}"/ || exit 1
     # Prepare calculations - load required application modules
     # See https://wiki.metacentrum.cz/wiki/Kategorie:Applications
     # Every application module is loaded by "module add XXX"
@@ -4546,7 +4579,7 @@
     # qsub must in this case contain select=1:ncpus=8 (see further)
     find . -name "*.nexus" -print | parallel -j 8 'mb {} | tee -a {}.log'
     # Copy results back to home directory
-    cp -a "$SCRATCHDIR" "$DATADIR"/"$WORKDIR" || export CLEAN_SCRATCH=false
+    cp -a "${SCRATCHDIR}" "${DATADIR}"/"${WORKDIR}" || export CLEAN_SCRATCH='false'
     # This is all needed, the script is ready to be launched...
     exit
 	\end{bashcode}
