@@ -4834,13 +4834,46 @@
 	\end{bashcode}
 \end{frame}
 
-% \subsection{MetaCloud} % TODO MetaCloud
-%
-% \begin{frame}{MetaCloud}
-% 	\begin{itemize}
-% 		\item 
-% 	\end{itemize}
-% \end{frame}
+\subsection{More services}
+
+\begin{frame}{OnDemand}{Applications in web browser}
+	\begin{itemize}
+		\item It allows to run selected interactive applications in web browser
+		\item See \url{https://wiki.metacentrum.cz/wiki/OnDemand} and \url{https://ondemand.cerit-sc.cz/}
+		\item Applications start in \texttt{/storage/brno3-cerit/home/\$USER/} --- ensure to have everything needed there
+	\end{itemize}
+	\begin{center}
+		\includegraphics[height=3.5cm]{rstudio_ondemand.png}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Jupyter Notebook}
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item Web service allowing to record code as well as its output for languages like BASH, R, Python,~\ldots
+			\item Convenient for recording and sharing code, interactive work,~\ldots
+			\item Use \href{https://wiki.metacentrum.cz/wiki/Jupyter_for_MetaCentrum_users}{Jupyter Hub} for MetaCentrum users
+			\begin{itemize}
+				\item Data are in \texttt{/storage/brno2/home/USER/}
+			\end{itemize}
+			\item \href{https://wiki.metacentrum.cz/wiki/Jupyter_notebook}{Available} also as part of OnDemand (previous slide), or bit experimental \href{https://hub.cerit-sc.cz/}{CERIT hub}, which allows to select custom storage and also custom docker image (see \href{https://docs.cerit.io/docs/jupyterhub.html}{documentation})
+		\end{itemize}
+		\begin{center}
+			\includegraphics[height=6.5cm]{jupyter.png}
+		\end{center}
+	\end{multicols}
+\end{frame}
+
+\begin{frame}{MetaCentrum cloud}
+	\begin{itemize}
+		\item MetaCentrum \href{https://wiki.metacentrum.cz/wiki/Kategorie:Clouds}{cloud} (\href{https://wiki.metacentrum.cz/wiki/Kategorie:Cloudy}{česky}) allows to run complete Linux distribution (Debian, CentOS,~\ldots), where you can install any software, like on any other computer
+		\item Useful e.g. for various testing or applications with very special requirements
+		\item Go to \url{https://cloud.metacentrum.cz/} and see \href{https://docs.cloud.muni.cz/}{documentation}
+		\item Login to running virtual machine requires SSH keys to be set up, access is normally via SSH
+		\item Users must have knowledge about Linux administration and follow all security best-practices
+		\item Setting up more than one virtual machine requires good knowledge about Linux networking (user has single public IP address)
+	\end{itemize}
+\end{frame}
 
 \section{Git}
 
