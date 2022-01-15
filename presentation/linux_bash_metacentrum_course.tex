@@ -4511,34 +4511,33 @@
 \end{frame}
 
 \begin{frame}[fragile]{MetaCentrum usage}
-	\begin{itemize}
-		\item User can transfer data on one of \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontends} (\href{https://wiki.metacentrum.cz/wiki/Celni_uzel}{česky}) (next slide; or data storage) by e.g. \texttt{scp} or \href{https://winscp.net/}{WinSCP} from Windows or \href{https://filezilla-project.org/}{FileZilla} from anywhere
-		\item Same credentials are used for all frontends, for SSH login as well as file transmissions
-	\end{itemize}
-	\vfill
+	\begin{enumerate}
+		\item Transfer data into one of \href{https://wiki.metacentrum.cz/wiki/Working_with_data}{storages} (\href{https://wiki.metacentrum.cz/wiki/Prace_s_daty}{česky}) by e.g. \texttt{scp} from command line, \href{https://winscp.net/}{WinSCP} from Windows or \href{https://filezilla-project.org/}{FileZilla} from any OS
+		\item Connect via SSH to select \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontend} (\href{https://wiki.metacentrum.cz/wiki/Celni_uzel}{česky}). Same credentials are used for all frontends, for SSH login as well as file transmissions
+		\item In home directory on the storage (accessed via frontend) prepare all needed data and non-interactive script to do the calculations
+		\item Submit job using \texttt{qsub}. Tasks are not launched immediately, but submitted into queue and system decides when it will be launched
+		\item Monitor job progress. Check results. Etc\ldots
+	\end{enumerate}
 	\begin{bashcode}
     # Login to selected server (tarkil is located in Prague)
     ssh USER@tarkil.metacentrum.cz
     # Continue as in any other command line...
     qsub ... # Submit the job (see later)
 	\end{bashcode}
-	\vfill
-	\begin{itemize}
-		\item In home directory on the server prepare all needed data and non-interactive script (interactive are more complicated) which will do the calculations
-		\item Tasks are not launched immediately, but using \texttt{qsub} the task is submitted into queue and system decides when it will be launched
-	\end{itemize}
 \end{frame}
 
 \begin{frame}{File transfers to MetaCentrum}
-	\begin{itemize}
-		\item Graphical applications: e.g. \href{https://filezilla-project.org/}{FileZilla} or from most of Linux file managers
-		\item Protocol is SSH/SSH2/SFTP/SCP, port 22, server is selected \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontend's} (\href{https://wiki.metacentrum.cz/wiki/Celni_uzel}{česky}) address (e.g. \texttt{tarkil.metacentrum.cz}) --- select any and keep using it
-		\item All servers are accessible under domain \texttt{*.metacentrum.cz}: \texttt{skirit}, \texttt{perian}, \texttt{onyx}, \texttt{zuphux} (located in Brno), \texttt{alfrid}, \texttt{nympha}, \texttt{minos} (in Pilsen), \texttt{tarkil} (in Prague), and \texttt{tilia} (in Průhonice) --- so that e.g. \texttt{tarkil.grid.cesnet.cz} is synonymous to \texttt{tarkil.metacentrum.cz}
-		\item See slide \ref{transfers} and following to command-line transfers of files
-	\end{itemize}
-	\begin{center}
-		\includegraphics[height=2.5cm]{gftp.png}
-	\end{center}
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item Graphical applications: e.g. \href{https://filezilla-project.org/}{FileZilla} or most of Linux file managers
+			\item Protocol is SSH/SSH2/SFTP/SCP, port 22, server is selected \href{https://wiki.metacentrum.cz/wiki/NFS4_Servery}{storage} address --- if possible, select any and keep using it
+			\item All servers (storages, frontends, computing nodes) are accessible under domain \texttt{*.metacentrum.cz} --- e.g. \texttt{tarkil.grid.cesnet.cz} is same as \texttt{tarkil.metacentrum.cz}
+			\item See slide \ref{transfers} and following to command-line transfers of files
+		\end{itemize}
+		\begin{center}
+			\includegraphics[height=6.5cm]{filezilla.png}
+		\end{center}
+	\end{multicols}
 \end{frame}
 
 \subsection{Tasks}
@@ -4549,8 +4548,8 @@
     # Modify the script according to your needs!
     # Set data directories
     WORKDIR="my_data_dir" # Or something else
-    DATADIR="/storage/praha1/home/$LOGNAME" # Or other storage
-    # There is directory /storage/praha1/home/USER/my_data_dir (in this case)
+    DATADIR="/storage/XXX/home/$LOGNAME" # Or other storage
+    # There is e.g. directory /storage/praha1/home/gunnera/my_data_dir
     # containing all the data needed for calculations
     # Clean-up of SCRATCH (it is temporal directory created by server) - the
     # commands will be launched on the end when the job is done
@@ -4577,15 +4576,15 @@
     # Launch the analysis - calculate MrBayes for multiple files
     # Note Parallel will distribute task among 8 CPU threads (-j 8), so that
     # qsub must in this case contain select=1:ncpus=8 (see further)
-    find . -name "*.nexus" -print | parallel -j 8 'mb {} | tee -a {}.log'
-    # Copy results back to home directory
-    cp -a "${SCRATCHDIR}" "${DATADIR}"/"${WORKDIR}" || export CLEAN_SCRATCH='false'
+    find . -name "*.nexus" -print | parallel -j 8 'mb {} | tee {.}.log'
+    # Copy results back to $DATADIR directory
+    cp -a "${SCRATCHDIR}" "${DATADIR}"/ || export CLEAN_SCRATCH='false'
     # This is all needed, the script is ready to be launched...
     exit
 	\end{bashcode}
 	\begin{itemize}
 		\item Make \texttt{metacentrum.sh} executable and modify it to fit your needs\ldots
-		\item If it was written on Windows, convert EOL (and encoding)\ldots
+		\item If it was written on Windows, convert EOL (and encoding, slide~\ref{eolencoding})\ldots
 	\end{itemize}
 \end{frame}
 
@@ -4606,6 +4605,7 @@
     qstat 123456789 # The task ID is available from commands above or mail
     qstat -f 123456789 # Print a lot of details
     qdel 123456789 # Terminate scheduled or running task
+    qextend 123456789.meta-pbs.metacentrum.cz 12:0:0 # Prolong walltime (12 h)
 	\end{bashcode}
 \end{frame}
 
@@ -4635,13 +4635,13 @@
 		\item Specify needed time
 		\begin{itemize}
 			\item Always \texttt{hours:minutes:seconds}, so e.g. for 4~weeks use \texttt{-l~walltime=672:0:0} (28~$\cdot$~24), for two days and 12 hours \texttt{-l~walltime=60:0:0}
-			\item User \href{mailto:meta@cesnet.cz}{may ask} to prolong the walltime --- it is needed to write in advance
+			\item User may extend it with \texttt{qextend} (see \texttt{qextend info}), otherwise \href{mailto:meta@cesnet.cz}{ask support} (write them in advance)
 		\end{itemize}
 		\item Ask for as much RAM as you need (e.g. \texttt{-l~mem=8gb} to request 8~GB)
 		\begin{itemize}
 			\item If the task is going to require more, than allowed, system kills it\ldots
 			\item If user doesn't use all required RAM, the system temporarily lowers priority for future tasks (RAM is limiting resource, do not waste it)
-			\item It can be hard to estimate (no easy general advice to estimate needs for particular task)\ldots
+			\item It can be hard to estimate (no easy general advice to estimate needs for particular task) --- do some experiment and see how your application behaves with your data\ldots
 		\end{itemize}
 		\item Disk space is relatively free resource, user can ask more to have some reserve (e.g. \texttt{-l~scratch\_local=10gb} to request 10~GB)
 		\item Specify how many physical computer(s) you are going to use (e.g. \texttt{-l~select=1} for one machine) and number of CPU threads on each machine (e.g. \texttt{-l~select=1:ncpus=8} for 1~machine with 8~cores or \texttt{-l~select=2:ncpus=4} for 2~machines, each with 4~CPU threads)
@@ -4650,8 +4650,8 @@
 			\item If the application consumes less than required, the system temporarily lowers priority for future tasks, if it try to use more, it will be very slowed down or killed by the server
 			\item If using more physical machines, ensure correct settings of e.g. MPI (see documentation for respective software you are using)
 		\end{itemize}
-		\item If requesting e-mails (e.g. \texttt{-m abe} to get mail about abort, beginning and exit of the task) and submitting plenty of tasks by some script, it can result in plentoy of mails\ldots
-		\item Every user has certain \href{https://metavo.metacentrum.cz/pbsmon2/users/}{priority} increased by \href{https://wiki.metacentrum.cz/wiki/Usage_rules/Acknowledgement}{acknowledgments} in publications to MetaCentrum and lowered by intensive usage of the service (the usage is calculated from past month)
+		\item If requesting e-mails (e.g. \texttt{-m abe} to get mail about abort, beginning and exit of the task) and submitting plenty of tasks by some script, it can result in plenty of mails\ldots
+		\item Every user has certain \href{https://metavo.metacentrum.cz/pbsmon2/users/}{priority} increased by \href{https://wiki.metacentrum.cz/wiki/Usage_rules/Acknowledgement}{acknowledgments} (\textbf{it's mandatory to acknowledge MetaCentrum when using it}) in publications to MetaCentrum, and lowered by intensive usage of the service (the usage is calculated from past month)
 		\item After submission of the task, check in \href{https://metavo.metacentrum.cz/pbsmon2/queues/jobsQueued}{the queue} in which state it is --- sometimes it can't start because of impossible combination of requested resources or so
 		\item User can \href{https://metavo.metacentrum.cz/pbsmon2/nodes/physical}{check load of machines}
 		\item For more options read \url{https://wiki.metacentrum.cz/wiki/About_scheduling_system}
@@ -4710,17 +4710,15 @@
 
 \begin{frame}{Running R tasks on MetaCentrum}
 	\begin{itemize}
-		\item There are only some R packages, to get more create own package library and use it in scripts
+		\item There are only some R packages, to get more create own package library and use it in scripts (see e.g. \texttt{/software/R/4.0.0/gcc/lib/R/library/})
 		\item \alert{Be careful about paths!}
-		\item In the \texttt{metacentrum.sh} script load R \texttt{module add R-4.0.0-gcc} and start R script as usually \texttt{R CMD BATCH script.r}
+		\item In the \texttt{metacentrum.sh} script load R \texttt{module add R-4.0.0-gcc} and start there R script as usually \texttt{R CMD BATCH script.r}
 	\end{itemize}
 	\begin{enumerate}
 		\item Login to selected front node via SSH
-		\item Go to working directory \texttt{cd workdir}
-		\item Create new directory for R packages \texttt{mkdir rpkgs}
-		\item Start R \texttt{R}
-		\item Install \textbf{all} R packages needed for the task --- install them into the \texttt{rpkgs} directory \texttt{install.packages(pkgs=..., lib="rpkgs")}
-		\item In the R script \texttt{*.r} load the packages from the \texttt{rpkgs} directory \texttt{library(package=..., lib.loc="rpkgs")}
+		\item Create somewhere new directory for R packages \texttt{mkdir rpkgs} (or use default \texttt{$\sim$/R/})
+		\item Start R \texttt{R} and install \textbf{all} R packages needed for the task --- install them into the \texttt{rpkgs} directory \texttt{install.packages(pkgs=\ldots, lib="rpkgs")}
+		\item In the R script \texttt{*.r} load the packages from the \texttt{rpkgs} directory \texttt{library(package=\ldots, lib.loc="/storage/\ldots/rpkgs")}
 		\item Ensure all needed outputs are saved from the R script
 	\end{enumerate}
 \end{frame}
@@ -4759,7 +4757,7 @@
 		\item Submit the task via \texttt{qsub}.
 		\item Monitor the task with \texttt{qstat}.
 		\item Login with SSH to computing node where the task is running, go to \texttt{\$SCRATCHDIR} and see its progress. Look at output of \texttt{ps ux}. What does it say?
-		\item Wait for the task to be done and explore output.
+		\item Wait for the task to be done and explore output (e.g. open the \texttt{treefile} in \href{http://tree.bio.ed.ac.uk/software/figtree/}{FigTree}).
 		\item If you encounter any error, try to find its source and fix it.
 	\end{enumerate}
 \end{frame}
@@ -4778,12 +4776,11 @@
     # Wait for job to start... User automatically gets to the computing node
     # After we get the interactive task, we are on new server
     module add gui # We need to add GUI module
-    gui start # Start GUI (see above link for details)
-    gui info -p # Print information about running VNC sessions
-                # Including address, port and password to connect
+    gui start --ssh # Start GUI (see above link for details)
+    gui info # Print information about running VNC sessions
 	\end{bashcode}
 	\begin{itemize}
-		\item Launch your favorite VNC client (\href{https://apps.kde.org/krdc}{KRDC}, \href{https://www.tightvnc.com/}{TightVNC}, \href{https://tigervnc.org/}{TigerVNC}~\ldots) and use credentials from above output to connect
+		\item Download and install \href{https://www.tightvnc.com/}{TightVNC} (Windows installer or Java Viewer)
 		\item Work as on normal Linux desktop (ensure to work in \texttt{\$SCRATCHDIR})\ldots
 		\item It provides limited amount of resources, not suitable for big tasks
 	\end{itemize}
@@ -4795,9 +4792,9 @@
 	\end{center}
 \end{frame}
 
-\subsection{Data storage}
+\subsection{Archive data storage}
 
-\begin{frame}{CESNET data storage}
+\begin{frame}{CESNET archive data storage}
 	\begin{itemize}
 		\item Read documentation \url{https://du.cesnet.cz/} and connection instructions \url{https://du.cesnet.cz/en/navody/sluzby/start} (\href{https://du.cesnet.cz/cs/navody/sluzby/start}{česky})
 		\item Generally, it is possible to connect via FTPS, NFS, SAMBA (Windows network drive), SCP/SFTP or SSH --- more options how to get to same resource
@@ -4832,8 +4829,8 @@
     chgrp -R XXX /tape_tape/VO_XXX 2>/dev/null
     # ("-R" to modify also subdirectories; "2>/dev/null" to discard errors)
     # Set correct permissions to directories and files
-    find /tape_tape/VO_XXX -type d -exec chmod 770 {} \;
-    find /tape_tape/VO_XXX -type f -exec chmod 660 {} \;
+    find /tape_tape/VO_XXX -type d -exec chmod 770 {} \; 2>/dev/null
+    find /tape_tape/VO_XXX -type f -exec chmod 660 {} \; 2>/dev/null
 	\end{bashcode}
 \end{frame}
 
