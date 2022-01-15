@@ -4847,10 +4847,18 @@
 
 \section{Git}
 
-% TODO Add https://xkcd.com/1597/ and https://ohmygit.org/
-
 \begin{frame}{Git}
-	\tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
+	\begin{multicols}{2}
+		\vfill
+		\tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
+		\columnbreak
+		\begin{center}
+			\includegraphics[height=5.5cm]{git_xkcd.png}
+		\end{center}
+		\begin{flushright}
+			\url{https://xkcd.com/1597/}
+		\end{flushright}
+	\end{multicols}
 \end{frame}
 
 \subsection{Git principle}
@@ -4922,6 +4930,7 @@
 				\item Separation of tasks
 				\item Keeping more versions of the project
 			\end{itemize}
+			\item \alert{Homework:} play \href{https://ohmygit.org/}{Oh My Git!} to learn more and practice
 		\end{itemize}
 		\begin{center}
 			\includegraphics[height=5cm]{git.png}
@@ -5002,7 +5011,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Working with Git --- settings and more}
+\begin{frame}[fragile]{Working with Git --- summary, settings and more}
 	\begin{itemize}
 		\item Basically repeat in \texttt{git} \texttt{add}, \texttt{commit} and \texttt{push} to get your work to the repository, and \texttt{fetch} and \texttt{pull} to download news from central repository
 		\item \texttt{diff} to see local changes, \texttt{status} to see state
