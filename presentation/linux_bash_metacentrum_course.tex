@@ -194,7 +194,7 @@
 			\item \href{https://en.wikipedia.org/wiki/Unix-like}{UNIX-like} (UN*X, *nix)
 			\begin{itemize}
 				\item Systems compatible with UNIX (Linux, BSD and its variants, macOS,~\ldots)
-				\item Mainly open-source (UNIX is commonly commercial --- source code is not publicaly available, but its specification is)
+				\item Mainly open-source (UNIX is commonly commercial --- source code is not publicly available, but its specification is)
 				\item Nowadays prevailing over \enquote{old} UNIX systems, used in many devices from tiny embedded toys to huge data centers
 				\item Try to provide same quality as paid systems, but (mostly) for free
 			\end{itemize}
@@ -462,7 +462,7 @@
 		\begin{itemize}
 			\item If you can use whole disk, just boot from CD/USB and click \enquote{Next}\ldots
 			\item If you don't have whole disk, you need at least one (commonly more) disk partition(s) --- if you don't know how to manage them, ask someone skilled\ldots
-			\item Major updates of Windows 10 or Windows reainstalls use to destroy bootloader and it is not possible to start Linux anymore (although it can be usually easily fixed)
+			\item Major updates of Windows 10 or Windows reinstall use to destroy bootloader and it is not possible to start Linux anymore (although it can be usually easily fixed)
 		\end{itemize}
 		\item Live CD/USB
 		\begin{itemize}
@@ -761,7 +761,7 @@
     # remote side (the "spoofed" X-server by the remote sshd) can read your
     # keystrokes as you type, just like any other X11 client could do.
     # Set this to "no" here for global effect or in your own ~/.ssh/config
-    # file if you want to have the remote X11 authentification data to
+    # file if you want to have the remote X11 authentication data to
     # expire after twenty minutes after remote login.
     ForwardX11Trusted yes
     # ...
@@ -1266,7 +1266,7 @@
 			\item Login again to the server. Is it same or different process? Why?
 			\item Reattach to the screen --- same state as before logout from server.
 			\item Open new screen and practice tasks with file names (slide~\ref{filenames}).
-			\item Detach and re-attach to both sreens.
+			\item Detach and re-attach to both screens.
 			\item Close all screen sessions and logout from the server.
 		\end{enumerate}
 	\begin{center}
@@ -1981,7 +1981,7 @@
     # We are outputting 'ls -lh' to 'awk' and not to screen, printing only
     # selected columns, and parsing with 'column -t' for tabular display
     ls -lh # Compare outputs of the 3 commands starting with 'ls -lh'
-    ls -lh | awk '{ print $NF, " ", $5}' # See further more info about awk
+    ls -lh | awk '{ print $NF, " ", $5}' # See further more info about AWK
     ls -lh | awk '{ print $NF, " ", $5}' | column -t
 	\end{bashcode}
 	\begin{block}{Tasks with redirects of standard input/output}
@@ -2127,7 +2127,7 @@
 
 \begin{frame}[fragile]{Users and groups}
 	\begin{itemize}
-		\item These commands to manage users and groups do not have to work on all systems - depends on authentication methods used
+		\item These commands to manage users and groups do not have to work on all systems --- depends on authentication methods used
 		\item Commands modifying users and groups require root authentication
 	\end{itemize}
 	\begin{bashcode}
@@ -2281,7 +2281,7 @@
 	\begin{bashcode}
     # Mounting remote server over SSH (sshfs package must be installed)
     sshfs USER@vyuka.natur.cuni.cz:/some/dir /local/mount/point
-    fusermount -u /local/mount/point # Disconnect SSHF
+    fusermount -u /local/mount/point # Disconnect SSHFS
     # Mount Windows server (requires packages samba and cifs)
     mount.cifs //windows.server.cz/Some/Directory /mnt/win -o \
       credentials=/path/to/password.file,uid=USER,gid=GROUP
@@ -2389,9 +2389,9 @@
 	\end{itemize}
 \end{frame}
 
-\subsection{Parallelisation}
+\subsection{Parallelization}
 
-\begin{frame}{Parallelisation with GNU Parallel}
+\begin{frame}{Parallelization with GNU Parallel}
 	\begin{itemize}
 		\item \href{https://www.gnu.org/software/parallel/}{GNU Parallel} can distribute task among CPU threads of one computer, or even among different computers in network
 		\item It is not (so) effective for short/small tasks
@@ -2409,10 +2409,11 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{GNU Parallel examples I}
+\begin{frame}[fragile]{GNU Parallel examples I} %FIXME Fix wrong syntax highlight
 	\begin{bashcode}
     # Convert all images from JPG to PNG
-    find . -name '*.jpg' -print | parallel --bar convert '{}' '{.}.png'
+    find . -name '*.jpg' -print | parallel --bar convert {} {.}.png
+    # It might be possible to to use "'{}' '{.}.png'" instead
     # Resize all images ("\" marks that command continue on next line)
     find . -name '*.jpg' -print | parallel convert -resize 500x500 \
       -quality 75 '{}' '{.}-small.jpg' # or
@@ -2421,8 +2422,7 @@
     # Find WORD in huge text file (named "longfile" here) - this works
     # but it is not possible to get line number (file is red in blocks)
     parallel --pipe --block 10M -- grep --color=always WORD < longfile
-    # Same as above but add line numbers according to original file
-    nl longfile | parallel -k --pipe --block 20M -- grep WORD
+    nl longfile | parallel -k --pipe --block 20M -- grep WORD # Add line num.
     # When needed to get phrase or regular expression (use parameter
     # "-q" for escaping of shell special characters or extra quotes):
     # "--" stops reading parameters for parallel
@@ -2431,7 +2431,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{GNU Parallel examples II}
+\begin{frame}[fragile]{GNU Parallel examples II} %FIXME Fix wrong syntax highlight
 	\begin{bashcode}
     # Convert all WAV files into OGG
     parallel -X oggenc ::: *.wav # -X parse as many parameters as possible
@@ -2452,7 +2452,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{GNU Parallel examples III and tasks}
+\begin{frame}[fragile]{GNU Parallel examples III and tasks} %FIXME Fix wrong syntax highlight
 	\begin{bashcode}
     # Create BCFtools statistics for all *.vcf.gz files
     find . -name "*.vcf.gz" | parallel "echo '{/}' && bcftools stats -F \
@@ -2949,9 +2949,9 @@
     # Convert all capital letters into lower
     sed 's/[A-Z]/\L&/g' inputtextfile > outputtextfile # And vice versa:
     sed 's/[a-z]/\U&/g' inputtextfile > outputtextfile
-    # Groups to remember work in same way in sed, grep as well as vim
-    \(ToRemember\) # Remember expression in brackets
-    \Number # Use remembered expression (numbered from one: \1, \2, \3, ...)
+    # Groups to remember work in same way in sed, grep as well as vim:
+    # \(ToRemember\) # Remember expression in brackets and then use
+    # \Number # Use remembered expression (numbered from one: \1, \2, \3, ...)
     # Take output of ls -l and replace value of $USER by "$USER-RULEZZZ"
     ls -l | sed "s/\($USER\)/\1-RULEZZZ/g" # Note " to use the variable
     # Replace size column (2nd numeric) by "size:TAB<file size>b"
@@ -3069,7 +3069,7 @@
 	\begin{itemize}
 		\item Graphically compare two files by e.g. \href{https://apps.kde.org/kompare}{Kompare}, \href{https://sourcegear.com/diffmerge/}{DiffMerge}, \href{https://meldmerge.org/}{Meld},~\ldots
 		\item Most common is usage of GNU diffutils (next slide), see manual \url{https://www.gnu.org/software/diffutils/manual/}
-		\item See also \href{https://www.computerhope.com/unix/udiff.htm}{guide with examples}, česky \href{https://blog.root.cz/petrkrcmar/diff-jak-cist-vystup-z-porovnani-souboru/}{příklady na diff} a~\href{https://www.root.cz/clanky/nastroje-pro-porovnani-obsahu-dvou-textovych-souboru/}{porovnání dvou textových souborů}
+		\item See also \href{https://www.computerhope.com/unix/udiff.htm}{guide with examples}, česky \href{https://blog.root.cz/petrkrcmar/diff-jak-cist-vystup-z-porovnani-souboru/}{příklady na~diff} a~\href{https://www.root.cz/clanky/nastroje-pro-porovnani-obsahu-dvou-textovych-souboru/}{porovnání dvou textových souborů}
 	\end{itemize}
 	\begin{center}
 		\includegraphics[height=4.5cm]{kompare.png}
@@ -3364,7 +3364,7 @@
 
 \begin{frame}[fragile]{Regular expressions tasks}
 	\begin{enumerate}
-		\item Remove "\texttt{S}" codes, replace underscore by dot and space (\texttt{. }), and capitalize initial "\texttt{o}" in FASTA names in \texttt{oxalis\_assembly\_6235.aln.fasta}, e.g. from \texttt{>o\_annae\_S499} to \texttt{>O. annae}.
+		\item Remove "\texttt{S}" codes, replace underscore by dot and space (\texttt{. }), and capitalize initial "\texttt{o}" in FASTA names in \texttt{oxalis\_assembly\_6235.aln.fasta}, e.g. from \texttt{>o\_annae\_S499} to \texttt{>O.~annae}.
 		\item Extract from \texttt{arabidopsis.vcf.gz} values of \texttt{DP} (only numbers), sort them and print on single line, separated by commas.
 		\item Determine, which sequence(s) of \texttt{Oxalis\_HybSeq\_nrDNA\_selection\_alignment.fasta} has block of missing data (\texttt{N}) or spaces (\texttt{-}) longer than 10~bp.
 		\item From file \texttt{cut\_awk\_test\_file.tsv} remove with \texttt{sed} column \texttt{Description} (\texttt{"Assembly of \# reads: \ldots "}).
@@ -3688,7 +3688,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) I}
+\begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) I} %FIXME Fix wrong syntax highlight
 	\begin{itemize}
 		\item Following code use to be near beginning of the script to evaluate input
 		\item See \texttt{interactive5.sh} for complete example
@@ -3712,7 +3712,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) II}
+\begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) II} %FIXME Fix wrong syntax highlight
 	\begin{bashcode}
     # ...starts on previous slide...
         o) # Parameter "-o" accepts some value (e.g. "-o outputfile.txt")
@@ -3734,7 +3734,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) III}
+\begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) III} %FIXME Fix wrong syntax highlight
 	\begin{bashcode}
     # ...continuing from previous slide...
           ;; # End of this option (see previous slide)
@@ -3768,7 +3768,7 @@
            # the beginning of the line to overwrite the number in next step
       sleep 1s # Wait 1 second - just for fun ;-)
       # Do the task - append input to the output - note usage of variables
-      cat "${INPUTFILE}" >> "${OUTPUTFILE}" # Do the task - append into to output
+      cat "${INPUTFILE}" >> "${OUTPUTFILE}" #Do the job: append input to output
       done
     echo -ne "\n" # Reset cursor to new line
     echo "Done!"
@@ -3782,7 +3782,7 @@
 		\item This is the classical way how to use UNIX switches used in most of commands
 		\item \texttt{while} loop encapsulating \texttt{case} ensures we evaluate all provided parameters regardless their number or order
 		\begin{itemize}
-			\item Be prepared that user can use the arguments in any combination and orded (e.g. calling \texttt{-h} together with any other switch) --- avoid in code doing several things at once
+			\item Be prepared that user can use the arguments in any combination and order (e.g. calling \texttt{-h} together with any other switch) --- avoid in code doing several things at once
 		\end{itemize}
 	\end{itemize}
 	\vfill
@@ -3917,9 +3917,9 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Selecting version of RAxML according the CPU type I}
+\begin{frame}[fragile]{Selecting version of RAxML according the CPU type I} %FIXME Fix wrong syntax highlight
 	\begin{itemize}
-		\item \href{https://github.com/stamatak/standard-RAxML}{RAxML} can take advantage of modern CPUs to highly speed up calculations, with or without parallelisation --- every version has separated binary, user must select, see \href{https://github.com/stamatak/standard-RAxML/blob/master/README}{README}
+		\item \href{https://github.com/stamatak/standard-RAxML}{RAxML} can take advantage of modern CPUs to highly speed up calculations, with or without parallelization --- every version has separated binary, user must select, see \href{https://github.com/stamatak/standard-RAxML/blob/master/README}{README}
 		\item After compilation, the script can select e.g. on remote server appropriate version
 		\item RAxML binaries must be in \texttt{\$PATH}
 		\item See \texttt{raxml\_if.sh} for whole script
@@ -3935,11 +3935,11 @@
           else # The very last option
             RAXML='raxmlHPC' # Slowest oldest CPU...
       fi # End of branching
-    "${RAXML}" -s "${INPUT}" # All the parameters as usually...
+    ${RAXML} -s ${INPUT} # All the parameters as usually...
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Selecting version of RAxML according the CPU type II}{Multiple branching in one step}
+\begin{frame}[fragile]{Selecting version of RAxML according the CPU type II}{Multiple branching in one step} %FIXME Fix wrong syntax highlight
 	\begin{itemize}
 		\item Same task as on previous slide, but instead of if-then branching it is using \texttt{case}
 		\item See \texttt{raxml\_case.sh} for whole script
@@ -3958,13 +3958,13 @@
       *) # The very last option
         RAXML='raxmlHPC';; # Slowest oldest CPU...
       esac # End of branching
-    "${RAXML}" -s "${INPUT}" # All the parameters as usually...
+    ${RAXML} -s ${INPUT} # All the parameters as usually...
 	\end{bashcode}
 \end{frame}
 
 \subsection{Loops}
 
-\begin{frame}[fragile]{For loops I}
+\begin{frame}[fragile]{For loops I} %FIXME Fix wrong syntax highlight
 	\begin{itemize}
 		\item \texttt{for} loops are available in practically every programming language
 		\item BASH allows plenty of variants how to declare repetitions
@@ -3982,11 +3982,11 @@
     # One line for cycle for resizing of multiple images
     # Variable $JPGF contains in every repeat one-by-one name of input file
     # (each JPG) processed in the respective turn (creates tuhmbnails th-...)
-    for JPGF in *.jpg; do convert "${JPGF}" -resize 100x100 th-"${JPGF}"; done
+    for JPGF in *.jpg; do convert ${JPGF} -resize 100x100 th-${JPGF}; done
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{For loops II}
+\begin{frame}[fragile]{For loops II} %FIXME Fix wrong syntax highlight
 	\begin{itemize}
 		\item Basic way to process more files
 	\end{itemize}
@@ -3996,7 +3996,7 @@
       echo "Processing JPG file ${JPGF}"
       file "${JPGF}" # Get information about currently processed file
       # Create tuhmbnail. If it fails, skip following commands
-      convert "${JPGF}" -resize 100x100 thumbs-"${JPGF}" || continue
+      convert ${JPGF} -resize 100x100 thumbs-${JPGF} || continue
       echo "File thumbs-${JPGF} created"
       done
     # Passing through each loop can be influenced using conditions and
@@ -4165,6 +4165,7 @@
 		\item \texttt{zypper rr \textit{repository}} --- remove \textit{repository} (name according to \texttt{zypper lr})
 		\item \texttt{zypper mr \textit{repository}} --- modify \textit{repository} (see \texttt{man zypper} first or use \texttt{yast sw\_single})
 		\item \texttt{zypper pa \textit{package}} --- get information about particular \textit{package} or another query (e.g. list of dependencies, see \texttt{man zypper})
+		\item \texttt{opi} \textit{package} --- search (and possibly install) \textit{package} in \href{https://build.opensuse.org/}{OBS} in all repositories contributed by users
 		\item \texttt{rpmconfigcheck} --- check which configuration files in \texttt{/etc} have new version after update of some software --- compare respective configuration files with new \texttt{*.rpmnew} files
 		\item \texttt{rpm*} commands for other tasks
 		\item \texttt{man zypper}, \texttt{man rpm} --- usage help
@@ -4220,7 +4221,9 @@
 \end{frame}
 
 \begin{frame}{Graphical package managers II}{GNOME Software in Fedora and YaST in openSUSE}
-	\includegraphics[height=5.5cm]{software_managers_fedora_suse.png}
+	\begin{center}
+		\includegraphics[height=5.5cm]{software_managers_fedora_suse.png}
+	\end{center}
 	\begin{itemize}
 		\item Practically every common general distribution has some graphical tool\ldots{ }Explore it\ldots
 	\end{itemize}
@@ -4269,7 +4272,7 @@
     # openSUSE and SUSE Linux Enterprise
     zypper in -t pattern devel_basis devel_C_C++
     # Debian, Ubuntu and derivatives like Linux Mint and others
-    apt-get install build-essential # Or "aptitude install build-essential"
+    apt install build-essential # Or "aptitude install build-essential"
     # Red Hat, CENTOS, Fedora and derivatives (2 options - dnf or yum)
     dnf groupinstall "Development Tools" "C Development Tools and Libraries"
     yum groupinstall "Development Tools" "C Development Tools and Libraries"
@@ -4280,7 +4283,7 @@
 	\begin{itemize}
 		\item Available from \url{https://github.com/stamatak/standard-RAxML}
 		\item Before compilation check \href{https://github.com/stamatak/standard-RAxML/blob/master/README}{README}
-		\item This example does not require to run \texttt{make install}, it does not have extra dependencies for compilation, it requires specifying of particular source file by \texttt{make -f} (there are multiple \texttt{GCC} files, no one main)
+		\item This example does not require to run \texttt{make install}, it does not have extra dependencies for compilation, it requires specifying of particular source file by \texttt{make~-f} (there are multiple \texttt{GCC} files, no one main)
 	\end{itemize}
 	\begin{bashcode}
     mkdir raxml # Create working directory
@@ -4394,7 +4397,7 @@
 		\item There is no universal simple solution
 		\item As first step look if particular package is available for your distribution
 		\begin{itemize}
-			\item DebianScience \url{https://wiki.debian.org/DebianScience} --- same packages are available also for Ubuntu, Mint and all the DEB derivatives
+			\item Debian Science \url{https://wiki.debian.org/DebianScience} --- same packages are available also for Ubuntu, Mint and all the DEB derivatives
 			\item openSUSE Science project \url{https://en.opensuse.org/Portal:Science}
 			\item Fedora scientific packages \url{https://fedoraproject.org/wiki/Scientific_Packages_List}
 			\item Major distributions have web services (e.g. \href{https://launchpad.net/}{Launchpad} for Ubuntu or \href{https://build.opensuse.org/}{openSUSE Build Service}) where users can create their own personal repositories and package their favorite packages (like \href{https://build.opensuse.org/project/show/home:vojtaeus}{myself}) --- search\ldots
@@ -4916,7 +4919,7 @@
 			\item Commits in various branches can be compared and branches can be merged again
 			\item Key feature of Git --- branches are useful when user starts to work on any big change in the project (the \enquote{main} part is intact while developers can freely work on major change)
 		\end{itemize}
-		\item Users work on a project in some directory as usually and from time to time commit local changes to stagging (temporal area) and then push them to remote or local repository (directory storing all Git history of particular project, can be anywhere)
+		\item Users work on a project in some directory as usually and from time to time commit local changes to staging (temporal area) and then push them to remote or local repository (directory storing all Git history of particular project, can be anywhere)
 		\item Every commit is checkpoint in the history
 		\begin{itemize}
 			\item Can be tagged (named), e.g. particular released version of software, or project stage
@@ -4938,7 +4941,7 @@
 		\begin{itemize}
 			\item User can create an account on GitLab (as on GitHub), or download and install GitLab system on own server (like \href{https://sorbus.ibot.cas.cz/en/gitlab}{we did}, \href{https://sorbus.ibot.cas.cz/cs/gitlab}{česky})
 		\end{itemize}
-		\item \href{https://sourceforge.net/}{SourceForge} used to be more popular in the past, still harbours plenty of interesting projects
+		\item \href{https://sourceforge.net/}{SourceForge} used to be more popular in the past, still harbors plenty of interesting projects
 		\item Others are e.g. \href{https://bitbucket.org/}{Bitbucket}, \href{https://www.codebasehq.com/}{Codebase},~\ldots
 		\item For on-line services, many tools are available only for paying customers
 		\item All such services provide Git repositories accessible through standard tools (from command line, see further; or from some special application), through web browser
@@ -4969,7 +4972,7 @@
 			\item \alert{Homework:} play \href{https://ohmygit.org/}{Oh My Git!} to learn more and practice
 		\end{itemize}
 		\begin{center}
-			\includegraphics[height=5cm]{git.png}
+			\includegraphics[height=5.5cm]{git.png}
 		\end{center}
 		\begin{flushright}
 			\begin{footnotesize}
@@ -4999,7 +5002,7 @@
     # Add files to trace with Git
     # Ignored files (or patterns) can be listed in .gitignore file
     git add <files> # Or "git add *"
-    git status # See changed files, commits in stagging, etc.
+    git status # See changed files, commits in staging, etc.
 	\end{bashcode}
 \end{frame}
 
@@ -5021,7 +5024,7 @@
     # List branches (current is marked by asterisk on the beginning)
     git branch
     # Download news from central server (work of colleagues, etc.)
-    git fetch # Downloaded to stagging, not applied yet to local files
+    git fetch # Downloaded to staging, not applied yet to local files
 	\end{bashcode}
 \end{frame}
 
@@ -5166,7 +5169,7 @@
 	\label{howtoask}
 	\begin{itemize}
 		\item \alert{Never ever} ask simple silly lazy questions you can quickly find in manual or web
-		\item People on mailing lists and forums respond volunteerly in their spare free time --- do not waste it --- be polite, brief and informative
+		\item People on mailing lists and forums respond voluntarily in their spare free time --- do not waste it --- be polite, brief and informative
 		\item Imagine you should answer --- which information do you need?
 		\item Be as specific and exact as possible
 		\begin{itemize}
