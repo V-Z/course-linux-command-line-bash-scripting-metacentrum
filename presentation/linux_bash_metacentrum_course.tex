@@ -540,7 +540,7 @@
 \begin{frame}{Short overview of hard disk layout}
 	\begin{itemize}
 		\item Physical disk (piece of hardware) has at least 1~partition --- division seen in Windows as \enquote{disks} (\texttt{C}, \texttt{D},~\ldots) and mounted directory in UNIX
-		\item MBR --- older description of disk division, up to 4~primary partitions (OS typically requires at leas one to run), one can be extended and contain more partitions, disks up to 2~TB
+		\item MBR --- older description of disk division, up to 4~primary partitions (OS typically requires at least one to run), one can be extended and contain more partitions, disks up to 2~TB
 		\item GPT --- newer, no relevant limits, requires UEFI (replacement of BIOS --- responsible of start of nowadays computers)
 		\item If unsure what to do, high probability to break it\ldots
 		\item Blank new partition has to be formatted to desired file system according to use and target operating system
@@ -572,6 +572,25 @@
 		\item Btrfs, ext4, XFS and ZFS are not accessible from Windows at all (Linux mainly uses ext4)
 		\item Btrfs, XFS and ZFS are the most advanced FS in common use
 	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Mounting and unmounting disks and removable media}
+	\begin{itemize}
+		\item Mounting and unmounting of devices require root privileges
+		\item In modern desktop Linux distributions, mounting is done automatically and media are visible mostly in \texttt{/media} or \texttt{/run/media} (and show some icon, widget or so in desktop environment)
+		\item In Linux, physical disks are named from \texttt{sda} to \texttt{sdz}, each disk has partitions (at least one) numbered from \texttt{1}, (\texttt{sda1}, \texttt{sda2}, \texttt{sdb1},~\ldots), all are in \texttt{/dev} (\texttt{/dev/sdc3})
+	\end{itemize}
+	\begin{bashcode}
+    eject # Open CD/DVD drive
+    mount # Which FS (disk partitions) are mounted
+    findmnt # See mounted devices in tree-like structure
+    mkdir /mnt/point # Empty directory must exist prior mounting into it
+    # mount usually recognize FS of mounted device, if not, add '-t FS_type'
+    mount /dev/sdXY /mount/directory # Mount disk sdXY to /mount/directory
+    mount -t iso9660 -o loop file.iso /mnt/iso # Mount CD/DVD ISO file
+    umount /dev/sdXY # Unmount disk sdXY, alternatively use below command
+    umount /mount/directory # Unmount disk from /mount/directory
+	\end{bashcode}
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Creation and control of FS}
@@ -627,25 +646,6 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Mounting and unmounting disks and removable media}
-	\begin{itemize}
-		\item Mounting and unmounting of devices require root privileges
-		\item In modern desktop Linux distributions, mounting is done automatically and media are visible mostly in \texttt{/media} or \texttt{/run/media}
-		\item In Linux, physical disks are named from \texttt{sda} to \texttt{sdz}, each disk has partitions (at least one) numbered from \texttt{1}, (\texttt{sda1}, \texttt{sda2}, \texttt{sdb1},~\ldots), all are in \texttt{/dev} (\texttt{/dev/sdc3})
-	\end{itemize}
-	\begin{bashcode}
-    eject # Open CD/DVD drive
-    mount # Which FS (disk partitions) are mounted
-    findmnt # See mounted devices in tree-like structure
-    mkdir /mnt/point # Empty directory must exist prior mounting into it
-    # mount usually recognize FS of mounted device, if not, add '-t FS_type'
-    mount /dev/sdXY /mount/directory # Mount disk sdXY to /mount/directory
-    mount -t iso9660 -o loop file.iso /mnt/iso # Mount CD/DVD ISO file
-    umount /dev/sdXY # Unmount disk sdXY, alternatively use below command
-    umount /mount/directory # Unmount disk from /mount/directory
-	\end{bashcode}
-\end{frame}
-
 \begin{frame}{Put together more disks}{Extend space and get higher data security}
 	\label{LVMRAID}
 	\begin{itemize}
@@ -691,7 +691,7 @@
     su -c "some command" # Launch one command with root permissions
     su USER # Became USER (USER's password is required)
     sudo -i # For trusted users, became root (asks for user's password)
-            # User has to be listed in /etc/sudoers
+            # User (or group) has to be listed in /etc/sudoers
     sudo somecommand # Launch somecommand with root's privileges - can be
                      # restricted for particular commands; /etc/sudoers can
                      # contain special settings for particular users/groups
@@ -704,7 +704,7 @@
 \begin{frame}[allowframebreaks]{Directory structure in Linux}
 	\begin{itemize}
 		\item It is similar also in another UN*X systems
-		\item Directory structure in Linux is similar to macOS (but there it is bit hidden, users usually don't see everything), but very different from Windows logic
+		\item Directory structure in Linux is similar to macOS (but there it is bit hidden, users usually don't see everything), but very different from Windows \enquote{logic}
 		\item Top directory \enquote{\texttt{/}} --- \enquote{root}
 		\item Everything else (including disks and network shares) are mounted in subdirectories (\texttt{/\ldots})
 		\item \texttt{/bin} --- very basic command line utilities
@@ -729,7 +729,7 @@
 		\item \alert{\texttt{/var}} --- data of most of applications and services, including e.g. database data, system logs,~\ldots
 		\item \alert{\texttt{/windows}} --- if on dual boot, Windows disks are commonly mounted here
 		\item In newest Linux distributions, most of \texttt{/bin}, \texttt{/etc}, \texttt{/lib}, \texttt{/lib64} and \texttt{/sbin} are mostly in \texttt{/usr} (original locations are just links)
-		\item Can be altered, modified
+		\item Can be altered, modified --- especially on various servers
 		\item E.g. MetaCentrum has storage servers in various locations accessible from frontends and calculation nodes in \texttt{/storage}
 		\item Usually, work only in your home, anywhere else modify files only if you are absolutely sure what you are doing
 		\item Normal user doesn't have permission to modify files outside his directory (with exception of plugged removable media, etc.)
@@ -743,7 +743,7 @@
 		\begin{itemize}
 			\item Apache web server, database, FTP server, networking, basic system settings,~\ldots
 		\end{itemize}
-		\item \texttt{cron*} --- cron automatically repeatedly runs tasks
+		\item \texttt{cron*} --- cron automatically repeatedly scheduled tasks
 		\item \texttt{fstab} --- description of FS mounted during startup
 		\item \texttt{group} --- list of users and groups
 		\item \texttt{passwd} --- basic settings for users (home directory, default shell,~\ldots)
@@ -803,7 +803,7 @@
 \begin{frame}[fragile]{File names}
 	\label{filenames}
 	\begin{itemize}
-		\item \alert{Space serves as separator of parameters}
+		\item \alert{\textbf{Space} serves as separator of parameters}
 		\item Linux allows \alert{any} character in file name, except \alert{slash} (\texttt{/}), so including anything on keyboard as well as line break (\alert{!}) --- be conservative\ldots
 	\end{itemize}
 	\begin{bashcode}
@@ -997,6 +997,9 @@
 		\item MetaCentrum has storages and clusters connected via NFSv4 protocol (see also slide~\ref{netfs}) --- commands \texttt{getfacl} and \texttt{setfacl} do not work there, use \texttt{nfs4\_getfacl}, \texttt{nfs4\_setfacl} and \texttt{nfs4\_editfacl} instead (usage is very similar), see also \url{https://wiki.metacentrum.cz/wiki/Access_Control_Lists_on_NFSv4}
 		\item Permissions (\enquote{classical} as well as ACL) require some time to practice and master it\ldots
 	\end{itemize}
+	\begin{block}{Importance of permissions}
+		\alert{Too permissive (wrong) permissions can lead to data loss, or to data inaccessibility!}
+	\end{block}
 \end{frame}
 
 \begin{frame}[fragile]{ACL examples}
