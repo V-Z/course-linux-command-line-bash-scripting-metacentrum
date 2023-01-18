@@ -138,7 +138,7 @@
 		\item Download the presentation from \url{https://soubory.trapa.cz/linuxcourse/linux_bash_metacentrum_course.pdf}
 		\item Download the scripts and toy data from \url{https://soubory.trapa.cz/linuxcourse/scripts_data.zip}
 		\begin{itemize}
-			\item \alert{Note:} Open the scripts in some \alert{good} text editor (slide~\ref{editors}) --- showing syntax highlight, line numbers, etc. (\alert{NO} Windows notepad); the files are in UTF-8 encoding and with UNIX end of lines (so that too silly programs like Windows notepad won't be able to open them correctly)
+			\item \alert{Note:} Open the scripts in some \alert{good} text editor (slide~\ref{editors}) --- showing syntax highlight, line numbers, etc. (\alert{NO} Windows notepad); the files are in UTF-8 encoding and with UNIX end of lines (slide~\ref{eolenc}; so that too silly programs like Windows notepad won't be able to open them correctly)
 			\item \alert{Never ever} open any script file in software like MS~Word --- they destroy quotation marks and other things by \enquote{typographical enhancements} making the script unusable
 		\end{itemize}
 	\end{itemize}
@@ -188,18 +188,18 @@
 	\begin{itemize}
 		\item \href{https://en.wikipedia.org/wiki/Unix}{UNIX}
 		\begin{itemize}
-			\item Originally developed in Bell labs of AT\&T in 1969, written in C, since then  huge radiation, hybridization, HGT,~\ldots
+			\item Originally developed in Bell labs of AT\&T in 1969, written in C, since then  huge radiation, hybridization, horizontal gene transfer, rich evolution,~\ldots
 			\item Trademark --- only systems passing certain conditions (paid certification) can be called \enquote{UNIX} --- Solaris, HP-UX, AIX, etc. (commercial systems for big servers)
-			\item Main principles: simple, multitasking, hierarchical, network, for more users (takes cares about permissions etc.), configuration written in plain text files, important relationships among applications (generally one application = one task --- they are chained), work primarily with text, has kernel and API (interface to communicate with the rest of the system)
-			\item \href{https://en.wikipedia.org/wiki/Unix-like}{UNIX-like} (UN*X, *nix)
-			\begin{itemize}
-				\item Systems compatible with UNIX (Linux, BSD and its variants, macOS,~\ldots)
-				\item Mainly open-source (UNIX is commonly commercial --- source code is not publicly available, but its specification is)
-				\item Nowadays prevailing over \enquote{old} UNIX systems, used in many devices from tiny embedded toys to huge data centers
-				\item Try to provide same quality as paid systems, but (mostly) for free
-			\end{itemize}
-			\item Many courts about copyrights, parts of code, patents (USA allow software patents, EU not) --- GNU, Linux, BSD, etc. try to ensure to have only code not covered by any patents to avoid possible courts
+			\item \textbf{Main principles:} simple, multitasking, hierarchical, network, for more users (takes care about permissions etc.), configuration written in plain text files, important relationships among applications (generally one application = one task --- they are chained), work primarily with text, has kernel and API (interface to communicate with the rest of the system)
 		\end{itemize}
+		\item \href{https://en.wikipedia.org/wiki/Unix-like}{UNIX-like} (UN*X, *nix)
+		\begin{itemize}
+			\item Systems compatible with UNIX (Linux, BSD and its variants, macOS,~\ldots)
+			\item Mainly open-source (UNIX is commonly commercial --- source code is not publicly available, but its specification is)
+			\item Nowadays prevailing over \enquote{old} UNIX systems, used in many devices from tiny embedded toys to huge data centers
+			\item Try to provide same quality as paid systems, but (mostly) for free
+		\end{itemize}
+		\item Many courts about copyrights, parts of code, patents (USA allow software patents, EU not) --- GNU, Linux, BSD, etc. try to ensure to have only code not covered by any patents to avoid possible legal issues
 		\item \href{https://www.gnu.org/}{GNU}
 		\begin{itemize}
 			\item \enquote{GNU's Not Unix!} --- but it is compatible, respects its principles
@@ -221,7 +221,13 @@
 			\item Most of people working with UNIX are using Linux (or macOS)
 		\end{itemize}
 		\item GNU and Linux are two important (but not sole) pieces of building set forming modern operating system
-		\item \enquote{Linux} nowadays usually mean Linux kernel + GNU basic tools  (thus correctly \enquote{GNU/Linux}) + thousands of various another applications (= \enquote{Linux distribution})
+		\item \enquote{Linux} nowadays usually mean Linux kernel + GNU basic tools (thus correctly \enquote{GNU/Linux}) + thousands of various another applications (= \enquote{Linux distribution}) --- ecosystem of (free) open-source GNU/Linux applications of various origin forming together what  we usually call simply \enquote{Linux}
+		\item Term \enquote{Linux} has various meaning (see further)
+		\begin{itemize}
+			\item If we mean only Linux kernel or whole distribution
+			\item If we talk about little embed Internet of Things (IoT) device, some mobile device, personal computer, server, supercomputer,~\ldots
+			\item We can talk about particular Linux distribution (see further)/use case, or generally\ldots
+		\end{itemize}
 	\end{itemize}
 \end{frame}
 
@@ -267,7 +273,7 @@
 			\item Much cheaper to shop there
 		\end{itemize}
 		\item Both have pros and cons --- depends what you wish\ldots
-		\item Consider e.g. difference between usage of full-featured and expensive Geneious (theoretically everything you need to process genetic data) vs. searching for hundreds of tools and pipelines on the Internet (GitHub, R packages, fora,~\ldots)
+		\item Consider e.g. difference between usage of full-featured and expensive Geneious (theoretically everything you need to process genetic data) vs. searching for hundreds of free tools and pipelines on the Internet (GitHub, R packages, fora,~\ldots)
 		\item According to \href{https://en.wikipedia.org/wiki/The_Cathedral_and_the_Bazaar}{book by Eric S.~Raymond}
 	\end{itemize}
 \end{frame}
@@ -275,7 +281,7 @@
 \begin{frame}[allowframebreaks]{Free and open-source software --- (F)OSS}
 	\begin{itemize}
 		\item \textbf{Free like freedom of speech, \alert{not} like free beer!}
-		\item Open-source --- source code can be seen by the holder of the license (not necessary by everyone)
+		\item Open-source --- source code can be seen by the holder of the license (not necessary by everyone --- can be paid)
 		\item Not every OSS (generally less strict conditions) has to be \textbf{F}OSS (you can do with it (almost) whatever you like) --- source code might be available under some circumstance (only to look), but modification and/or reuse of the code prohibited (and then it is not \textbf{free})
 		\item \href{https://www.gnu.org/licenses/gpl-3.0.html}{GNU GPL} (\enquote{\href{https://www.gnu.org/copyleft/}{copyleft}}) --- probably most common OSS license, strict, viral --- derived code has to keep the license --- surprisingly not fully \enquote{free} as it doesn't allow changes of license
 		\item \href{https://www.gnu.org/licenses/lgpl-3.0.en.html}{LGPL} --- Lesser GPL --- more permissive
@@ -297,12 +303,12 @@
 		\item Practical output of using open-source licenses for the user
 		\begin{itemize}
 			\item Software can be used anywhere
-			\item Software can be modified --- including various fixes of older code to work properly, or to different systems
+			\item Software can be modified --- including various fixes of older code to work properly, or for different systems (author worked e.g. on Linux and someone else will do version for macOS or Windows)
 			\item User can learn from the software (from the code), new software can be developed on top of it
 			\item Easier to find and trace bugs
-			\item Security --- no backdoors
+			\item Security --- no backdoors, possibility to do various audits, screenings, etc.
 			\item Bugs (problems) in the code can fixed by nearly anyone
-			\item Often available for free
+			\item Often available for free (e.g. on services like \href{https://github.com/}{GitHub} or \href{https://sourceforge.net/}{SourceForge})
 			\item Easier distribution of the software (can be copied into various repositories, like those of Linux distributions, \href{https://docs.conda.io/}{Conda} or \href{https://brew.sh/}{Homebrew})
 		\end{itemize}
 	\end{itemize}
@@ -392,7 +398,7 @@
 		\end{itemize}
 		\item \href{https://manjaro.org/}{Manjaro}, \href{https://getsol.us/}{Solus},~\ldots
 		\item Android (practically Linux kernel, touch interface \& Java)
-		\item For experienced users: Arch, Slackware, Gentoo,~\ldots
+		\item For experienced users: \href{https://archlinux.org/}{Arch}, \href{http://www.slackware.com/}{Slackware}, \href{https://www.gentoo.org/}{Gentoo},~\ldots
 	\end{itemize}
 \end{frame}
 
@@ -458,6 +464,7 @@
 
 \begin{frame}[allowframebreaks]{How to try Linux?}
 	\begin{itemize}
+		\item If unsure what to do, ask someone for help. ;-)
 		\item Install it on some computer together with or instead of Windows
 		\begin{itemize}
 			\item If you can use whole disk, just boot from CD/USB and click \enquote{Next}\ldots
@@ -471,7 +478,7 @@
 		\end{itemize}
 		\item Virtualization (slide~\ref{VBox})
 		\begin{itemize}
-			\item Requires relatively powerful computer (preferable Intel i5 or i7 or AMD Ryzen and over 8~GB of RAM)
+			\item Requires relatively powerful computer (preferable Intel i5 or i7 or AMD Ryzen and over 8~GB of RAM) and enough disk space
 			\item Install virtual machine (probably the most easy is \href{https://www.virtualbox.org/}{VirtualBox}) --- allows install and run another operating system inside host as an ordinary application --- very easy and comfortable
 		\end{itemize}
 		\item Linux subsystem in MS Windows Store (Windows 10 and 11)
