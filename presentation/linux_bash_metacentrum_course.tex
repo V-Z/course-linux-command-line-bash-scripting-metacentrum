@@ -1131,6 +1131,7 @@
 	\begin{itemize}
 		\item macOS contains outdated versions of many command line utilities with limited functionality comparing to what we are going to use (what is available in modern Linux distributions)
 		\item Several projects provide Linux style way of installation and update of various (not only) command line tools, probably the best is \href{https://brew.sh/}{Homebrew}
+		\item \href{https://developer.apple.com/xcode/}{Xcode} must be installed prior installation of Homebrew
 		\item Homebrew contains also plenty of scientific packages, there is also specialized similar \href{https://brewsci.github.io/homebrew-bio/}{source for bioinformatics} (and another sciences)
 		\item Tools installed via Homebrew are installed into \texttt{/usr/local} not to interact with system packages
 		\item Derived project is \href{https://docs.brew.sh/Homebrew-on-Linux}{Linuxbrew} (works also on Windows subsystem for Linux) useful especially for installation of some special (scientific) software unavailable in main Linux repositories (software resources)
@@ -1177,7 +1178,7 @@
 			\end{itemize}
 			\item Nowadays used \enquote{indirectly} with special applications (\enquote{emulators})
 		\end{itemize}
-		\item Terminal emulator
+		\item \textbf{Terminal emulator}
 		\begin{itemize}
 			\item Application used to get the \enquote{terminal} and work in command line
 			\item Every GUI has some --- \href{https://konsole.kde.org/}{Konsole}, \href{https://apps.kde.org/yakuake}{Yakuake}, \href{https://invisible-island.net/xterm/}{XTerm}, \href{https://wiki.gnome.org/Apps/Terminal}{Gnome Terminal}, \href{http://guake.org/}{Guake}, \href{https://docs.xfce.org/apps/terminal/start}{XFCE Terminal}, \href{https://github.com/lxde/lxterminal}{LxTerminal},~\ldots
@@ -1197,7 +1198,7 @@
 
 \begin{frame}{Screen}{Split terminal or keep task running after logging off}
 	\begin{itemize}
-		\item When you log off or network connection is broken, running tasks for particular terminal usually crashes
+		\item When you log off or network connection is broken during work on remote server, running tasks for particular terminal usually crashes
 		\item Sometimes number of connections to the server is limited
 		\item \texttt{screen} is solution --- virtual terminals
 		\item Launch \texttt{screen} to start new screen terminal, read some info, confirm by \textbf{Space key} or \textbf{Enter}
@@ -1310,8 +1311,8 @@
 		\item \texttt{Ctrl+R} --- reverse search in history --- type to search last command(s) containing typed character(s) --- repeat typing \texttt{Ctrl+R} to search deeper in history
 		\begin{itemize}
 			\item When on correct entry, hit Enter or use L/R arrow keys to edit it
+			\item \texttt{Ctrl+J} --- exit the search
 		\end{itemize}
-		\item \texttt{Ctrl+J} --- exit search
 		\item \texttt{TAB} --- list command and files starting by typed characters
 		\item \texttt{Home}/\texttt{End} (or \texttt{Ctrl+A}/\texttt{Ctrl+E}) --- go to beginning/end of the line
 		\item \texttt{Ctrl+L} --- clear screen (like \texttt{clear} command)
@@ -1330,14 +1331,14 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Places to store BASH settings}
+\begin{frame}{Places to store BASH settings for interactive work in shell}
 	\begin{itemize}
 		\item \texttt{/etc/bash.bashrc} --- System wide BASH settings --- can be overridden by user's configuration
 		\item \texttt{$\sim$/.bashrc} --- File is loaded each time user creates new session (typically opens new terminal window)
 		\item \texttt{$\sim$/.bash\_profile} --- Used specifically (not in every system) when user is using remote connection (e.g. SSH) --- user can have different settings for local and remote work
 		\item \texttt{/etc/profile} --- System wide profile file --- can be overridden by user's configuration
 		\item \texttt{$\sim$/.profile} --- Settings loaded when user logs-in (mainly for language settings), sometimes used by remote connections
-		\item \alert{Note:} BASH scripts are non-interactive shells --- they do not read settings above --- there are no aliases,~\ldots{ }but they inherit some settings (PATH, language,~\ldots) and they can read global variables
+		\item \alert{Note:} BASH scripts are non-interactive shells --- they do not read settings above --- there are no aliases etc., but they inherit some settings (PATH, language,~\ldots) and they can read global (not local) variables
 	\end{itemize}
 \end{frame}
 
@@ -1347,11 +1348,25 @@
 		\item In any text editor open \texttt{$\sim$/.bashrc} (and/or \texttt{$\sim$/.bash\_profile}) and edit it
 		\item Behavior of BASH can be set to fit user's needs
 		\item Terminal emulators allow to set custom fonts and colors,~\ldots
+		\item Prompt can be colored using custom values of \texttt{PS1} and \texttt{PS2} variables (\texttt{export PS1='\ldots'}), see \href{https://www.howtogeek.com/307701/how-to-customize-and-colorize-your-bash-prompt/}{examples}
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
-    # More colors for outputs
+    # More colors for outputs (typically ls)
     eval "$(dircolors -b)"
+    # Colored GCC warnings and errors (useful for compilation)
+    export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:
+      locus=01:quote=01'
+    # Example of more colorful prompt
+    export PS1='\u@\h:\w\$'
+    export PS2='\u@\h:\w\$'
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Examples of BASH settings}
+	\begin{bashcode}
+    # Set custom default editor (Ctrl+X+E and other cases)
+    export EDITOR='nano'
     # Ignore repeated entries in bash history (stored in ~/.bash_history)
     HISTCONTROL='ignoreboth'
     # Maximal length (number of lines) of bash history (~/.bash_history)
@@ -1361,8 +1376,11 @@
     shopt -s histappend # Append to history, don't overwrite it
     # Save and reload the history after each command finishes
     export PROMPT_COMMAND="history -a; history -c; history -r;
-      $PROMPT_COMMAND" # Note its recursive behavior
+      ${PROMPT_COMMAND}" # Note its recursive behavior
 	\end{bashcode}
+	\begin{itemize}
+		\item \texttt{shopt} can set various shell options, see e.g. \url{https://www.geeksforgeeks.org/shell-scripting-shopt-command/} (it can be used also in script to set some specific shell behavior)
+	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Aliases and BASH settings I}{Alias is short cut --- instead of very long command write short alias}
@@ -1370,35 +1388,35 @@
     # Define new alias
     alias ll="ls -l"
 	\end{bashcode}
+	\vfill
 	\begin{itemize}
 		\item Can be stored in \texttt{$\sim$/.bashrc} (or \texttt{$\sim$/.profile} or \texttt{$\sim$/.bash\_profile})
-		\item If there are plenty of them, aliases can go to \texttt{$\sim$/.alias} and \texttt{$\sim$/.bashrc} then contain \texttt{test -s $\sim$/.alias \&\& . $\sim$/.alias || true}
+		\item If there are plenty of them, aliases can go to \texttt{$\sim$/.alias} and \texttt{$\sim$/.bashrc} then contains \texttt{test -s $\sim$/.alias \&\& . $\sim$/.alias || true}
 	\end{itemize}
+	\vfill
 	\begin{bashcode}
     # After adding new aliases to ~/.bashrc or ~/.alias or so reload it
     source ~/.bashrc # Reload BASH settings to load newly aliases
-    # Popular aliases
-    eval "$(dircolors -b)" # Make output of ls colored
+    # Popular ls aliases
     alias ls="ls --color=auto" # Make output of ls colored
-    alias l="ls -la" # Long list (add details) with hidden files
-    alias grep='grep --color=auto' # Enable color in grep
-    alias df='df -h' # Always human readable output of df (disk free)
-    # Add aliases pointing to software installed outside PATH, ...
+    alias l="ls -laF" # Long list (add details) with hidden files
+    alias ll='ls -l' # Long list (add details) without hidden files
+    alias lh='ls -lha' # Long list (add details) with human readable sizes
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Aliases and BASH settings II}
 	\begin{bashcode}
+    alias md='mkdir -p' # Making directories
+    alias rd='rmdir' # Removing directories
+    alias o='less' # Text file viewer
+    alias grep='grep --color=auto' # Enable color in grep
+    alias df='df -h' # Always human readable output of df (disk free)
     # Easier history listing
     alias his="history | grep" # Use e.g. 'his ls' to list last 'ls' usage
+    # Add aliases pointing to software installed outside PATH, ...
     # Add ~/.local/bin to PATH (directories with commands and scripts)
-    export PATH=$PATH:~/.local/bin
-    # Colored GCC warnings and errors when compiling from source code
-    export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;
-      32:locus=01:quote=01' # No spaces, single line
-    # Some applications read the EDITOR variable to determine your favourite
-    # text editor. Select e.g. nano, emacs, vim, ...
-    export EDITOR=nano
+    export PATH="${PATH}":~/.local/bin:~/bin
 	\end{bashcode}
 	\begin{itemize}
 		\item \texttt{$\sim$/.bashrc} can contain anything (technically it's just BASH script), functions, whatever needed
@@ -1410,6 +1428,13 @@
 \subsection{Directories}
 
 \begin{frame}[fragile]{Directories}
+	\begin{itemize}
+		\item When using \texttt{cd}, \texttt{cp}, \texttt{mv}, \ldots{ }use \texttt{<TAB><TAB>} key suggesting matching names of files and directories and save repeated and unneeded typing
+		\item In command line, \textbf{user is always in some directory} --- \alert{it's crucial to train fluent moving among directories and manipulation with files}
+		\begin{itemize}
+			\item If lost among directories, run \texttt{pwd} to find out current directory and \texttt{ls} to see what is around
+		\end{itemize}
+	\end{itemize}
 	\begin{bashcode}
     pwd # Print working directory - where we are right now
     cd # Change directory (just "cd" or "cd ~" goes to home directory)
@@ -1420,6 +1445,11 @@
     tree # Tree like hierarchy of files and directories
     tree -d # List only directories; see tree --help
     tree -L 2 # Only up to second level; combine: tree -d -L 3
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Directories and files}
+	\begin{bashcode}
     du -sh # Disk usage by current directory, -s for sum, -h for nice units
     mkdir NewDirectory # Make directory
     rmdir DirectoryToRemove # Remove empty directory
@@ -1428,11 +1458,6 @@
     rm -r # Recursive delete - remove also non-empty directories
     mv from to # Move files/directories (also for renaming)
     mv docs to/sub/directory/ # Move 'docs' to 'to/sub/directory/'
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Directories and files}
-	\begin{bashcode}
     cp from to # Copy, -r (recursive, including subdirectories)
                # -a (keeps all attributes), -v (verbose)
     # Copy 'XXX' (recursively with subdirectories and everything) in the
@@ -1443,25 +1468,18 @@
     file somefile # Information about questioned file (what it is, ...)
     xdg-open somefile # Open file by graphical application as in GUI
 	\end{bashcode}
-\begin{itemize}
-	\item When using \texttt{cd}, \texttt{cp}, \texttt{mv}, \ldots use \texttt{<TAB><TAB>} key suggesting matching names of files and directories and save repeated and unneeded typing
-	\item In command line, \textbf{user is always in some directory} --- \alert{it's crucial to train fluent moving among directories and manipulation with files}
-	\begin{itemize}
-		\item If lost among directories, run \texttt{pwd} to find out current directory and \texttt{ls} to see what is around
-	\end{itemize}
-\end{itemize}
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Tasks on the remote server}
 	\begin{enumerate}
 		\item Login via SSH to \texttt{vyuka.natur.cuni.cz}.
 		\item Get your path by \texttt{pwd}.
-		\item Go to \texttt{/home/scripts\_data} (with \texttt{cd}) and explore its content (\texttt{ls}).
-		\item List permissions in \texttt{/home/scripts\_data} (slide~\ref{permissions}). What do they show? What can you do with the content?
-		\item How much space does \texttt{/home/scripts\_data} consume?
+		\item Go to \texttt{/srv/scripts\_data} (with \texttt{cd}) and explore its content (\texttt{ls}).
+		\item List permissions in \texttt{/srv/scripts\_data} (slide~\ref{permissions}). What do they show? What can you do with the content?
+		\item How much space does \texttt{/srv/scripts\_data} consume?
 		\item Go back to home directory (by \texttt{cd}).
 		\item Create new directory in your home directory (\texttt{mkdir}).
-		\item Copy content of \texttt{/home/scripts\_data} into your newly created directory (\texttt{cp}).
+		\item Copy content of \texttt{/srv/scripts\_data} into your newly created directory (\texttt{cp}).
 		\item Rename that directory with scripts and data using \texttt{mv} to any custom name. Who is owner of the files in origin location and in new location? Why?
 		\item Explore your home directory and its content by command \texttt{ls} and \texttt{tree} and some files by command \texttt{file}. Which hidden files and directories are there? What could it be?
 		\item Change permissions of the files so that only you can read, write and execute them (\texttt{chmod}).
@@ -1470,20 +1488,19 @@
 		\item What are some permissions in \texttt{/}? Why?
 		\item Define some alias (by running \texttt{alias} command, not by edit of \texttt{$\sim$/.bashrc}) and use it.
 		\item Create directory in your home directory and share it with another user so she/he can write there anything (using e.g. \texttt{touch somefile} or \texttt{mkdir somedirectory}) (work e.g. in pairs). Use everywhere as restricted permissions as possible. Can you figure out solution with or without ACL (slide~\ref{acl})?
-		\item Practice moving between \texttt{/home/scripts\_data} and your home directory. Use \texttt{cd} and \texttt{TAB}.
-		\item Within \texttt{/home/scripts\_data} list by single command only \texttt{jpg} and \texttt{txt} files.
-		\item Create in your home directory new directory \texttt{scripts} and copy there with single command all shell scripts (\texttt{*.sh}) files from \texttt{/home/scripts\_data}
-		\item Copy anywhere into your home \texttt{/home/scripts\_data} and by single command remove all \texttt{jpg} and \texttt{sh} files there.
+		\item Practice moving between \texttt{/srv/scripts\_data} and your home directory. Use \texttt{cd} and \texttt{TAB}.
+		\item Within \texttt{/srv/scripts\_data} list by single command only \texttt{jpg} and \texttt{txt} files.
+		\item Create in your home directory new directory \texttt{scripts} and copy there with single command all shell scripts (\texttt{*.sh}) files from \texttt{/srv/scripts\_data}
+		\item Copy anywhere into your home \texttt{/srv/scripts\_data} and by single command remove all \texttt{jpg} and \texttt{sh} files there.
 	\end{enumerate}
 \end{frame}
 
 \begin{frame}{Midnight Commander}
 	\begin{multicols}{2}
 		\begin{itemize}
-			\item \texttt{mc} to launch MC
-			\item Move (\texttt{F6}), copy (\texttt{F5}), delete (\texttt{F8}), files/directories
+			\item \texttt{mc} to launch MC (\texttt{F10} to quit), can be used with mouse
+			\item Move (\texttt{F6}), copy (\texttt{F5}), delete (\texttt{F8}), files/directories, \texttt{TAB} to switch panes
 			\item Connect to SSH/(S)FTP,~\ldots
-			\item Can be used with mouse
 			\item Edit (\texttt{F4}) or view (\texttt{F3}) text files
 			\item \texttt{F2} for quick menu
 			\item \texttt{F9} for top menu
@@ -1491,29 +1508,13 @@
 			\item Impossible to live without it :-)
 			\item \alert{Task:} Which of the previous tasks can you solve with it? Try it.
 		\end{itemize}
-		\includegraphics[height=6.5cm]{mc.png}
+		\begin{center}
+			\includegraphics[height=6.5cm]{mc.png}
+		\end{center}
 	\end{multicols}
 \end{frame}
 
 \subsection{Archives}
-
-\begin{frame}{Compressing and decompressing archives}
-	\begin{center}
-		\begin{tabular}{m{2.25cm}m{6.3cm}m{5.3cm}}
-			\textbf{Archive} & \textbf{Compressing command} & \textbf{Decompressing command}\\
-			*.tar & tar cvf archive.tar file1 file2 file3 & tar xvf archive.tar\\
-			*.tar.gz \alert{/} *.tgz & tar czvf archive.tar.gz\alert{/}.tgz file1 file2 & tar xzvf archive.tar.gz\alert{/}.tgz\\
-			*.tar.bz \alert{/} *.tbz \alert{/} *.tar.bz2 & tar cjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2 file1 file2 file3 file4 & tar xjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2\\
-			*.tar.xz & tar cvJf archive.tar.xz file1 file2 file3 & tar xvJf archive.tar.xz\\
-			*.tar.lzma & tar cvf - file1 file2 file3 file4 | lzma > archive.tar.lzma & lzcat archive.tar.lzma | tar xvf -\\
-			*.gz & gzip file & gunzip archive.gz\\
-			*.bz2 & bzip2 file & bunzip2 archive.bz2\\
-			*.xz & xz -zv file & xz -d archive.xz\\
-			*.lzma & lzma file & unlzma archive.lzma\\
-			*.zip & zip -r archive.zip file1 file2 & unzip archive.zip
-		\end{tabular}
-	\end{center}
-\end{frame}
 
 \begin{frame}{Compressing and decompressing archives}
 	\begin{itemize}
@@ -1532,6 +1533,24 @@
 	\end{flushright}
 \end{frame}
 
+\begin{frame}{Compressing and decompressing archives}
+	\begin{center}
+		\begin{tabular}{m{2.25cm}m{6.3cm}m{5.3cm}}
+			\textbf{Archive} & \textbf{Compressing command} & \textbf{Decompressing command}\\
+			*.tar & tar cvf archive.tar file1 file2 file3 & tar xvf archive.tar\\
+			*.tar.gz \alert{/} *.tgz & tar czvf archive.tar.gz\alert{/}.tgz file1 file2 & tar xzvf archive.tar.gz\alert{/}.tgz\\
+			*.tar.bz \alert{/} *.tbz \alert{/} *.tar.bz2 & tar cjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2 file1 file2 file3 file4 & tar xjvf archive.tar.bz\alert{/}.tbz\alert{/}.tar.bz2\\
+			*.tar.xz & tar cvJf archive.tar.xz file1 file2 file3 & tar xvJf archive.tar.xz\\
+			*.tar.lzma & tar cvf - file1 file2 file3 file4 | lzma > archive.tar.lzma & lzcat archive.tar.lzma | tar xvf -\\
+			*.gz & gzip file & gunzip archive.gz\\
+			*.bz2 & bzip2 file & bunzip2 archive.bz2\\
+			*.xz & xz -zv file & xz -d archive.xz\\
+			*.lzma & lzma file & unlzma archive.lzma\\
+			*.zip & zip -r archive.zip file1 file2 file3 file4 & unzip archive.zip
+		\end{tabular}
+	\end{center}
+\end{frame}
+
 \begin{frame}{Tasks with archives}
 	\begin{enumerate}
 		\item Compress (and decompress) text file \texttt{Oxalis\_HybSeq\_nrDNA\_selection\_} \texttt{alignment.fasta} from \texttt{scripts\_data} with various compressing tools.
@@ -1540,7 +1559,7 @@
 		\item Compare sizes of original files and compressed outputs.
 		\item Which compression tool seems to be the best? In terms of compressing ratio and time needed for compression.
 		\item Is more effective compression of text files or images? Why?
-		\item Why is even plain \texttt{tar} (without compression, it requires \texttt{gzip}, \texttt{bzip2}, \texttt{xz} or \texttt{lzma} to add compression) useful with FAT disks?
+		\item Why is even plain \texttt{tar} (without compression, it requires \texttt{gzip}, \texttt{bzip2}, \texttt{xz} or \texttt{lzma} to add compression) useful with FAT disks (it applies also for another tools)?
 		\item Search the Internet to find out how to unpack \texttt{arj} and \texttt{rar} archives from command line.
 	\end{enumerate}
 \end{frame}
@@ -1609,6 +1628,10 @@
 \end{frame}
 
 \begin{frame}[fragile]{Find examples II}{Apply some (or something similar) of them to the toy data}
+	\begin{itemize}
+		\item \texttt{find} is extremely versatile and useful tool --- master it (see also \texttt{man find} for help)
+		\item \texttt{-print} is default action --- if it is missing and there is no other actions, results are printed to the screen
+	\end{itemize}
 	\begin{bashcode}
     # Find all executable files within current directory and list them
     find . -executable -type f -print
@@ -1620,13 +1643,9 @@
     find ~ -name long_text.txt -type f -print
     # Find in current directory files from 1 to 100 MB
     find . -type f -size +1M -size -100M
-    # See another options. Much more...
-    man find
+    # Search in home dir for files named "*.jpg" or "*.txt" and print them
+    find ~ -name "*.jpg" -o -name "*.txt"
 	\end{bashcode}
-	\begin{itemize}
-		\item \texttt{find} is extremely versatile and useful tool --- master it
-		\item \texttt{-print} is default action --- if it is missing and there is no other actions, results are printed to the screen
-	\end{itemize}
 \end{frame}
 
 \begin{frame}{Searching tasks}
@@ -1713,13 +1732,13 @@
     printenv # Get all environmental variables and their values
     export -p # Get all exported variables and their values
     declare -p # Get all declared variables and their values
-    echo "$VARIABLENAME" # Get value of particular variable
-    echo "$PATH" # Get path where to look for applications
+    echo "${VARIABLENAME}" # Get value of particular variable
+    echo "${PATH}" # Get path where to look for applications
     VARIABLE='variablevalue' # Set new variable and its value
                              # Or replace existing variable by new value
-    export EDITOR=/usr/bin/vim # Set new default text editor
+    export EDITOR='/usr/bin/vim' # Set new default text editor
     LISTFILES="$(ls -1)" # Get output of command 'ls -1' into the variable
-    echo "$LISTFILES" # See content of the variable LISTFILES
+    echo "${LISTFILES}" # See content of the variable LISTFILES
     export GREP_OPTIONS='--color=auto' # Colored grep (see further)
     unset VARIABLENAME # Drop variable and its value
 	\end{bashcode}
@@ -1762,9 +1781,10 @@
     echo $F # ab"cde
     G='ab"cde' # '...' keep literal value of the content
     echo $G # ab"cde
-    H=abc$(echo $USER)de # See $USER to see what will be inserted in $(...)
+    H=abc${USER}de # $USER wouldn't work - {} are needed
     echo $H # abcvojtade # To add output of command into the variable
-    I='...' # Needed if $I should contain spaces, quotes, `, $, ...
+    I="abc$(echo ${USER} | tr [:lower:] [:upper:])de" # Modification of var.
+    echo $I # See what happened with content of $USER
 	\end{bashcode}
 \end{frame}
 
@@ -1773,15 +1793,37 @@
 		\item As soon as variable contains only Latin alphanumerical characters, assignment like \texttt{MYVAR=whatever} works, but it is not recommended
 		\item If variable should contain another variable, special characters, etc, use double quotes, e.g. \texttt{WORKDIR="/home/\$USER/data"}
 		\begin{itemize}
-		 \item It might be called like \texttt{echo \$MYVAR}, but if there would be non-standard characters anywhere, it'd fail, so prefer \texttt{"\$MYVAR"} (it \textit{might} work without quotes, but don't risk it) or \texttt{"\$\textbraceleft MYVAR\textbraceright"}
+		 \item It might be called like \texttt{echo \$MYVAR}, but if there would be non-standard characters anywhere, it'd fail, so prefer \texttt{"\$MYVAR"} (it \textit{might} work without quotes, but don't risk it) or \texttt{"\$\textbraceleft MYVAR\textbraceright"} as the most reliable way
 		\end{itemize}
-		\item If variable should contain any special character (including space), or you wish to be sure you keep it's literal value, use single quotes, e.g. \texttt{MYDATA='$\sim$/My Doc/exp 1/data.fsa'} (and then \texttt{"\$MYVAR"})
+		\item If variable should contain any special character (including space), or you wish to be sure you keep it's literal value, use single quotes, e.g. \texttt{MYDATA='$\sim$/My Doc/exp 1/data.fsa'} (and then \texttt{"\$\textbraceleft MYDATA\textbraceright"})
 		\item Similar for using variables
 		\begin{itemize}
 			\item Using \texttt{\$MYVAR} is fine if it doesn't contain anything special (but are you really sure?)
-			\item Best practice is to use \texttt{"\$\textbraceleft MYVAR\textbraceright"} as there is highest security if \texttt{MYVAR} would contain special characters, and there is room for various manipulations (see next slide)
+			\item Best practice is to use \texttt{"\$\textbraceleft MYVAR\textbraceright"} as there is highest security if \texttt{MYVAR} would contain special characters, and there is room for various manipulations (next slide)
 		\end{itemize}
 	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Manipulating with content of variable}
+	\begin{itemize}
+		\item It is possible to change/remove extension (suffix) of variable, do simple search and replace with its content, etc. (useful in scripts e.g. for input and output files)
+		\item Search and replace syntax is related to \texttt{sed} (slide~\ref{sedex})
+	\end{itemize}
+	\begin{bashcode}
+    MYVAR='oxalis_assembly_6235.aln.fasta' # Assign new variable
+    echo "${MYVAR}" # See it - it works: oxalis_assembly_6235.aln.fasta
+    # Remove the '.fasta' extension
+    echo "${MYVAR%.fasta}" # oxalis_assembly_6235.aln
+    # Replace extension '.fasta' with '.fsa'
+    echo "${MYVAR%.fasta}".fsa # oxalis_assembly_6235.aln.fsa
+    # Remove any last extension
+    echo "${MYVAR%.*}" # oxalis_assembly_6235.aln
+    # Replace 'aln' within variable name with 'aligned'
+    echo "${MYVAR/aln/aligned}" # oxalis_assembly_6235.aligned.fasta
+    # More complex manipulations with variable content (try to avoid this)
+    echo "$(echo "${MYVAR}" | sed "s/assembly/${USER}/")"
+    # sed allows usage of variables (sed "s/pattern/$SOMEVAR/", see further)
+	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{The PATH variable}
@@ -1796,7 +1838,7 @@
     echo $PATH # See the $PATH variable. Sample output is on the next line:
     /home/$USER/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin:/sbin:/usr/sbin
     # Adding new directory to $PATH
-    export PATH=$PATH:/some/new/directory # Ensure to add original $PATH
+    export PATH="${PATH}":/some/new/directory # Ensure to add original $PATH
     # Do not overwrite $PATH - there would be only the new directory 
     export PATH=/some/new/directory # Wrong! Old $PATH is missing!
 	\end{bashcode}
@@ -1817,31 +1859,9 @@
     # "command" from previous lines can be e.g.
     cat somefile.txt # Read content of somefile.txt; or
     find . -name "*.txt" # Save list of matching files
-    WORKDIR=$(pwd)# Save current directory into variable
+    WORKDIR="$(pwd)" # Save current directory into variable
     ls -1 | head -n 1 # First file/directory in the current directory
     unset X # Destroy this variable
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Manipulating with content of variable}
-	\begin{itemize}
-		\item It is possible to change/remove extension (suffix) of variable, do simple search and replace with its content, etc. (useful in scripts e.g. for input and output files)
-		\item Search and replace syntax is related to \texttt{sed} (slide~\ref{sedex})
-	\end{itemize}
-	\begin{bashcode}
-    MYVAR='oxalis_assembly_6235.aln.fasta' # Assign new variable
-    echo "$MYVAR" # See it - it works: oxalis_assembly_6235.aln.fasta
-    # Remove the '.fasta' extension
-    echo "${MYVAR%.fasta}" # oxalis_assembly_6235.aln
-    # Replace extension '.fasta' with '.fsa'
-    echo "${MYVAR%.fasta}".fsa # oxalis_assembly_6235.aln.fsa
-    # Remove any last extension
-    echo "${MYVAR%.*}" # oxalis_assembly_6235.aln
-    # Replace 'aln' within variable name with 'aligned'
-    echo "${MYVAR/aln/aligned}" # oxalis_assembly_6235.aligned.fasta
-    # More complex manipulations with variable content (try to avoid this)
-    echo "$(echo "$MYVAR" | sed 's/assembly/contig/')"
-    # sed allows usage of variables (sed "s/pattern/$SOMEVAR/")
 	\end{bashcode}
 \end{frame}
 
@@ -1850,7 +1870,7 @@
     echo $((5 < 7)) # Is 5 smaller than 7? TRUE (1)
     echo $((3 > 4)) # Is 3 greater than 4? FALSE (0)
     echo $((16 / 3)) # Division (without decimal part)
-    echo $((12 % 5)) # What remains after aritmetic division
+    echo $((16 % 3)) # What remains after aritmetic division
     x=$((1 + 6)) # Result will be in 'x' - save output into variable $x
     echo $x # See content of $x
     x=1 # Set x to 1
@@ -1907,7 +1927,7 @@
 		\item \alert{\texttt{|}} --- pipe --- redirects standard output of one command into standard input of second command: compare \texttt{mount} and \texttt{mount | column -t}
 		\begin{itemize}
 			\item Chains commands, basic redirecting method --- common e.g. for various data parsing
-			\item One of key features for commands and scripts processing scientific data (e.g. \texttt{bwa mem \ldots{ }| samtools view -bu | samtools sort -o sample.bam})
+			\item One of key features for commands and scripts processing scientific data, e.g. \texttt{bwa mem \ldots{ }| samtools view -bu | samtools sort -o sample.bam}
 		\end{itemize}
 		\item Behavior in shells other than bash might be little bit different
 	\end{itemize}
@@ -2028,7 +2048,7 @@
 	\begin{bashcode}
     # Extract and sort depth of coverage (how many times was each position
     # sequenced) in genomic VCF with multiple individuals
-    zcat arabidopsis.vcf.gz | grep -o "DP=[0-9]\+" | sort | less
+    zcat arabidopsis.vcf.gz | grep -o "DP=[0-9]\+" | sed 's/^DP=//' |sort |less
     # Convert DNA sequence from FASTQ to FASTA (two of many options)
     # Discard FASTQ quality scores and keep only the sequence and its name
     bzcat Oxalis_hirta_R1.fastq.bz2 | sed -n '1~4s/^@/>/p;2~4p' > \
@@ -2219,7 +2239,7 @@
     hostname # Get name of the computer
     ping web.natur.cuni.cz # Ping host. Is it alive? Cancel by Ctrl+C
     traceroute www.metacentrum.cz # Get route (path) to the host
-    mtr hostname # Combines ping and traceroute, quit with "q"
+    mtr seznam.cz # Combines ping and traceroute, quit with "q"
     ip a s # Information about all network devices (MAC, IP address, ...)
     ip r s # Show routes
     # Does SSH work on the host? Verbose (-v), scan (-z), host, port number
@@ -2244,11 +2264,11 @@
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
-    wget http://some.address.cz/internet # Download file(s) from Internet
+    wget https://some.address.cz/internet # Download file(s) from Internet
     wget --help # -r for recursive download (whole web), -k to convert links
     # curl is predecessor of wget, without parameter "-o" it prints remote
     # content to standard output (typically screen)
-    curl http://some.server.cz/some/files -o localfilename
+    curl https://some.server.cz/some/files -o localfilename
     # Copy files (-r for recursive) over SSH from local computer
     # to remote server or vice versa (just flip arguments)
     scp -r localfiles remoteuser@remote.server.cz:/remote/path/
@@ -2320,8 +2340,8 @@
 		\end{itemize}
 		\item File \texttt{$\sim$/.ssh/known\_hosts} contain servers you have ever connected to, and their SSH fingerprints (unique IDs) --- if this changes, SSH complains a lot as it could be \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{Man-in-the-middle attack}
 		\item File \texttt{$\sim$/.ssh/authorized\_keys} contains public keys allowing logging to the machine
-		\item \texttt{$\sim$//.ssh/config} can store various settings for particular servers
-		\item SSH keys work in all applications using SSH (SFTP, SSHFS, rsync, many graphical file managers,~\ldots)
+		\item \texttt{$\sim$/.ssh/config} can store various settings for particular servers
+		\item SSH keys work in all applications using SSH (SFTP, SSHFS, rsync, Git, many graphical file managers,~\ldots)
 		\item User can have various local passwords on servers, but use single SSH key to connect to all of them, very convenient if connecting to multiple servers
 	\end{itemize}
 \end{frame}
@@ -2365,7 +2385,7 @@
 		\end{itemize}
 		\item Use \texttt{scp} to copy directory with toy data and scripts from your home directory on \texttt{vyuka.natur.cuni.cz} into your notebook.
 		\item Use \texttt{scp} to copy any file from your notebook into your home directory on \texttt{vyuka.natur.cuni.cz}.
-		\item Use \texttt{rsync} to update toy data and scripts in your notebook according to version on \texttt{vyuka.natur.cuni.cz} in \texttt{/home/scripts\_data}.
+		\item Use \texttt{rsync} to update toy data and scripts in your notebook according to version on \texttt{vyuka.natur.cuni.cz} in \texttt{/srv/scripts\_data}.
 		\item Use \texttt{rsync} to update directory with toy data files and scripts in your home directory on \texttt{vyuka.natur.cuni.cz} according to version in your notebook.
 		\begin{itemize}
 			\item For \texttt{rsync} try to use various options, run it several times.
@@ -2456,7 +2476,7 @@
     find . -name '*.txt' -print | parallel 'sed -i "s/XXX/YYY/g" {}'
     # Launch MrBayes for multiple nexus files and create log file with
     # starting and ending date and time
-    find . -name '*.nexus' -print | parallel 'echo -e "Start: $(date)\n" >
+    find . -name '*.nexus' -print | parallel 'echo -e "Start: $(date)\n" > \
       {}.log && mb {} | tee -a {}.log && echo "End: $(date)" >> {}.log'
     # 'tee' copies output of the program into given log file
 	\end{bashcode}
@@ -2535,7 +2555,7 @@
 	\begin{itemize}
 		\item \texttt{cron} runs tasks repeatedly (\texttt{cron} daemon must be running)
 		\item Scripts for tasks running hourly/daily/weekly/monthly can be copied into respective \texttt{/etc/cron.*/} directories
-		\item Can be replaced by SystemD timers (more complex, but more versatile)
+		\item Can be replaced by \href{https://www.freedesktop.org/software/systemd/man/systemd.timer.html}{SystemD timers} files (more complex, but more versatile)
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
@@ -2543,7 +2563,7 @@
     systemctl status/start/stop/enable/disable cron.service
     crontab -l # List user's cron tasks
     crontab -e # Edit user's cron tasks (separate columns by spaces):
-    # Minute, Hour, Day in month, Month, Day in week, Command(absolute path)
+    # Minute, Hour, Day in month, Month, Day in week, Command (absolute path)
     # 0-59    0-23  1-31          1-12   0-6 starting with Sunday (WTF?)
       *       *     *             *      *            /usr/bin/command
       10      22    1             *      *    # 1st day in month, 23:11
