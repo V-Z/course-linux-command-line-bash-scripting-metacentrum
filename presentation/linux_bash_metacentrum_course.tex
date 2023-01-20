@@ -3069,6 +3069,7 @@
 		\item For files compressed by \texttt{lzma} or \texttt{lzma2} (\texttt{xz}, \texttt{lzma}) use \texttt{lzcat}, \texttt{lzdiff}, \texttt{lzegrep}, \texttt{lzfgrep}, \texttt{lzgrep}, \texttt{lzless}, \texttt{lzmore},~\ldots
 		\item Sometimes these variants are used automatically when user works with compressed file
 		\item \texttt{mc} can also do the job
+		\item These tools sometimes don't have all options of the \enquote{standard} applications
 	\end{itemize}
 \end{frame}
 
@@ -3146,13 +3147,13 @@
 	\begin{itemize}
 		\item Saves difference between two files --- it can be later used as template to modify original file
 		\item Single patch file can contain changes from multiple files
-		\item Patch format from \texttt{diff -u} is common way how to send someone changes, improvements,~\ldots
+		\item Patch file from \texttt{diff -u} is common way how to send changes, improvements,~\ldots
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
     # Create the diff file
     diff -u diff_test_file_1.txt diff_test_file_2.txt > difference.diff
-    # Apply the patch
+    # Apply the patch - xxx_file_1.txt is patched according to xxx_file_2.txt
     patch < difference.diff # or
     patch diff_test_file_1.txt difference.diff
 	\end{bashcode}
@@ -3299,6 +3300,9 @@
 	\begin{itemize}
 		\item Implementation in \texttt{vim}, \texttt{sed}, \texttt{grep}, \texttt{awk} and \texttt{perl} and among various UNIX systems is almost same, but not identical --- can be confusing\ldots
 		\item \textbf{grep}, \textbf{sed} and \textbf{vim} \alert{require escaping} of \alert{\texttt{+}}, \alert{\texttt{?}}, \alert{\texttt{\{}}, \alert{\texttt{\}}}, \alert{\texttt{(}} and \alert{\texttt{)}} by backslash \alert{\texttt{\textbackslash}} (e.g. \texttt{\textbackslash +}, see also next slides)
+		\begin{itemize}
+			\item These characters have special meaning (see further) --- consider if you search for e.g. literal \texttt{+} or not (and then you can use it's special meaning)
+		\end{itemize}
 		\item \textbf{egrep} (extended version, launched as \texttt{grep -E \ldots} or \texttt{egrep \ldots}), \textbf{sed} with extended reg exp (\texttt{sed -r}) and \textbf{perl} \alert{do not} require escaping (simply just e.g. \texttt{+}, not \texttt{\textbackslash +})
 		\item Mastering regular expressions require practicing -- solve practical problems and see their power
 		\item Read \url{https://en.wikibooks.org/wiki/Regular_Expressions}, \url{https://www.grymoire.com/Unix/Regular.html}, \url{https://www.regular-expressions.info/}
@@ -3360,9 +3364,9 @@
     # Get quality of Illumina reads mapping to reference in genomic VCF
     zcat arabidopsis.vcf.gz | grep -o "MQ=[[:digit:]]\+" | sed 's/^MQ=//'
     # How many times there is a direct speech (text between "...")
-    grep -o '\"[[:upper:]][a-zA-Z0-9,\.\?\! ]\+\"' long_text.txt | wc -l
+    grep -o '"[[:upper:]][a-zA-Z0-9,\.\?\! ]\+"' long_text.txt | wc -l
     # Add after dot on the end of the line by extra line break
-    sed 's/\.$/.\n/' long_text.txt
+    sed 's/\.$/.\n/' long_text.txt | less
     # Add HTML paragraph tags (<p> and </p>)
     sed -e 's/^/<p>/' -e 's/$/<\/p>/' long_text.txt | less
     # Make first word of every paragraph bold in HTML (<strong>...</strong>)
