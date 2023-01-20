@@ -3621,7 +3621,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Provide named parameters}
+\begin{frame}[fragile]{Provide named parameters} %FIXME Fix wrong syntax highlight
 	\begin{bashcode}
     #!/bin/bash
     # Script has only one parameter ($1) provided
@@ -3908,17 +3908,17 @@
 		\item Avoid long chaining of conditions using \texttt{elif} statement (previous slide) --- susceptible to mistakes, hard to debug
 		\item \enquote{\texttt{[~\ldots~]}} (always keep space inside around it) is function to evaluate expressions
 		\begin{itemize}
-			\item \texttt{if [ "\${VAR}" -eq 25 ]} or alternatively \texttt{test "\${VAR}" -eq 25} instead of \texttt{if}
-			\item \texttt{if [ "\${VAR}" == "value" ]; \ldots}
+			\item \texttt{if [ "\$\textbraceleft VAR\textbraceright" -eq 25 ]} or alternatively \texttt{test "\$\textbraceleft VAR\textbraceright" -eq 25} instead
+			\item \texttt{if [ "\$\textbraceleft VAR\textbraceright" == "value" ]; \ldots}
 			\begin{itemize}
 				\item Escaping variables and values by double quotes (\texttt{"\ldots"}) is recommended (to be sure), but not strictly required all the time
 			\end{itemize}
-			\item \texttt{if [ ! -f regularfile ];} \ldots --- \texttt{!} reverts condition
+			\item \texttt{if [ ! -f regularfile ];} \ldots{ }--- \texttt{!} reverts condition
 			\item Single-bracket conditions --- file, string, or arithmetic conditions
 			\item Double-bracket syntax --- enhanced (now preferred)
 			\begin{itemize}
 				\item Allow usage of regular expressions and globing patterns
-				\item Word splitting is prevented --- \texttt{\$STRINGVAR} can contain spaces
+				\item Word splitting is prevented --- \texttt{\textbraceleft \$STRINGVAR} can contain spaces
 				\item Expanding file names --- \texttt{if [[ -a *.sh ]]} (variant with only one bracket doesn't work when there are multiple sh files)
 				\item More detailed test, e.g. \texttt{if [[ \$num -eq 3 \&\& "\$\textbraceleft STRINGVAR\textbraceright " == XXX ]]\ldots}
 			\end{itemize}
@@ -4170,7 +4170,7 @@
 			\item And many more\ldots
 			\item All do same task --- as soon as user master one, others are equally simple
 		\end{itemize}
-		\item Distributions use to provide convenient simple update applet notifying about awaiting updates
+		\item Distributions use to provide convenient update applet notifying about awaiting updates
 		\item There use to be web services to look for packages, also from other sources --- \href{https://software.opensuse.org/explore}{openSUSE}, \href{https://www.debian.org/distrib/packages\#search_packages}{Debian}, \href{https://packages.ubuntu.com/}{Ubuntu} (+ \href{https://launchpad.net/ubuntu/+search}{Launchpad} and \href{https://launchpad.net/ubuntu/+ppas}{PPAs}), \href{https://packages.fedoraproject.org/}{Fedora},~\ldots
 		\item The task is always same, the exact work-flow and commands more or less differ among distributions\ldots
 		\item Tools like Android Google Play, Apple Store or Windows Store are inspired from Linux (but terribly simplified)\ldots
@@ -4183,7 +4183,7 @@
 
 \begin{frame}[allowframebreaks]{Package management in command line in openSUSE and SLE (basic commands)}
 	\begin{itemize}
-		\item Root password is required: use \texttt{sudo\ldots} or \texttt{su~-}
+		\item Root password is required: use \texttt{sudo \ldots} or \texttt{su~-}
 		\item Package name \texttt{*.rpm}
 		\item \texttt{zypper in \textit{package}} --- install \textit{package}
 		\item \texttt{zypper rm \textit{package}} --- remove \textit{package}
@@ -4208,7 +4208,7 @@
 
 \begin{frame}[allowframebreaks]{Package management in command line in Debian/Ubuntu and derivatives (basic commands)}
 	\begin{itemize}
-		\item Root password is required: use \texttt{sudo\ldots} or \texttt{su~-}
+		\item Root password is required: use \texttt{sudo \ldots} or \texttt{su~-}
 		\item Package name \texttt{*.deb}
 		\item \texttt{apt install \textit{package}} --- install \textit{package}
 		\item \texttt{apt remove \textit{package}} --- remove \textit{package}
@@ -4221,7 +4221,7 @@
 		\item \texttt{cat /etc/apt/sources.list} --- list repositories
 		\item \texttt{nano /etc/apt/sources.list} --- add/remove/edit repositories
 		\item \texttt{dpkg-*}, \texttt{apt-*} commands for other tasks
-		\item \texttt{aptitude} is used in similar way as \texttt{apt} (e.g. \texttt{aptitude install \textit{package}},~\ldots)
+		\item \texttt{aptitude} is used in similar way as \texttt{apt} (e.g. \texttt{aptitude install \textit{package}},~\ldots) or as interactive tool (just run \texttt{aptitude})
 		\item Similar tasks can be done with \texttt{apt}, \texttt{apt-get}, or \texttt{aptitude}
 		\item \texttt{man aptitude}, \texttt{man apt-XXX}, \texttt{man dpkg-XXX}, \texttt{man apt} --- usage help
 	\end{itemize}
@@ -4229,7 +4229,7 @@
 
 \begin{frame}[allowframebreaks]{Package management in command line in RedHat, Fedora, CENTOS and derivatives (basic commands)}
 	\begin{itemize}
-		\item Root password is required: use \texttt{sudo\ldots} or \texttt{su~-}
+		\item Root password is required: use \texttt{sudo \ldots} or \texttt{su~-}
 		\item Package name \texttt{*.rpm}
 		\item \texttt{dnf install \textit{package}} --- install \textit{package}
 		\item \texttt{dnf remove \textit{package}} --- remove \textit{package}
@@ -4277,7 +4277,7 @@
 
 \begin{frame}[fragile]{Basics of compilation}
 	\begin{itemize}
-		\item Some software is distributed only as source code (e.g. downloaded from GitHub) written in languages like C or C++ --- user has to compile it to get binary executable
+		\item Some software is distributed only as source code (e.g. downloaded from GitHub) written in languages like C or C++ --- user has to \textit{compile} it to get working binary executable
 		\item Compilation creates binary specific for particular operating system and hardware platform --- can be tuned for optimal performance
 		\item Interpreted languages like Bash, Perl, Python or Java don't have to be compiled (but it is possible) --- they need their interpreter to run, relative easily portable among hardware platforms and OS
 		\item Applications requiring compilation usually have good instructions
@@ -4490,7 +4490,7 @@
 			\item To use MetaCentrum fill registration form \url{https://metavo.metacentrum.cz/en/application/form} (\href{https://metavo.metacentrum.cz/cs/application/}{česky})
 			\item To use data storage fill registration form \url{https://einfra.cesnet.cz/perun-registrar-fed/?vo=storage}
 			\item After registration for MetaCentrum, user can join MetaCloud via \url{https://perun.metacentrum.cz/fed/registrar/?vo=meta&group=metacloud}
-			\item Users not having access to \href{https://www.eduid.cz/en/index}{EduID} (\href{https://www.eduid.cz/cs/index}{česky}) have to register first at \href{https://www.eduid.cz/cs/hostel}{HostelID} (only in Czech)
+			\item Login is using \href{https://www.eduid.cz/en/index}{EduID} (\href{https://www.eduid.cz/cs/index}{česky})
 		\end{itemize}
 		\item Information about data storage \url{https://du.cesnet.cz/en/start} (\href{https://du.cesnet.cz/cs/start}{česky}) contains detailed usage instructions
 		\item Information about MetaCentrum \url{https://www.metacentrum.cz/en/} (\href{https://www.metacentrum.cz/cs/}{česky}) and wiki \url{https://wiki.metacentrum.cz/wiki/Main_Page} (\href{https://wiki.metacentrum.cz/wiki/Hlavn\%C3\%AD_strana}{česky}) (main information for users containing all needed documentation)
@@ -4512,7 +4512,7 @@
 \begin{frame}{Terminology}
 	\begin{multicols}{2}
 		\begin{itemize}
-			\item Node (computing server) --- single computer, worker finally doing computational job
+			\item Node (computing server) --- single computer, worker finally doing your computational job
 			\item Cluster --- bunch of nodes in rack (special case storing nodes, use to contain also network switch, backup power,~\ldots{ } e.g. \href{https://sorbus.ibot.cas.cz/en/hw}{cluster in Průhonice}, \href{https://sorbus.ibot.cas.cz/cs/hw}{česky})
 			\item Grid --- clusters distributed in various places, connected into single system by fast network (e.g. \href{https://www.metacentrum.cz/en/Sluzby/Grid/}{MetaCentrum}, \href{https://www.metacentrum.cz/cs/Sluzby/Grid/}{česky})
 			\item Supercomputer --- extra powerful computer, nowadays mostly special cluster, e.g. \href{https://www.it4i.cz/}{IT4Innovations} in Ostrava
@@ -4539,6 +4539,9 @@
 		\item Some special services (like \href{https://wiki.metacentrum.cz/wiki/OnDemand}{OnDemand}) start on particular storage (here \texttt{brno3})
 		\item Generally, computing task loads data from selected storage and can start on any cluster
 		\item Orientation is plenty of storages might be sometimes tricky --- ensure where you are and where your data are supposed to be
+		\begin{itemize}
+			\item Preferably use single frontend and storage to avoid confusions and issues with paths
+		\end{itemize}
 	\end{itemize}
 \end{frame}
 
@@ -4556,7 +4559,7 @@
 \begin{frame}[fragile]{MetaCentrum usage}
 	\begin{enumerate}
 		\item Transfer data into one of \href{https://wiki.metacentrum.cz/wiki/Working_with_data}{storages} (\href{https://wiki.metacentrum.cz/wiki/Prace_s_daty}{česky}) by e.g. \texttt{scp} from command line, \href{https://winscp.net/}{WinSCP} from Windows or \href{https://filezilla-project.org/}{FileZilla} from any OS
-		\item Connect via SSH to select \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontend} (\href{https://wiki.metacentrum.cz/wiki/Celni_uzel}{česky}). Same credentials are used for all frontends, for SSH login as well as file transmissions
+		\item Connect via SSH to selected \href{https://wiki.metacentrum.cz/wiki/Frontend}{frontend} (\href{https://wiki.metacentrum.cz/wiki/Celni_uzel}{česky}). Same credentials are used for all frontends, for SSH login as well as file transmissions
 		\item In home directory on the storage (accessed via frontend) prepare all needed data and non-interactive script to do the calculations
 		\item Submit job using \texttt{qsub}. Tasks are not launched immediately, but submitted into queue and system decides when it will be launched
 		\item Monitor job progress. Check results. Etc\ldots
@@ -4591,7 +4594,7 @@
     # Modify the script according to your needs!
     # Set data directories
     WORKDIR="my_data_dir" # Or something else
-    DATADIR="/storage/XXX/home/$LOGNAME" # Or other storage
+    DATADIR="/storage/XXX/home/${LOGNAME}" # Or other storage
     # There is e.g. directory /storage/praha1/home/gunnera/my_data_dir
     # containing all the data needed for calculations
     # Clean-up of SCRATCH (it is temporal directory created by server) - the
@@ -4872,8 +4875,8 @@
     chgrp -R XXX /tape_tape/VO_XXX 2>/dev/null
     # ("-R" to modify also subdirectories; "2>/dev/null" to discard errors)
     # Set correct permissions to directories and files
-    find /tape_tape/VO_XXX -type d -exec chmod 770 {} \; 2>/dev/null
-    find /tape_tape/VO_XXX -type f -exec chmod 660 {} \; 2>/dev/null
+    find /tape_tape/VO_XXX -type d -exec chmod 770 '{}' \; 2>/dev/null
+    find /tape_tape/VO_XXX -type f -exec chmod 660 '{}' \; 2>/dev/null
 	\end{bashcode}
 \end{frame}
 
@@ -4939,7 +4942,7 @@
 \begin{frame}[allowframebreaks]{Git and version control}
 	\begin{itemize}
 		\item \href{https://git-scm.com/}{Git} is \href{https://en.wikipedia.org/wiki/Version_control}{version controlling} (\href{https://cs.wikipedia.org/wiki/Verzov\%C3\%A1n\%C3\%AD}{česky}) system (nowadays the most common) --- it traces changes among all versions --- absolutely crucial for any software development
-		\item Older (nowadays not so common) version controlling systems is Subversion (SVN), there are many more (Bazaar, Mercurial,~\ldots)
+		\item Older (nowadays not so common) version controlling systems is Subversion (SVN); there are many more (Bazaar, Mercurial,~\ldots)
 		\item Probably the best textbook for Git is \href{https://git-scm.com/book/en/v2}{Chacon's Pro Git}
 		\begin{itemize}
 			\item Dostupná i~\href{https://git-scm.com/book/cs/v2}{česky} (včetně \href{https://knihy.nic.cz/\#ProGit}{prvního vydání})
@@ -4995,7 +4998,7 @@
 				\item Staging (changes awaiting to be pushed to the repository)
 				\item Git repository (remote/local)
 			\end{enumerate}
-			\item Everyone has whole repository and history --- very robust
+			\item Everyone has whole repository and history (it's \enquote{distributed}) --- very robust
 			\item Flexible branches
 			\begin{itemize}
 				\item Very convenient
@@ -5106,7 +5109,7 @@
 
 \begin{frame}{Git tasks}
 	\begin{enumerate}
-		\item Clone over SSH repository \texttt{USER@vyuka.natur.cuni.cz:/home/dadaism} (use your credentials on the testing server) and go to \texttt{dadaism} directory.
+		\item Clone over SSH repository \texttt{USER@vyuka.natur.cuni.cz:/srv/dadaism} (use your credentials on the testing server) and go to \texttt{dadaism} directory.
 		\item Add some text files, edit existing text files. Do not add images or another non-text files, do not add large files.
 		\item Push your changes back to the repository.
 		\item Fetch changes done by others.
@@ -5217,7 +5220,7 @@
 		\begin{itemize}
 			\item As soon as you don't pay for support, you can't blame anyone for lack of responses
 			\item Most of software we use to process our data is provided under \enquote{best effort}, without warranty\ldots
-			\item Plenty of scientific software is not written by professional programmers, authors often do not foresee everything what could happen and they could have troubles wehn fixing reported issues\ldots
+			\item Plenty of scientific software is not written by professional programmers, authors often do not foresee everything what could happen and they could have troubles when fixing reported issues\ldots
 			\item There are plenty of reasons some software doesn't work --- usage/data author didn't expect, unsupported version of operating system, author's mistake, user's mistake, unexpected interaction with another software,~\ldots
 			\item Authors wish their software to be useful --- constructive feedback, reporting bugs and wishes is welcomed, but it must be provided in the way useful for the developer
 		\end{itemize}
