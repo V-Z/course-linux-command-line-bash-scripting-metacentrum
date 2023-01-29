@@ -1251,11 +1251,11 @@
 		\end{bashcode}
 		\vfill
 		\begin{itemize}
-			\item Toy server: user names \texttt{courseuser01}--\texttt{courseuser15}
+			\item Toy server: user names \texttt{cusr01}--\texttt{cusr30}
 		\end{itemize}
 		\vfill
 		\begin{bashcode}
-    ssh courseuserXY@vyuka.natur.cuni.cz
+    ssh cusrXY@vyuka.natur.cuni.cz
 		\end{bashcode}
 		\vfill
 		\begin{itemize}
@@ -2100,8 +2100,8 @@
     lspci # List of PCI devices (graphic card, network card, ...)
     lspci | grep -i vga # Get information about graphical card
     lshw # Complete list of hardware; e.g. 'lshw -C memory' for RAM
-    hwinfo # Complete list of hardware
-    hwinfo --network # Information about network devices
+    hwinfo # Complete list of hardware; "hwinfo --network" for network devices
+    neofetch # System information tool
     free -h # Available memory (RAM) and swap, -h for nice units
     df -h # Free space on disk partitions, -h for nice units
     lsmod # List loaded kernel modules
