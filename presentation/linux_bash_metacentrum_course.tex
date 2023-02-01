@@ -1638,7 +1638,7 @@
     # Delete empty directories within 'doc' directory
     find doc/ -type d -empty -execdir rmdir '{}' \;
     # Copy all *.sh files from /home to ~/scripts
-    find /home -name "*.sh" -exec cp '{}' ~/scripts/
+    find /home -name "*.sh" -exec cp '{}' ~/scripts/ \;
     # Search for file long_text.txt (exact name) in your home directory
     find ~ -name long_text.txt -type f -print
     # Find in current directory files from 1 to 100 MB
@@ -2848,8 +2848,8 @@
     # Precede each line by its line number for all files together, with TAB
     # (i.e. print line number (NR) and then whole original line ($0))
     awk '{print NR "\t" $0}' diff_test_file_*
-    # Substitute "a" with "XXX" ONLY for lines which contain "The"
-    awk '/The/{gsub(/a/, "XXX")}; 1' diff_test_file_1.txt
+    # Substitute "a" with "XXX" ONLY for lines which contain "the"
+    awk '/the/{gsub(/a/, "XXX")}; 1' diff_test_file_1.txt
 	\end{bashcode}
 \end{frame}
 
@@ -4233,7 +4233,7 @@
 		\item Package name \texttt{*.rpm}
 		\item \texttt{dnf install \textit{package}} --- install \textit{package}
 		\item \texttt{dnf remove \textit{package}} --- remove \textit{package}
-		\item \texttt{dbf check-update} --- refresh repositories, check for updates
+		\item \texttt{dnf check-update} --- refresh repositories, check for updates
 		\item \texttt{dnf upgrade} --- upgrade packages
 		\item \texttt{dnf search \textit{term}} --- search \textit{term}
 		\item \texttt{dnf autoremove} --- clear packages
