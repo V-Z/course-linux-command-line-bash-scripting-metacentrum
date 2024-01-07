@@ -34,3 +34,4 @@ if [[ "$1" == "all" ]]; then
 echo "Done!"
 
 exit
+
