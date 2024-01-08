@@ -1297,11 +1297,13 @@
 		\item \textbf{Interpreter of our commands inserted into command line}
 		\item \textbf{BASH} --- Bourne again shell
 		\begin{itemize}
-			\item Probably the most common shell, based on original \texttt{sh}, respecting original specification, adding new features
+			\item Probably the most common shell, based on original \texttt{sh}, respecting original specification, adding new features; probably the most common
 			\item We will use it
 		\end{itemize}
-		\item Other variants: \textbf{csh} (syntax influenced by C), \textbf{ksh} (younger, backward compatible with bash), \textbf{zsh} (extended bash), \textbf{ash} (mainly in BSD)
-		\item There are some differences in syntax and features
+		\item Other variants: \textbf{csh} (syntax influenced by C), \textbf{ksh} (younger, backward compatible with bash), \textbf{zsh} (extended bash; probably the most advanced, not so common), \textbf{ash} (mainly in BSD)
+		\begin{itemize}
+		 \item There are some differences in syntax and features
+		\end{itemize}
 		\item Language suitable for easy scripting and system tasks, not for \enquote{big} programming, neither for graphical applications
 	\end{itemize}
 \end{frame}
@@ -1350,18 +1352,18 @@
 		\item In any text editor open \texttt{$\sim$/.bashrc} (and/or \texttt{$\sim$/.bash\_profile}) and edit it
 		\item Behavior of BASH can be set to fit user's needs
 		\item Terminal emulators allow to set custom fonts and colors,~\ldots
-		\item Prompt can be colored using custom values of \texttt{PS1} and \texttt{PS2} variables (\texttt{export PS1='\ldots'}), see \href{https://www.howtogeek.com/307701/how-to-customize-and-colorize-your-bash-prompt/}{examples}
+		\item Prompt can be colored using custom values of \texttt{PS1} and \texttt{PS2} variables (\texttt{export PS1='\ldots'}), see \href{https://www.howtogeek.com/307701/how-to-customize-and-colorize-your-bash-prompt/}{examples} and \href{https://duckduckgo.com/?t=ffab\&q=how+to+customize+linux+bash+prompt\&ia=web}{search}
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
-    # More colors for outputs (typically ls)
-    eval "$(dircolors -b)"
+    eval "$(dircolors -b)" # More colors for outputs (typically ls)
     # Colored GCC warnings and errors (useful for compilation)
     export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:
       locus=01:quote=01'
-    # Example of more colorful prompt
-    export PS1='\u@\h:\w\$'
-    export PS2='\u@\h:\w\$'
+    # Example of more colorful prompt (do the same for PS2)
+    export PS1='\[\033[0;34m\]\u\[\033[0m\]@\[\033[0;32m\]\h\[\033[0m\]:
+      \[\033[1;31m\]\w\[\033[0m\]\$ ' # Everything on single line without space
+    export PS1='\[\033[0;32m\]\d:\t \[\033[0m\]\[\033[1;31m\]\w\[\033[0m\]$ '
 	\end{bashcode}
 \end{frame}
 
