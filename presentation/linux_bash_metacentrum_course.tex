@@ -2412,7 +2412,7 @@
 		\item It is Linux server running Debian
 		\item Connect with SSH/SFTP/SCP to \texttt{web.natur.cuni.cz}
 		\item Mainly used for webhosting, user's address will have form \texttt{https://web.natur.cuni.cz/$\sim$loginname/}, user can \href{https://helpdesk.natur.cuni.cz/servlet/HelpdeskDynamic?eid=Rozcestnik}{apply} for another URL, for space for some projects,~\ldots
-		\item Every department also has dedicated space there, it can be used for various web projects, address can be discussed with \href{https://www.natur.cuni.cz/fakulta/cit/lide}{IT department}
+		\item Every department also has dedicated space there, it can be used for various web projects, address can be discussed with \href{https://www.natur.cuni.cz/eng/centre-of-information-technologies/contacts}{IT department}
 		\item Personal web can be placed in \texttt{public\_html} within home folder
 		\item Users can \href{https://helpdesk.natur.cuni.cz/servlet/HelpdeskDynamic?eid=Rozcestnik}{apply} for MySQL database or special settings
 		\item \href{https://www.natur.cuni.cz/biology/botany/working-information/servers-webs-computers/}{Department of Botany} (and some other departments) have their own web and file servers
@@ -4497,7 +4497,7 @@
 		\begin{itemize}
 			\item The documentation is being moved into \url{https://docs.metacentrum.cz/}
 		\end{itemize}
-		\item Information about MetaCloud \url{https://wiki.metacentrum.cz/wiki/Kategorie:Clouds}
+		\item Information about MetaCloud \url{https://docs.cloud.muni.cz/} (\href{https://wiki.metacentrum.cz/wiki/Kategorie:Clouds}{old wiki page})
 		\item Also available is Galaxy \url{https://usegalaxy.cz/} (same login as to MetaCentrum) --- web based bioinformatics framework (more information at \href{https://docs.metacentrum.cz/related/galaxy/}{documentation})
 		\item Current state and usage of resources is available at \url{https://metavo.metacentrum.cz/en/} (\href{https://metavo.metacentrum.cz/cs/}{česky})
 		\item Manage your user account at \url{http://metavo.metacentrum.cz/en/myaccount/} (\href{https://metavo.metacentrum.cz/cs/myaccount/}{česky})
@@ -4639,7 +4639,7 @@
 
 \begin{frame}[fragile]{Launching of tasks}
 	\begin{itemize}
-		\item See \url{https://docs.metacentrum.cz/}
+		\item See \url{https://docs.metacentrum.cz/computing/run-basic-job/}
 		\item Personal view \url{https://metavo.metacentrum.cz/pbsmon2/person} has nice overview of available resources and tasks and allows comfortable construction of submission command
 	\end{itemize}
 	\vfill
@@ -4664,7 +4664,7 @@
 		\item Command \texttt{module} loads/unloads selected \href{https://docs.metacentrum.cz/software/}{application}
 		\item Tasks (BASH scripts) are submitted for computing by \texttt{qsub} --- the script must copy the data into \texttt{\$SCRATCHDIR} and do all calculations there
 		\begin{itemize}
-			\item It has plenty of options how to specify requirements (see next slide and \href{https://wiki.metacentrum.cz/wiki/About_scheduling_system}{help})
+			\item It has plenty of options how to specify requirements (see next slide and \href{https://docs.metacentrum.cz/computing/pbs-resources/}{help})
 		\end{itemize}
 		\item Queued and running jobs can be seen by \texttt{qstat -u \$USER} (\texttt{qstat} has much more options) and any job can be terminated by \texttt{qdel 123456789} (number from \texttt{qstat})
 	\end{itemize}
@@ -4703,7 +4703,7 @@
 		\item Every user has certain \href{https://metavo.metacentrum.cz/pbsmon2/users/}{priority} increased by \href{https://docs.metacentrum.cz/access/terms/\#acknowledgements-and-publications}{acknowledgments} (\textbf{it's mandatory to acknowledge MetaCentrum when using it}) in publications to MetaCentrum, and lowered by intensive usage of the service (the usage is calculated from past month)
 		\item After submission of the task, check in \href{https://metavo.metacentrum.cz/pbsmon2/queues/jobsQueued}{the queue} in which state it is --- sometimes it can't start because of impossible combination of requested resources or so
 		\item User can \href{https://metavo.metacentrum.cz/pbsmon2/nodes/physical}{check load of machines}
-		\item For more options read \url{https://wiki.metacentrum.cz/wiki/About_scheduling_system}
+		\item For more options read \url{https://docs.metacentrum.cz/computing/pbs-resources/}
 		\begin{itemize}
 			\item Request special CPU (AMD, graphical,~\ldots), e.g. CPU with AVX2 \texttt{-l~select=cpu\_flag=avx2}
 			\item SSD local storage (e.g. \texttt{-l~scratch\_ssd=1gb})
@@ -4721,7 +4721,7 @@
 		\end{itemize}
 		\item Not all required applications are correctly loaded
 		\begin{itemize}
-			\item Check \href{https://docs.metacentrum.cz/software/}{wiki} and load all needed applications
+			\item Check \href{https://docs.metacentrum.cz/}{documentation} and load all needed applications
 			\item Names of binaries are sometimes little bit different --- contain names of versions, etc.
 		\end{itemize}
 		\item Estimation of time needed to run the task
@@ -4888,7 +4888,7 @@
 \begin{frame}{OnDemand}{Applications in web browser}
 	\begin{itemize}
 		\item It allows to run selected interactive applications in web browser
-		\item See \url{https://docs.metacentrum.cz/software/ondemand/} and \url{https://ondemand.cerit-sc.cz/}
+		\item See \url{https://docs.metacentrum.cz/software/ondemand/} and \url{https://ondemand.grid.cesnet.cz/}
 		\item Applications start in \texttt{/storage/brno3-cerit/home/\$USER/} --- ensure to have everything needed there
 	\end{itemize}
 	\begin{center}
@@ -4901,11 +4901,11 @@
 		\begin{itemize}
 			\item Web service allowing to record code as well as its output for languages like BASH, R, Python,~\ldots
 			\item Convenient for recording and sharing code, interactive work,~\ldots
-			\item Use \href{https://wiki.metacentrum.cz/wiki/Jupyter_for_MetaCentrum_users}{Jupyter Hub} for MetaCentrum users
+			\item Use \href{https://docs.metacentrum.cz/related/jupyter/}{Jupyter Hub} for MetaCentrum users
 			\begin{itemize}
-				\item Data are in \texttt{/storage/brno2/home/USER/}
+				\item Data are typically in \texttt{/storage/brno2/home/USER/}
 			\end{itemize}
-			\item \href{https://docs.metacentrum.cz/related/jupyter/}{Available} also as part of OnDemand (previous slide), or bit experimental \href{https://hub.cerit-sc.cz/}{CERIT hub}, which allows to select custom storage and also custom docker image (see \href{https://docs.cerit.io/docs/jupyterhub.html}{documentation})
+			\item Available also as part of OnDemand (previous slide), or bit experimental \href{https://hub.cloud.e-infra.cz/}{CERIT hub}, which allows to select custom storage and also custom docker image (see \href{https://docs.cerit.io/docs/jupyterhub.html}{documentation})
 		\end{itemize}
 		\begin{center}
 			\includegraphics[height=6.5cm]{jupyter.png}
@@ -5016,7 +5016,7 @@
 		\end{center}
 		\begin{flushright}
 			\begin{footnotesize}
-				\href{https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control}{https://git-scm.com/}, \href{https://nvie.com/posts/a-successful-git-branching-model/}{https://nvie.com/}
+				\href{https://git-scm.com/book/en/v2/Getting-Started-What-is-Git\%3F}{https://git-scm.com/}, \href{https://nvie.com/posts/a-successful-git-branching-model/}{https://nvie.com/}
 			\end{footnotesize}
 		\end{flushright}
 	\end{multicols}
