@@ -188,13 +188,13 @@
 	\begin{itemize}
 		\item \href{https://en.wikipedia.org/wiki/Unix}{UNIX}
 		\begin{itemize}
-			\item Originally developed in Bell labs of AT\&T in 1969, written in C, since then  huge radiation, hybridization, horizontal gene transfer, rich evolution,~\ldots
-			\item Trademark --- only systems passing certain conditions (paid certification) can be called \enquote{UNIX} --- Solaris, HP-UX, AIX, etc. (commercial systems for big servers)
-			\item \textbf{Main principles:} simple, multitasking, hierarchical, network, for more users (takes care about permissions etc.), configuration written in plain text files, important relationships among applications (generally one application = one task --- they are chained), work primarily with text, has kernel and API (interface to communicate with the rest of the system)
+			\item Originally developed in Bell labs of AT\&T in 1969, written in C, since then rich evolution\ldots
+			\item Trademark --- only systems passing certain conditions (paid certification) can be called \enquote{UNIX} --- Solaris, HP-UX, AIX, etc. (commercial systems for big servers; nowadays rare)
+			\item \textbf{Main principles:} simple, multitasking, hierarchical structure, network, for more users (takes care about permissions etc.), configuration written in plain text files, important relationships among applications (generally one application = one task --- they are chained), work primarily with text, has kernel and API (interface to communicate with the rest of the system)
 		\end{itemize}
 		\item \href{https://en.wikipedia.org/wiki/Unix-like}{UNIX-like} (UN*X, *nix)
 		\begin{itemize}
-			\item Systems compatible with UNIX (Linux, BSD and its variants, macOS,~\ldots)
+			\item Systems compatible with UNIX (\textbf{Linux}, BSD and its variants, \textbf{macOS},~\ldots)
 			\item Mainly open-source (UNIX is commonly commercial --- source code is not publicly available, but its specification is)
 			\item Nowadays prevailing over \enquote{old} UNIX systems, used in many devices from tiny embedded toys to huge data centers
 			\item Try to provide same quality as paid systems, but (mostly) for free
@@ -206,8 +206,8 @@
 			\item System written from scratch, following ideas of UNIX
 			\item Since 1984 Richard Stallman (founder of \href{https://www.fsf.org/}{Free Software Foundation}) tried to make new kernel (Hurd --- not finished yet\ldots)
 			\item Generally set of basic system tools --- working with many kernels (Linux, BSD*, macOS,~\ldots), also present in many commercial paid UNIX systems
-			\item Source code is free and open --- anyone can study it (Security!), report bugs, contribute, modify, share it,~\ldots
-			\item GNU General Public License (GPL) --- free spirit of open-source --- license, idea, how to share software
+			\item Source code is free and open --- anyone can study it (Security!), report bugs, contribute, modify, share it, get inspiration,~\ldots
+			\item GNU General Public License (GPL) --- free spirit of open-source --- license, idea, how to share software to benefit everyone
 			\item Inspired open public software development --- crucial for our usage of Linux \& al.
 		\end{itemize}
 		\item \href{https://en.wikipedia.org/wiki/Linux}{Linux}
@@ -219,8 +219,9 @@
 			\item Nowadays powering most of the Internet
 			\item Anyone can contribute --- not only code, also documentation, design, translations,~\ldots
 			\item Most of people working with UNIX are using Linux (or macOS)
+			\item Powering everything from little \href{https://en.wikipedia.org/wiki/Internet_of_things}{IoT} toys and devices to 100\% of \href{https://www.top500.org/statistics/list/}{top 500 supercomputers}
 		\end{itemize}
-		\item GNU and Linux are two important (but not sole) pieces of building set forming modern operating system
+		\item \textbf{GNU tools} and \textbf{Linux kernel} are two important (but not sole) pieces of building set forming modern operating system --- \textbf{\enquote{Linux distribution}}
 		\item \enquote{Linux} nowadays usually mean Linux kernel + GNU basic tools (thus correctly \enquote{GNU/Linux}) + thousands of various another applications (= \enquote{Linux distribution}) --- ecosystem of (free) open-source GNU/Linux applications of various origin forming together what  we usually call simply \enquote{Linux}
 		\item Term \enquote{Linux} has various meaning (see further)
 		\begin{itemize}
@@ -239,7 +240,7 @@
 
 \begin{frame}{Most common UNIX-based systems (except Linux)}
 	\begin{itemize}
-		\item \href{https://en.wikipedia.org/wiki/macOS}{macOS} (previously Mac OS~X) --- system kernel is based on older BSD and uses plenty of GNU tools (although mostly older outdated versions)
+		\item Apple \href{https://en.wikipedia.org/wiki/macOS}{macOS} (previously Mac OS~X) --- system kernel is based on older BSD and uses plenty of GNU tools (although mostly older outdated versions)
 		\item \href{https://en.wikipedia.org/wiki/Berkeley_Software_Distribution}{BSD} --- one of the oldest operating systems, still developed in \href{https://distrowatch.com/search.php?ostype=BSD}{many independent variants}
 		\begin{itemize}
 			\item Still very popular especially on servers, for special purposes, etc.
@@ -247,7 +248,7 @@
 			\item Installation and management is for beginners usually harder than Linux, everything must be done manually, not so common as Linux anymore
 			\item E.g. \href{https://www.freebsd.org/}{FreeBSD}, \href{https://www.dragonflybsd.org/}{DragonFly BSD}, \href{https://www.openbsd.org/}{OpenBSD}, \href{https://www.truenas.com/}{TrueNAS} (for storage servers),~\ldots
 		\end{itemize}
-		\item \href{https://en.wikipedia.org/wiki/Oracle_Solaris}{Solaris} --- commercial, not very common
+		\item \href{https://en.wikipedia.org/wiki/Oracle_Solaris}{Solaris} --- commercial, not very common anymore
 		\begin{itemize}
 			\item Mainly special servers, paid
 			\item \href{https://distrowatch.com/search.php?ostype=Solaris}{Several community-based variants} freely available
@@ -350,7 +351,7 @@
 		\begin{itemize}
 			\item Somehow assemble Linux kernel, basic tools and some applications
 			\item Optionally add some patches and extra tools and gadgets
-			\item Make your own design! (very important;)
+			\item Make your own design! (very important;-)
 			\item If lazy, remake existing distribution (using e.g. \href{http://openbuildservice.org/}{web service})
 			\item Still surprised there are hundreds of them?
 			\item It is like Lego --- pieces are more or less same across distributions, but result is very variable
@@ -386,7 +387,7 @@
 			\item \href{https://www.debian.org/}{Debian} --- one of oldest and most common, especially on servers
 			\item \href{https://ubuntu.com/}{Ubuntu} (nowadays probably the most popular on PCs and notebooks) and derivatives --- \href{https://kubuntu.org/}{Kubuntu}, \href{https://xubuntu.org/}{Xubuntu}, \href{https://lubuntu.me/}{Lubuntu},~\ldots~(according to GUI used --- most of the system is same)
 			\item \href{https://linuxmint.com/}{Mint} --- Based on Ubuntu as well as Debian, user-friendly, popular
-			\item \href{https://www.kali.org/}{Kali}, \href{https://knopper.net/knoppix/index-en.html}{KNOPPIX}, \href{https://elementary.io/}{elementaryOS},~\ldots
+			\item \href{https://www.kali.org/}{Kali}, \href{https://knopper.net/knoppix/index-en.html}{KNOPPIX}, \href{https://elementary.io/}{elementaryOS}, \href{https://pop.system76.com/}{Pop!\_OS}, \href{https://mxlinux.org/}{MX Linux}, \href{https://zorin.com/os/}{Zorin OS},~\ldots
 		\end{itemize}
 		\item \href{https://distrowatch.com/search.php?package=RPM}{Red Hat (RPM) based}
 		\begin{itemize}
@@ -475,22 +476,23 @@
 		\begin{itemize}
 			\item The most easy --- burn ISO image of CD from web of almost any Linux distribution or use for example \href{https://unetbootin.github.io/}{UNetbootin} to prepare bootable flash
 			\item You only have to know how to boot from CD/USB (usually press \texttt{ESC}, \texttt{DEL}, \texttt{F2}, \texttt{F10}, \texttt{F12},~\ldots{ }when starting computer --- varies according to manufacturer)
+			\item Commonly done to rescue data from broken Windows installations\ldots~;-)
 		\end{itemize}
 		\item Virtualization (slide~\ref{VBox})
 		\begin{itemize}
-			\item Requires relatively powerful computer (preferable Intel i5 or i7 or AMD Ryzen and over 8~GB of RAM) and enough disk space
+			\item Requires powerful computer --- Intel i7 or AMD Ryzen, over 12~GB of RAM and hundreds of GB
 			\item Install virtual machine (probably the most easy is \href{https://www.virtualbox.org/}{VirtualBox}) --- allows install and run another operating system inside host as an ordinary application --- very easy and comfortable
 		\end{itemize}
 		\item Linux subsystem in MS Windows Store (Windows 10 and 11)
 		\begin{itemize}
 			\item To install follow \url{https://docs.microsoft.com/windows/wsl/about}
-			\item Version 1 only for command-line applications (it has some problems with paths, text files,~\ldots), version 2 should allow GUI (experimental)
-			\item Version 2 works well for most of tasks
+			\item Version 1 only for command-line applications (it has some problems with paths, text files,~\ldots)
+			\item Version 2 works well for most of tasks and allows GUI (experimental)
 		\end{itemize}
 		\item Cygwin
 		\begin{itemize}
 			\item Download and install from \url{https://www.cygwin.com/}
-			\item It is not native Linux, it is collection of GNU and open-source utilities compiled to work on Windows
+			\item It is not native Linux, it is collection of GNU and open-source utilities compiled to work on Windows as more or less standard Windows applications
 			\item Follows POSIX standards (i.e. it works like normal UNIX command line, with all features)
 			\item Every application must be specially compiled to be able to work under Cygwin (it is sometimes complicated)
 			\item Collection is large, include also GUI and DE, but not everything is easy working
