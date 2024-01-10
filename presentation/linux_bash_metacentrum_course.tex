@@ -1673,7 +1673,7 @@
 \begin{frame}{BASH globing and wildcards}
 	\label{globbing}
 	\begin{itemize}
-		\item BASH itself doesn't recognize regular expressions --- its wildcards have some of functions of regular expressions (from slide~\ref{regexp}) and can look similarly, but behave differently --- Do not confuse!
+		\item BASH itself doesn't recognize regular expressions (from slide~\ref{regexp}) --- its wildcards have some of functions of regular expressions and can look similarly, but behave differently --- Do not confuse!
 		\item \texttt{?} --- Replaces any single character
 		\item \texttt{*} --- Replaces any number of any characters (\texttt{ls a*} lists all files starting with \enquote{a})
 		\item \texttt{[]} --- Range or a~list --- \texttt{[abcdef]} and \texttt{[a-f]} are same
@@ -1741,7 +1741,7 @@
     VARIABLE='variablevalue' # Set new variable and its value
                              # Or replace existing variable by new value
     export EDITOR='/usr/bin/vim' # Set new default text editor
-    LISTFILES="$(ls -1)" # Get output of command 'ls -1' into the variable
+    LISTFILES="$(ls)" # Get output of command 'ls -1' into the variable
     echo "${LISTFILES}" # See content of the variable LISTFILES
     export GREP_OPTIONS='--color=auto' # Colored grep (see further)
     unset VARIABLENAME # Drop variable and its value
@@ -1759,14 +1759,14 @@
     echo '$A' # Single quotes preserve literal value
     $A # We see variable's name, not its content
     echo "$A" # Double quotes preserve literal value, except $, `, \
-    abcdef # This also works
-    echo `$A` # Text between back ticks is evaluated and launched
+    abcdef # This also works; not needed here
+    echo `$A` # Text between back ticks is evaluated as a command and launched
     abcdef: command not found # There is no command "abcdef"...
     echo $($A) # Same as `...`, this is now recommended way, `...` is legacy
+               # Commonly used to fill variable by output of some command, e.g.
+               FQTOPROCESS=$(find "${DATADIR}" -type f -name "*.f*q")
     echo "Hi, dear $USER" # Compare this and following command...
     echo 'Hi, dear $USER' # Single quotes do not evaluate variables
-    A=abcde # OK
-    echo $A # abcde
 	\end{bashcode}
 \end{frame}
 
@@ -1776,19 +1776,19 @@
     echo $B # abcd
     C=abcd\$e # \ escapes next character - it is loosing its special meaning
     echo $C # abcd$e
-    D='abcd$e' # '...' keep literal value of the content
-    echo $D # abcd$e
+    C='abcd$e' # '...' keep literal value of the content; as above
     # Next command breaks shell - incomplete quotes " - pres then Ctrl+C
-    E=ab"cde # The variable should contain incomplete quotes ", it fails
-    echo $E # Nothing - empty
-    F=ab\"cde # \ escapes next character - it is loosing its special meaning
-    echo $F # ab"cde
-    G='ab"cde' # '...' keep literal value of the content
-    echo $G # ab"cde
-    H=abc${USER}de # $USER wouldn't work - {} are needed
-    echo $H # abcvojtade # To add output of command into the variable
-    I="abc$(echo ${USER} | tr [:lower:] [:upper:])de" # Modification of var.
-    echo $I # See what happened with content of $USER
+    D=ab"cde # The variable should contain incomplete quotes ", it fails
+    echo $D # Nothing - empty
+    E=ab\"cde # \ escapes next character - it is loosing its special meaning
+    echo $E # ab"cde
+    E='ab"cde' # '...' keep literal value of the content; as above
+    F=abc${USER}de # $USER wouldn't work - {} are needed
+    echo $F # abcvojtade # To add output of command into the variable
+    G="abc$(echo ${USER} | tr [:lower:] [:upper:])de" # Modification of var.
+    echo $G # See what happened with content of $USER
+    H=abc def # Error: command "def" not found... Why? Fixing:
+    H='abc def' # "echo $H" outputs "abc def" - typical problem with paths
 	\end{bashcode}
 \end{frame}
 
