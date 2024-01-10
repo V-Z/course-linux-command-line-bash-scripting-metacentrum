@@ -1570,29 +1570,7 @@
 
 \subsection{Searching}
 
-\begin{frame}[fragile]{Looking for files and applications}
-	\begin{bashcode}
-    apropos keyword # Searches for command descriptions containing keyword
-    updatedb # Must be regularly launched to get "locate" to work
-             # It is usually regularly launched by cron task (see further)
-    locate somename # Searches for files/directories in "locate" database
-    which # Full path to application (shell command)
-    whereis # Path to source code, executable and man pages for the command
-    # Test if executable command exists (good for scripts)
-    # If "Application" is missing, script ends with error
-    command -v Application >/dev/null 2>&1 || { echo >&2 "Application is
-      required but not installed. Aborting."; exit 1; }
-    command -v find # Behaves like which, but reliable in scripts
-    type Application >/dev/null 2>&1 || { echo >&2 "Application is
-      required but not installed. Aborting."; exit 1; }
-    exit 1 # "exit" use to be added (with various numbers) after any error
-           # to send term signal 1 - for better handling of various errors.
-           # Every termination has exit status number - 0 is normal exit.
-           # Exit status 1 and higher number is various error.
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Find}
+\begin{frame}[fragile]{Find --- looking for files}
 	\begin{bashcode}
     find <where> <what> <what to do> # The most powerful searching tool:
     find /... -type d/f -name XXX -print # Most common usage
@@ -1621,13 +1599,13 @@
     # stdin and execute command with given arguments, using all CPU threads)
     # Note in the example below -print is not needed as it is default action
     find photos/ -name "*.jpg" | xargs mogrify -resize 1000x1000
-    # Find all R scripts in ~/Documents and find in them lines with "DNA"
-    find ~/Documents -name "*.r" -print | xargs grep -nH DNA # Or
-    find ~/Documents -name "*.r" -exec grep -nH DNA '{}' \;
     # How many directories are there in the books directory
     find books/ -type d -print | wc -l # wc -l calculates lines
     # Change permissions of all files within "files" directory to 640
     find files/ -type f -exec chmod 640 '{}' \;
+    # Find all R scripts in ~/Documents and find in them lines with "DNA"
+    find ~/Documents -name "*.r" -print | xargs grep -nH DNA # Or
+    find ~/Documents -name "*.r" -exec grep -nH DNA '{}' \;
 	\end{bashcode}
 \end{frame}
 
@@ -1648,7 +1626,29 @@
     # Find in current directory files from 1 to 100 MB
     find . -type f -size +1M -size -100M
     # Search in home dir for files named "*.jpg" or "*.txt" and print them
-    find ~ -name "*.jpg" -o -name "*.txt"
+    find ~ -name "*.jpg" -o -name "*.txt" # '-print' is default, can be omitted
+	\end{bashcode}
+\end{frame}
+
+\begin{frame}[fragile]{Looking for applications and files}
+	\begin{bashcode}
+    updatedb # Must be regularly launched to get "locate" to work
+             # It is usually regularly launched by cron task (see further)
+    locate somename # Searches for files/directories in "locate" database
+    apropos keyword # Searches for command descriptions containing keyword
+    which app # Full path to application (shell command)
+    whereis app # Path to source code, executable and man pages for the command
+    # Test if executable command exists (good for scripts)
+    # If "Application" is missing, script ends with error
+    command -v Application >/dev/null 2>&1 || { echo >&2 "Application is
+      required but not installed. Aborting."; exit 1; }
+    type Application >/dev/null 2>&1 || { echo >&2 "Application is
+      required but not installed. Aborting."; exit 1; }
+    # More reliable than 'which Application || { echo XXX; exit 1; }'
+    exit 1 # "exit" use to be added (with various numbers) after any error
+           # to send term signal 1 - for better handling of various errors.
+           # Every termination has exit status number - 0 is normal exit.
+           # Exit status 1 and higher number is various error.
 	\end{bashcode}
 \end{frame}
 
