@@ -2073,7 +2073,7 @@
 \begin{frame}[fragile]{Examples of redirects and pipes when working with molecular data II}
 	\begin{bashcode}
     # How many FASTQ reads are there in the file
-    cat file.fastq | echo "$(("$(wc -l)" / 4))"
+    echo "$(("$(wc -l file.fastq)" / 4))"
     # Count number of *.FNA or *.fasta files in current directory
     find . -maxdepth 1 -name "*.FNA" -o -name "*.fasta" | wc -l
     # Same as above, saving output to the file
@@ -2250,10 +2250,10 @@
     # (22 for SSH, can be any)
     nc -vz web.natur.cuni.cz 22
     man nc # See for more information; "nc" is alias for "netcat"
-    netstat -atn # Information about all network connections
-    netstat -ntplu # Show open TCP/UDP ports
-    netstat -anp # Show active connections
-    ss --help # netstat is deprecated, prefer usage of ss
+    ss -atn # Information about all network connections
+    ss -ntplu # Show open TCP/UDP ports
+    ss -anp # Show active connections
+    ss --help # More options...
     # If using nmap at faculty, firewall disconnects you for 10 minutes!
     nmap -r someserver.cz # Scan someserver.cz for opened ports
     nmap botany.natur.cuni.cz --script ssh-hostkey # See SSH key
