@@ -2803,10 +2803,10 @@
 \begin{frame}[fragile]{Get a~column with awk}
 	\begin{itemize}
 		\item AWK is scripting language mainly for text manipulations
-		\item Can not select column according to its name (Perl can do that)
-		\item Can do things other BASH tools can not (easily) do --- better manipulation with columns, calculations,~\ldots
+		\item Can do things other BASH tools can not (easily) do --- better manipulation with columns, calculations, work with multi-line patterns,~\ldots
 		\item Has complicated syntax, it is hard to read, it is not similar to other tools --- Perl can do more and is more common (learn it instead)\ldots
 		\item Supports regular expressions, slide \ref{regexp}
+		\item Can not select column according to its name (Perl can do that)
 		\item For more information see manuals \url{https://www.gnu.org/software/gawk/manual/}, \url{https://en.wikibooks.org/wiki/An_Awk_Primer} and \url{https://www.grymoire.com/Unix/Awk.html}
 	\end{itemize}
 	\vfill
@@ -2881,7 +2881,7 @@
     LC_ALL=C sort ... # To force use of English locale use
     # Take into account only spaces and alphanumerical characters (ignore
     # any other)
-    sort -d textfile 
+    sort -d textfile # Only spaces and alphanumerical characters
     sort -r textfile # Reverse order
     sort -f textfile # Ignore character case (not case sensitive)
     sort -m textfile1 textfile2 # Merge already sorted text files
@@ -2960,7 +2960,7 @@
     # Search and replace ("s") all occurrences ("g") of "find" by "replace"
     sed 's/find/replace/g' textfile
     # Replace third occurrence of pattern on every line
-    sed 's/pattern/Replace/3' # 's/.../.../' replace only third occurrence
+    sed 's/pattern/Replace/3' # 's/.../.../3' replace only third occurrence
     sed '1,7s/...' # To work only on particular line, place single number or
     sed '5s/...'   # range (e.g. 1,7) right before "s" ("$" for last line)
     sed '1~2n;s/F/R/g' # Work on every second line, starting by line 1
@@ -2991,7 +2991,7 @@
     # Replace size column (2nd numeric) by "size:TAB<file size>b"
     # Second sed replaces any white spaces by single TAB
     ls -l | sed 's/\([0-9]\+\)/size:\t\1b/2' | sed 's/[[:blank:]]\+/\t/g'
-    head long_text.txt | sed '/^$/d' # Delete blank (empty) lines
+    sed '/^$/d' long_text.txt | less # Delete blank (empty) lines
     head long_text.txt | sed '6d' # Delete 6th line
 	\end{bashcode}
 \end{frame}
@@ -3027,11 +3027,11 @@
     ls -l | sed 's/[0-9]\{4,\}/BIG!/' # Replace 4 or more digits by "BIG!"
     sed -E ... ; sed -r ... # Use extended regular expressions (see further)
     # Remove blank space (spaces or tabs) on beginning of each line
-    sed 's/^[[:blank:]]\+//'
+    sed 's/^[[:blank:]]\+//' textfile
     # Remove suffix from names of *.sh files - compare variants
     ls -1 *.sh | sed 's/\.sh$//' # Note '$' to ensure end of line
     ls -1 *.sh
-    find . -name "*.sh" | sed 's/^\.\///;s/\.sh//' # Note chaining patterns
+    find . -name "*.sh" | sed 's/^\.\///;s/\.sh//' # Note chaining of patterns
     find . -name "*.sh"  # It searches also in subdirectories
 	\end{bashcode}
 	\begin{itemize}
@@ -3041,8 +3041,8 @@
 
 \begin{frame}[fragile]{Joining}
 	\begin{itemize}
-		\item Generally, most of tools work per-line, \texttt{paste} appends columns (slide~\ref{cutpaste})
-		\item Join compares every matching lines (by default 1$^{st}$ field) and creates all combinations --- ensure to have sorted input files with unique text
+		\item Generally, most of tools work per-line, \texttt{paste} appends columns (see also slide~\ref{cutpaste})
+		\item \texttt{join} compares every matching lines (by default 1$^{st}$ field) and creates all combinations --- ensure to have sorted input files with unique text
 		\begin{itemize}
 			\item E.g. if 1$^{st}$ file contains \texttt{A~B} and \texttt{A~C} and 2$^{nd}$ file \texttt{A~D} and \texttt{A~E}, the result will be \texttt{A~B D}, \texttt{A~B E}, \texttt{A~C D} and \texttt{A~C E}
 		\end{itemize}
@@ -3241,7 +3241,7 @@
 		\begin{itemize}
 			\item \texttt{i} or \texttt{Insert} key to enter \textit{insert mode}, \texttt{:} to enter \textit{command mode}
 		\end{itemize}
-		\item \textbf{Insert} --- in bottom left corner \enquote{{-}- \texttt{INSERT} -{-}} is displayed, the most familiar mode, normal typing etc., exit to normal mode by \texttt{ESC} key
+		\item \textbf{Insert} --- in bottom left corner \enquote{\texttt{{-}- INSERT -{-}}} is displayed, the most familiar mode, normal typing etc., exit to normal mode by \texttt{ESC} key
 		\item \textbf{Command} --- in bottom left corner \texttt{:} is displayed, awaits commands, exit to normal mode by \texttt{Backspace} key (delete \enquote{\texttt{:}})
 	\end{enumerate}
 	\begin{itemize}
@@ -3291,8 +3291,9 @@
 			\item Manipulate the text --- flip, reformat, replace,~\ldots
 			\item Syntax is variable among programming languages and applications
 			\item There are commonly more solutions for one task
-			\item Well supported in \texttt{grep}, \texttt{sed}, \texttt{vim}, \texttt{emacs},~\ldots
+			\item Well supported in \texttt{grep}, \texttt{sed}, \texttt{awk}, \texttt{vim}, \texttt{emacs},~\ldots
 			\item Probably the most advanced is \href{https://www.perl.org/}{Perl}
+			\item Implementations can differ among tools
 		\end{itemize}
 		\vfill
 		\url{https://xkcd.com/208/}
