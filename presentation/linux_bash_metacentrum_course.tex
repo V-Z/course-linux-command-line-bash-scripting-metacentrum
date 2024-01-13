@@ -4579,7 +4579,7 @@
 		\includegraphics[height=5.5cm]{grid_graphics.jpg}
 	\end{center}
 	\begin{flushright}
-		From \href{https://docs.metacentrum.cz/tutorials/}{Beginners guide}
+		From old beginners guide
 	\end{flushright}
 \end{frame}
 
@@ -4644,8 +4644,8 @@
     # Prepare calculations - load required application modules
     # See https://docs.metacentrum.cz/software/
     # Every application module is loaded by "module add XXX"
-    module add parallel # In this (example) case GNU Parallel and MrBayes
-    module add mrbayes-3.2.6
+    module add parallel/20210922-gcc-10.2.1-iiyjqem # In this (example) case
+    module add mrbayes/3.2.7a                       # GNU Parallel and MrBayes
     # Launch the analysis - calculate MrBayes for multiple files
     # Note Parallel will distribute task among 8 CPU threads (-j 8), so that
     # qsub must in this case contain select=1:ncpus=8 (see further)
@@ -4775,7 +4775,7 @@
     # From any MetaCentrum frontend login to respective node running the task
     ssh exec_host # No need to specify user name; e.g. mandos9
     # Go to SCRATCH directory
-    cd SCRATCHDIR # e.g. /scratch/USER/job_1234567.arien-pro.ics.muni.cz/
+    cd SCRATCHDIR # e.g. /scratch/USER/job_12345678.meta-pbs.metacentrum.cz/
     # There are working data of currently running task...
     # Check whatever you need...
 	\end{bashcode}
@@ -4783,9 +4783,9 @@
 
 \begin{frame}{Running R tasks on MetaCentrum}
 	\begin{itemize}
-		\item There are only some R packages, to get more create own package library and use it in scripts (see e.g. \texttt{/software/R/4.0.0/gcc/lib/R/library/})
+		\item There are only some R packages, to get more create own package library and use it in scripts (see e.g. \texttt{.libPaths()} within \texttt{R})
 		\item \alert{Be careful about paths!}
-		\item In the \texttt{metacentrum.sh} script load R \texttt{module add R-4.0.0-gcc} and start there R script as usually \texttt{R CMD BATCH script.r}
+		\item In the \texttt{metacentrum.sh} script load R, e.g. \texttt{module add r/4.1.3-gcc-10.2.1-6xt26dl} and start there R script as usually \texttt{R CMD BATCH script.r}
 	\end{itemize}
 	\begin{enumerate}
 		\item Login to selected front node via SSH
@@ -4840,6 +4840,7 @@
 \begin{frame}[fragile]{Graphical interactive task}
 	\begin{itemize}
 		\item See \url{https://docs.metacentrum.cz/software/graphical-access/}
+		\item Download and install \href{https://www.tightvnc.com/}{TightVNC} (Windows installer or Java Viewer)
 	\end{itemize}
 	\begin{bashcode}
     screen # Secure we can log off in the meantime
@@ -4850,10 +4851,9 @@
     # After we get the interactive task, we are on new server
     module add gui # We need to add GUI module
     gui start --ssh # Start GUI (see above link for details)
-    gui info # Print information about running VNC sessions
+    gui info # Print information about running VNC sessions - use for TightVNC
 	\end{bashcode}
 	\begin{itemize}
-		\item Download and install \href{https://www.tightvnc.com/}{TightVNC} (Windows installer or Java Viewer)
 		\item Work as on normal Linux desktop (ensure to work in \texttt{\$SCRATCHDIR})\ldots
 		\item It provides limited amount of resources, not suitable for big tasks
 	\end{itemize}
@@ -4892,7 +4892,7 @@
 		\item Users must carefully set permissions!
 		\begin{itemize}
 			\item Sharing is done by specific UNIX group
-			\item Users must set group ownership to particular group and permissions e.g. 770 for directories and 660 for files to avoid access of any other users
+			\item Users must set group ownership to particular group and permissions e.g. \texttt{770} for directories and \texttt{660} for files to avoid access of any other users
 			\item All members of the group must be able to manipulate the data
 		\end{itemize}
 	\end{itemize}
