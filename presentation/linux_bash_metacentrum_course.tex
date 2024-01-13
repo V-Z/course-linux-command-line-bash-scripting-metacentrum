@@ -4954,6 +4954,10 @@
 	\begin{multicols}{2}
 		\vfill
 		\tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
+		\vfill
+		\begin{center}
+			\includegraphics[height=3.5cm]{git_fire.png}
+		\end{center}
 		\columnbreak
 		\begin{center}
 			\includegraphics[height=5.5cm]{git_xkcd.png}
@@ -5022,7 +5026,7 @@
 			\item Three main areas
 			\begin{enumerate}
 				\item Working directory
-				\item Staging (changes awaiting to be pushed to the repository)
+				\item Staging (changes awaiting to be pushed to central repository)
 				\item Git repository (remote/local)
 			\end{enumerate}
 			\item Everyone has whole repository and history (it's \enquote{distributed}) --- very robust
@@ -5051,7 +5055,7 @@
 \begin{frame}[fragile]{Working with Git --- start and sending changes}
 	\begin{bashcode}
     # Create a new central repository (e.g. on a server) in empty directory
-    git init --bare
+    git init --bare # No need when establishing project e.g. on GitHub
     # Create a new repository for new project (in empty directory)
     git init # No need when cloning from existing repository
     # If you did not start by cloning, add connection to server
@@ -5137,13 +5141,13 @@
 \begin{frame}{Git tasks}
 	\begin{enumerate}
 		\item Clone over SSH repository \texttt{USER@vyuka.natur.cuni.cz:/srv/dadaism} (use your credentials on the testing server) and go to \texttt{dadaism} directory.
+		\item Communicate with others to avoid conflicting edits.
 		\item Add some text files, edit existing text files. Do not add images or another non-text files, do not add large files.
 		\item Push your changes back to the repository.
 		\item Fetch changes done by others.
 		\item See history of changes, who did what, etc.
 		\item Use at least \texttt{git} commands \texttt{clone},\texttt{diff}, \texttt{status}, \texttt{add}, \texttt{commit}, \texttt{push}, \texttt{fetch}, \texttt{pull}, \texttt{log} and \texttt{gitk}.
 		\item You can try to play with branches --- \texttt{branch}, \texttt{checkout}, \texttt{merge}.
-		\item Communicate with others to avoid conflicting edits.
 	\end{enumerate}
 \end{frame}
 
