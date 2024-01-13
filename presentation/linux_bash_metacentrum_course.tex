@@ -4206,9 +4206,9 @@
 		\item \texttt{zypper lr} --- list repositories
 		\item \texttt{zypper ar \textit{repository}} --- add \textit{repository} (URL of remote \texttt{*.repo} file)
 		\item \texttt{zypper rr \textit{repository}} --- remove \textit{repository} (name according to \texttt{zypper lr})
-		\item \texttt{zypper mr \textit{repository}} --- modify \textit{repository} (see \texttt{man zypper} first or use \texttt{yast sw\_single})
+		\item \texttt{zypper mr \textit{repository}} --- modify \textit{repository} (see \texttt{man zypper} first, or use \texttt{yast sw\_single})
 		\item \texttt{zypper pa \textit{package}} --- get information about particular \textit{package} or another query (e.g. list of dependencies, see \texttt{man zypper})
-		\item \texttt{opi} \textit{package} --- search (and possibly install) \textit{package} in \href{https://build.opensuse.org/}{OBS} in all repositories contributed by users
+		\item \texttt{opi \textit{package}} --- search (and possibly install) \textit{package} in \href{https://build.opensuse.org/}{OBS} in all repositories contributed by users (take care, there are no quality checks)
 		\item \texttt{rpmconfigcheck} --- check which configuration files in \texttt{/etc} have new version after update of some software --- compare respective configuration files with new \texttt{*.rpmnew} files
 		\item \texttt{rpm*} commands for other tasks
 		\item \texttt{man zypper}, \texttt{man rpm} --- usage help
@@ -4225,7 +4225,8 @@
 		\item \texttt{apt upgrade} -- upgrade packages
 		\item \texttt{apt dist-upgrade} -- upgrade to newer release of whole distribution
 		\item \texttt{apt search \textit{term}} --- search \textit{term}
-		\item \texttt{apt autoremove} --- clear packages
+		\item \texttt{apt autoremove} --- clear unneeded packages
+		\item \texttt{apt autoclean} --- cleanup of files after uninstalled packages
 		\item \texttt{aptitude} --- interactive manager
 		\item \texttt{cat /etc/apt/sources.list} --- list repositories
 		\item \texttt{nano /etc/apt/sources.list} --- add/remove/edit repositories
@@ -4288,9 +4289,9 @@
 	\begin{itemize}
 		\item Some software is distributed only as source code (e.g. downloaded from GitHub) written in languages like C or C++ --- user has to \textit{compile} it to get working binary executable
 		\item Compilation creates binary specific for particular operating system and hardware platform --- can be tuned for optimal performance
-		\item Interpreted languages like Bash, Perl, Python or Java don't have to be compiled (but it is possible) --- they need their interpreter to run, relative easily portable among hardware platforms and OS
+		\item Interpreted languages (Bash, Perl, Python etc.) don't have to be compiled (but it is possible) --- they need their interpreter to run, relative easily portable among hardware platforms and OS (similar to Java and its Virtual Machine)
 		\item Applications requiring compilation usually have good instructions
-		\item \textbf{If you don't have to do it, don't do it.}\textbf{} Solving problems can be complicated --- contact someone skilled or author of the application\ldots
+		\item \textbf{If you don't have to do it, don't do it.}\textbf{} Solving problems can be complicated --- contact someone skilled or author of the application, consult ChatGPT\ldots
 	\end{itemize}
 	\begin{bashcode}
     # General schema within application directory with the source code:
@@ -4461,6 +4462,20 @@
 			\item Distributions sometimes provide packages at least for part of the packages of such languages --- typically at least for Python, Perl or R --- this is especially convenient for packages having plenty of complex dependencies
 		\end{itemize}
 		\item Packages in various repositories are sometimes not up-to-date with newest version released --- if so, contact maintainer of distributional package and kindly ask for update (distributional webs use to have easy ways how to do it)
+	\end{itemize}
+\end{frame}
+
+\subsection{Games}
+
+\begin{frame}{How to game on Linux}
+	\begin{itemize}
+		\item Plenty of games are in repositories of all major Linux distributions --- just search
+		\item Many open-source games are multiplatform
+		\item Some distributions have extra repositories for games, e.g. \href{https://software.opensuse.org/packages/Games}{openSUSE}
+		\item See \url{https://www.gamingonlinux.com/} for news etc.
+		\item A lot of Windows-only games can be used with \href{https://appdb.winehq.org/}{Wine}
+		\item Install \href{https://store.steampowered.com/}{Steam} (package is often available in standard repositories) and there activate Proton (version of Wine to run plenty of Windows games on Linux via Steam)
+		\item Although not all games available for Windows are available for Linux, there are more games than you have time\ldots~;-)
 	\end{itemize}
 \end{frame}
 
