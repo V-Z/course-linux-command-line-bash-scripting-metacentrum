@@ -3425,19 +3425,36 @@
 		\item Every script begins with \texttt{\#!/bin/bash} (or alternative for another shells, Perl,~\ldots)
 		\item Add any commands you like\ldots
 		\item Every script should end with \texttt{exit} (but it is not necessary)
-		\item After writing the script, add execution permission (\texttt{chmod +x noninteractive.sh})
-		\item Launch with \texttt{./noninteractive.sh}
+		\item After writing the script, add execution permission (\texttt{chmod +x noninteractive.sh}), launch with \texttt{./noninteractive.sh}
 		\item The most simple script:
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
     #!/bin/bash
-    # Simple non-interactive script - no communication with user
-    # only list of commands - prints user name, date and $PATH
+    # Simple non-interactive script - no communication with user,
+    # only list of commands - prints user name, date, $PATH and free space
     echo "Hi, ${USER}, today is $(date) and your PATH is ${PATH}."
+    echo "Free space on your disk:"
+    df -h
     echo
     exit
 	\end{bashcode}
+\end{frame}
+
+\subsection{BASH variables}
+
+\begin{frame}{Special BASH internal variables available in the script (selection)}
+	\begin{itemize}
+		\item These variables can be used within script e.g. to parse arguments provided by the user
+		\item \alert{\texttt{\$1}},~\ldots~(number from \texttt{1} up to number of parameters) --- individual positional parameters (see further examples)
+		\item \alert{\texttt{\$0}} --- path of the starting script
+		\item \alert{\texttt{\$\#}} --- number of command-line arguments
+		\item \alert{\texttt{\$*}} --- all of the positional parameters, seen as a~single word, must be quoted (i.e. \texttt{"\$*"})
+		\item \alert{\texttt{\$@}} --- same as \texttt{\$*}, but each parameter is a~quoted string --- the parameters are passed intact, without interpretation or expansion, each parameter in the argument list is seen as a~separate word, should be quoted (i.e. something like \texttt{"\$@"})
+		\item \alert{\texttt{\$\$}} --- process ID (PID) of the script itself
+		\item \alert{\texttt{\$?}} --- Exit status of previous command, function, or the script itself
+		\item \href{https://tldp.org/LDP/abs/html/internalvariables.html}{See more variables\ldots}
+	\end{itemize}
 \end{frame}
 
 \subsection{Functions}
@@ -3461,22 +3478,6 @@
     MyNewFunction2 5 8 # For example
     ...
 	\end{bashcode}
-\end{frame}
-
-\subsection{BASH variables}
-
-\begin{frame}{Special BASH internal variables available in the script (selection)}
-	\begin{itemize}
-		\item These variables can be used within script e.g. to parse arguments provided by the user
-		\item \alert{\texttt{\$1}},~\ldots~(number from \texttt{1} up to number of parameters) --- individual positional parameters (see further examples)
-		\item \alert{\texttt{\$0}} --- path of the starting script
-		\item \alert{\texttt{\$\#}} --- number of command-line arguments
-		\item \alert{\texttt{\$*}} --- all of the positional parameters, seen as a~single word, must be quoted (i.e. \texttt{"\$*"})
-		\item \alert{\texttt{\$@}} --- same as \texttt{\$*}, but each parameter is a~quoted string --- the parameters are passed intact, without interpretation or expansion, each parameter in the argument list is seen as a~separate word, should be quoted (i.e. something like \texttt{"\$@"})
-		\item \alert{\texttt{\$\$}} --- process ID (PID) of the script itself
-		\item \alert{\texttt{\$?}} --- Exit status of previous command, function, or the script itself
-		\item \href{https://tldp.org/LDP/abs/html/internalvariables.html}{See more variables\ldots}
-	\end{itemize}
 \end{frame}
 
 \subsection{Reading variables}
@@ -3902,7 +3903,7 @@
           commands2
         else
           commands3
-        fi
+        fi # Branching can be long, hard to read and susceptible to errors
 	\end{bashcode}
 \end{frame}
 
@@ -3923,29 +3924,32 @@
 			\item Double-bracket syntax --- enhanced (now preferred)
 			\begin{itemize}
 				\item Allow usage of regular expressions and globing patterns
-				\item Word splitting is prevented --- \texttt{\textbraceleft \$STRINGVAR} can contain spaces
+				\item Word splitting is prevented --- \texttt{\$\textbraceleft STRINGVAR\textbraceright} can contain spaces etc.
 				\item Expanding file names --- \texttt{if [[ -a *.sh ]]} (variant with only one bracket doesn't work when there are multiple sh files)
 				\item More detailed test, e.g. \texttt{if [[ \$num -eq 3 \&\& "\$\textbraceleft STRINGVAR\textbraceright " == XXX ]]\ldots}
 			\end{itemize}
 		\end{itemize}
-		\item \texttt{-eq} --- Equal to (like \texttt{==})
-		\item \texttt{-lt} --- Less than
-		\item \texttt{-gt} --- Greater than
-		\item \texttt{-ge} --- Greater than or equal to
-		\item \texttt{-le} --- Less than or equal to
-		\item \texttt{-f "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is a~regular file (not link or so)
-		\item \texttt{-r "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is readable
-		\item \texttt{-w "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is writable
-		\item \texttt{-x "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is executable
-		\item \texttt{-d "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is a~directory
-		\item \texttt{-s "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and has a~size greater than zero
-		\item \texttt{-n "\$\textbraceleft STR\textbraceright "} --- True if string \texttt{\$STR} is not a~null (empty) string
-		\item \texttt{-z "\$\textbraceleft STR\textbraceright "} --- True if string \texttt{\$STR} is a~null string
-		\item \texttt{"\$\textbraceleft STR1\textbraceright " == "\$\textbraceleft STR2\textbraceright "} --- True if both strings are equal
-		\item \texttt{"\$\textbraceleft STR\textbraceright "} --- True if string \texttt{\$STR} is assigned a~value and is not null
-		\item \texttt{"\$\textbraceleft STR1\textbraceright " != "\$\textbraceleft STR2\textbraceright "} --- True if both strings are unequal
-		\item \texttt{-a} --- Performs the \texttt{AND} function (\texttt{[~\ldots~-a~\ldots~]} or \texttt{[~\ldots~] \&\& [~\ldots~]})
-		\item \texttt{-o} --- Performs the \texttt{OR} function (\texttt{[~\ldots~-o~\ldots~]} or \texttt{[~\ldots~] || [~\ldots~]})
+		\item Common tests
+		\begin{itemize}
+			\item \texttt{-eq} --- Equal to (like \texttt{==})
+			\item \texttt{-lt} --- Less than
+			\item \texttt{-gt} --- Greater than
+			\item \texttt{-ge} --- Greater than or equal to
+			\item \texttt{-le} --- Less than or equal to
+			\item \texttt{-f "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is a~regular file (not link or so)
+			\item \texttt{-r "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is readable
+			\item \texttt{-w "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is writable
+			\item \texttt{-x "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is executable
+			\item \texttt{-d "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is a~directory
+			\item \texttt{-s "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and has a~size greater than zero
+			\item \texttt{-n "\$\textbraceleft STR\textbraceright "} --- True if string \texttt{\$STR} is not a~null (empty) string
+			\item \texttt{-z "\$\textbraceleft STR\textbraceright "} --- True if string \texttt{\$STR} is a~null string
+			\item \texttt{"\$\textbraceleft STR1\textbraceright " == "\$\textbraceleft STR2\textbraceright "} --- True if both strings are equal
+			\item \texttt{"\$\textbraceleft STR\textbraceright "} --- True if string \texttt{\$STR} is assigned a~value and is not null
+			\item \texttt{"\$\textbraceleft STR1\textbraceright " != "\$\textbraceleft STR2\textbraceright "} --- True if both strings are unequal
+			\item \texttt{-a} --- Performs the \texttt{AND} function (\texttt{[~\ldots~-a~\ldots~]} or \texttt{[~\ldots~] \&\& [~\ldots~]})
+			\item \texttt{-o} --- Performs the \texttt{OR} function (\texttt{[~\ldots~-o~\ldots~]} or \texttt{[~\ldots~] || [~\ldots~]})
+		\end{itemize}
 		\item \texttt{if} statement can test whatever returning \texttt{TRUE}/\texttt{FALSE}, commonly something like \texttt{if grep -q XXX; then \ldots} (see also further)
 		\item Do not confuse globing patterns and regular expressions when using \texttt{[[~\ldots~]]}
 		\begin{itemize}
