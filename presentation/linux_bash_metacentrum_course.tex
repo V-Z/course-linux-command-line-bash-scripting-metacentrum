@@ -986,7 +986,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{Extending permissions --- ACL (Access control list)}
+\begin{frame}[allowframebreaks]{Extending permissions --- ACL (Access control list)} % TODO No slashes, setfacl must be '-Rm'
 	\label{acl}
 	\begin{itemize}
 		\item By default, it is not possible to give specific permission to the user who is not owner, nor member of group owning the file
@@ -1658,7 +1658,7 @@
 		\item Where is executable of \texttt{mc}? Why can be such information useful?
 		\item Which software is related to keywords \texttt{permission} and \texttt{compress} (use e.g. \texttt{apropos})? Use \texttt{man} to explore some of them.
 	\end{enumerate}
-	\begin{block}{Tasks with \texttt{find}}
+	\begin{block}{Tasks with \texttt{find}} % TODO Make it clear that there will be individual archives for each file
 		\begin{enumerate}
 			\item Find all \texttt{*.vcf.gz} files in whole \texttt{/home}. Why do you get errors for some directories?
 			\item Compress, see and decompress all shell scripts in your home directory.
@@ -2238,7 +2238,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Basic network information and testing} % TODO Rewrite netstat examples for ss
+\begin{frame}[fragile]{Basic network information and testing}
 	\begin{bashcode}
     hostname # Get name of the computer
     ping web.natur.cuni.cz # Ping host. Is it alive? Cancel by Ctrl+C
@@ -3411,7 +3411,7 @@
 	\end{enumerate}
 \end{frame}
 
-\section{Scripting}
+\section{Scripting} % TODO For each script add explanation what it does. Preferably more useful examples.
 
 \begin{frame}{Scripting}{Basics of writing scripts in BASH}
 	\tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
@@ -4323,7 +4323,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Compilation of RAxML}
+\begin{frame}[fragile]{Compilation of RAxML} % TODO Use Git instead of SVN.
 	\begin{itemize}
 		\item Available from \url{https://github.com/stamatak/standard-RAxML}
 		\item Before compilation check \href{https://github.com/stamatak/standard-RAxML/blob/master/README.md}{README}
@@ -4344,7 +4344,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Compilation of SAMtools}
+\begin{frame}[fragile]{Compilation of SAMtools} % TODO Use Git instead os wget
 	\begin{itemize}
 		\item See \url{https://www.htslib.org/download/}
 		\item Ensure packages \texttt{zlib} and \texttt{zlib-dev(el)} are installed --- required for running and compilation, see \href{https://github.com/samtools/samtools/blob/master/INSTALL}{INSTALL} and \href{https://github.com/samtools/samtools/blob/master/README}{README}
@@ -4479,7 +4479,7 @@
 	\end{itemize}
 \end{frame}
 
-\section{MetaCentrum}
+\section{MetaCentrum} % TODO Update syntax according to newest scripts and standards
 
 \begin{frame}{MetaCentrum}
 	\tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
@@ -4615,7 +4615,7 @@
 
 \subsection{Tasks}
 
-\begin{frame}[fragile]{Basic skeleton of script running tasks I}
+\begin{frame}[fragile]{Basic skeleton of script running tasks I} % TODO Check usage of trap.
 	\begin{bashcode}
     #!/bin/bash
     # Modify the script according to your needs!
@@ -5050,7 +5050,7 @@
 	\end{multicols}
 \end{frame}
 
-\subsection{Git basics}
+\subsection{Git basics} % TODO Bit reorder commands so it is more fluent.
 
 \begin{frame}[fragile]{Working with Git --- start and sending changes}
 	\begin{bashcode}
@@ -5138,7 +5138,7 @@
 
 \subsection{}
 
-\begin{frame}{Git tasks}
+\begin{frame}{Git tasks} % TODO Make clear they work from their notebooks.
 	\begin{enumerate}
 		\item Clone over SSH repository \texttt{USER@vyuka.natur.cuni.cz:/srv/dadaism} (use your credentials on the testing server) and go to \texttt{dadaism} directory.
 		\item Communicate with others to avoid conflicting edits.
@@ -5163,7 +5163,7 @@
 	\end{multicols}
 \end{frame}
 
-\subsection{System services}
+\subsection{System services} % TODO Check how it is in Debian/Ubuntu. Possibly drop init and/or RC scripts?
 
 \begin{frame}[fragile]{Managing system services}
 	\begin{itemize}
@@ -5458,4 +5458,6 @@
 
 % TODO Missing topics
 % * https://wiki.control.fel.cvut.cz/osp/
+% * More tasks.
+% * Possibly some reorders.
 
