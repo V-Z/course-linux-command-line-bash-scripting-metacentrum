@@ -4788,7 +4788,7 @@
 		\item In the \texttt{metacentrum.sh} script load R, e.g. \texttt{module add r/4.1.3-gcc-10.2.1-6xt26dl} and start there R script as usually \texttt{R CMD BATCH script.r}
 	\end{itemize}
 	\begin{enumerate}
-		\item Login to selected front node via SSH
+		\item Login to selected front node via SSH and load R module
 		\item Create somewhere new directory for R packages \texttt{mkdir rpkgs} (or use default \texttt{$\sim$/R/})
 		\item Start R \texttt{R} and install \textbf{all} R packages needed for the task --- install them into the \texttt{rpkgs} directory \texttt{install.packages(pkgs=\ldots, lib="rpkgs")}
 		\item In the R script \texttt{*.r} load the packages from the \texttt{rpkgs} directory \texttt{library(package=\ldots, lib.loc="/storage/\ldots/rpkgs")}
@@ -5111,7 +5111,7 @@
     git log # Newest is on top, see also "git log --help"
     git log --graph --oneline --decorate --all # Full long log
     # Discard local changes for particular file
-    git checkout --- <file>
+    git restore <file>
     # Discard all local changes
     git fetch origin # Overwrite local changes
     git reset --hard origin/master # If local repository is broken...
