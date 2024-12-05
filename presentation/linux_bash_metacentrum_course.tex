@@ -90,7 +90,7 @@
 \title{Linux, command line \& MetaCentrum}
 \subtitle{Use of Linux command line not only for CESNET's MetaCentrum}
 \titlegraphic{\includegraphics[width=1cm]{tux.png}}
-\date{January 15 to 18, 2024}
+\date{January 14 to 16, 2025}
 
 \begin{document}
 
@@ -110,9 +110,9 @@
 
 \begin{frame}{The course information}
 	\begin{itemize}
-		\item The course page: \url{https://trapa.cz/en/course-linux-command-line-2024}
+		\item The course page: \url{https://trapa.cz/en/course-linux-command-line-2025}
 		\begin{itemize}
-			\item Česky: \url{https://trapa.cz/cs/kurz-prikazove-radky-linuxu-2024}
+			\item Česky: \url{https://trapa.cz/cs/kurz-prikazove-radky-linuxu-2025}
 		\end{itemize}
 		\item Subject in SIS: \url{https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=MB120C23}
 		\begin{itemize}
@@ -324,7 +324,7 @@
 			\item (F)OSS is available for free --- user can use it as it is or buy a~support --- help of any type
 			\item No vendor lock-in --- user has the code, so he can modify the software himself, change provider of the services,~\ldots
 			\item Cheap for user as well as company --- company specialized for one task, let's say server database, doesn't have to take care about the rest of the system --- someone else does; user pays only what he needs
-			\item Our faculty is using \href{https://plone.org/}{Plone} system for web pages --- anyone can use it for free, someone (like we) asked a~company to help, and if we'd decided, we  could keep Plone and maintain it ourselves or find another company to help us with it
+			\item E.g. anyone can download and install \href{https://en.wikipedia.org/wiki/Content_management_system}{Content management system} like \href{https://www.drupal.org/}{Drupal} or \href{https://wordpress.org/}{WordPress} on their server to create custom web page, or there are plenty of companies providing service of hosting such system on their server, including various user support, and in case of need it is easy to change such provider
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -485,7 +485,7 @@
 		\end{itemize}
 		\item Linux subsystem in MS Windows Store (Windows 10 and 11)
 		\begin{itemize}
-			\item To install follow \url{https://docs.microsoft.com/windows/wsl/about}
+			\item To install follow \url{https://learn.microsoft.com/windows/wsl/about}
 			\item Version 1 only for command-line applications (it has some problems with paths, text files,~\ldots)
 			\item Version 2 works well for most of tasks and allows GUI (experimental)
 		\end{itemize}
@@ -996,7 +996,7 @@
 		\item Important especially in network environment with many users
 		\item If intensively used, \texttt{ls -l} sometimes doesn't show correct permissions (see next slide), it can be confusing and lead into various issues
 		\item If not in use on server (like e.g. on CESNET data storage in Ostrava, \texttt{du4.cesnet.cz}), relatively high number of groups is required to be able to correctly setup sharing permissions
-		\item MetaCentrum has storages and clusters connected via NFSv4 protocol (see also slide~\ref{netfs}) --- commands \texttt{getfacl} and \texttt{setfacl} do not work there, use \texttt{nfs4\_getfacl}, \texttt{nfs4\_setfacl} and \texttt{nfs4\_editfacl} instead (usage is very similar), see also \url{https://wiki.metacentrum.cz/wiki/Access_Control_Lists_on_NFSv4}
+		\item MetaCentrum has storages and clusters connected via NFSv4 protocol (see also slide~\ref{netfs}) --- commands \texttt{getfacl} and \texttt{setfacl} do not work there, use \texttt{nfs4\_getfacl}, \texttt{nfs4\_setfacl} and \texttt{nfs4\_editfacl} instead (usage is very similar), see also \href{https://wiki.metacentrum.cz/wiki/Access_Control_Lists_on_NFSv4}{old MetaCentrum wiki}
 		\item Permissions (\enquote{classical} as well as ACL) require some time to practice and master it\ldots
 	\end{itemize}
 	\begin{block}{Importance of permissions}
@@ -2412,14 +2412,14 @@
 \begin{frame}{Faculty web server(s)}
 	\begin{itemize}
 		\item Login requires same credentials as to \href{https://ldapuser.cuni.cz/}{CAS} (login name, no ISIC number)
-		\item Faculty information are \href{https://www.natur.cuni.cz/fakulta/cit/web-aplikace/webhosting}{only in Czech}
+		\item Faculty information are \href{https://natur.cuni.cz/fakulta/organizacni-struktura/pracoviste-dekanatu/odbor-informacnich-technologii/sluzby-it/sprava-webu-a-webovych-aplikaci/centralni-webovy-server-prf-uk-web-natur-cuni-cz}{only in Czech}
 		\item It is Linux server running Debian
 		\item Connect with SSH/SFTP/SCP to \texttt{web.natur.cuni.cz}
 		\item Mainly used for webhosting, user's address will have form \texttt{https://web.natur.cuni.cz/$\sim$loginname/}, user can \href{https://helpdesk.natur.cuni.cz/servlet/HelpdeskDynamic?eid=Rozcestnik}{apply} for another URL, for space for some projects,~\ldots
-		\item Every department also has dedicated space there, it can be used for various web projects, address can be discussed with \href{https://www.natur.cuni.cz/eng/centre-of-information-technologies/contacts}{IT department}
+		\item Every department also has dedicated space there, it can be used for various web projects, address can be discussed with \href{https://natur.cuni.cz/en/faculty/organizational-structure/dean-s-office-departments/information-technology-division/contacts}{IT department}
 		\item Personal web can be placed in \texttt{public\_html} within home folder
 		\item Users can \href{https://helpdesk.natur.cuni.cz/servlet/HelpdeskDynamic?eid=Rozcestnik}{apply} for MySQL database or special settings
-		\item \href{https://www.natur.cuni.cz/biology/botany/working-information/servers-webs-computers/}{Department of Botany} (and some other departments) have their own web and file servers
+		\item \href{https://natur.cuni.cz/en/biology/departments-and-work-places/department-of-botany/working-information/servers-webs-and-computers/departmental-server}{Department of Botany} (and some other departments) have their own web and file servers
 	\end{itemize}
 \end{frame}
 
@@ -2559,7 +2559,7 @@
 	\begin{itemize}
 		\item \texttt{cron} runs tasks repeatedly (\texttt{cron} daemon must be running)
 		\item Scripts for tasks running hourly/daily/weekly/monthly can be copied into respective \texttt{/etc/cron.*/} directories
-		\item Can be replaced by \href{https://www.freedesktop.org/software/systemd/man/systemd.timer.html}{SystemD timers} files (more complex, but more versatile)
+		\item Can be replaced by \href{https://www.freedesktop.org/software/systemd/man/latest/systemd.timer.html}{SystemD timers} files (more complex, but more versatile)
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
@@ -2602,7 +2602,7 @@
 
 \begin{frame}{It \textbf{is} important to select \textbf{good} text editor\ldots}
 	\begin{center}
-		\includegraphics[width=\textwidth-4.5cm]{real_programmers.png}
+		\includegraphics[height=5.75cm]{real_programmers.png}
 	\end{center}
 	\begin{flushright}
 		\url{https://xkcd.com/378/}
@@ -3245,7 +3245,7 @@
 		\item \textbf{Command} --- in bottom left corner \texttt{:} is displayed, awaits commands, exit to normal mode by \texttt{Backspace} key (delete \enquote{\texttt{:}})
 	\end{enumerate}
 	\begin{itemize}
-		\item See documentation \url{https://vim.fandom.com/wiki/Vim_Tips_Wiki}, \url{https://www.vim.org/docs.php}; česky \url{http://www.nti.tul.cz/~satrapa/docs/vim/}
+		\item See documentation \url{https://vim.fandom.com/wiki/Vim_Tips_Wiki}, \url{https://www.vim.org/docs.php}; česky \url{https://www.nti.tul.cz/~satrapa/docs/vim/}
 		\item For interactive learning try \url{https://vim-adventures.com/} (\alert{Task:} Play it for a while.:-) or command \texttt{vimtutor}
 	\end{itemize}
 \end{frame}
@@ -3312,7 +3312,7 @@
 		\item Mastering regular expressions require practicing -- solve practical problems and see their power
 		\item Read \url{https://en.wikibooks.org/wiki/Regular_Expressions}, \url{https://www.grymoire.com/Unix/Regular.html}, \url{https://www.regular-expressions.info/}
 		\begin{itemize}
-			\item Česky \url{http://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{https://www.root.cz/serialy/regularni-vyrazy/} a~\url{https://www.regularnivyrazy.info/}
+			\item Česky \url{https://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{https://www.root.cz/serialy/regularni-vyrazy/} a~\url{https://www.regularnivyrazy.info/}
 			\item Manuals for \href{https://www.gnu.org/software/grep/manual/}{Grep}, Vim, \href{https://www.gnu.org/software/sed/manual/}{Sed}, \href{https://www.gnu.org/software/gawk/manual/}{Awk}, \href{https://en.wikibooks.org/wiki/Perl_Programming}{Perl} (\href{https://en.wikibooks.org/wiki/Raku_Programming}{newer Perl~6 Raku}),~\ldots
 		\end{itemize}
 		\item See sed examples, slide~\ref{sedex}; and next slides
@@ -4400,7 +4400,7 @@
 			\item They must be written in portable language like Java or script like Perl, Python or BASH
 			\item Otherwise we need an emulator --- not everything works
 		\end{itemize}
-		\item Windows has since v. 10 \href{https://docs.microsoft.com/windows/wsl/install}{possibility to run Linux applications}, other option (for more Windows versions) is \href{https://www.cygwin.com/}{Cygwin} (application must be specially compiled to work on Cygwin)
+		\item Windows has since v. 10 \href{https://learn.microsoft.com/windows/wsl/install}{possibility to run Linux applications}, other option (for more Windows versions) is \href{https://www.cygwin.com/}{Cygwin} (application must be specially compiled to work on Cygwin)
 		\item To run Windows applications on Linux use \href{https://www.winehq.org/}{Wine}
 		\begin{itemize}
 			\item Search for packages named \texttt{wine} and install it
@@ -4449,7 +4449,7 @@
 		\item There are projects creating repositories with custom management system providing (among others) plenty of scientific applications
 		\begin{itemize}
 			\item Probably most known is \href{https://docs.conda.io/}{Conda}
-			\item \href{https://docs.brew.sh/Homebrew-on-Linux}{Homebrew on Linux} is derived from macOS Homebrew, works also on WSL
+			\item \href{https://docs.brew.sh/Homebrew-on-Linux}{Homebrew on Linux} is derived from macOS Homebrew (works also on WSL) --- \href{https://github.com/brewsci}{Brewsci} with scientific packages, e.g. \href{https://brewsci.github.io/homebrew-bio/}{bioinformatics}
 		\end{itemize}
 		\item Authors sometimes provide on homepages RPM/DEB/precompiled Java binaries/\ldots{ }--- check them first
 		\item If there is no other option, download source code and compile yourselves\ldots
@@ -4490,14 +4490,14 @@
 \begin{frame}[allowframebreaks]{CESNET and MetaCentrum}
 	\label{CESNET}
 	\begin{itemize}
-		\item \href{https://www.cesnet.cz/?lang=en}{CESNET} (\href{https://www.cesnet.cz/}{česky}) is organization of Czech universities, Academy of Science and other organizations taking care about Czech backbone Internet, one of world leading institutions of this type
-		\item CESNET provides various \href{https://www.cesnet.cz/services/?lang=en}{services} (\href{https://www.cesnet.cz/sluzby/}{česky})
+		\item \href{https://www.cesnet.cz/en}{CESNET} (\href{https://www.cesnet.cz/}{česky}) is organization of Czech universities, Academy of Science and other organizations taking care about Czech backbone Internet, one of world leading institutions of this type
+		\item CESNET provides various \href{https://www.cesnet.cz/en/services}{services} (\href{https://www.cesnet.cz/sluzby/}{česky})
 		\begin{itemize}
-			\item Massive computations --- \href{https://www.cesnet.cz/services/massive-computations-metacentrum/?lang=en}{MetaCentrum} (\href{https://www.cesnet.cz/sluzby/metacentrum/}{česky})
-			\item Large \href{https://www.cesnet.cz/services/data-storage/?lang=en}{data storage} (\href{https://www.cesnet.cz/sluzby/datova-uloziste/}{česky})
-			\item \href{https://www.cesnet.cz/services/filesender/?lang=en}{FileSender} (\href{https://www.cesnet.cz/sluzby/filesender/}{česky}) to be able to send up to 1.9~TB file
+			\item Massive computations --- \href{https://www.cesnet.cz/en/services/computing-2/metacentrum-10}{MetaCentrum} (\href{https://www.cesnet.cz/sluzby/vypocty-2/narocne-vypocty-metacentrum-10}{česky})
+			\item Large \href{https://www.cesnet.cz/en/services/data-storage-3}{data storage} (\href{https://www.cesnet.cz/sluzby/datova-uloziste-3/datova-uloziste-13}{česky})
+			\item \href{https://www.cesnet.cz/en/services/data-storage-3/filesender-15}{FileSender} (\href{https://www.cesnet.cz/sluzby/datova-uloziste-3/filesender-15}{česky}) to be able to send up to 1.9~TB file
 			\item \href{https://www.metacentrum.cz/en/Sluzby/Cloud/}{Cloud} (\href{https://www.metacentrum.cz/cs/Sluzby/Cloud/}{česky}) --- computing (HPC) cloud similar to e.g. Amazon Elastic Compute Cloud (EC2), Google Compute Engine or Microsoft Azure
-			\item \href{https://www.cesnet.cz/services/owncloud/?lang=en}{ownCloud} (\href{https://www.cesnet.cz/sluzby/owncloud/}{česky}) to backup and/or sync data across devices (default capacity is 100~GB, user may ask for more) --- similar to e.g. Dropbox, Google Drive or Microsoft OneDrive
+			\item \href{https://www.cesnet.cz/en/services/data-storage-3/owncloud-16}{ownCloud} (\href{https://www.cesnet.cz/sluzby/datova-uloziste-3/owncloud-16}{česky}) to backup and/or sync data across devices (default capacity is 100~GB, user may ask for more) --- similar to e.g. Dropbox, Google Drive or Microsoft OneDrive
 			\begin{itemize}
 				\item It is possible to connect by webDAV to ownCloud (slide \ref{transfers}) --- many applications support it
 				\item It is possible to share calendars and/or address books via calDav and cardDav among devices and/or people
@@ -4517,9 +4517,9 @@
 			\item Login is using \href{https://www.eduid.cz/en/index}{EduID} (\href{https://www.eduid.cz/cs/index}{česky})
 		\end{itemize}
 		\item Information about data storage \url{https://du.cesnet.cz/en/start} (\href{https://du.cesnet.cz/cs/start}{česky}) contains detailed usage instructions
-		\item Information about MetaCentrum \url{https://www.metacentrum.cz/en/} (\href{https://www.metacentrum.cz/cs/}{česky}) and wiki \url{https://wiki.metacentrum.cz/wiki/Main_Page} (\href{https://wiki.metacentrum.cz/wiki/Hlavn\%C3\%AD_strana}{česky}) (main information for users containing all needed documentation)
+		\item Information about MetaCentrum \url{https://www.metacentrum.cz/en/} (\href{https://www.metacentrum.cz/cs/}{česky}) and documentation \url{https://docs.metacentrum.cz/}
 		\begin{itemize}
-			\item The documentation is being moved into \url{https://docs.metacentrum.cz/}
+			\item The documentation is being migrated from wiki \url{https://wiki.metacentrum.cz/wiki/Main_Page} (\href{https://wiki.metacentrum.cz/wiki/Hlavn\%C3\%AD_strana}{česky})
 		\end{itemize}
 		\item Information about MetaCloud \url{https://docs.cloud.muni.cz/} (\href{https://wiki.metacentrum.cz/wiki/Kategorie:Clouds}{old wiki page})
 		\item Also available is Galaxy \url{https://usegalaxy.cz/} (same login as to MetaCentrum) --- web based bioinformatics framework (more information at \href{https://docs.metacentrum.cz/related/galaxy/}{documentation})
@@ -4527,7 +4527,7 @@
 		\item Manage your user account at \url{http://metavo.metacentrum.cz/en/myaccount/} (\href{https://metavo.metacentrum.cz/cs/myaccount/}{česky})
 		\item Personal view on actual resources and running tasks is at \url{https://metavo.metacentrum.cz/pbsmon2/person}
 		\item List of available applications \url{https://docs.metacentrum.cz/software/}
-		\item MetaCentrum has 11~\href{https://docs.metacentrum.cz/computing/frontends/}{frontends} where users log and thousands of computers doing the calculations --- they are not accessed directly to run task
+		\item MetaCentrum has 11~\href{https://docs.metacentrum.cz/computing/infrastructure/frontends/}{frontends} where users log and thousands of computers doing the calculations --- they are not accessed directly to run task
 		\item Most of computers are running \href{https://www.debian.org/}{Debian GNU/Linux}
 		\begin{itemize}
 			\item Basic usage as with any other Linux server --- SSH \& command line\ldots
@@ -4561,9 +4561,9 @@
 	\end{center}
 	\begin{itemize}
 		\item Users have different quota on different arrays (depending on home organization etc.)
-		\item There are 11 \href{https://docs.metacentrum.cz/computing/frontends/}{frontends} where user logs via SSH and prepare computing task for submission etc. (see further)
+		\item There are 11 \href{https://docs.metacentrum.cz/computing/infrastructure/frontends/}{frontends} where user logs via SSH and prepare computing task for submission etc. (see further)
 		\item Distributed topology might be bit confusing --- user has different home directory when logging to different frontends --- recommended is to use as few frontends and storages as possible
-		\item Some special services (like \href{https://docs.metacentrum.cz/software/ondemand/}{OnDemand}) start on particular storage (here \texttt{brno3})
+		\item Some special services (like \href{https://docs.metacentrum.cz/ondemand/}{OnDemand}) start on particular storage (here \texttt{brno3})
 		\item Generally, computing task loads data from selected storage and can start on any cluster
 		\item Orientation is plenty of storages might be sometimes tricky --- ensure where you are and where your data are supposed to be
 		\begin{itemize}
@@ -4585,8 +4585,8 @@
 
 \begin{frame}[fragile]{MetaCentrum usage}
 	\begin{enumerate}
-		\item Transfer data into one of \href{https://docs.metacentrum.cz/data/}{storages} by e.g. \texttt{scp} from command line, \href{https://winscp.net/}{WinSCP} from Windows or \href{https://filezilla-project.org/}{FileZilla} from any OS
-		\item Connect via SSH to selected \href{https://docs.metacentrum.cz/computing/frontends/}{frontend}. Same credentials are used for all frontends, for SSH login as well as file transmissions
+		\item Transfer data into one of \href{https://docs.metacentrum.cz/data/useful-commands/}{storages} by e.g. \texttt{scp} from command line, \href{https://winscp.net/}{WinSCP} from Windows or \href{https://filezilla-project.org/}{FileZilla} from any OS
+		\item Connect via SSH to selected \href{https://docs.metacentrum.cz/computing/infrastructure/frontends/}{frontend}. Same credentials are used for all frontends, for SSH login as well as file transmissions
 		\item In home directory on the storage (accessed via frontend) prepare all needed data and non-interactive script to do the calculations
 		\item Submit job using \texttt{qsub}. Tasks are not launched immediately, but submitted into queue and system decides when it will be launched
 		\item Monitor job progress. Check results. Etc\ldots
@@ -4688,7 +4688,7 @@
 		\item Command \texttt{module} loads/unloads selected \href{https://docs.metacentrum.cz/software/}{application}
 		\item Tasks (BASH scripts) are submitted for computing by \texttt{qsub} --- the script must copy the data into \texttt{\$SCRATCHDIR} and do all calculations there
 		\begin{itemize}
-			\item It has plenty of options how to specify requirements (see next slide and \href{https://docs.metacentrum.cz/computing/pbs-resources/}{help})
+			\item It has plenty of options how to specify requirements (see next slide and \href{https://docs.metacentrum.cz/computing/resources/resources/}{help})
 		\end{itemize}
 		\item Queued and running jobs can be seen by \texttt{qstat -u \$USER} (\texttt{qstat} has much more options) and any job can be terminated by \texttt{qdel 123456789} (number from \texttt{qstat})
 	\end{itemize}
@@ -4727,7 +4727,7 @@
 		\item Every user has certain \href{https://metavo.metacentrum.cz/pbsmon2/users/}{priority} increased by \href{https://docs.metacentrum.cz/access/terms/\#acknowledgements-and-publications}{acknowledgments} (\textbf{it's mandatory to acknowledge MetaCentrum when using it}) in publications to MetaCentrum, and lowered by intensive usage of the service (the usage is calculated from past month)
 		\item After submission of the task, check in \href{https://metavo.metacentrum.cz/pbsmon2/queues/jobsQueued}{the queue} in which state it is --- sometimes it can't start because of impossible combination of requested resources or so
 		\item User can \href{https://metavo.metacentrum.cz/pbsmon2/nodes/physical}{check load of machines}
-		\item For more options read \url{https://docs.metacentrum.cz/computing/pbs-resources/}
+		\item For more options read \url{https://docs.metacentrum.cz/computing/resources/resources/}
 		\begin{itemize}
 			\item Request special CPU (AMD, graphical,~\ldots), e.g. CPU with AVX2 \texttt{-l~select=cpu\_flag=avx2}
 			\item SSD local storage (e.g. \texttt{-l~scratch\_ssd=1gb})
@@ -4865,54 +4865,54 @@
 	\end{center}
 \end{frame}
 
-\subsection{Archive data storage}
-
-\begin{frame}{CESNET archive data storage}
-	\begin{itemize}
-		\item Read documentation \url{https://du.cesnet.cz/} and connection instructions \url{https://du.cesnet.cz/en/navody/sluzby/start} (\href{https://du.cesnet.cz/cs/navody/sluzby/start}{česky})
-		\item Generally, it is possible to connect via FTPS, NFS, SAMBA (Windows network drive), SCP/SFTP or SSH --- more options how to get to same resource
-		\item See slide~\ref{CESNET} for general information and \ref{transfers} for connecting information
-		\item After logging via SSH, it is possible to work as on any other server
-		\item Users get information about selected storage location and paths after registration (there are several locations, user get space on one of them)
-		\begin{itemize}
-			\item There are plenty of storages, be careful where you are connecting to and what is the path --- e.g. when connecting directly to \texttt{du4.cesnet.cz}, paths are \texttt{/tape\_tape/\ldots}, from any other MetaCentrum node \texttt{\textbf{/storage/ostrava2-archive}/tape\_tape/\ldots}
-		\end{itemize}
-		\item All storage locations are accessible from any MetaCentrum front node via directories in \texttt{/storage} (e.g. \texttt{/storage/ostrava2-archive/tape\_tape/VO\_\ldots})
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Shared space on CESNET data storage}
-	\begin{itemize}
-		\item Users \href{https://du.cesnet.cz/en/uzivatelska_podpora/start}{can ask} (\href{https://du.cesnet.cz/cs/uzivatelska_podpora/start}{česky}) for creation of shared space
-		\begin{itemize}
-			\item Normally, the space is private only for particular user
-			\item Groups allow more users to share data
-			\item Data storage admins will instruct users regarding locations, paths, permissions, etc. (it is specific for each case)
-		\end{itemize}
-		\item Users must carefully set permissions!
-		\begin{itemize}
-			\item Sharing is done by specific UNIX group
-			\item Users must set group ownership to particular group and permissions e.g. \texttt{770} for directories and \texttt{660} for files to avoid access of any other users
-			\item All members of the group must be able to manipulate the data
-		\end{itemize}
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    # Change group ownership to XXX
-    chgrp -R XXX /tape_tape/VO_XXX 2>/dev/null
-    # ("-R" to modify also subdirectories; "2>/dev/null" to discard errors)
-    # Set correct permissions to directories and files
-    find /tape_tape/VO_XXX -type d -exec chmod 770 '{}' \; 2>/dev/null
-    find /tape_tape/VO_XXX -type f -exec chmod 660 '{}' \; 2>/dev/null
-	\end{bashcode}
-\end{frame}
+% \subsection{Archive data storage} % TODO S3 storage
+% 
+% \begin{frame}{CESNET archive data storage}
+% 	\begin{itemize}
+% 		\item Read documentation \url{https://du.cesnet.cz/} and connection instructions \url{https://du.cesnet.cz/en/navody/sluzby/start} (\href{https://du.cesnet.cz/cs/navody/sluzby/start}{česky})
+% 		\item Generally, it is possible to connect via FTPS, NFS, SAMBA (Windows network drive), SCP/SFTP or SSH --- more options how to get to same resource
+% 		\item See slide~\ref{CESNET} for general information and \ref{transfers} for connecting information
+% 		\item After logging via SSH, it is possible to work as on any other server
+% 		\item Users get information about selected storage location and paths after registration (there are several locations, user get space on one of them)
+% 		\begin{itemize}
+% 			\item There are plenty of storages, be careful where you are connecting to and what is the path --- e.g. when connecting directly to \texttt{du4.cesnet.cz}, paths are \texttt{/tape\_tape/\ldots}, from any other MetaCentrum node \texttt{\textbf{/storage/ostrava2-archive}/tape\_tape/\ldots}
+% 		\end{itemize}
+% 		\item All storage locations are accessible from any MetaCentrum front node via directories in \texttt{/storage} (e.g. \texttt{/storage/ostrava2-archive/tape\_tape/VO\_\ldots})
+% 	\end{itemize}
+% \end{frame}
+% 
+% \begin{frame}[fragile]{Shared space on CESNET data storage}
+% 	\begin{itemize}
+% 		\item Users \href{https://du.cesnet.cz/en/uzivatelska_podpora/start}{can ask} (\href{https://du.cesnet.cz/cs/uzivatelska_podpora/start}{česky}) for creation of shared space
+% 		\begin{itemize}
+% 			\item Normally, the space is private only for particular user
+% 			\item Groups allow more users to share data
+% 			\item Data storage admins will instruct users regarding locations, paths, permissions, etc. (it is specific for each case)
+% 		\end{itemize}
+% 		\item Users must carefully set permissions!
+% 		\begin{itemize}
+% 			\item Sharing is done by specific UNIX group
+% 			\item Users must set group ownership to particular group and permissions e.g. \texttt{770} for directories and \texttt{660} for files to avoid access of any other users
+% 			\item All members of the group must be able to manipulate the data
+% 		\end{itemize}
+% 	\end{itemize}
+% 	\vfill
+% 	\begin{bashcode}
+%     # Change group ownership to XXX
+%     chgrp -R XXX /tape_tape/VO_XXX 2>/dev/null
+%     # ("-R" to modify also subdirectories; "2>/dev/null" to discard errors)
+%     # Set correct permissions to directories and files
+%     find /tape_tape/VO_XXX -type d -exec chmod 770 '{}' \; 2>/dev/null
+%     find /tape_tape/VO_XXX -type f -exec chmod 660 '{}' \; 2>/dev/null
+% 	\end{bashcode}
+% \end{frame}
 
 \subsection{More services}
 
 \begin{frame}{OnDemand}{Applications in web browser}
 	\begin{itemize}
 		\item It allows to run selected interactive applications in web browser
-		\item See \url{https://docs.metacentrum.cz/software/ondemand/} and \url{https://ondemand.grid.cesnet.cz/}
+		\item See \url{https://docs.metacentrum.cz/ondemand/} and \url{https://ondemand.grid.cesnet.cz/}
 		\item Applications start in \texttt{/storage/brno3-cerit/home/\$USER/} --- ensure to have everything needed there
 	\end{itemize}
 	\begin{center}
@@ -4976,7 +4976,7 @@
 		\item Older (nowadays not so common) version controlling systems is Subversion (SVN); there are many more (Bazaar, Mercurial,~\ldots)
 		\item Probably the best textbook for Git is \href{https://git-scm.com/book/en/v2}{Chacon's Pro Git}
 		\begin{itemize}
-			\item Dostupná i~\href{https://git-scm.com/book/cs/v2}{česky} (včetně \href{https://knihy.nic.cz/\#ProGit}{prvního vydání})
+			\item Dostupná i~\href{https://git-scm.com/book/cs/v2}{česky} (včetně \href{https://knihy.nic.cz/cs/detail/2/}{prvního vydání})
 		\end{itemize}
 		\item Changes and their history is stored in repository (local or network, shared or private) --- it is possible to view any historical state and differences between any versions
 		\item It is possible to trace who and when did what
@@ -5275,7 +5275,7 @@
 		\item Good for adaptation of existing code for user's needs
 		\item Limited usage to generate new code --- can misunderstand request, code can be technically wrong, but not well working, can be incomplete or limited in corner-cases
 		\item Without at least basic understanding of subject it is hard to realize if ChatGPT solution is correct --- user should be at least basically able to work without AI, otherwise there is high risk of failures
-		\item One should never rely on tool with unclear functionality and problematic usage of of users' data and copyrighted content
+		\item \alert{One should never rely on tool with unclear functionality and problematic usage of of users' data and copyrighted content}
 	\end{itemize}
 \end{frame}
 
