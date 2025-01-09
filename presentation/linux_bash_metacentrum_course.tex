@@ -470,7 +470,7 @@
 		\begin{itemize}
 			\item If you can use whole disk, just boot from CD/USB and click \enquote{Next}\ldots
 			\item If you don't have whole disk, you need at least one (commonly more) disk partition(s) --- if you don't know how to manage them, ask someone skilled\ldots
-			\item Major updates of Windows 10 or Windows reinstall use to destroy bootloader and it is not possible to start Linux anymore (although it can be usually easily fixed)
+			\item Major updates of Windows 10/11 or Windows reinstall use to destroy bootloader and it is not possible to start Linux anymore (although it can be usually easily fixed)
 		\end{itemize}
 		\item Live CD/USB
 		\begin{itemize}
@@ -561,7 +561,7 @@
 				exFAT & 255 & ? & No limit defined & 16 EiB & 64 ZiB & Any\\
 				NTFS & 255 & Variable & Variable & 16 TiB & 16 EiB & Windows (UN*X)\\
 				HFS+ & 255 & Unicode & Unlimited & 8 EiB & 8 EiB & macOS\\
-				ext4 & 255 & Any, not / & No limit defined & 16 TiB & 1 EiB & Linux (UN*X)\\
+				ext4 & 255 & Any, not \texttt{/} & No limit defined & 16 TiB & 1 EiB & Linux (UN*X)\\
 				XFS & 255 & Any & No limit defined & 9 EiB & 9 EiB & Linux (UN*X)\\
 				Btrfs & 255 & Any & No limit defined & 16 EiB & 16 EiB & Linux (only?)\\
 				ZFS & 255 & Unicode & No limit defined & 16 EiB & 256 ZiB & UN*X
@@ -572,7 +572,7 @@
 		\item FAT32 (including extensions) is old-fashioned and not reliable FS, but still common in various flash disks and memory cards
 		\item NTFS (basic Windows FS) and FAT do not support UNIX permissions, so they can't be used as system partition in Linux; see also \href{https://en.wikipedia.org/wiki/Comparison_of_file_systems}{full comparison}
 		\item Btrfs, ext4, XFS and ZFS are not accessible from Windows at all (Linux mainly uses ext4)
-		\item Btrfs, XFS and ZFS are the most advanced FS in common use
+		\item Btrfs and ZFS are the most advanced FS in common use
 	\end{itemize}
 \end{frame}
 
@@ -995,7 +995,7 @@
 		\item \alert{When in use, \enquote{basic} tools listing permissions (e.g. \texttt{ls -l}, ACL in use is marked by \texttt{+} after permissions --- next slide) sometimes do not show correct result and permissions may work unexpectedly}
 		\item Important especially in network environment with many users
 		\item If intensively used, \texttt{ls -l} sometimes doesn't show correct permissions (see next slide), it can be confusing and lead into various issues
-		\item If not in use on server (like e.g. on CESNET data storage in Ostrava, \texttt{du4.cesnet.cz}), relatively high number of groups is required to be able to correctly setup sharing permissions
+		\item If not in use on a~server, relatively high number of groups is required to be able to correctly setup sharing permissions
 		\item MetaCentrum has storages and clusters connected via NFSv4 protocol (see also slide~\ref{netfs}) --- commands \texttt{getfacl} and \texttt{setfacl} do not work there, use \texttt{nfs4\_getfacl}, \texttt{nfs4\_setfacl} and \texttt{nfs4\_editfacl} instead (usage is very similar), see also \href{https://wiki.metacentrum.cz/wiki/Access_Control_Lists_on_NFSv4}{old MetaCentrum wiki}
 		\item Permissions (\enquote{classical} as well as ACL) require some time to practice and master it\ldots
 	\end{itemize}
@@ -1342,7 +1342,7 @@
 		\item \texttt{$\sim$/.bash\_profile} --- Used specifically (not in every system) when user is using remote connection (e.g. SSH) --- user can have different settings for local and remote work
 		\item \texttt{/etc/profile} --- System wide profile file --- can be overridden by user's configuration
 		\item \texttt{$\sim$/.profile} --- Settings loaded when user logs-in (mainly for language settings), sometimes used by remote connections
-		\item \alert{Note:} BASH scripts are non-interactive shells --- they do not read settings above --- there are no aliases etc., but they inherit some settings (PATH, language,~\ldots) and they can read global (not local) variables
+		\item \alert{Note:} BASH \textbf{scripts} are non-interactive shells --- they do not read settings above --- there are no aliases etc., but they inherit some settings (PATH, language,~\ldots) and they can read global (not local) variables
 	\end{itemize}
 \end{frame}
 
@@ -1490,7 +1490,7 @@
 		\item Create other directory, see it and then remove (\texttt{rmdir}).
 		\item Can you access directories of another users? Why? If yes, what are your permissions there? Explain it.
 		\item What are some permissions in \texttt{/}? Why?
-		\item Define some alias (by running \texttt{alias} command, not by edit of \texttt{$\sim$/.bashrc}) and use it.
+		\item Define some alias (by running \texttt{alias} command, or edit \texttt{$\sim$/.bashrc} and reload it) and use them.
 		\item Create directory in your home directory and share it with another user so she/he can write there anything (using e.g. \texttt{touch somefile} or \texttt{mkdir somedirectory}) (work e.g. in pairs). Use everywhere as restricted permissions as possible. Can you figure out solution with or without ACL (slide~\ref{acl})?
 		\item Practice moving between \texttt{/srv/scripts\_data} and your home directory. Use \texttt{cd} and \texttt{TAB}.
 		\item Within \texttt{/srv/scripts\_data} list by single command only \texttt{jpg} and \texttt{txt} files.
@@ -1584,7 +1584,7 @@
 		\begin{itemize}
 			\item All following arguments are argument of the command until \enquote{\texttt{;}} is encountered
 			\item \texttt{'\{\}'} is replaced by the current file name being processed
-			\item Those constructs might require protection by escape (\enquote{\textbackslash}) or quotes not to be expanded by shell
+			\item Those constructs might require protection by escape (\enquote{\texttt{\textbackslash}}) or quotes not to be expanded by shell
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -2230,7 +2230,7 @@
 		\item SAMBA --- UNIX connection to Microsoft network shares (port 5445), slide~\ref{netfs}
 		\item web --- \enquote{The Internet} for most of users (port 80 or encrypted 443)
 		\item IMAP (port 143 or 993) and SMTP (port 25 or 465) to connect to e-mail server and send mails
-		\item Messaging protocols like XMPP (Jabber and derived services like Google Talk or Facebook Messenger), IRC, ICQ, Skype,~\ldots
+		\item Messaging protocols like XMPP (Jabber), IRC, ICQ, MS Teams, Slack, Skype,~\ldots
 		\item Databases (if accessible over the Internet), and another special services, use to be available on dedicated ports
 		\item And much more (see \texttt{/etc/services})\ldots
 		\item Port number can be changed in configuration of respective server service
@@ -2784,8 +2784,8 @@
 
 \begin{frame}[fragile]{Examples of usage of head, grep and cut with our data II}
 	\begin{bashcode}
-    # Extract from FASTA only sequences (discard sequence names) into seq.txt
-    grep -v "^>" Oxalis_HybSeq_nrDNA_selection_alignment.fasta > seq.txt
+    # Extract from FASTA only sequence names into names.txt
+    grep "^>" Oxalis_HybSeq_nrDNA_selection_*.fasta | sed 's/^>//' > names.txt
     # Save names of oxalis* JPG files into list_oxalis_photo.txt and see it
     ls -1 *oxalis*.jpg > list_oxalis_photo.txt && cat list_oxalis_photo.txt
 	\end{bashcode}
@@ -3074,6 +3074,7 @@
 		\item Sometimes these variants are used automatically when user works with compressed file
 		\item \texttt{mc} can also do the job
 		\item These tools sometimes don't have all options of the \enquote{standard} applications
+		\item Scientific data formats are often compressed by GZIP (FASTQ, VCF,~\ldots)
 	\end{itemize}
 \end{frame}
 
@@ -3144,7 +3145,7 @@
 	\begin{bashcode}
     # Display diff in vim
     diff -u diff_test_file_1.txt diff_test_file_2.txt | view -
-    # vimdiff can show more colors, launches vim (exit by <ESC>:q! Enter)
+    # vimdiff can show more colors, launches vim (exit by <ESC>:q!<Enter>)
     vimdiff diff_test_file_1.txt diff_test_file_2.txt
 	\end{bashcode}
 	\vfill
@@ -3155,7 +3156,7 @@
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
-    # Create the diff file
+    # Create the diff file - use like "diff old new"
     diff -u diff_test_file_1.txt diff_test_file_2.txt > difference.diff
     # Apply the patch - xxx_file_1.txt is patched according to xxx_file_2.txt
     patch < difference.diff # or
@@ -3203,7 +3204,7 @@
 		\end{itemize}
 		\item The most common (but very complex and specific) is \textbf{Vim}
 		\begin{itemize}
-			\item See \url{https://vim-adventures.com/} to play a~game and learn Vim
+			\item See \url{https://vim-adventures.com/} to play a~game and learn Vim (and derivatives)
 		\end{itemize}
 		\item \textbf{Emacs} and \textbf{Vim} have huge number of possibilities and support for plugins and scripts, but completely different usage style --- one person can really learn only one\ldots
 		\item If regularly working in command line, master any command line editor
@@ -3838,7 +3839,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Simple providing of input file I}
+\begin{frame}[fragile]{Simple providing of input file I}{Probably the most common script type you need --- just specify data to process}
 	\begin{bashcode}
     #!/bin/bash
     # We expect exactly one parameter
@@ -3873,6 +3874,7 @@
 	\begin{itemize}
 		\item Common way for simple scripts --- check input and do something with single input file
 		\item Note lines 4 and 5 above --- common way to report success as well as handle failure
+		\item Possibly add extra variables describing what to do with input data (e.g. slide~\ref{metacentrumscript})
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
@@ -4088,7 +4090,7 @@
     # whatever reason 'for' loop construction is impractical)
     while read TEXTLINE; do # Run loops on every line of text file
       commands... # TEXTLINE contains in each turn one line of the file
-      done < text_file_to_process.txt
+      done < text_file_to_process.txt # Commonly list of input data files
     # Infinite loops - common when waiting for some condition to proceed
     while :; do echo "Press CTRL+C to exit..."; done
     for (( ; ; )) ; do echo "Press CTRL+C to exit..."; done
@@ -4327,7 +4329,7 @@
 	\begin{itemize}
 		\item Available from \url{https://github.com/stamatak/standard-RAxML}
 		\item Before compilation check \href{https://github.com/stamatak/standard-RAxML/blob/master/README.md}{README}
-		\item This example does not require to run \texttt{make install}, it does not have extra dependencies for compilation, it requires specifying of particular source file by \texttt{make~-f} (there are multiple \texttt{GCC} files, no one main)
+		\item This example does not require to run \texttt{make install}, it does not have extra dependencies for compilation, it requires specifying of particular source file by \texttt{make~-f} (there are multiple \texttt{GCC} files, not just one main)
 	\end{itemize}
 	\begin{bashcode}
     mkdir raxml # Create working directory
@@ -4616,6 +4618,7 @@
 \subsection{Tasks}
 
 \begin{frame}[fragile]{Basic skeleton of script running tasks I} % TODO Check usage of trap.
+	\label{metacentrumscript}
 	\begin{bashcode}
     #!/bin/bash
     # Modify the script according to your needs!
@@ -4777,7 +4780,7 @@
     # Go to SCRATCH directory
     cd SCRATCHDIR # e.g. /scratch/USER/job_12345678.meta-pbs.metacentrum.cz/
     # There are working data of currently running task...
-    # Check whatever you need...
+    # Check whatever you need... Press Ctrl+D to logout
 	\end{bashcode}
 \end{frame}
 
@@ -5138,9 +5141,13 @@
 
 \subsection{}
 
-\begin{frame}{Git tasks} % TODO Make clear they work from their notebooks.
+\begin{frame}[fragile]{Git tasks}
+	\begin{bashcode}
+    git clone https://students:glpat-ms4sHCxhfJBBxUiiu388@git.sorbus.ibot.cas
+      .cz/restio/dadaism.git # It is one long line (no space after .cas)
+	\end{bashcode}
 	\begin{enumerate}
-		\item Clone over SSH repository \texttt{USER@vyuka.natur.cuni.cz:/srv/dadaism} (use your credentials on the testing server) and go to \texttt{dadaism} directory.
+		\item Clone the repository using access token (see above) and go to the \texttt{dadaism} directory.
 		\item Communicate with others to avoid conflicting edits.
 		\item Add some text files, edit existing text files. Do not add images or another non-text files, do not add large files.
 		\item Push your changes back to the repository.
@@ -5273,7 +5280,7 @@
 		\item Very good to improve code and fixing non-working code
 		\item Can well explain existing code --- good starting point
 		\item Good for adaptation of existing code for user's needs
-		\item Limited usage to generate new code --- can misunderstand request, code can be technically wrong, but not well working, can be incomplete or limited in corner-cases
+		\item Limited usage to generate new code --- can misunderstand request, code can be technically correct, but not well working, can be incomplete or limited in corner-cases
 		\item Without at least basic understanding of subject it is hard to realize if ChatGPT solution is correct --- user should be at least basically able to work without AI, otherwise there is high risk of failures
 		\item \alert{One should never rely on tool with unclear functionality and problematic usage of of users' data and copyrighted content}
 	\end{itemize}
