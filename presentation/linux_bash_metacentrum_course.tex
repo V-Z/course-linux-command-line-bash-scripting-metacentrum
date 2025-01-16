@@ -1346,7 +1346,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{BASH settings (popular examples)}{Write them into BASH configuration file}
+\begin{frame}[fragile]{BASH settings (popular examples)}{Write them into BASH configuration file} % TODO Change in the way users directly edit ~/.bashrc and source it, add and edit tasks accordingly
 	\label{bashrc}
 	\begin{itemize}
 		\item In any text editor open \texttt{$\sim$/.bashrc} (and/or \texttt{$\sim$/.bash\_profile}) and edit it
@@ -1792,7 +1792,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}{How quotes influence reading of variable content III}
+\begin{frame}{How quotes influence reading of variable content III} % TODO In MYDATA='~/...' can't be ~, it doesn' expand
 	\begin{itemize}
 		\item As soon as variable contains only Latin alphanumerical characters, assignment like \texttt{MYVAR=whatever} works, but it is not recommended
 		\item If variable should contain another variable, special characters, etc, use double quotes, e.g. \texttt{WORKDIR="/home/\$USER/data"}
