@@ -986,7 +986,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{Extending permissions --- ACL (Access control list)} % TODO No slashes, setfacl must be '-Rm'
+\begin{frame}[allowframebreaks]{Extending permissions --- ACL (Access control list)}
 	\label{acl}
 	\begin{itemize}
 		\item By default, it is not possible to give specific permission to the user who is not owner, nor member of group owning the file
@@ -1018,9 +1018,9 @@
     ls -l FILE # Compare this and previous output (This might be wrong!):
     drwxr-x---+  2 zeisek zeisek     6 17. zář 20.40 dokumenty/
     setfacl -m u/g:USER/GROUP:r/w/x FILE # Add for USER/GROUP r/w/x right
-    # E.g. recursively add read permission to user 'arabidopsis_data' to
-    # folder 'dokumenty/arabidopsis' (no extra group is required)
-    setfacl -mR u:arabidopsis_data:r dokumenty/arabidopsis
+    # E.g. recursively add read and enter permission to user 'arabidopsis_data'
+    # to folder 'dokumenty/arabidopsis' (no extra group is required)
+    setfacl -Rm u:arabidopsis_data:rx dokumenty/arabidopsis
     setfacl -R ... # Recursive (including subdirectories)
     setfacl -b FILE # Remove all ACL from FILE (combine with -R ...)
 	\end{bashcode}
@@ -1658,11 +1658,11 @@
 		\item Where is executable of \texttt{mc}? Why can be such information useful?
 		\item Which software is related to keywords \texttt{permission} and \texttt{compress} (use e.g. \texttt{apropos})? Use \texttt{man} to explore some of them.
 	\end{enumerate}
-	\begin{block}{Tasks with \texttt{find}} % TODO Make it clear that there will be individual archives for each file
+	\begin{block}{Tasks with \texttt{find}}
 		\begin{enumerate}
 			\item Find all \texttt{*.vcf.gz} files in whole \texttt{/home}. Why do you get errors for some directories?
-			\item Compress, see and decompress all shell scripts in your home directory.
-			\item Change permissions of all content of your home directory so that no one else can access it. Consider hidden files, directories and scripts.
+			\item Compress, see and decompress all shell scripts (every script in its own archive) in your \texttt{$\sim$}.
+			\item Change permissions of all content of your home directory so that no one else can access it. Consider hidden files, directories and scripts. Try to use single command.
 			\item List all directories in \texttt{/etc} up to second level.
 		\end{enumerate}
 	\end{block}
@@ -1792,19 +1792,16 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}{How quotes influence reading of variable content III} % TODO In MYDATA='~/...' can't be ~, it doesn' expand
+\begin{frame}{How quotes influence reading of variable content III}
 	\begin{itemize}
 		\item As soon as variable contains only Latin alphanumerical characters, assignment like \texttt{MYVAR=whatever} works, but it is not recommended
 		\item If variable should contain another variable, special characters, etc, use double quotes, e.g. \texttt{WORKDIR="/home/\$USER/data"}
 		\begin{itemize}
 		 \item It might be called like \texttt{echo \$MYVAR}, but if there would be non-standard characters anywhere, it'd fail, so prefer \texttt{"\$MYVAR"} (it \textit{might} work without quotes, but don't risk it) or \texttt{"\$\textbraceleft MYVAR\textbraceright"} as the most reliable way
 		\end{itemize}
-		\item If variable should contain any special character (including space), or you wish to be sure you keep it's literal value, use single quotes, e.g. \texttt{MYDATA='$\sim$/My Doc/exp 1/data.fsa'} (and then \texttt{"\$\textbraceleft MYDATA\textbraceright"})
-		\item Similar for using variables
-		\begin{itemize}
-			\item Using \texttt{\$MYVAR} is fine if it doesn't contain anything special (but are you really sure?)
-			\item Best practice is to use \texttt{"\$\textbraceleft MYVAR\textbraceright"} as there is highest security if \texttt{MYVAR} would contain special characters, and there is room for various manipulations (next slide)
-		\end{itemize}
+		\item If variable \texttt{"\$\textbraceleft MYVAR\textbraceright"} should contain any special character (including space), or you wish to be sure you keep it's literal value (common for paths), use single quotes, e.g. \texttt{MYVAR='/home/USER/My Doc/exp 1/data.fsa'} or double quotes to expand variables, e.g. \texttt{MYVAR="\$HOME/My Doc/exp 1/data.fsa"}
+		\item Using \texttt{\$MYVAR} is fine if it doesn't contain anything special (but are you really sure?)
+		\item Best practice is to use \texttt{"\$\textbraceleft MYVAR\textbraceright"} as there is highest security and more (next slide)
 	\end{itemize}
 \end{frame}
 
