@@ -67,8 +67,8 @@
 	}
 
 % Fixing space before and after block of code higlight
-\BeforeBeginEnvironment{bashcode}{\vspace{-0.75em}}
-\AfterEndEnvironment{bashcode}{\par\vspace{-0.5em}}
+\BeforeBeginEnvironment{bashcode}{\vspace{-0.25em}}
+\AfterEndEnvironment{bashcode}{\par\vspace{-0.25em}}
 
 % Fixing space before and after multicols region
 \BeforeBeginEnvironment{multicols}{\vspace{-0.5em}}
@@ -219,7 +219,7 @@
 			\item Nowadays powering most of the Internet
 			\item Anyone can contribute --- not only code, also documentation, design, translations,~\ldots
 			\item Most of people working with UNIX are using Linux (or macOS)
-			\item Powering everything from little \href{https://en.wikipedia.org/wiki/Internet_of_things}{IoT} toys and devices to 100\% of \href{https://www.top500.org/statistics/list/}{top 500 supercomputers}
+			\item Powering everything from little \href{https://en.wikipedia.org/wiki/Internet_of_things}{IoT} toys and devices to 100\% of \href{https://www.top500.org/lists/top500/}{top 500 supercomputers}
 		\end{itemize}
 		\item \textbf{GNU tools} and \textbf{Linux kernel} are two important (but not sole) pieces of building set forming modern operating system --- \textbf{\enquote{Linux distribution}}
 		\item \enquote{Linux} nowadays usually mean Linux kernel + GNU basic tools (thus correctly \enquote{GNU/Linux}) + thousands of various another applications (= \enquote{Linux distribution}) --- ecosystem of (free) open-source GNU/Linux applications of various origin forming together what  we usually call simply \enquote{Linux}
@@ -309,7 +309,7 @@
 			\item Easier to find and trace bugs
 			\item Security --- no backdoors, possibility to do various audits, screenings, etc.
 			\item Bugs (problems) in the code can fixed by nearly anyone
-			\item Often available for free (e.g. on services like \href{https://github.com/}{GitHub} or \href{https://sourceforge.net/}{SourceForge})
+			\item Often available for free (e.g. on services like \href{https://github.com/}{GitHub}, \href{https://gitlab.com/}{GitLab}, \href{https://bitbucket.org/}{Bitbucket} or \href{https://sourceforge.net/}{SourceForge})
 			\item Easier distribution of the software (can be copied into various repositories, like those of Linux distributions, \href{https://docs.conda.io/}{Conda} or \href{https://brew.sh/}{Homebrew})
 		\end{itemize}
 	\end{itemize}
@@ -410,8 +410,7 @@
 		\item \href{https://www.gnome.org/}{GNOME} --- one of the most common, relatively simplistic interface, but still feature rich, \enquote{Mac-like}
 		\item \href{https://xfce.org/}{XFCE} --- lightweight version of older GNOME --- for older computers or users not willing to be disturbed by graphical effects, basically \enquote{Mac-like} looking, but panels can be moved to \enquote{Windows style}
 		\item \href{https://cinnamon-spices.linuxmint.com/}{Cinnamon} --- remake of GNOME to look more like Windows\ldots
-		\item \href{https://code.launchpad.net/unity}{Unity} --- originally developed by Ubuntu (discontinued, now community based), \enquote{Mac-style}
-		\item And much more\ldots
+		\item And much \href{https://en.wikipedia.org/wiki/Desktop_environment\#Examples_of_desktop_environments}{more}\ldots
 		\item Choose what you like --- doesn't matter much which one\ldots
 	\end{itemize}
 \end{frame}
@@ -996,7 +995,7 @@
 		\item Important especially in network environment with many users
 		\item If intensively used, \texttt{ls -l} sometimes doesn't show correct permissions (see next slide), it can be confusing and lead into various issues
 		\item If not in use on a~server, relatively high number of groups is required to be able to correctly setup sharing permissions
-		\item MetaCentrum has storages and clusters connected via NFSv4 protocol (see also slide~\ref{netfs}) --- commands \texttt{getfacl} and \texttt{setfacl} do not work there, use \texttt{nfs4\_getfacl}, \texttt{nfs4\_setfacl} and \texttt{nfs4\_editfacl} instead (usage is very similar), see also \href{https://wiki.metacentrum.cz/wiki/Access_Control_Lists_on_NFSv4}{old MetaCentrum wiki}
+		\item MetaCentrum has storages and clusters connected via NFSv4 protocol (see also slide~\ref{netfs}) --- commands \texttt{getfacl} and \texttt{setfacl} do not work there, use \texttt{nfs4\_getfacl}, \texttt{nfs4\_setfacl} and \texttt{nfs4\_editfacl} instead (usage is very similar), see also \href{https://docs.metacentrum.cz/en/docs/data/data-sharing\#nfsv4-wrapper}{MetaCentrum documentation}
 		\item Permissions (\enquote{classical} as well as ACL) require some time to practice and master it\ldots
 	\end{itemize}
 	\begin{block}{Importance of permissions}
@@ -1262,7 +1261,7 @@
 		\vfill
 		\begin{itemize}
 			\item If fingerprint key changes, ssh complains a~lot --- possible \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{man in the middle attack}
-			\item From Windows use \href{https://www.putty.org/}{Putty} (see right figure)
+			\item From Windows use \href{https://www.chiark.greenend.org.uk/~sgtatham/putty/}{Putty} (see right figure)
 		\end{itemize}
 		\begin{center}
 			\includegraphics[height=6cm]{putty.png}
@@ -2635,7 +2634,7 @@
 			\item \href{https://www.gnu.org/software/emacs/}{GNU Emacs}
 			\item \href{https://www.geany.org/}{Geany}
 			\item \href{https://bluefish.openoffice.nl/}{Bluefish}
-			\item \href{https://gedit-technology.github.io/apps/gedit/}{Gedit}
+			\item \href{https://gedit-text-editor.org/}{Gedit}
 			\item \href{https://notepad-plus-plus.org/}{Notepad++}
 			\item \href{https://www.sublimetext.com/}{Sublime}
 			\item \href{https://code.visualstudio.com/}{VS Code}
@@ -4275,7 +4274,7 @@
 \begin{frame}{Manuals for package management}
 	\begin{itemize}
 		\item openSUSE and SUSE Linux Enterprise: \url{https://doc.opensuse.org/documentation/leap/startup/html/book-startup/part-reference-software.html} and \url{https://en.opensuse.org/Portal:Zypper}
-		\item Red Hat, Fedora, CENTOS, Scientific Linux and others: \url{http://yum.baseurl.org/} and newer \url{https://docs.fedoraproject.org/en-US/quick-docs/dnf/}
+		\item Red Hat, Fedora, CENTOS, Scientific Linux and others: \url{https://docs.fedoraproject.org/en-US/quick-docs/dnf/} and older \url{http://yum.baseurl.org/}
 		\item Debian (and derivatives): \url{https://www.debian.org/doc/manuals/debian-reference/ch02.en.html} and \url{https://wiki.debian.org/PackageManagement}
 		\item Ubuntu (and derivatives): \url{https://help.ubuntu.com/stable/ubuntu-help/addremove.html} and \url{https://help.ubuntu.com/community/AptGet/Howto}
 		\item And another distributions\ldots
@@ -4372,7 +4371,7 @@
 	\begin{itemize}
 		\item \href{https://www.java.com/}{Java} is probably the most portable language working on any operating system --- the only condition is to install \href{https://en.wikipedia.org/wiki/Java_virtual_machine}{Java virtual machine (JVM)}
 		\item Linux usually use \href{https://openjdk.org/}{OpenJDK} --- search for packages named \texttt{*openjdk*}
-		\item Let's download e.g. \href{http://tree.bio.ed.ac.uk/software/figtree/}{FigTree} from \url{https://github.com/rambaut/figtree/releases}
+		\item Let's download e.g. \href{https://tree.bio.ed.ac.uk/software/figtree/}{FigTree} from \url{https://github.com/rambaut/figtree/releases}
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
@@ -4511,22 +4510,19 @@
 		\item Services requiring registration (and approval)
 		\begin{itemize}
 			\item To use MetaCentrum fill registration form \url{https://metavo.metacentrum.cz/en/application/form} (\href{https://metavo.metacentrum.cz/cs/application/}{česky})
-			\item To use data storage fill registration form \url{https://einfra.cesnet.cz/perun-registrar-fed/?vo=storage}
+			\item To use data storage fill registration form \url{https://einfra.cesnet.cz/allfed/registrar/?vo=VO_s3&group=s3_cl4}
 			\item After registration for MetaCentrum, user can join MetaCloud via \url{https://perun.metacentrum.cz/fed/registrar/?vo=meta&group=metacloud}
 			\item Login is using \href{https://www.eduid.cz/en/index}{EduID} (\href{https://www.eduid.cz/cs/index}{česky})
 		\end{itemize}
 		\item Information about data storage \url{https://du.cesnet.cz/en/start} (\href{https://du.cesnet.cz/cs/start}{česky}) contains detailed usage instructions
 		\item Information about MetaCentrum \url{https://www.metacentrum.cz/en/} (\href{https://www.metacentrum.cz/cs/}{česky}) and documentation \url{https://docs.metacentrum.cz/}
-		\begin{itemize}
-			\item The documentation is being migrated from wiki \url{https://wiki.metacentrum.cz/wiki/Main_Page} (\href{https://wiki.metacentrum.cz/wiki/Hlavn\%C3\%AD_strana}{česky})
-		\end{itemize}
-		\item Information about MetaCloud \url{https://docs.cloud.muni.cz/} (\href{https://wiki.metacentrum.cz/wiki/Kategorie:Clouds}{old wiki page})
-		\item Also available is Galaxy \url{https://usegalaxy.cz/} (same login as to MetaCentrum) --- web based bioinformatics framework (more information at \href{https://docs.metacentrum.cz/related/galaxy/}{documentation})
+		\item Information about MetaCloud \url{https://docs.platforms.cloud.e-infra.cz/}
+		\item Also available is Galaxy \url{https://usegalaxy.cz/} (same login as to MetaCentrum) --- web based bioinformatics framework (more information at \href{https://docs.metacentrum.cz/en/docs/related/galaxy}{documentation})
 		\item Current state and usage of resources is available at \url{https://metavo.metacentrum.cz/en/} (\href{https://metavo.metacentrum.cz/cs/}{česky})
 		\item Manage your user account at \url{http://metavo.metacentrum.cz/en/myaccount/} (\href{https://metavo.metacentrum.cz/cs/myaccount/}{česky})
 		\item Personal view on actual resources and running tasks is at \url{https://metavo.metacentrum.cz/pbsmon2/person}
-		\item List of available applications \url{https://docs.metacentrum.cz/software/}
-		\item MetaCentrum has 11~\href{https://docs.metacentrum.cz/computing/infrastructure/frontends/}{frontends} where users log and thousands of computers doing the calculations --- they are not accessed directly to run task
+		\item List of available applications \url{https://docs.metacentrum.cz/en/docs/software/alphabet}
+		\item MetaCentrum has 11~\href{https://docs.metacentrum.cz/en/docs/computing/infrastructure/frontends}{frontends} where users log and thousands of computers doing the calculations --- they are not accessed directly to run task
 		\item Most of computers are running \href{https://www.debian.org/}{Debian GNU/Linux}
 		\begin{itemize}
 			\item Basic usage as with any other Linux server --- SSH \& command line\ldots
@@ -4553,16 +4549,16 @@
 	\begin{itemize}
 		\item \href{https://metavo.metacentrum.cz/}{MetaCentrum clusters} are distributed in various Czech cities (and institutions)
 		\item Clusters use to have (at least small) storage array (accessible via \texttt{/storage/\ldots})
-		\item There are special \href{https://du.cesnet.cz/en/infrastruktura_ulozist/start}{archive storages} (\href{https://du.cesnet.cz/cs/infrastruktura_ulozist/start}{česky}) in Jihlava, Ostrava and Plzeň
+		\item There are special \href{https://docs.du.cesnet.cz/en/docs/introduction/description}{archive storages} in multiple locations
 	\end{itemize}
 	\begin{center}
 		\includegraphics[width=\textwidth]{metacentrum_map.png}
 	\end{center}
 	\begin{itemize}
 		\item Users have different quota on different arrays (depending on home organization etc.)
-		\item There are 11 \href{https://docs.metacentrum.cz/computing/infrastructure/frontends/}{frontends} where user logs via SSH and prepare computing task for submission etc. (see further)
+		\item There are 11 \href{https://docs.metacentrum.cz/en/docs/computing/infrastructure/frontends}{frontends} where user logs via SSH and prepare computing task for submission etc. (see further)
 		\item Distributed topology might be bit confusing --- user has different home directory when logging to different frontends --- recommended is to use as few frontends and storages as possible
-		\item Some special services (like \href{https://docs.metacentrum.cz/ondemand/}{OnDemand}) start on particular storage (here \texttt{brno3})
+		\item Some special services (like \href{https://docs.metacentrum.cz/en/docs/graphical/ondemand}{OnDemand}) start on particular storage
 		\item Generally, computing task loads data from selected storage and can start on any cluster
 		\item Orientation is plenty of storages might be sometimes tricky --- ensure where you are and where your data are supposed to be
 		\begin{itemize}
@@ -4584,8 +4580,8 @@
 
 \begin{frame}[fragile]{MetaCentrum usage}
 	\begin{enumerate}
-		\item Transfer data into one of \href{https://docs.metacentrum.cz/data/useful-commands/}{storages} by e.g. \texttt{scp} from command line, \href{https://winscp.net/}{WinSCP} from Windows or \href{https://filezilla-project.org/}{FileZilla} from any OS
-		\item Connect via SSH to selected \href{https://docs.metacentrum.cz/computing/infrastructure/frontends/}{frontend}. Same credentials are used for all frontends, for SSH login as well as file transmissions
+		\item \href{https://docs.metacentrum.cz/en/docs/data/large-data}{Transfer} data into one of \href{https://docs.metacentrum.cz/en/docs/computing/infrastructure/storages}{storages} by e.g. \texttt{scp} from command line, \href{https://winscp.net/}{WinSCP} from Windows or \href{https://filezilla-project.org/}{FileZilla} from any OS
+		\item Connect via SSH to selected \href{https://docs.metacentrum.cz/en/docs/computing/infrastructure/frontends}{frontend}. Same credentials are used for all frontends, for SSH login as well as file transmissions
 		\item In home directory on the storage (accessed via frontend) prepare all needed data and non-interactive script to do the calculations
 		\item Submit job using \texttt{qsub}. Tasks are not launched immediately, but submitted into queue and system decides when it will be launched
 		\item Monitor job progress. Check results. Etc\ldots
@@ -4602,7 +4598,7 @@
 	\begin{multicols}{2}
 		\begin{itemize}
 			\item Graphical applications: e.g. \href{https://filezilla-project.org/}{FileZilla} or most of Linux file managers
-			\item Protocol is SSH/SSH2/SFTP/SCP, port 22, server is selected \href{https://docs.metacentrum.cz/snippets/storages-direct-ssh-table/}{storage} address --- if possible, select any and keep using it
+			\item Protocol is SSH/SSH2/SFTP/SCP, port 22, server is selected \href{https://docs.metacentrum.cz/en/docs/computing/infrastructure/frontend-storage}{storage} address --- if possible, select any and keep using it
 			\item All servers (storages, frontends, computing nodes) are accessible under domain \texttt{*.metacentrum.cz} --- e.g. \texttt{tarkil.grid.cesnet.cz} is same as \texttt{tarkil.metacentrum.cz}
 			\item See slide \ref{transfers} and following to command-line transfers of files
 		\end{itemize}
@@ -4642,7 +4638,7 @@
     # ...begins on previous slide; copy data - if it fails, exit
     cp -a "${DATADIR}"/"${WORKDIR}"/* "${SCRATCHDIR}"/ || exit 1
     # Prepare calculations - load required application modules
-    # See https://docs.metacentrum.cz/software/
+    # See https://docs.metacentrum.cz/en/docs/software/alphabet
     # Every application module is loaded by "module add XXX"
     module add parallel/20210922-gcc-10.2.1-iiyjqem # In this (example) case
     module add mrbayes/3.2.7a                       # GNU Parallel and MrBayes
@@ -4663,7 +4659,7 @@
 
 \begin{frame}[fragile]{Launching of tasks}
 	\begin{itemize}
-		\item See \url{https://docs.metacentrum.cz/computing/run-basic-job/}
+		\item See \url{https://docs.metacentrum.cz/en/docs/computing/run-basic-job}
 		\item Personal view \url{https://metavo.metacentrum.cz/pbsmon2/person} has nice overview of available resources and tasks and allows comfortable construction of submission command
 	\end{itemize}
 	\vfill
@@ -4685,10 +4681,10 @@
 \begin{frame}[fragile]{Key MetaCentrum commands}
 	\begin{itemize}
 		\item MetaCentrum is \enquote{just} normal Linux server --- work there as on any other Linux system
-		\item Command \texttt{module} loads/unloads selected \href{https://docs.metacentrum.cz/software/}{application}
+		\item Command \texttt{module} loads/unloads selected \href{https://docs.metacentrum.cz/en/docs/software/alphabet}{application}
 		\item Tasks (BASH scripts) are submitted for computing by \texttt{qsub} --- the script must copy the data into \texttt{\$SCRATCHDIR} and do all calculations there
 		\begin{itemize}
-			\item It has plenty of options how to specify requirements (see next slide and \href{https://docs.metacentrum.cz/computing/resources/resources/}{help})
+			\item It has plenty of options how to specify requirements (see next slide and \href{https://docs.metacentrum.cz/en/docs/computing/resources/resources}{help})
 		\end{itemize}
 		\item Queued and running jobs can be seen by \texttt{qstat -u \$USER} (\texttt{qstat} has much more options) and any job can be terminated by \texttt{qdel 123456789} (number from \texttt{qstat})
 	\end{itemize}
@@ -4724,10 +4720,10 @@
 			\item If using more physical machines, ensure correct settings of e.g. MPI (see documentation for respective software you are using)
 		\end{itemize}
 		\item If requesting e-mails (e.g. \texttt{-m abe} to get mail about abort, beginning and exit of the task) and submitting plenty of tasks by some script, it can result in plenty of mails\ldots
-		\item Every user has certain \href{https://metavo.metacentrum.cz/pbsmon2/users/}{priority} increased by \href{https://docs.metacentrum.cz/access/terms/\#acknowledgements-and-publications}{acknowledgments} (\textbf{it's mandatory to acknowledge MetaCentrum when using it}) in publications to MetaCentrum, and lowered by intensive usage of the service (the usage is calculated from past month)
+		\item Every user has certain \href{https://metavo.metacentrum.cz/pbsmon2/users/}{priority} increased by \href{https://docs.metacentrum.cz/en/docs/access/terms\#acknowledgements-and-publications}{acknowledgments} (\textbf{it's mandatory to acknowledge MetaCentrum when using it}) in publications to MetaCentrum, and lowered by intensive usage of the service (the usage is calculated from past month)
 		\item After submission of the task, check in \href{https://metavo.metacentrum.cz/pbsmon2/queues/jobsQueued}{the queue} in which state it is --- sometimes it can't start because of impossible combination of requested resources or so
 		\item User can \href{https://metavo.metacentrum.cz/pbsmon2/nodes/physical}{check load of machines}
-		\item For more options read \url{https://docs.metacentrum.cz/computing/resources/resources/}
+		\item For more options read \url{https://docs.metacentrum.cz/en/docs/computing/resources/resources}
 		\begin{itemize}
 			\item Request special CPU (AMD, graphical,~\ldots), e.g. CPU with AVX2 \texttt{-l~select=cpu\_flag=avx2}
 			\item SSD local storage (e.g. \texttt{-l~scratch\_ssd=1gb})
@@ -4830,7 +4826,7 @@
 		\item Submit the task via \texttt{qsub}.
 		\item Monitor the task with \texttt{qstat}.
 		\item Login with SSH to computing node where the task is running, go to \texttt{\$SCRATCHDIR} and see its progress. Look at output of \texttt{ps ux}. What does it say?
-		\item Wait for the task to be done and explore output (e.g. open the \texttt{treefile} in \href{http://tree.bio.ed.ac.uk/software/figtree/}{FigTree}).
+		\item Wait for the task to be done and explore output (e.g. open the \texttt{treefile} in \href{https://tree.bio.ed.ac.uk/software/figtree/}{FigTree}).
 		\item If you encounter any error, try to find its source and fix it.
 	\end{enumerate}
 \end{frame}
@@ -4839,7 +4835,7 @@
 
 \begin{frame}[fragile]{Graphical interactive task}
 	\begin{itemize}
-		\item See \url{https://docs.metacentrum.cz/software/graphical-access/}
+		\item See \url{https://docs.metacentrum.cz/en/docs/software/graphical-access}
 		\item Download and install \href{https://www.tightvnc.com/}{TightVNC} (Windows installer or Java Viewer)
 	\end{itemize}
 	\begin{bashcode}
@@ -4912,8 +4908,8 @@
 \begin{frame}{OnDemand}{Applications in web browser}
 	\begin{itemize}
 		\item It allows to run selected interactive applications in web browser
-		\item See \url{https://docs.metacentrum.cz/ondemand/} and \url{https://ondemand.grid.cesnet.cz/}
-		\item Applications start in \texttt{/storage/brno3-cerit/home/\$USER/} --- ensure to have everything needed there
+		\item See \url{https://docs.metacentrum.cz/en/docs/graphical/ondemand} and \url{https://ondemand.metacentrum.cz/}
+		\item Applications start in selected storage --- ensure to have everything needed in correct place
 	\end{itemize}
 	\begin{center}
 		\includegraphics[height=3.5cm]{rstudio_ondemand.png}
@@ -4925,11 +4921,11 @@
 		\begin{itemize}
 			\item Web service allowing to record code as well as its output for languages like BASH, R, Python,~\ldots
 			\item Convenient for recording and sharing code, interactive work,~\ldots
-			\item Use \href{https://docs.metacentrum.cz/related/jupyter/}{Jupyter Hub} for MetaCentrum users
+			\item Use \href{https://docs.metacentrum.cz/en/docs/software/sw-list/jupyter}{Jupyter Hub} for MetaCentrum users
 			\begin{itemize}
 				\item Data are typically in \texttt{/storage/brno2/home/USER/}
 			\end{itemize}
-			\item Available also as part of OnDemand (previous slide), or bit experimental \href{https://hub.cloud.e-infra.cz/}{CERIT hub}, which allows to select custom storage and also custom docker image (see \href{https://docs.cerit.io/docs/jupyterhub.html}{documentation})
+			\item Available also as part of OnDemand (previous slide), or bit experimental \href{https://hub.cloud.e-infra.cz/}{CERIT hub}, which allows to select custom storage and also custom docker image (see \href{https://docs.cerit.io/en/docs/web-apps/jupyterhub}{documentation})
 		\end{itemize}
 		\begin{center}
 			\includegraphics[height=6.5cm]{jupyter.png}
@@ -4939,9 +4935,9 @@
 
 \begin{frame}{MetaCentrum cloud}
 	\begin{itemize}
-		\item MetaCentrum \href{https://wiki.metacentrum.cz/wiki/Kategorie:Clouds}{cloud} (\href{https://wiki.metacentrum.cz/wiki/Kategorie:Cloudy}{česky}) allows to run complete Linux distribution (Debian, CentOS,~\ldots), where you can install any software, like on any other computer
+		\item MetaCentrum \href{https://docs.platforms.cloud.e-infra.cz/}{cloud} allows to run complete Linux distribution (Debian, CentOS,~\ldots), where you can install any software, like on any other computer
 		\item Useful e.g. for various testing or applications with very special requirements
-		\item Go to \url{https://cloud.metacentrum.cz/} and see \href{https://docs.cloud.muni.cz/}{documentation}
+		\item Go to \url{https://cloud.metacentrum.cz/} and see \href{https://docs.platforms.cloud.e-infra.cz/}{documentation}
 		\item Login to running virtual machine requires SSH keys to be set up, access is normally via SSH
 		\item Users must have knowledge about Linux administration and follow all security best-practices
 		\item Setting up more than one virtual machine requires good knowledge about Linux networking (user has single public IP address)
@@ -5349,7 +5345,7 @@
 \begin{frame}{Fedora}
 	\begin{itemize}
 		\item Homepage \url{https://fedoraproject.org/}
-		\item Communication and help overview \url{https://fedoraproject.org/wiki/Communicating_and_getting_help}
+		\item Communication and help overview \url{https://docs.fedoraproject.org/en-US/project/communications/}
 		\item Wiki \url{https://fedoraproject.org/wiki/Fedora_Project_Wiki}
 		\item Official forum \url{https://discussion.fedoraproject.org/}
 		\item Documentation \url{https://docs.fedoraproject.org/}
@@ -5361,7 +5357,7 @@
 	\begin{itemize}
 		\item GNOME \url{https://www.gnome.org/}
 		\begin{itemize}
-			\item Help for users \url{https://help.gnome.org/users/}
+			\item Help for users \url{https://help.gnome.org/}
 			\item Wiki \url{https://wiki.gnome.org/}
 		\end{itemize}
 		\item KDE \url{https://kde.org/}
