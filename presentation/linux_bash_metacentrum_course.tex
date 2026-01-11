@@ -541,8 +541,11 @@
 \begin{frame}{Short overview of hard disk layout}
 	\begin{itemize}
 		\item Physical disk (piece of hardware) has at least 1~partition --- division seen in Windows as \enquote{disks} (\texttt{C}, \texttt{D},~\ldots) and mounted directory in UNIX
-		\item MBR --- older description of disk division, up to 4~primary partitions (OS typically requires at least one to run), one can be extended and contain more partitions, disks up to 2~TB
-		\item GPT --- newer, no relevant limits, requires UEFI (replacement of BIOS --- responsible of start of nowadays computers)
+		\item GPT is a \enquote{table} describing partitioning of physical disk
+		\begin{itemize}
+			\item Replaces older MBR
+			\item Requires UEFI --- basic computer firmware responsible of booting of the computer (replacement of old BIOS)
+		\end{itemize}
 		\item If unsure what to do, high probability to break it\ldots
 		\item Blank new partition has to be formatted to desired file system according to use and target operating system
 		\item Linux distributions have easy graphical tools to manage disk partitions (e.g. \href{https://gparted.org/}{GParted})
@@ -715,17 +718,17 @@
 		\item \alert{\texttt{/home}} --- users' homes
 		\item \texttt{/lib}, \texttt{/lib64} --- basic system libraries (32 and 64bits)
 		\item \texttt{/lost+found} --- feature of FS, after crash and recovery of FS, restored files are there
-		\item \alert{\texttt{/media}} --- attached disks (USB flash,~\ldots) usually appear there (might be in \texttt{/var/run/media} or  \texttt{/var/media}) --- subdirectories are automatically created when device is plugged and disappears when unplugged
+		\item \alert{\texttt{/media}} --- attached disks (USB flash,~\ldots) usually appear there (might be in \texttt{/var/run/media}, \texttt{/var/media} or \texttt{/run/media}) --- subdirectories are automatically created when device is plugged and disappears when unplugged
 		\item \texttt{/mnt} --- usually manually mounted file systems (but they can be mounted elsewhere according to needs)
 		\item \texttt{/opt} --- optional, usually locally compiled software
-		\item \texttt{/proc} --- dynamic information about system processes
+		\item \texttt{/proc} --- dynamic information about system processes (often also pluggable media appear here)
 		\item \texttt{/root} --- root's (admin's) home
 		\item \texttt{/run} --- temporal ID files (locks) of running processes
 		\item \texttt{/sbin} --- basic system utilities
 		\item \texttt{/selinux} --- SELinux is security framework
 		\item \texttt{/srv} --- FTP and WWW server data (can be in \texttt{/var/srv})
 		\item \texttt{/sys} --- basic system
-		\item \texttt{/tmp} --- temporary files --- users have private dynamically created spaces there, used automatically by applications according to need
+		\item \texttt{/tmp} --- temporary files (content use to be discarded during reboot) --- users have private dynamically created spaces there, used automatically by applications according to need
 		\item \texttt{/usr} --- binaries (executable applications) and libraries of installed applications
 		\item \alert{\texttt{/var}} --- data of most of applications and services, including e.g. database data, system logs,~\ldots
 		\item \alert{\texttt{/windows}} --- if on dual boot, Windows disks are commonly mounted here
@@ -852,7 +855,7 @@
 	\begin{itemize}
 		\item \textbf{Symbolic (soft) links (symlinks)} --- like links on the web --- short-cut to another place
 		\begin{itemize}
-			\item When we delete link, nothing happens, when target, non-working link remains
+			\item When we delete link, nothing happens; when target is deleted, non-working link remains
 		\end{itemize}
 	\end{itemize}
 	\vfill
@@ -890,7 +893,7 @@
 		\item Commands \texttt{chown} to change owner requires root privileges
 		\item Commands \texttt{chgrp} to change group often requires root privileges --- user has to be member of particular group to be able to change ownership to it (if not, \texttt{root} must do it)
 		\item Information about users and groups and their IDs are in \texttt{/etc/group} and \texttt{/etc/passwd}
-		\item Ownership (and permissions, slide~\ref{permissions}) are important especially on servers with plenty of users (e.g. on MetaCentrum)
+		\item Ownership (and permissions, slide~\ref{permissions}) are important especially on servers with plenty of users (e.g. on MetaCentrum) --- share files with only dedicated users, protect private files
 		\item It is not possible to add particular permissions for particular user on one file/directory --- there must be special group or ACL must be used (slide~\ref{acl})
 	\end{itemize}
 \end{frame}
@@ -995,7 +998,7 @@
 		\item Important especially in network environment with many users
 		\item If intensively used, \texttt{ls -l} sometimes doesn't show correct permissions (see next slide), it can be confusing and lead into various issues
 		\item If not in use on a~server, relatively high number of groups is required to be able to correctly setup sharing permissions
-		\item MetaCentrum has storages and clusters connected via NFSv4 protocol (see also slide~\ref{netfs}) --- commands \texttt{getfacl} and \texttt{setfacl} do not work there, use \texttt{nfs4\_getfacl}, \texttt{nfs4\_setfacl} and \texttt{nfs4\_editfacl} instead (usage is very similar), see also \href{https://docs.metacentrum.cz/en/docs/data/data-sharing\#nfsv4-wrapper}{MetaCentrum documentation}
+		\item MetaCentrum has storages and clusters connected via NFSv4 protocol (see also slide~\ref{netfs}) --- commands \texttt{getfacl} and \texttt{setfacl} do not work there, use \texttt{nfs4\_getfacl}, \texttt{nfs4\_setfacl} and \texttt{nfs4\_editfacl} instead (usage is very similar), see also \href{https://docs.metacentrum.cz/en/docs/data/data-sharing\#nfsv4-wrapper}{MetaCentrum documentation} and its wrapper script
 		\item Permissions (\enquote{classical} as well as ACL) require some time to practice and master it\ldots
 	\end{itemize}
 	\begin{block}{Importance of permissions}
@@ -1028,7 +1031,7 @@
 \begin{frame}{Set default permissions for new files}
 	\begin{itemize}
 		\item \texttt{umask} sets implicit permissions for newly created files for user
-		\item Syntax is similar to \texttt{chmod}, but reverse (e.g. \texttt{027} keeps all rights for owner, for group removes writing and nothing left for others)
+		\item Syntax is similar to \texttt{chmod}, but reverse (e.g. \texttt{027} keeps all rights for owner, for group removes writing and nothing left for the others)
 		\begin{itemize}
 			\item \texttt{umask} number \textbf{removes} certain permissions
 		\end{itemize}
@@ -1296,7 +1299,7 @@
 		\item \textbf{Interpreter of our commands inserted into command line}
 		\item \textbf{BASH} --- Bourne again shell
 		\begin{itemize}
-			\item Probably the most common shell, based on original \texttt{sh}, respecting original specification, adding new features; probably the most common
+			\item Probably the most common shell, based on original \texttt{sh}, respecting original specification, adding new features
 			\item We will use it
 		\end{itemize}
 		\item Other variants: \textbf{csh} (syntax influenced by C), \textbf{ksh} (younger, backward compatible with bash), \textbf{zsh} (extended bash; probably the most advanced, not so common), \textbf{ash} (mainly in BSD)
@@ -1697,7 +1700,7 @@
 		\item Text in single quotes (\texttt{'\ldots'}) preserves the literal value of each character within the quotes
 		\item Text in double quotes (\texttt{"\ldots"}) preserves the literal value of all characters within the quotes except of dollar (\texttt{\textdollar}), back tick (\texttt{\textasciigrave}) and back slash (\texttt{\textbackslash}) --- handling variables
 		\item A~double quote may be quoted within double quotes by preceding it with a~backslash (\texttt{\textbackslash"} means literally \enquote{double quote})
-		\item Text between back ticks (\texttt{\textasciigrave\ldots\textasciigrave}) or within \texttt{\$(\ldots)} will be evaluated and then used as command or argument (see next slide for examples)
+		\item Text between back ticks (\texttt{\textasciigrave\ldots\textasciigrave}) or within \texttt{\$(\ldots)} will be evaluated and then used as command or argument (see further for examples)
 	\begin{itemize}
 		\item Syntax with back ticks is deprecated, keep using \texttt{\$(\ldots)} instead
 	\end{itemize}
@@ -1977,7 +1980,7 @@
 		\end{itemize}
 	\end{itemize}
 	\begin{bashcode}
-    echo "Žluťoučký kůň úpěl ďábelské ó" | iconv -f utf-8 -t cp1250 /dev/stdin
+    echo "Žluťoučký kůň úpěl ďábelské šó" | iconv -f utf-8 -t cp1250 /dev/stdin
 	\end{bashcode}
 	\begin{itemize}
 		\item \texttt{/dev/stdout} --- standard output
@@ -2226,7 +2229,7 @@
 		\item SAMBA --- UNIX connection to Microsoft network shares (port 5445), slide~\ref{netfs}
 		\item web --- \enquote{The Internet} for most of users (port 80 or encrypted 443)
 		\item IMAP (port 143 or 993) and SMTP (port 25 or 465) to connect to e-mail server and send mails
-		\item Messaging protocols like XMPP (Jabber), IRC, ICQ, MS Teams, Slack, Skype,~\ldots
+		\item Messaging protocols like XMPP (Jabber), IRC, Discord, MS Teams, Slack, Matrix,~\ldots
 		\item Databases (if accessible over the Internet), and another special services, use to be available on dedicated ports
 		\item And much more (see \texttt{/etc/services})\ldots
 		\item Port number can be changed in configuration of respective server service
@@ -2348,7 +2351,7 @@
 
 \begin{frame}[fragile]{Connect to SSH with key}{No need to remember password for every server\ldots}
 	\begin{bashcode}
-    # Create the key (several options)
+    # Create the key (several options) --- for most of cases keep defaults
     ssh-keygen -t rsa -b 4096 # Good security, portable
     # ECC gives better security, but not all servers/applications support it
     ssh-keygen -t ecdsa -b 521 # Higher security
@@ -2432,17 +2435,17 @@
 			\item \texttt{\{/\}} --- base name of input line --- only file name (without path)
 			\item \texttt{\{//\}} --- dirname from input line (filename is removed)
 			\item \texttt{\{/.\}} --- base name of input line without extension
-			\item \texttt{:::} --- use arguments from command line instead of stdin (::: is placed after the command and before the argument)
+			\item \texttt{:::} --- use arguments from command line instead of stdin (\texttt{:::} is placed after the command and before the argument, see further examples)
 			\item \texttt{::::} --- read from argument files
 			\item \texttt{-j} --- number of jobs --- if not provided, \texttt{parallel} will use all available CPU threads
 		\end{itemize}
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{GNU Parallel examples I} %FIXME Fix wrong syntax highlight
+\begin{frame}[fragile]{GNU Parallel examples I}
 	\begin{bashcode}
     # Convert all images from JPG to PNG
-    find . -name '*.jpg' -print | parallel --bar convert {} {.}.png
+    find . -name '*.jpg' -print | parallel --bar convert '{}' '{.}'.png
     # It might be possible to to use "'{}' '{.}.png'" instead
     # Resize all images ("\" marks that command continue on next line)
     find . -name '*.jpg' -print | parallel convert -resize 500x500 \
@@ -2461,7 +2464,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{GNU Parallel examples II} %FIXME Fix wrong syntax highlight
+\begin{frame}[fragile]{GNU Parallel examples II}
 	\begin{bashcode}
     # Convert all WAV files into OGG
     parallel -X oggenc ::: *.wav # -X parse as many parameters as possible
@@ -2482,7 +2485,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{GNU Parallel examples III and tasks} %FIXME Fix wrong syntax highlight
+\begin{frame}[fragile]{GNU Parallel examples III and tasks}
 	\begin{bashcode}
     # Create BCFtools statistics for all *.vcf.gz files
     find . -name "*.vcf.gz" | parallel "echo '{/}' && bcftools stats -F \
@@ -2740,18 +2743,18 @@
 	\vfill
 	\begin{bashcode}
     cut column/delimiter+field textfile
-    cut -c 1 /etc/group # Get first character
+    cut -c 1 /etc/group # Get first character from each line
     cut -c 1-5 /etc/group # Get character 1-5
     cut -c 4- /etc/group # Get character 4 and more
     cut -c 2,5,7 /etc/group # Get characters 2, 5 and 7
-    cut -d ':' -f 1 /etc/group # Select 1st field separated by ":"
+    cut -d ':' -f 1 /etc/group # Select 1st field, fields are separated by ":"
     cut -d ':' -f 2-4 /etc/group # Select fields 2-4 separated by ":"
     cut -f 1,2 cut_awk_test_file.tsv # get columns 1 and 2 separated by TABs
     # Add second file as second column
     paste file1 file2 > outputfile
     # Output will be two columns (from file1 and file2) separated by TAB
     paste -d "|" diff_test_file_1.txt diff_test_file_2.txt # -d for delimiter
-    # Swapping columns is not very comfortable...
+    # Swapping columns is not very comfortable (see later AWK)...
     paste <(cut -f 2 cut_awk_test_file.tsv) <(cut -f 1 cut_awk_test_file.tsv)
     ls -l | column -t # Reformate input as table (compare with 'ls -l')
 	\end{bashcode}
@@ -2774,7 +2777,7 @@
     # Number of occurrences of word "Gregor" in file long_text.txt
     grep Gregor long_text.txt | wc -l # Number of matching lines
     grep -c Gregor long_text.txt # Number of occurrences
-    ls -1 *.sh | wc -l # How many BASH script are in current directory
+    ls *.sh | wc -l # How many BASH script are in current directory
 	\end{bashcode}
 \end{frame}
 
@@ -2800,7 +2803,7 @@
 	\begin{itemize}
 		\item AWK is scripting language mainly for text manipulations
 		\item Can do things other BASH tools can not (easily) do --- better manipulation with columns, calculations, work with multi-line patterns,~\ldots
-		\item Has complicated syntax, it is hard to read, it is not similar to other tools --- Perl can do more and is more common (learn it instead)\ldots
+		\item Has complicated syntax, it is hard to read, it is not similar to other tools --- Perl can do more and is more common\ldots
 		\item Supports regular expressions, slide \ref{regexp}
 		\item Can not select column according to its name (Perl can do that)
 		\item For more information see manuals \url{https://www.gnu.org/software/gawk/manual/}, \url{https://en.wikibooks.org/wiki/An_Awk_Primer} and \url{https://www.grymoire.com/Unix/Awk.html}
@@ -2874,7 +2877,7 @@
 \begin{frame}[fragile]{Sorting I}
 	\begin{bashcode}
     sort file # Sorting is influenced by locale setting (e.g. Czech "ch")
-    LC_ALL=C sort ... # To force use of English locale use
+    LC_ALL=C sort ... # Force usage of English locale
     # Take into account only spaces and alphanumerical characters (ignore
     # any other)
     sort -d textfile # Only spaces and alphanumerical characters
@@ -2952,7 +2955,7 @@
 		\item Various parameters, modificators, operators can be combined\ldots
 	\end{itemize}
 	\begin{bashcode}
-    sed 'operator/FindToReplace/Replace/modificator' textfile > newtextfile
+    sed 'operator/FindToReplace/Replacement/modificator' textfile > newtextfile
     # Search and replace ("s") all occurrences ("g") of "find" by "replace"
     sed 's/find/replace/g' textfile
     # Replace third occurrence of pattern on every line
@@ -3164,14 +3167,14 @@
 
 \begin{frame}[fragile]{Command line text editors}
 	\begin{itemize}
-		\item \texttt{nano}, \texttt{pico} and \texttt{mc} are very simple, just for very basic text editing in command line or until you learn \texttt{vim} (graphical version is \textbf{gVim}) or \texttt{emacs} (graphical versions are also available, just search for \textbf{Emacs} in your distribution software manager)
+		\item \texttt{nano}, \texttt{pico} and \texttt{mc} are very simple, just for very basic text editing in command line or until you learn \texttt{vim} (graphical version is \textbf{gVim}), or \texttt{emacs} (graphical versions are also available, just search for \textbf{Emacs} in your distribution software manager)
 		\item You can work most of the time in graphical editors (slide \ref{editors})
 		\item Emacs and Vim are extremely rich, but having completely different approach --- when you get use to one, you can't use the another
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
-    nano textfile # Enhanced clone of pico, basic simple text editor
     pico textfile # Basic simple text editor
+    nano textfile # Enhanced clone of pico, basic simple text editor
     mc # Use its internal editor, just very basic (press F4 on the file)
     emacs textfile # Extremely feature rich (including file browser and
                    # many tools), exit by Ctrl+X and Ctrl+C
@@ -3309,8 +3312,8 @@
 		\item Mastering regular expressions require practicing -- solve practical problems and see their power
 		\item Read \url{https://en.wikibooks.org/wiki/Regular_Expressions}, \url{https://www.grymoire.com/Unix/Regular.html}, \url{https://www.regular-expressions.info/}
 		\begin{itemize}
-			\item Česky \url{https://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{https://www.root.cz/serialy/regularni-vyrazy/} a~\url{https://www.regularnivyrazy.info/}
 			\item Manuals for \href{https://www.gnu.org/software/grep/manual/}{Grep}, Vim, \href{https://www.gnu.org/software/sed/manual/}{Sed}, \href{https://www.gnu.org/software/gawk/manual/}{Awk}, \href{https://en.wikibooks.org/wiki/Perl_Programming}{Perl} (\href{https://en.wikibooks.org/wiki/Raku_Programming}{newer Perl~6 Raku}),~\ldots
+			\item Česky \url{https://www.nti.tul.cz/~satrapa/docs/regvyr/}, \url{https://www.root.cz/serialy/regularni-vyrazy/} a~\url{https://www.regularnivyrazy.info/}
 		\end{itemize}
 		\item See sed examples, slide~\ref{sedex}; and next slides
 		\item macOS has by default very outdated version of \texttt{sed} and another tools --- it does not have all advanced features --- users need to install e.g. \texttt{gnu-sed} formulae from \href{https://brew.sh/}{Homebrew} (slide~\ref{homebrew}), similarly for Grep, AWK,~\ldots
@@ -3366,7 +3369,7 @@
     # Get quality of Illumina reads mapping to reference in genomic VCF
     zcat arabidopsis.vcf.gz | grep -o "MQ=[[:digit:]]\+" | sed 's/^MQ=//'
     # How many times there is a direct speech (text between "...")
-    grep -o '"[[:upper:]][a-zA-Z0-9,\.\?\! ]\+"' long_text.txt | wc -l
+    grep -o '"[[:upper:]][a-zA-Z0-9,;\.\?\! ]\+"' long_text.txt | wc -l
     # Add after dot on the end of the line by extra line break
     sed 's/\.$/.\n/' long_text.txt | less
     # Add HTML paragraph tags (<p> and </p>)
@@ -3815,7 +3818,7 @@
 
 \begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) V}
 	\begin{itemize}
-		\item Script \texttt{interactive5.sh} contains complete example
+		\item Script \texttt{interactive5.sh} contains complete example --- take inspiration there
 		\item This is the classical way how to use UNIX switches used in most of commands
 		\item \texttt{while} loop encapsulating \texttt{case} ensures we evaluate all provided parameters regardless their number or order
 		\begin{itemize}
@@ -3879,6 +3882,9 @@
     # Use the script with some text file...
     ./interactive6.sh long_text.txt
 	\end{bashcode}
+	\begin{itemize}
+		\item Similar (even simpler) example is typical MetaCentrum script (slide~\ref{metacentrumscript})
+\end{itemize}
 \end{frame}
 
 \subsection{Branching the code}
@@ -3924,7 +3930,7 @@
 				\item Allow usage of regular expressions and globing patterns
 				\item Word splitting is prevented --- \texttt{\$\textbraceleft STRINGVAR\textbraceright} can contain spaces etc.
 				\item Expanding file names --- \texttt{if [[ -a *.sh ]]} (variant with only one bracket doesn't work when there are multiple sh files)
-				\item More detailed test, e.g. \texttt{if [[ \$num -eq 3 \&\& "\$\textbraceleft STRINGVAR\textbraceright " == XXX ]]\ldots}
+				\item More detailed test, e.g. \texttt{if [[ \$num -eq 3 \&\& "\$\textbraceleft STRINGVAR\textbraceright " == XXX ]] \ldots}
 			\end{itemize}
 		\end{itemize}
 		\item Common tests
@@ -3952,13 +3958,13 @@
 		\item Do not confuse globing patterns and regular expressions when using \texttt{[[~\ldots~]]}
 		\begin{itemize}
 			\item \textbf{Shell globing:} \texttt{if [[ "\$\textbraceleft STRINGVAR\textbraceright " \alert{==} ?[sS]tring* ]]; then} --- \texttt{?} represents single character \texttt{[]} any character inside and \texttt{*} zero or more characters
-			\item \textbf{Regular expressions:} \texttt{if [[ "\$\textbraceleft STRINGVAR\textbraceright " \alert{=$\sim$} .[sS]tring.* ]]\ldots} --- \texttt{.} represents single character (\texttt{?} would be zero or one occurrence of preceding expression), \texttt{[]} any character inside and \texttt{.*} zero or more occurrences of any single characters
+			\item \textbf{Regular expressions:} \texttt{if [[ "\$\textbraceleft STRINGVAR\textbraceright " \alert{=$\sim$} .[sS]tring.* ]] \ldots} --- \texttt{.} represents any single character (\texttt{?} would be zero or one occurrence of preceding expression), \texttt{[]} any character inside and \texttt{.*} zero or more occurrences of any single characters
 			\item Same expression is interpreted in different ways
 		\end{itemize}
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Selecting version of RAxML according the CPU type I} %FIXME Fix wrong syntax highlight
+\begin{frame}[fragile]{Selecting version of RAxML according the CPU type I}
 	\begin{itemize}
 		\item \href{https://github.com/stamatak/standard-RAxML}{RAxML} can take advantage of modern CPUs to highly speed up calculations, with or without parallelization --- every version has separated binary, user must select, see \href{https://github.com/stamatak/standard-RAxML/blob/master/README.md}{README}
 		\item After compilation, the script can select e.g. on remote server appropriate version
@@ -3976,11 +3982,11 @@
           else # The very last option
             RAXML='raxmlHPC' # Slowest oldest CPU...
       fi # End of branching
-    ${RAXML} -s ${INPUT} # All the parameters as usually...
+    "${RAXML}" -s "${INPUT}" # All the parameters as usually...
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Selecting version of RAxML according the CPU type II}{Multiple branching in one step} %FIXME Fix wrong syntax highlight
+\begin{frame}[fragile]{Selecting version of RAxML according the CPU type II}{Multiple branching in one step}
 	\begin{itemize}
 		\item Same task as on previous slide, but instead of if-then branching it is using \texttt{case}
 		\item See \texttt{raxml\_case.sh} for whole script
@@ -3999,7 +4005,7 @@
       *) # The very last option
         RAXML='raxmlHPC';; # Slowest oldest CPU...
       esac # End of branching
-    ${RAXML} -s ${INPUT} # All the parameters as usually...
+    "${RAXML}" -s "${INPUT}" # All the parameters as usually...
 	\end{bashcode}
 \end{frame}
 
@@ -4093,7 +4099,7 @@
 	\end{bashcode}
 \end{frame}
 
-\subsection{}
+\subsection{Tasks}
 
 \begin{frame}{What is worth of scripting}
 	\begin{itemize}
@@ -4144,7 +4150,7 @@
 
 \subsection{Packages}
 
-\begin{frame}[allowframebreaks]{Package management}{Installation of software}
+\begin{frame}[allowframebreaks]{Package management}{Installation of software in Linux}
 	\begin{itemize}
 		\item \textbf{Package} --- an application or its part (documentation, plug-ins, translations,~\ldots)
 		\item Packages are available in \textbf{repositories} (directories) on the internet
@@ -4196,15 +4202,15 @@
 		\item \texttt{zypper rm \textit{package}} --- remove \textit{package}
 		\item \texttt{zypper ref} --- refresh repositories
 		\item \texttt{zypper up} --- update
-		\item \texttt{zypper dup} -- upgrade to newer release of whole distribution (see \href{https://en.opensuse.org/SDB:System_upgrade}{documentation})
-		\item \texttt{zypper ps -s} -- check which running applications (including SystemD services) should be restarted after update of packages
 		\item \texttt{zypper se \textit{term}} --- search \textit{term}
+		\item \texttt{zypper dup} or \texttt{opensuse-migration-tool} -- upgrade to newer release of whole distribution (see \href{https://en.opensuse.org/SDB:System_upgrade}{documentation})
+		\item \texttt{zypper ps -s} -- check which running applications (including SystemD services) should be restarted after update of packages
 		\item \texttt{zypper pa -{-}orphaned -{-}unneeded} --- list packages, which can be safely removed
 		\item \texttt{yast sw\_single} --- interactive manager
 		\item \texttt{zypper lr} --- list repositories
-		\item \texttt{zypper ar \textit{repository}} --- add \textit{repository} (URL of remote \texttt{*.repo} file)
+		\item \texttt{zypper ar \textit{repository}} --- add \textit{repository} (URL of remote \texttt{*.repo} file etc.)
 		\item \texttt{zypper rr \textit{repository}} --- remove \textit{repository} (name according to \texttt{zypper lr})
-		\item \texttt{zypper mr \textit{repository}} --- modify \textit{repository} (see \texttt{man zypper} first, or use \texttt{yast sw\_single})
+		\item \texttt{zypper mr \ldots{ }\textit{repository}} --- modify \textit{repository} (see \texttt{man zypper} first, or use \texttt{yast sw\_single})
 		\item \texttt{zypper pa \textit{package}} --- get information about particular \textit{package} or another query (e.g. list of dependencies, see \texttt{man zypper})
 		\item \texttt{opi \textit{package}} --- search (and possibly install) \textit{package} in \href{https://build.opensuse.org/}{OBS} in all repositories contributed by users (take care, there are no quality checks)
 		\item \texttt{rpmconfigcheck} --- check which configuration files in \texttt{/etc} have new version after update of some software --- compare respective configuration files with new \texttt{*.rpmnew} files
@@ -4252,7 +4258,7 @@
 		\item \texttt{rpm -e \textit{package}} --- remove \textit{package}
 		\item \texttt{rpm*} commands for other tasks
 		\item In older releases of Fedora, RedHat and CENTOS, \texttt{yum} is used instead of \texttt{dnf} in nearly identical way
-		\item \texttt{man dnf} (or \texttt{man yum}), \texttt{man rpm} --- usage help
+		\item \texttt{man dnf} (or \texttt{man yum} --- older tool to do the same tasks), \texttt{man rpm} --- usage help
 	\end{itemize}
 \end{frame}
 
@@ -4274,7 +4280,7 @@
 \begin{frame}{Manuals for package management}
 	\begin{itemize}
 		\item openSUSE and SUSE Linux Enterprise: \url{https://doc.opensuse.org/documentation/leap/startup/html/book-startup/part-reference-software.html} and \url{https://en.opensuse.org/Portal:Zypper}
-		\item Red Hat, Fedora, CENTOS, Scientific Linux and others: \url{https://docs.fedoraproject.org/en-US/quick-docs/dnf/} and older \url{http://yum.baseurl.org/}
+		\item Red Hat, Fedora, CENTOS, and others: \url{https://docs.fedoraproject.org/en-US/quick-docs/dnf/} and older \url{http://yum.baseurl.org/}
 		\item Debian (and derivatives): \url{https://www.debian.org/doc/manuals/debian-reference/ch02.en.html} and \url{https://wiki.debian.org/PackageManagement}
 		\item Ubuntu (and derivatives): \url{https://help.ubuntu.com/stable/ubuntu-help/addremove.html} and \url{https://help.ubuntu.com/community/AptGet/Howto}
 		\item And another distributions\ldots
@@ -4289,7 +4295,7 @@
 		\item Compilation creates binary specific for particular operating system and hardware platform --- can be tuned for optimal performance
 		\item Interpreted languages (Bash, Perl, Python etc.) don't have to be compiled (but it is possible) --- they need their interpreter to run, relative easily portable among hardware platforms and OS (similar to Java and its Virtual Machine)
 		\item Applications requiring compilation usually have good instructions
-		\item \textbf{If you don't have to do it, don't do it.}\textbf{} Solving problems can be complicated --- contact someone skilled or author of the application, consult ChatGPT\ldots
+		\item \textbf{If you don't have to do it, don't do it.}\textbf{} Solving problems can be complicated --- contact someone skilled or author of the application, consult AI\ldots
 	\end{itemize}
 	\begin{bashcode}
     # General schema within application directory with the source code:
@@ -4321,31 +4327,30 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Compilation of RAxML} % TODO Use Git instead of SVN.
+\begin{frame}[fragile]{Compilation of RAxML}
 	\begin{itemize}
 		\item Available from \url{https://github.com/stamatak/standard-RAxML}
 		\item Before compilation check \href{https://github.com/stamatak/standard-RAxML/blob/master/README.md}{README}
 		\item This example does not require to run \texttt{make install}, it does not have extra dependencies for compilation, it requires specifying of particular source file by \texttt{make~-f} (there are multiple \texttt{GCC} files, not just one main)
 	\end{itemize}
 	\begin{bashcode}
-    mkdir raxml # Create working directory
-    cd raxml/ # Go there
+    # Download the latest version from GitHub
+    git clone https://github.com/stamatak/standard-RAxML.git
+    cd standard-RAxML/ # Go to the downloaded source code
     # Get source code from GitHub (svn downloads only changed files)
-    svn co https://github.com/stamatak/standard-RAxML/tags/v8.2.12
-    cd v8.2.12/ # Go to newly created directory
     ls # List files
     rm -rf Windows* # No need of Windows version - delete it
     # Compile standard version (other versions are available for better CPU)
     make -f Makefile.gcc
     rm *.o # Remove unneeded files (temporal for compilation)
+    ls # List files. What changed? Any new items?
     ./raxmlHPC -h # Launch it - see RAxML help
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Compilation of SAMtools} % TODO Use Git instead os wget
+\begin{frame}[fragile]{Compilation of SAMtools} % TODO Use Git instead os wget. New version?
 	\begin{itemize}
-		\item See \url{https://www.htslib.org/download/}
-		\item Ensure packages \texttt{zlib} and \texttt{zlib-dev(el)} are installed --- required for running and compilation, see \href{https://github.com/samtools/samtools/blob/master/INSTALL}{INSTALL} and \href{https://github.com/samtools/samtools/blob/master/README}{README}
+		\item Ensure packages \texttt{zlib} and \texttt{zlib-dev(el)} are installed --- required for running and compilation, see \href{https://github.com/samtools/samtools/blob/master/INSTALL}{INSTALL} and \href{https://github.com/samtools/samtools/blob/master/README}{README}, and \url{https://www.htslib.org/download/}
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
@@ -4353,6 +4358,7 @@
       samtools-1.10.tar.bz2 # Download SAMtools
     tar xjvf samtools-1.10.tar.bz2 # Unpack the archive
     cd samtools-1.10/ # Go to the unpacked directory
+    less README # See documentation (also check INSTALL)
     ./configure --help # See various configuring options
     ./configure # Configure settings for compilation (default settings)
     ./configure --without-curses # Compile without ncurses support
@@ -4375,12 +4381,12 @@
 	\end{itemize}
 	\vfill
 	\begin{bashcode}
-    # Go to directory where you downloaded it
+    # Go to directory where you downloaded the latest version
     cd directory/with/downloaded/figtree
     # Decompress downloaded archive
-    tar zxvf FigTree_v1.4.4.tgz
+    tar zxvf FigTree_v1.4.5_pre.tgz
     # Go to created directory
-    cd FigTree_v1.4.4/
+    cd FigTree_v1.4.5_pre/
     ls * # List files, also in subdirectories
     # Launch it (command java launches *.jar files)
     java -jar lib/figtree.jar
@@ -4398,7 +4404,7 @@
 			\item They must be written in portable language like Java or script like Perl, Python or BASH
 			\item Otherwise we need an emulator --- not everything works
 		\end{itemize}
-		\item Windows has since v. 10 \href{https://learn.microsoft.com/windows/wsl/install}{possibility to run Linux applications}, other option (for more Windows versions) is \href{https://www.cygwin.com/}{Cygwin} (application must be specially compiled to work on Cygwin)
+		\item Windows has since v. 10 \href{https://learn.microsoft.com/windows/wsl/install}{possibility to run Linux applications}, other option is \href{https://www.cygwin.com/}{Cygwin} (application must be specially compiled to work on Cygwin)
 		\item To run Windows applications on Linux use \href{https://www.winehq.org/}{Wine}
 		\begin{itemize}
 			\item Search for packages named \texttt{wine} and install it
@@ -4455,7 +4461,7 @@
 			\item Always check documentation for requirements and instructions
 			\item Solving issues requires experience, can be tricky, ask for help and don't give it up
 		\end{itemize}
-		\item Scientific programming languages like R, Python, Perl, Julia, Matlab etc. have their own system to install language-specific packages
+		\item Scientific programming languages like R, Python, Perl, Julia, Matlab (Octave) etc. have their own system to install language-specific packages
 		\begin{itemize}
 			\item Distributions sometimes provide packages at least for part of the packages of such languages --- typically at least for Python, Perl or R --- this is especially convenient for packages having plenty of complex dependencies
 		\end{itemize}
@@ -4473,7 +4479,7 @@
 		\item See \url{https://www.gamingonlinux.com/} for news etc.
 		\item A lot of Windows-only games can be used with \href{https://appdb.winehq.org/}{Wine}
 		\item Install \href{https://store.steampowered.com/}{Steam} (package is often available in standard repositories) and there activate Proton (version of Wine to run plenty of Windows games on Linux via Steam)
-		\item Although not all games available for Windows are available for Linux, there are more games than you have time\ldots~;-)
+		\item Although not all games available for Windows are available for Linux, there are more games than you have time to play\ldots~;-)
 	\end{itemize}
 \end{frame}
 
@@ -4488,8 +4494,8 @@
 \begin{frame}[allowframebreaks]{CESNET and MetaCentrum}
 	\label{CESNET}
 	\begin{itemize}
-		\item \href{https://www.cesnet.cz/en}{CESNET} (\href{https://www.cesnet.cz/}{česky}) is organization of Czech universities, Academy of Science and other organizations taking care about Czech backbone Internet, one of world leading institutions of this type
-		\item CESNET provides various \href{https://www.cesnet.cz/en/services}{services} (\href{https://www.cesnet.cz/sluzby/}{česky})
+		\item \href{https://www.cesnet.cz/en}{CESNET} (\href{https://www.cesnet.cz/}{česky}) is organization of Czech universities, Academy of Science and other organizations taking care about Czech backbone Internet (among other tasks), one of world leading institutions of this type
+		\item CESNET also provides various \href{https://www.cesnet.cz/en/services}{services} (\href{https://www.cesnet.cz/sluzby/}{česky})
 		\begin{itemize}
 			\item Massive computations --- \href{https://www.cesnet.cz/en/services/computing-2/metacentrum-10}{MetaCentrum} (\href{https://www.cesnet.cz/sluzby/vypocty-2/narocne-vypocty-metacentrum-10}{česky})
 			\item Large \href{https://www.cesnet.cz/en/services/data-storage-3}{data storage} (\href{https://www.cesnet.cz/sluzby/datova-uloziste-3/datova-uloziste-13}{česky})
@@ -4522,7 +4528,7 @@
 		\item Manage your user account at \url{http://metavo.metacentrum.cz/en/myaccount/} (\href{https://metavo.metacentrum.cz/cs/myaccount/}{česky})
 		\item Personal view on actual resources and running tasks is at \url{https://metavo.metacentrum.cz/pbsmon2/person}
 		\item List of available applications \url{https://docs.metacentrum.cz/en/docs/software/alphabet}
-		\item MetaCentrum has 11~\href{https://docs.metacentrum.cz/en/docs/computing/infrastructure/frontends}{frontends} where users log and thousands of computers doing the calculations --- they are not accessed directly to run task
+		\item MetaCentrum has 9~\href{https://docs.metacentrum.cz/en/docs/computing/infrastructure/frontends}{frontends} where users log-in, and thousands of computers doing the calculations --- they are not accessed directly to run task, tasks are submitted via frontends
 		\item Most of computers are running \href{https://www.debian.org/}{Debian GNU/Linux}
 		\begin{itemize}
 			\item Basic usage as with any other Linux server --- SSH \& command line\ldots
@@ -4719,7 +4725,7 @@
 			\item If the application consumes less than required, the system temporarily lowers priority for future tasks, if it try to use more, it will be very slowed down or killed by the server
 			\item If using more physical machines, ensure correct settings of e.g. MPI (see documentation for respective software you are using)
 		\end{itemize}
-		\item If requesting e-mails (e.g. \texttt{-m abe} to get mail about abort, beginning and exit of the task) and submitting plenty of tasks by some script, it can result in plenty of mails\ldots
+		\item If requesting e-mails (e.g. \texttt{-m abe} to get mail about \textit{abort}, \textit{beginning} and \textit{exit} of the task) and submitting plenty of tasks by some script, it can result in plenty of mails\ldots
 		\item Every user has certain \href{https://metavo.metacentrum.cz/pbsmon2/users/}{priority} increased by \href{https://docs.metacentrum.cz/en/docs/access/terms\#acknowledgements-and-publications}{acknowledgments} (\textbf{it's mandatory to acknowledge MetaCentrum when using it}) in publications to MetaCentrum, and lowered by intensive usage of the service (the usage is calculated from past month)
 		\item After submission of the task, check in \href{https://metavo.metacentrum.cz/pbsmon2/queues/jobsQueued}{the queue} in which state it is --- sometimes it can't start because of impossible combination of requested resources or so
 		\item User can \href{https://metavo.metacentrum.cz/pbsmon2/nodes/physical}{check load of machines}
@@ -4755,7 +4761,7 @@
 			\item Hard to estimate\ldots
 			\item Some applications allow setting number of CPU threads --- check documentation
 			\item If using Java application, it often helps to request one more CPU thread for Java itself
-			\item Limiting memory is problematic, e.g. Java allows \texttt{java -Xmx8g -jar \ldots}, some applications also --- check documentation
+			\item Limiting memory is problematic, e.g. Java allows \texttt{java -Xmx8g -jar app.jar}, some applications also --- check documentation
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -4779,9 +4785,9 @@
 
 \begin{frame}{Running R tasks on MetaCentrum}
 	\begin{itemize}
-		\item There are only some R packages, to get more create own package library and use it in scripts (see e.g. \texttt{.libPaths()} within \texttt{R})
+		\item There are only some R packages installed, to use more create own package library and use it in scripts (see e.g. \texttt{.libPaths()} within \texttt{R})
 		\item \alert{Be careful about paths!}
-		\item In the \texttt{metacentrum.sh} script load R, e.g. \texttt{module add r/4.1.3-gcc-10.2.1-6xt26dl} and start there R script as usually \texttt{R CMD BATCH script.r}
+		\item In the \texttt{metacentrum.sh} script load R, e.g. \texttt{module add r/4.5.1-gcc-10.2.1-zmneq6c} and start there R script as usually \texttt{R CMD BATCH script.r}
 	\end{itemize}
 	\begin{enumerate}
 		\item Login to selected front node via SSH and load R module
@@ -5075,11 +5081,11 @@
     # Commit changes to prepare them to send to repository
     git commit -m "Message..."
     # Push changes into the repository (regardless where it is)
-    git push origin master # See further for selection of branches
+    git push origin main # See further for selection of branches
     # Making new branch and switching to it
     git checkout -b NewFeature # Now we are in branch NewFeature
-    # Switch back to branch master
-    git checkout master # Generally, "git checkout <branch>"
+    # Switch back to branch main
+    git checkout main # Generally, "git checkout <branch>"
     # Delete the branch (changes there are lost, must be in another branch)
     git branch -d NewFeature # Delete local branch
     git push origin --delete <branch> # Delete remote branch
@@ -5110,16 +5116,16 @@
     git restore <file>
     # Discard all local changes
     git fetch origin # Overwrite local changes
-    git reset --hard origin/master # If local repository is broken...
+    git reset --hard origin/main # If local repository is broken...
 	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Working with Git --- summary, settings and more}
 	\begin{itemize}
-		\item Basically repeat in \texttt{git} \texttt{add}, \texttt{commit} and \texttt{push} to get your work to the repository, and \texttt{fetch} and \texttt{pull} to download news from central repository
+		\item Basically repeat in \texttt{git} commands \texttt{add}, \texttt{commit} and \texttt{push} to get your work to the repository, and \texttt{fetch} and \texttt{pull} to download news from the central repository
 		\item \texttt{diff} to see local changes, \texttt{status} to see state
 		\item \texttt{log} and \texttt{branch} show history and branches
-		\item \texttt{branch}, \texttt{checkout} and \texttt{merge} for branching code and merging changes back to master (main) branch
+		\item \texttt{branch}, \texttt{checkout} and \texttt{merge} for branching code and merging changes back to main (master) branch
 	\end{itemize}
 	\begin{bashcode}
     git diff # See changes in particular text files
@@ -5276,6 +5282,7 @@
 		\item Limited usage to generate new code --- can misunderstand request, code can be technically correct, but not well working, can be incomplete or limited in corner-cases
 		\item Without at least basic understanding of subject it is hard to realize if ChatGPT solution is correct --- user should be at least basically able to work without AI, otherwise there is high risk of failures
 		\item \alert{One should never rely on tool with unclear functionality and problematic usage of of users' data and copyrighted content}
+		\item \alert{Never ever paste private data or data under copyright}
 	\end{itemize}
 \end{frame}
 
