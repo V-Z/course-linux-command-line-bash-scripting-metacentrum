@@ -251,83 +251,43 @@
 	\vfill
 \end{frame}
 
-\subsection{Choose one}
-
-\begin{frame}{Graphical User Interfaces (GUI)}{More like \enquote{Mac-style}, \enquote{Windows-style} or something else? Feature rich or minimalistic?}
-	\begin{itemize}
-		\item Most of GUIs are available for most of common distributions --- one is picked as default and \enquote{only} color style is different
-		\item \href{https://kde.org/}{KDE} --- one of the most common, feature extremely rich, basically \enquote{Windows-like} (can be changed), extremely versatile
-		\item \href{https://www.gnome.org/}{GNOME} --- one of the most common, relatively simplistic interface, but still feature rich, \enquote{Mac-like}
-		\item \href{https://xfce.org/}{XFCE} --- lightweight version of older GNOME --- for older computers or users not willing to be disturbed by graphical effects, basically \enquote{Mac-like} looking, but panels can be moved to \enquote{Windows style}
-		\item \href{https://cinnamon-spices.linuxmint.com/}{Cinnamon} --- remake of GNOME to look more like Windows\ldots
-		\item And much \href{https://en.wikipedia.org/wiki/Desktop_environment\#Examples_of_desktop_environments}{more}\ldots
-		\item Choose what you like --- doesn't matter much which one\ldots
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Ubuntu with GNOME} % TODO Update print screen, add more
-	\begin{center}
-		\includegraphics[height=6.5cm]{ubuntu.png}
-	\end{center}
-\end{frame}
-
-\begin{frame}{openSUSE with KDE --- Kubuntu is same, but blue\ldots} % TODO Update print screen, add more
-	\begin{center}
-		\includegraphics[height=6.5cm]{opensuse.png}
-	\end{center}
-\end{frame}
-
-\begin{frame}{Fedora with GNOME --- GNOME is always almost same} % TODO Update print screen, add more
-	\begin{center}
-		\includegraphics[height=6.5cm]{fedora.png}
-	\end{center}
-\end{frame}
-
-\begin{frame}{Linux Mint with Cinnamon} % TODO Update print screen, add more
-	\begin{center}
-		\includegraphics[height=6.5cm]{mint.png}
-	\end{center}
-\end{frame}
-
-\begin{frame}{Debian with XFCE --- Xubuntu has more \enquote{modern} design} % TODO Update print screen, add more
-	\begin{center}
-		\includegraphics[height=6.5cm]{debian.png}
-	\end{center}
-\end{frame}
-
-\begin{frame}{XFCE in Xubuntu, openSUSE, Fedora and Linux Mint} % TODO Update print screen
-	\begin{center}
-		\includegraphics[height=6.5cm]{xfce.png}
-	\end{center}
-\end{frame}
-
-\begin{frame}{Dolphin (KDE file manager) --- default for openSUSE (inset) and after tuning in the same distribution\ldots} % TODO Update print screen
-	\begin{center}
-		\includegraphics[height=5.75cm]{dolphin.png}
-	\end{center}
-\end{frame}
-
-\subsection{Differences}
-
-\begin{frame}{Differences among (common) Linux distributions}
-	\begin{itemize}
-		\item Design and colors ;-)
-		\item Default GUI (others can be installed)
-		\item Applications available right after installation
-		\item Default settings (not much)
-		\item Package management --- especially in command line
-		\item Development model --- conservative or experimental, fast or slow
-		\item Management of system services (how to start/stop certain services like database or web server) --- not important for daily usage for most of users
-		\item Sometimes in location of some system files (can be customized) --- also not important in daily usage of most of users
-		\item Kernel is almost same, applications are same and used in same way\ldots
-		\item Command line is almost same across Linux, and almost same as in other UNIX systems (macOS,~\ldots)
-	\end{itemize}
-\end{frame}
-
 \section{UN*X}
 
 \begin{frame}{UN*X}{Theory and principles of UNIX-based operating systems}
 	\tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
+\end{frame}
+
+\subsection{SSH}
+
+\begin{frame}[fragile]{Login to remote server}{SSH --- secure shell --- encrypted connection}
+	\label{ssh}
+	\begin{multicols}{2}
+		\begin{bashcode}
+    ssh remoteUser@remote.server.cz
+    # When logging first time, check
+    # and confirm fingerprint key
+    yes # And press Enter
+    # Type remote user's password
+    # (nothing is shown when typing)
+    # Confirm by Enter
+		\end{bashcode}
+		\vfill
+		\begin{itemize}
+			\item Toy server: user names \texttt{cu01}--\texttt{cu35}
+		\end{itemize}
+		\vfill
+		\begin{bashcode}
+    ssh courseuXY@vyuka.natur.cuni.cz
+		\end{bashcode}
+		\vfill
+		\begin{itemize}
+			\item If fingerprint key changes, ssh complains a~lot --- possible \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{man in the middle attack}
+			\item From Windows use \href{https://www.chiark.greenend.org.uk/~sgtatham/putty/}{Putty} (see right figure)
+		\end{itemize}
+		\begin{center}
+			\includegraphics[height=6cm]{putty.png}
+		\end{center}
+	\end{multicols}
 \end{frame}
 
 \subsection{Directory structure}
@@ -365,23 +325,6 @@
 		\item Usually, work only in your home, anywhere else modify files only if you are absolutely sure what you are doing
 		\item Normal user doesn't have permission to modify files outside his directory (with exception of plugged removable media, etc.)
 		\item Try \texttt{man hier} for details
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Configuration in \texttt{/etc} (examples)}
-	\begin{itemize}
-		\item Configuration of system services (servers,~\ldots) and behavior
-		\begin{itemize}
-			\item Apache web server, database, FTP server, networking, basic system settings,~\ldots
-		\end{itemize}
-		\item \texttt{cron*} --- cron automatically repeatedly scheduled tasks
-		\item \texttt{fstab} --- description of FS mounted during startup
-		\item \texttt{group} --- list of users and groups
-		\item \texttt{passwd} --- basic settings for users (home directory, default shell,~\ldots)
-		\item \texttt{resolv.conf} ---  DNS settings (part of basic networking)
-		\item \texttt{shadow} --- users passwords in encrypted form
-		\item \texttt{skel} --- basic directories and configuration for new users
-		\item Much more according to software installed\ldots
 	\end{itemize}
 \end{frame}
 
@@ -750,39 +693,6 @@
 	\end{itemize}
 \end{frame}
 
-\subsection[SSH]{SSH --- secure shell and screen}
-
-\begin{frame}[fragile]{Login to remote server}{SSH --- secure shell --- encrypted connection}
-	\label{ssh}
-	\begin{multicols}{2}
-		\begin{bashcode}
-    ssh remoteUser@remote.server.cz
-    # When logging first time, check
-    # and confirm fingerprint key
-    yes # And press Enter
-    # Type remote user's password
-    # (nothing is shown when typing)
-    # Confirm by Enter
-		\end{bashcode}
-		\vfill
-		\begin{itemize}
-			\item Toy server: user names \texttt{courseu01}--\texttt{courseu35}
-		\end{itemize}
-		\vfill
-		\begin{bashcode}
-    ssh courseuXY@vyuka.natur.cuni.cz
-		\end{bashcode}
-		\vfill
-		\begin{itemize}
-			\item If fingerprint key changes, ssh complains a~lot --- possible \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{man in the middle attack}
-			\item From Windows use \href{https://www.chiark.greenend.org.uk/~sgtatham/putty/}{Putty} (see right figure)
-		\end{itemize}
-		\begin{center}
-			\includegraphics[height=6cm]{putty.png}
-		\end{center}
-	\end{multicols}
-\end{frame}
-
 \begin{frame}{SSH and screen practice}
 	\begin{block}{Tasks}
 		\begin{enumerate}
@@ -1068,19 +978,6 @@
 	\end{center}
 \end{frame}
 
-\begin{frame}{Tasks with archives}
-	\begin{enumerate}
-		\item Compress (and decompress) text file \texttt{Oxalis\_HybSeq\_nrDNA\_selection\_} \texttt{alignment.fasta} from \texttt{scripts\_data} with various compressing tools.
-		\item Compare sizes of original file and compressed outputs.
-		\item Compress (and decompress) all \texttt{foto\_oxalis\_*.jpg} (\textit{Oxalis} photos) together from \texttt{scripts\_data} with various compressing tools.
-		\item Compare sizes of original files and compressed outputs.
-		\item Which compression tool seems to be the best? In terms of compressing ratio and time needed for compression.
-		\item Is more effective compression of text files or images? Why?
-		\item Why is even plain \texttt{tar} (without compression, it requires \texttt{gzip}, \texttt{bzip2}, \texttt{xz} or \texttt{lzma} to add compression) useful with FAT disks (it applies also for another tools)?
-		\item Search the Internet to find out how to unpack \texttt{arj} and \texttt{rar} archives from command line.
-	\end{enumerate}
-\end{frame}
-
 \subsection{Searching}
 
 \begin{frame}[fragile]{Find --- looking for files}
@@ -1141,17 +1038,6 @@
     # Search in home dir for files named "*.jpg" or "*.txt" and print them
     find ~ -name "*.jpg" -o -name "*.txt" # '-print' is default, can be omitted
 	\end{bashcode}
-\end{frame}
-
-\begin{frame}{Searching tasks}
-	\begin{block}{Tasks with \texttt{find}}
-		\begin{enumerate}
-			\item Find all \texttt{*.vcf.gz} files in whole \texttt{/home}. Why do you get errors for some directories?
-			\item Compress, see and decompress all shell scripts (every script in its own archive) in your \texttt{$\sim$}.
-			\item Change permissions of all content of your home directory so that no one else can access it. Consider hidden files, directories and scripts. Try to use single command.
-			\item List all directories in \texttt{/etc} up to second level.
-		\end{enumerate}
-	\end{block}
 \end{frame}
 
 \subsection{Globbing, wildcards, quotes}
@@ -1335,117 +1221,6 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Standard input and output and redirects}
-	\begin{itemize}
-		\item Standard input (\texttt{stdin}) is standard place where software takes input (keyboard and terminal) and writes results to standard output (\texttt{stdout}) --- typically monitor (or file)
-		\item Standard error output (\texttt{stderr}) is target of error messages --- typically also monitor (but can be log file or so)
-		\item \alert{\texttt{\textgreater}} redirects output into new place (file, device, another command,~\ldots)
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    cat /etc/group # Print whole file /etc/group
-    grep users /etc/group > users # Extract from /etc/group lines containing
-                                  # "users" and write output into new file
-    cat users # See result
-	\end{bashcode}
-	\vfill
-	\begin{itemize}
-		\item \alert{\texttt{\textgreater\textgreater}} adds output to the end of the file (\texttt{\textgreater} rewrites target file)
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    grep root /etc/group >> users # Add new information into existing file
-    cat users # See result
-	\end{bashcode}
-	\vfill
-	\begin{itemize}
-		\item \alert{Task:} Practice chaining and redirects from previous and this slide. What is it good for?
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Redirects of input/output}
-	\label{pipe}
-	\begin{itemize}
-		\item \texttt{/dev/null} --- \enquote{black hole} --- can discard anything
-	\end{itemize}
-	\begin{bashcode}
-    command 2> /dev/null # Discard only errors (note "2" for errors only)
-    command > /dev/null # Discard all output (no logging or onscreen output)
-	\end{bashcode}
-	\begin{itemize}
-		\item \texttt{/dev/stdin} --- standard input (typically keyboard)
-		\begin{itemize}
-			\item In case application reads files, not from standard input:
-		\end{itemize}
-	\end{itemize}
-	\begin{bashcode}
-    echo "Žluťoučký kůň úpěl ďábelské šó" | iconv -f utf-8 -t cp1250 /dev/stdin
-	\end{bashcode}
-	\begin{itemize}
-		\item \texttt{/dev/stdout} --- standard output
-		\begin{itemize}
-			\item Typically screen, commonly redirected into file
-			\item We wish to see errors which would be discarded otherwise:
-		\end{itemize}
-	\end{itemize}
-	\begin{bashcode}
-    command 2> /dev/stdout # Errors go to screen (typically), not to log
-	\end{bashcode}
-	\begin{itemize}
-		\item \texttt{/dev/stderr} --- standard error output
-		\begin{itemize}
-			\item Typically screen or log file, right place to send errors to:
-		\end{itemize}
-	\end{itemize}
-	\begin{bashcode}
-    echo "error" > /dev/stderr
-    command 2> /dev/stderr # Errors go to standard error log
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Redirects of standard input and output I}{Common way how to save output of some command(s)}
-	\begin{bashcode}
-    # If file directory_listing.txt exists, will be overwritten
-    ls -la > directory_listing.txt
-    cat directory_listing.txt # See result (same as running "ls -la")
-    # If file directory_listing.txt exists, new content will be appended
-    ls -la >> directory_listing.txt # See result 'cat directory_listing.txt'
-    # We are outputting 'ls -lh' to 'awk' and not to screen, printing only
-    # selected columns, and parsing with 'column -t' for tabular display
-    ls -lh # Compare outputs of the 3 commands starting with 'ls -lh'
-    ls -lh | awk '{ print $NF, " ", $5}' # See further more info about AWK
-    ls -lh | awk '{ print $NF, " ", $5}' | column -t
-	\end{bashcode}
-	\begin{block}{Tasks with redirects of standard input/output}
-		\begin{enumerate}
-			\item Try everything on this and following slide, be sure to understand the redirects.
-			\item Try to figure out some other example regarding your practical needs.
-		\end{enumerate}
-	\end{block}
-\end{frame}
-
-\begin{frame}[fragile]{Redirects of standard input and output II}
-	\begin{bashcode}
-    # Add error output to the end of standard output file
-    # Note: In the examples below command "commandX" does not exist -
-    # it produces error "command not found" to be recorded by the log
-    # and because of redirect, the error is not shown in the terminal.
-    command > outputfile.log 2>&1 # Example:
-    { commandX; ls; } > outputfile.log 2>&1
-    cat outputfile # See result
-    # Compare with following. What is the difference?
-    { commandX; ls; } > outputfile.log # Where does error and output go?
-    # Compare two following commands. What is the difference?
-    { commandX; ls; } > outputfile.log 2>&1 # Inspect outputfile.log
-    { commandX; ls; } >> outputfile.log 2>&1 # Inspect outputfile.log
-    # Add error output to the error log text file
-    command >> outputfile.log 2> error.log # Example:
-    { commandX; ls; } >> outputfile.txt 2> error.log
-    cat outputfile.txt # See results
-    cat error.log # See results
-	\end{bashcode}
-\end{frame}
-
 \begin{frame}[fragile]{Examples of redirects and pipes when working with molecular data I}
 	\begin{bashcode}
     # Extract and sort depth of coverage (how many times was each position
@@ -1577,84 +1352,6 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{SSH keys}{Secure way how to connect to multiple servers with single key and more}
-	\begin{itemize}
-		\item Secure way how to connect to multiple servers via SSH with single (or no) password using asymmetric encryption
-		\item Command \texttt{ssh-keygen} generates pair of keys
-		\begin{itemize}
-			\item Private key is typically in \texttt{$\sim$/.ssh/id\_*} file(s) (according to cipher)
-			\item Public key is typically in \texttt{$\sim$/.ssh/id\_*.pub} file(s) (according to selected cipher) and are copied to target servers
-			\item Private key is unlocked by password (might be without password) and it then allows to login to any server having the public key
-			\item Having only public key is not enough to login, private key without password is still not enough, but user must be sure private key is kept securely and not lost or stolen
-			\item When running it, \texttt{ssh-keygen} asks bunch of questions --- unless having special needs, keep defaults (hit Enter), using password for key is optional (but recommended)
-		\end{itemize}
-		\item File \texttt{$\sim$/.ssh/known\_hosts} contain servers you have ever connected to, and their SSH fingerprints (unique IDs) --- if this changes, SSH complains a lot as it could be \href{https://en.wikipedia.org/wiki/Man-in-the-middle_attack}{Man-in-the-middle attack}
-		\item File \texttt{$\sim$/.ssh/authorized\_keys} contains public keys allowing logging to the machine
-		\item \texttt{$\sim$/.ssh/config} can store various settings for particular servers
-		\item SSH keys work in all applications using SSH (SFTP, SSHFS, rsync, Git, many graphical file managers,~\ldots)
-		\item User can have various local passwords on servers, but use single SSH key to connect to all of them, very convenient if connecting to multiple servers
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Connect to SSH with key}{No need to remember password for every server\ldots}
-	\begin{bashcode}
-    # Create the key (several options) --- for most of cases keep defaults
-    ssh-keygen -t rsa -b 4096 # Good security, portable
-    # ECC gives better security, but not all servers/applications support it
-    ssh-keygen -t ecdsa -b 521 # Higher security
-    ssh-keygen -t ed25519 # Same security as ecdsa, higher performance
-    # Empty (no) passphrase will connect to server without password
-    # Copy public key to remote server (private key must be kept locally)
-    ssh-copy-id user@remote.server.cz
-    # Now, public key is on the server and private key in local computer is
-    # unlocking the connection
-    # Unlock the key (no need in some distributions or if there is no
-    # passphrase) - must be done only once per user session
-    ssh-add
-    # Connect as usually
-    ssh user@remote.server.cz
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[allowframebreaks]{Network tasks}
-	\begin{enumerate}
-		\item Create SSH key (if you don't have any), copy the public part to \texttt{vyuka.natur.cuni.cz} and connect there with SSH.
-		\begin{enumerate}
-			\item What are advantages and disadvantages of having the key with or without password?
-			\item Is there any reason for having multiple keys? Can you find any examples?
-			\item Which services, protocols can use it? Find some examples.
-		\end{enumerate}
-		\item Make in your notebook new empty directory and mount there via SSHFS your home directory on \texttt{vyuka.natur.cuni.cz} (or on some other server).
-		\begin{enumerate}
-			\item Explore it. What is then path to files on the remote server?
-			\item Disconnect the server when done.
-		\end{enumerate}
-		\item Use \texttt{wget} and \texttt{curl} to download this presentation to your notebook (link at slide~\ref{materials}).
-		\begin{itemize}
-			\item For \texttt{curl} be aware of setting of output --- what is default behavior?
-		\end{itemize}
-		\item Use \texttt{scp} to copy directory with toy data and scripts from your home directory on \texttt{vyuka.natur.cuni.cz} into your notebook.
-		\item Use \texttt{scp} to copy any file from your notebook into your home directory on \texttt{vyuka.natur.cuni.cz}.
-		\item Use \texttt{rsync} to update toy data and scripts in your notebook according to version on \texttt{vyuka.natur.cuni.cz} in \texttt{/srv/scripts\_data}.
-		\item Use \texttt{rsync} to update directory with toy data files and scripts in your home directory on \texttt{vyuka.natur.cuni.cz} according to version in your notebook.
-		\begin{itemize}
-			\item For \texttt{rsync} try to use various options, run it several times.
-			\item Explore help of \texttt{rsync}. Can you find there some useful parameters?
-		\end{itemize}
-		\item Get MAC and IP address of your notebook. Why can be such information useful?
-		\item Ping some web server. Is it alive and well reachable?
-		\item Why can be output of \texttt{traceroute} useful when you have problems with network?
-		\item Mount (explore and then unmount) your CESNET ownCloud into your notebook. If unsure, consult \href{https://du.cesnet.cz/en/navody/owncloud/start}{help} (\href{https://du.cesnet.cz/cs/navody/owncloud/start}{česky}).
-		\begin{itemize}
-			\item It is available for all academics in the Czech Republic, just go to \url{https://owncloud.cesnet.cz} and login with your institutional credentials
-			\item Alternatively connect to some other ownCloud/nextCloud/generic webDAV server
-		\end{itemize}
-		\item What are advantages and disadvantages of mounting of remote servers (SSHFS,~etc.) into local directories?
-		\item Connect to \texttt{vyuka.natur.cuni.cz} (or any other server) using \texttt{mc} and copy there and back some files. What are advantages and disadvantages of \texttt{mc} when compared with usage of \texttt{scp} or \texttt{rsync}?
-		\item Find in graphical interface of your computer how to connect via SSH/SFTP/SCP to transfer files. Connect to \texttt{vyuka.natur.cuni.cz} or some other server and transfer there and back some files.
-	\end{enumerate}
-\end{frame}
-
 \subsection{Parallelization}
 
 \begin{frame}{Parallelization with GNU Parallel}
@@ -1685,20 +1382,6 @@
       -quality 75 '{}' '{.}-small.jpg' # or
     parallel convert -resize 25% '{}' '{.}-small.jpg' ::: *.jpg
     convert --help # See help of 'convert' from ImageMagick set
-    # Find WORD in huge text file (named "longfile" here) - this works
-    # but it is not possible to get line number (file is red in blocks)
-    parallel --pipe --block 10M -- grep --color=always WORD < longfile
-    nl longfile | parallel -k --pipe --block 20M -- grep WORD # Add line num.
-    # When needed to get phrase or regular expression (use parameter
-    # "-q" for escaping of shell special characters or extra quotes):
-    # "--" stops reading parameters for parallel
-    nl longfile | parallel -qk --pipe --block 20M -- grep "WORD TEXT" # or
-    nl longfile | parallel -k --pipe --block 20M -- grep '"WORD TEXT"'
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{GNU Parallel examples II}
-	\begin{bashcode}
     # Convert all WAV files into OGG
     parallel -X oggenc ::: *.wav # -X parse as many parameters as possible
     # Decompress all *.bz2 files in 'archive' directory using 2 CPU threads
@@ -1708,18 +1391,13 @@
     parallel :::: command_list.txt
     # Add same text to the end of multiple files
     find . -name '*.txt' -print | parallel 'cat block_to_be_added.txt >> {}'
-    # Replace particular text in multiple files with sed and GNU Parallel
-    find . -name '*.txt' -print | parallel 'sed -i "s/XXX/YYY/g" {}'
-    # Launch MrBayes for multiple nexus files and create log file with
-    # starting and ending date and time
-    find . -name '*.nexus' -print | parallel 'echo -e "Start: $(date)\n" > \
-      {}.log && mb {} | tee -a {}.log && echo "End: $(date)" >> {}.log'
-    # 'tee' copies output of the program into given log file
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{GNU Parallel examples III and tasks}
+\begin{frame}[fragile]{GNU Parallel examples II and tasks}
 	\begin{bashcode}
+    # Replace particular text in multiple files with sed and GNU Parallel
+    find . -name '*.txt' -print | parallel 'sed -i "s/XXX/YYY/g" {}'
     # Create BCFtools statistics for all *.vcf.gz files
     find . -name "*.vcf.gz" | parallel "echo '{/}' && bcftools stats -F \
       reference.fasta '{}' > '{.}'.stats.txt"
@@ -1731,8 +1409,6 @@
 	\begin{block}{Tasks}
 		\begin{enumerate}
 			\item Resize using \texttt{parallel} photos \texttt{foto\_oxalis\_*.jpg} to 1000x1000~px.
-			\item Convert all above JPG files to PNG.
-			\item Use several options how to run \texttt{parallel}.
 			\item Think about some example solving your practical task where GNU Parallel would be helpful.
 		\end{enumerate}
 	\end{block}
@@ -1893,32 +1569,6 @@
 		\item Grep works per-line, multiline patterns are more or less impossible (use AWK or Perl instead) --- this is general limitation of basic tools
 		\item Grep (and sed and other tools) in macOS is outdated, missing plenty of functions --- use version from Homebrew (slide~\ref{homebrew})
 	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Work with columns}
-	\label{cutpaste}
-	\begin{itemize}
-		\item \texttt{cut} extracts columns, \texttt{paste} joins, \texttt{column} reformates
-		\item BASH can not select column according to its name (Perl can do that)
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    cut column/delimiter+field textfile
-    cut -c 1 /etc/group # Get first character from each line
-    cut -c 1-5 /etc/group # Get character 1-5
-    cut -c 4- /etc/group # Get character 4 and more
-    cut -c 2,5,7 /etc/group # Get characters 2, 5 and 7
-    cut -d ':' -f 1 /etc/group # Select 1st field, fields are separated by ":"
-    cut -d ':' -f 2-4 /etc/group # Select fields 2-4 separated by ":"
-    cut -f 1,2 cut_awk_test_file.tsv # get columns 1 and 2 separated by TABs
-    # Add second file as second column
-    paste file1 file2 > outputfile
-    # Output will be two columns (from file1 and file2) separated by TAB
-    paste -d "|" diff_test_file_1.txt diff_test_file_2.txt # -d for delimiter
-    # Swapping columns is not very comfortable (see later AWK)...
-    paste <(cut -f 2 cut_awk_test_file.tsv) <(cut -f 1 cut_awk_test_file.tsv)
-    ls -l | column -t # Reformate input as table (compare with 'ls -l')
-	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Examples of usage of head, grep and cut with our data I}
@@ -2194,37 +1844,6 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{diff and patch}
-	\begin{itemize}
-		\item Users of \texttt{vim} (slide~\ref{vim}) can display the diff in \texttt{vim}, or use \texttt{vimdiff}
-		\item In vimdiff swap between panes by \texttt{Ctrl+W+W}
-		\begin{itemize}
-			\item Can open more files, works like standard \texttt{vim} (from slide~\ref{vim}), individual files can be saved
-		\end{itemize}
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    # Display diff in vim
-    diff -u diff_test_file_1.txt diff_test_file_2.txt | view -
-    # vimdiff can show more colors, launches vim (exit by <ESC>:q!<Enter>)
-    vimdiff diff_test_file_1.txt diff_test_file_2.txt
-	\end{bashcode}
-	\vfill
-	\begin{itemize}
-		\item Saves difference between two files --- it can be later used as template to modify original file
-		\item Single patch file can contain changes from multiple files
-		\item Patch file from \texttt{diff -u} is common way how to send changes, improvements,~\ldots
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    # Create the diff file - use like "diff old new"
-    diff -u diff_test_file_1.txt diff_test_file_2.txt > difference.diff
-    # Apply the patch - xxx_file_1.txt is patched according to xxx_file_2.txt
-    patch < difference.diff # or
-    patch diff_test_file_1.txt difference.diff
-	\end{bashcode}
-\end{frame}
-
 \subsection{Editors}
 
 \begin{frame}[fragile]{Command line text editors}
@@ -2246,29 +1865,6 @@
 	\vfill
 	\begin{itemize}
 		\item \alert{Task:} Run \texttt{vimtutor} and follow instructions there.
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{The editors and their usage}
-	\begin{itemize}
-		\item In \texttt{nano} and \texttt{pico} see bottom line for commands
-		\begin{itemize}
-			\item \texttt{Ctrl+O} to write the file, \texttt{Ctrl+X} to quit the editor, \texttt{Ctrl+G} for help (\texttt{\textasciicircum}~stands for \texttt{Ctrl} key)
-		\end{itemize}
-		\item In \texttt{mc} highlight the file to edit and press \texttt{F4}
-		\begin{itemize}
-			\item \texttt{F2} to save, \texttt{F10} to quit, \texttt{F1} to help, \texttt{F9} for top menu (navigate with arrows, cancel with double \texttt{Esc}), it is possible to use mouse
-		\end{itemize}
-		\item \textbf{Emacs} use huge number of commands with \texttt{Ctrl} key (basics on next slide)
-		\begin{itemize}
-			\item See \url{https://www.gnu.org/software/emacs/tour/}, \url{https://tuhdo.github.io/emacs-tutor.html} and \url{https://systemcrafters.net/emacs-essentials/absolute-beginners-guide-to-emacs/}
-		\end{itemize}
-		\item The most common (but very complex and specific) is \textbf{Vim}
-		\begin{itemize}
-			\item See \url{https://vim-adventures.com/} to play a~game and learn Vim (and derivatives)
-		\end{itemize}
-		\item \textbf{Emacs} and \textbf{Vim} have huge number of possibilities and support for plugins and scripts, but completely different usage style --- one person can really learn only one\ldots
-		\item If regularly working in command line, master any command line editor
 	\end{itemize}
 \end{frame}
 
@@ -2660,27 +2256,6 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Install tools needed for compilation}
-	\begin{itemize}
-		\item You need to install compilation tools for your distribution and programming languages you are going to use
-		\item Commonly, extra dependencies are required to compile the application
-		\begin{itemize}
-			\item Packages for compilation use to end with \texttt{-dev} or \texttt{-devel} (e.g. if the software requires package \texttt{zlib} to run, install also its developmental version \texttt{zlib-dev(el)} to be able to compile it)
-			\item All requirements should be listed in README and/or INSTALL documents of particular package --- user must install them manually\ldots
-		\end{itemize}
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    # openSUSE and SUSE Linux Enterprise
-    zypper in -t pattern devel_basis devel_C_C++
-    # Debian, Ubuntu and derivatives like Linux Mint and others
-    apt install build-essential # Or "aptitude install build-essential"
-    # Red Hat, CENTOS, Fedora and derivatives (2 options - dnf or yum)
-    dnf groupinstall "Development Tools" "C Development Tools and Libraries"
-    yum groupinstall "Development Tools" "C Development Tools and Libraries"
-	\end{bashcode}
-\end{frame}
-
 \begin{frame}[fragile]{Compilation of RAxML}
 	\begin{itemize}
 		\item Available from \url{https://github.com/stamatak/standard-RAxML}
@@ -2699,29 +2274,6 @@
     rm *.o # Remove unneeded files (temporal for compilation)
     ls # List files. What changed? Any new items?
     ./raxmlHPC -h # Launch it - see RAxML help
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Compilation of SAMtools} % TODO Use Git instead os wget. New version?
-	\begin{itemize}
-		\item Ensure packages \texttt{zlib} and \texttt{zlib-dev(el)} are installed --- required for running and compilation, see \href{https://github.com/samtools/samtools/blob/master/INSTALL}{INSTALL} and \href{https://github.com/samtools/samtools/blob/master/README}{README}, and \url{https://www.htslib.org/download/}
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    wget https://github.com/samtools/samtools/releases/download/1.10/
-      samtools-1.10.tar.bz2 # Download SAMtools
-    tar xjvf samtools-1.10.tar.bz2 # Unpack the archive
-    cd samtools-1.10/ # Go to the unpacked directory
-    less README # See documentation (also check INSTALL)
-    ./configure --help # See various configuring options
-    ./configure # Configure settings for compilation (default settings)
-    ./configure --without-curses # Compile without ncurses support
-    make # Compile the software - check if there is error
-         # Ensure developmental files for zlib (and ncurses) are available
-    sudo make install # Copy products into final location - default /usr/local
-    sudo make prefix=/where/to/install install # Install into custom location
-    make prefix=/home/$USER/bin install # Binary into /home/$USER/bin/bin
-    make clean # Cleanup - final files are already in the destination
 	\end{bashcode}
 \end{frame}
 
@@ -3223,270 +2775,6 @@
 	\end{itemize}
 \end{frame}
 
-\section{Git}
-
-\begin{frame}{Git}
-	\begin{multicols}{2}
-		\vfill
-		\tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
-		\vfill
-		\begin{center}
-			\includegraphics[height=3.25cm]{git_fire.png}
-		\end{center}
-		\columnbreak
-		\begin{center}
-			\includegraphics[height=5.25cm]{git_xkcd.png}
-		\end{center}
-		\begin{flushright}
-			\url{https://xkcd.com/1597/}
-		\end{flushright}
-	\end{multicols}
-\end{frame}
-
-\subsection{Git principle}
-
-\begin{frame}[allowframebreaks]{Git and version control}
-	\begin{itemize}
-		\item \href{https://git-scm.com/}{Git} is \href{https://en.wikipedia.org/wiki/Version_control}{version controlling} (\href{https://cs.wikipedia.org/wiki/Verzov\%C3\%A1n\%C3\%AD}{česky}) system (nowadays the most common) --- it traces changes among all versions --- absolutely crucial for any software development
-		\item Older (nowadays not so common) version controlling systems is Subversion (SVN); there are many more (Bazaar, Mercurial,~\ldots)
-		\item Probably the best textbook for Git is \href{https://git-scm.com/book/en/v2}{Chacon's Pro Git}
-		\begin{itemize}
-			\item Dostupná i~\href{https://git-scm.com/book/cs/v2}{česky} (včetně \href{https://knihy.nic.cz/cs/detail/2/}{prvního vydání})
-		\end{itemize}
-		\item Changes and their history is stored in repository (local or network, shared or private) --- it is possible to view any historical state and differences between any versions
-		\item It is possible to trace who and when did what
-		\item Branching and merging of branches helps with making of big changes
-		\begin{itemize}
-			\item When new branch is created, it contains copy of current state
-			\item User selects in which branch she/he is working, the branches are diverging, user can commit in every branch independently
-			\item Commits in various branches can be compared and branches can be merged again
-			\item Key feature of Git --- branches are useful when user starts to work on any big change in the project (the \enquote{main} part is intact while developers can freely work on major change)
-		\end{itemize}
-		\item Users work on a project in some directory as usually and from time to time commit local changes to staging (temporal area) and then push them to remote or local repository (directory storing all Git history of particular project, can be anywhere)
-		\item Every commit is checkpoint in the history
-		\begin{itemize}
-			\item Can be tagged (named), e.g. particular released version of software, or project stage
-			\item User can compare any two commits or commit and current state
-		\end{itemize}
-		\item Stagging area serves as local \enquote{container} of changes to be pushed to central Git repository (or to be modified, discarded)
-		\item Central repository keeps whole history of the project
-		\begin{itemize}
-			\item Every user has full copy of the central Git repository --- can be large
-		\end{itemize}
-		\item Git was developed by Linus to trace development of Linux kernel, now it is probably the most used version control tool, used also by Microsoft to trace development of Windows :-)
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{GitHub and others}
-	\begin{itemize}
-		\item \href{https://github.com/}{GitHub} is currently probably the most popular platform to host development of open-source projects, see \href{https://support.github.com/}{documentation}
-		\item Probably second most common on-line service providing Git repository is \href{https://about.gitlab.com/}{GitLab}
-		\begin{itemize}
-			\item User can create an account on GitLab (as on GitHub), or download and install GitLab system on own server (like \href{https://sorbus.ibot.cas.cz/en/gitlab}{we did}, \href{https://sorbus.ibot.cas.cz/cs/gitlab}{česky})
-		\end{itemize}
-		\item \href{https://sourceforge.net/}{SourceForge} used to be more popular in the past, still harbors plenty of interesting projects
-		\item Others are e.g. \href{https://bitbucket.org/}{Bitbucket}, \href{https://www.codebasehq.com/}{Codebase},~\ldots
-		\item For on-line services, many tools are available only for paying customers
-		\item All such services provide Git repositories accessible through standard tools (from command line, see further; or from some special application), through web browser
-		\begin{itemize}
-			\item Exact usage might differ from standard Git, check respective help pages first
-		\end{itemize}
-		\item Git repository can be easily hosted e.g. on any Linux server\ldots
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Git principles}
-	\begin{multicols}{2}
-		\begin{itemize}
-			\item Three main areas
-			\begin{enumerate}
-				\item Working directory
-				\item Staging (changes awaiting to be pushed to central repository)
-				\item Git repository (remote/local)
-			\end{enumerate}
-			\item Everyone has whole repository and history (it's \enquote{distributed}) --- very robust
-			\item Flexible branches
-			\begin{itemize}
-				\item Very convenient
-				\item Keeping work structured
-				\item Separation of tasks
-				\item Keeping more versions of the project
-			\end{itemize}
-			\item \alert{Homework:} play \href{https://ohmygit.org/}{Oh My Git!} to learn more and practice
-		\end{itemize}
-		\begin{center}
-			\includegraphics[height=5.5cm]{git.png}
-		\end{center}
-		\begin{flushright}
-			\begin{footnotesize}
-				\href{https://git-scm.com/book/en/v2/Getting-Started-What-is-Git\%3F}{https://git-scm.com/}, \href{https://nvie.com/posts/a-successful-git-branching-model/}{https://nvie.com/}
-			\end{footnotesize}
-		\end{flushright}
-	\end{multicols}
-\end{frame}
-
-\subsection{Git basics} % TODO Bit reorder commands so it is more fluent.
-
-\begin{frame}[fragile]{Working with Git --- start and sending changes}
-	\begin{bashcode}
-    # Create a new central repository (e.g. on a server) in empty directory
-    git init --bare # No need when establishing project e.g. on GitHub
-    # Create a new repository for new project (in empty directory)
-    git init # No need when cloning from existing repository
-    # If you did not start by cloning, add connection to server
-    git remote add origin <location> # Do only once on the beginning
-    # <location> can be remote server or local path
-    git remote add origin . # For repository within working directory
-    # Or checkout (make a copy) of existing local or remote repository
-    git clone /path/to/local/repository # Locally mounted repository
-    git clone username@host:/path/to/remote/repository # Over SSH
-    git clone https://github.com/V-Z/course-linux-command-line-bash-
-      scripting-metacentrum.git # Clone from web, e.g. GitHub
-    # Add files to trace with Git
-    # Ignored files (or patterns) can be listed in .gitignore file
-    git add <files> # Or "git add *"
-    git status # See changed files, commits in staging, etc.
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Working with Git --- branching and getting changes}
-	\begin{bashcode}
-    # Commit changes to prepare them to send to repository
-    git commit -m "Message..."
-    # Push changes into the repository (regardless where it is)
-    git push origin main # See further for selection of branches
-    # Making new branch and switching to it
-    git checkout -b NewFeature # Now we are in branch NewFeature
-    # Switch back to branch main
-    git checkout main # Generally, "git checkout <branch>"
-    # Delete the branch (changes there are lost, must be in another branch)
-    git branch -d NewFeature # Delete local branch
-    git push origin --delete <branch> # Delete remote branch
-    # New branch must be also pushed to the remote server
-    git push origin <branch>
-    # List branches (current is marked by asterisk on the beginning)
-    git branch
-    # Download news from central server (work of colleagues, etc.)
-    git fetch # Downloaded to staging, not applied yet to local files
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Working with Git --- tags, logs and more}
-	\begin{bashcode}
-    # Update local repository to the newest version from central repository
-    git pull # Fetch and merge remote changes (before commit)
-    # Merge another branch into the current one
-    git merge <branch>
-    # In case of conflict, git shows editor and user must fix it manually
-    git add <file with conflict> # Needed to re-add conflicting file
-    # To see changes before merging
-    git diff <source_branch> <target_branch>
-    # Tagging e.g. milestones, released versions of software, etc.
-    git tag <name> <commit id> # <name> can be custom, <commit id> from log:
-    git log # Newest is on top, see also "git log --help"
-    git log --graph --oneline --decorate --all # Full long log
-    # Discard local changes for particular file
-    git restore <file>
-    # Discard all local changes
-    git fetch origin # Overwrite local changes
-    git reset --hard origin/main # If local repository is broken...
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Working with Git --- summary, settings and more}
-	\begin{itemize}
-		\item Basically repeat in \texttt{git} commands \texttt{add}, \texttt{commit} and \texttt{push} to get your work to the repository, and \texttt{fetch} and \texttt{pull} to download news from the central repository
-		\item \texttt{diff} to see local changes, \texttt{status} to see state
-		\item \texttt{log} and \texttt{branch} show history and branches
-		\item \texttt{branch}, \texttt{checkout} and \texttt{merge} for branching code and merging changes back to main (master) branch
-	\end{itemize}
-	\begin{bashcode}
-    git diff # See changes in particular text files
-    gitk # Graphical interface
-    git config color.ui true # Set output to be colored
-    git config format.pretty oneline # Nicer log output
-    ~/.git # Contains user's settings, .git in every repository contains
-           # data and settings for particular repository
-           # Default behavior of Git can be heavily altered
-	\end{bashcode}
-\end{frame}
-
-\subsection{Tasks}
-
-\begin{frame}[fragile]{Git tasks}
-	\begin{bashcode}
-    git clone https://project_243_bot_9fce660bb409b4d418f7052c1f375914:
-      glpat-vkWesRqxGBOUEw9MMxy3pm86MQp1OjM0CA.01.0y1xsw5ib@git.sorbus.
-      ibot.cas.cz/restio/dadaism.git # It is one long line (no space after : .)
-	\end{bashcode}
-	\begin{enumerate}
-		\item Clone the repository using access token (see above) and go to the \texttt{dadaism} directory.
-		\item Communicate with others to avoid conflicting edits.
-		\item Add some text files, edit existing text files. Do not add images or another non-text files, do not add large files.
-		\item Push your changes back to the repository. Fetch changes done by others.
-		\item See history of changes, who did what, etc.
-		\item Use at least \texttt{git} commands \texttt{clone},\texttt{diff}, \texttt{status}, \texttt{add}, \texttt{commit}, \texttt{push}, \texttt{fetch}, \texttt{pull}, \texttt{log} and \texttt{gitk}.
-		\item You can try to play with branches --- \texttt{branch}, \texttt{checkout}, \texttt{merge}.
-	\end{enumerate}
-\end{frame}
-
-\section{Administration}
-
-\begin{frame}{Administration}
-	\begin{multicols}{2}
-		\tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
-		\columnbreak
-		\begin{center}
-			\includegraphics[height=6.5cm]{rmrf.jpg}
-		\end{center}
-	\end{multicols}
-\end{frame}
-
-\subsection{System services} % TODO Check how it is in Debian/Ubuntu. Possibly drop init and/or RC scripts?
-
-\begin{frame}[fragile]{Managing system services}
-	\begin{itemize}
-		\item Different among distributions --- several main methods
-		\item In Linux, most common is \href{https://wiki.freedesktop.org/www/Software/systemd/}{SystemD}, less common older init scripts and RC scripts
-		\item macOS and various BSD and other systems have different methods
-		\item Used to manage system services like networking, cron, web server, database,~\ldots
-		\item \alert{Read documentation of your distribution first!}
-		\item Most of actions require root authentication
-		\item For SystemD there are also graphical managers (\href{https://doc.opensuse.org/documentation/leap/reference/html/book-reference/cha-systemd.html#sec-boot-runlevel-edit}{YaST}, \href{https://store.kde.org/p/1127873/}{Systemd-kcm} for KDE, \href{https://github.com/GuillaumeGomez/systemd-manager}{GTK Systemd Manager}, web-based \href{https://cockpit-project.org/}{Cockpit},~\ldots)
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    # SystemD - huge amount of possibilities
-    systemctl enable/disable/status/start/stop servicename # TAB helps
-    # RC scripts
-    rcservicename status/start/stop # TAB helps to select service
-    # Init scripts
-    /etc/init.d/servicename status/start/stop # TAB helps to select service
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{SystemD usage (few examples)}
-	\begin{bashcode}
-    # List installed services and their status
-    systemctl list-units --type service
-    # Enable/disable/see status/start/stop/restart/... service
-    systemctl enable/disable/status/start/stop/restart servicename # TAB...
-    # Show overridden config files after upgrade
-    systemd-delta
-    # Analyze boot time (how long does each service take to start)
-    systemd-analyze blame # Text output
-    systemd-analyze plot > filename.svg # Same in graphics
-    # Log for particular service
-    journalctl -u servicename
-    # Last logged messages (press Ctrl+C to exit)
-    journalctl -f
-    # Log records since last boot
-    journalctl -b
-    # Time and date information and management
-    timedatectl
-	\end{bashcode}
-\end{frame}
-
 \section{The End}
 
 \begin{frame}{The End}
@@ -3581,98 +2869,6 @@
 		\item If you find a~bug, report it according to instructions given by the project
 		\item Plenty of software packages have bug (issue) trackers (e.g. on GitHub) to report any problem with the software and discuss --- search them on software homepage
 		\item Programming languages like R or Python have their own discussion fora, commonly specific for particular field
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{openSUSE}
-	\begin{itemize}
-		\item Homepage \url{https://www.opensuse.org/}
-		\item Wiki (knowledge base) \url{https://en.opensuse.org/Main_Page}
-		\item Documentation \url{https://doc.opensuse.org/}
-		\item News \url{https://news.opensuse.org/}, blogs \url{https://planet.opensuse.org/}
-		\item Forums \url{https://forums.opensuse.org/}
-		\item Mailing lists \url{https://lists.opensuse.org/}
-		\item Community \url{https://opensuse-community.org/}, short community guide \url{https://opensuse-guide.org/}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Debian, Ubuntu, Linux Mint and derivatives}
-	\begin{itemize}
-		\item Debian \url{https://www.debian.org/}
-		\begin{itemize}
-			\item Documentation, wiki \url{https://wiki.debian.org/}
-			\item Support \url{https://www.debian.org/support}
-		\end{itemize}
-		\item Ubuntu \url{https://ubuntu.com/}
-		\begin{itemize}
-			\item Support \url{https://ubuntu.com/support}
-			\item Ask Ubuntu (probably the best forum) \url{https://askubuntu.com/}
-			\item Forum \url{https://ubuntuforums.org/}
-			\item Documentation \url{https://help.ubuntu.com/}
-			\item Kubuntu \url{https://kubuntu.org/}
-			\item Kubuntu forum \url{https://www.kubuntuforums.net/}
-			\item Xubuntu \url{https://xubuntu.org/}
-			\item Lubuntu \url{https://lubuntu.me/}
-		\end{itemize}
-		\item Linux Mint \url{https://www.linuxmint.com/}
-		\begin{itemize}
-			\item Documentation \url{https://www.linuxmint.com/documentation.php}
-			\item Forums \url{https://forums.linuxmint.com/}
-		\end{itemize}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Fedora}
-	\begin{itemize}
-		\item Homepage \url{https://fedoraproject.org/}
-		\item Communication and help overview \url{https://docs.fedoraproject.org/en-US/project/communications/}
-		\item Wiki \url{https://fedoraproject.org/wiki/Fedora_Project_Wiki}
-		\item Official forum \url{https://discussion.fedoraproject.org/}
-		\item Documentation \url{https://docs.fedoraproject.org/}
-		\item Community forum \url{https://fedoraforum.org/}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{GNOME, KDE and XFCE}
-	\begin{itemize}
-		\item GNOME \url{https://www.gnome.org/}
-		\begin{itemize}
-			\item Help for users \url{https://help.gnome.org/}
-			\item Wiki \url{https://wiki.gnome.org/}
-		\end{itemize}
-		\item KDE \url{https://kde.org/}
-		\begin{itemize}
-			\item Forum \url{https://discuss.kde.org/}
-			\item UserBase wiki \url{https://userbase.kde.org/}
-			\item Application store \url{https://store.kde.org/}
-			\item KDE for education \url{https://apps.kde.org/categories/education/}
-			\item Blogs \url{https://planet.kde.org/}
-		\end{itemize}
-		\item XFCE \url{https://xfce.org/}
-		\begin{itemize}
-			\item Documentation \url{https://docs.xfce.org/}
-			\item Wiki \url{https://wiki.xfce.org/}
-			\item Forum \url{https://forum.xfce.org/}
-			\item Blogs \url{https://blog.xfce.org/}
-		\end{itemize}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{LibreOffice}
-	\begin{itemize}
-		\item LibreOffice \url{https://www.libreoffice.org/}
-		\begin{itemize}
-			\item Document Foundation \url{https://www.documentfoundation.org/}
-			\item Ask LO \url{https://ask.libreoffice.org/}
-			\item Wiki of LO \url{https://help.libreoffice.org/} and DF \url{https://wiki.documentfoundation.org/Main_Page}
-			\item Documentation \url{https://documentation.libreoffice.org/}
-		\end{itemize}
-		\item Česky
-		\begin{itemize}
-			\item Novinky a~informace \url{https://www.openoffice.cz/}
-			\item Fórum \url{https://forum.openoffice.cz/}
-			\item Podrobná příručka \url{https://www.root.cz/knihy/libreoffice-writer-prakticky-pruvodce/} (jedna z~vůbec nejlepších dostupných knih)
-		\end{itemize}
 	\end{itemize}
 \end{frame}
 
