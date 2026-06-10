@@ -110,32 +110,18 @@
 
 \begin{frame}{The course information}
 	\begin{itemize}
-		\item The course page: \url{https://trapa.cz/en/course-linux-command-line-2026}
+		\item Selected chapter pro my \enquote{big} Linux course: \url{https://trapa.cz/en/course-linux-command-line-2026}
 		\begin{itemize}
 			\item Česky: \url{https://trapa.cz/cs/kurz-prikazove-radky-linuxu-2026}
-		\end{itemize}
-		\item Subject in SIS: \url{https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=MB120C23}
-		\begin{itemize}
-			\item Česky: \url{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=MB120C23}
-			\item For students having subscribed the subject, requirements are on next slide
 		\end{itemize}
 		\item Working version of the presentation is available at \url{https://github.com/V-Z/course-linux-command-line-bash-scripting-metacentrum} --- feel free to contribute, request new parts or report bugs
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Requirements to exam (\enquote{zápočet})}
-	\begin{enumerate}
-		\item Be present whole course.
-		\item Be active --- ask and answer questions.
-		\item Write short script solving any task the student is (going to be) solving. E.g. prepare script to process student's data on MetaCentrum. Or short script to do anything the student needs to do. This will be very individual. According to topics and interests of every student. Students can of course discuss with anyone, use Internet, manuals, etc. The aim is to learn how to solve real problem the student has/is going to have.
-		\item Write at least one page (can be split into multiple articles) on Wikipedia about any topic discussed during the course. Again, this is very open, students can write about any topic they like. I~prefer native language of the student (typically to make larger non-English Wikipedia).
-	\end{enumerate}
-\end{frame}
-
 \begin{frame}{Materials to help you\ldots}
 	\label{materials}
 	\begin{itemize}
-		\item Download the presentation from \url{https://soubory.trapa.cz/linuxcourse/linux_bash_metacentrum_course.pdf}
+		\item Download the \enquote{full} presentation from \url{https://soubory.trapa.cz/linuxcourse/linux_bash_metacentrum_course.pdf}
 		\item Download the scripts and toy data from \url{https://soubory.trapa.cz/linuxcourse/scripts_data.zip}
 		\begin{itemize}
 			\item \alert{Note:} Open the scripts in some \alert{good} text editor (slide~\ref{editors}) --- showing syntax highlight, line numbers, etc. (\alert{NO} Windows notepad); the files are in UTF-8 encoding and with UNIX end of lines (slide~\ref{eolenc}; so that too silly programs like Windows notepad won't be able to open them correctly)
@@ -144,52 +130,12 @@
 	\end{itemize}
 \end{frame}
 
-\subsection{Learning machine}
-
-\begin{frame}{Virtual machine for learning}
-	\label{VBox}
-	\begin{multicols}{2}
-		\begin{itemize}
-			\item If you do not have Linux installed, download and install VirtualBox from \url{https://www.virtualbox.org/}
-			\item Download openSUSE Leap 15.6 Linux distribution for this course from \url{https://botany.natur.cuni.cz/zeisek/openSUSE_Leap_courses.ova} ($\sim$8.2~GB)
-			\item Launch VirtualBox and go to menu \textbf{File | Import appliance\ldots} to import it. When done, launch it (\textbf{Start})
-			\item See also \url{https://trapa.cz/en/vm-for-courses}
-		\end{itemize}
-		\includegraphics[height=6.5cm]{virtualbox.png}
-	\end{multicols}
-\end{frame}
-
-\begin{frame}{Enjoy learning virtual machine for the course}
-	\begin{center}
-		\includegraphics[height=6.5cm]{opensuse_leap_course.png}
-	\end{center}
-\end{frame}
-
-\begin{frame}{VirtualBox shared folder I}{VirtualBox can be configured to share folder with host operating system}
-	\begin{center}
-		\includegraphics[height=6cm]{virtualbox_shared_folder_1.png}
-	\end{center}
-\end{frame}
-
-\begin{frame}[fragile]{VirtualBox shared folder II}{Go to menu \enquote{Devices | Shared Folders} and set pair of folders}
-	\begin{bashcode}
-    sudo mount -t vboxsf -o uid=$UID,gid=$(id -g) shared /mnt
-	\end{bashcode}
-	\vfil
-	\begin{center}
-		\includegraphics[height=5.5cm]{virtualbox_shared_folder_2.png}
-	\end{center}
-	\vfill
-\end{frame}
-
 \subsection{What it is a~\enquote{UNIX}}
 
 \begin{frame}[allowframebreaks]{What it is UNIX, Linux and GNU}
 	\begin{itemize}
 		\item \href{https://en.wikipedia.org/wiki/Unix}{UNIX}
 		\begin{itemize}
-			\item Originally developed in Bell labs of AT\&T in 1969, written in C, since then rich evolution\ldots
-			\item Trademark --- only systems passing certain conditions (paid certification) can be called \enquote{UNIX} --- Solaris, HP-UX, AIX, etc. (commercial systems for big servers; nowadays rare)
 			\item \textbf{Main principles:} simple, multitasking, hierarchical structure, network, for more users (takes care about permissions etc.), configuration written in plain text files, important relationships among applications (generally one application = one task --- they are chained), work primarily with text, has kernel and API (interface to communicate with the rest of the system)
 		\end{itemize}
 		\item \href{https://en.wikipedia.org/wiki/Unix-like}{UNIX-like} (UN*X, *nix)
@@ -197,14 +143,9 @@
 			\item Systems compatible with UNIX (\textbf{Linux}, BSD and its variants, \textbf{macOS},~\ldots)
 			\item Mainly open-source (UNIX is commonly commercial --- source code is not publicly available, but its specification is)
 			\item Nowadays prevailing over \enquote{old} UNIX systems, used in many devices from tiny embedded toys to huge data centers
-			\item Try to provide same quality as paid systems, but (mostly) for free
 		\end{itemize}
-		\item Many courts about copyrights, parts of code, patents (USA allow software patents, EU not) --- GNU, Linux, BSD, etc. try to ensure to have only code not covered by any patents to avoid possible legal issues
 		\item \href{https://www.gnu.org/}{GNU}
 		\begin{itemize}
-			\item \enquote{GNU's Not Unix!} --- but it is compatible, respects its principles
-			\item System written from scratch, following ideas of UNIX
-			\item Since 1984 Richard Stallman (founder of \href{https://www.fsf.org/}{Free Software Foundation}) tried to make new kernel (Hurd --- not finished yet\ldots)
 			\item Generally set of basic system tools --- working with many kernels (Linux, BSD*, macOS,~\ldots), also present in many commercial paid UNIX systems
 			\item Source code is free and open --- anyone can study it (Security!), report bugs, contribute, modify, share it, get inspiration,~\ldots
 			\item GNU General Public License (GPL) --- free spirit of open-source --- license, idea, how to share software to benefit everyone
@@ -232,52 +173,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Extremely simplified UNIX phylogeny}
-	\begin{center}
-		\includegraphics[height=6.5cm]{unix_history-simple.png}
-	\end{center}
-\end{frame}
-
-\begin{frame}{Most common UNIX-based systems (except Linux)}
-	\begin{itemize}
-		\item Apple \href{https://en.wikipedia.org/wiki/macOS}{macOS} (previously Mac OS~X) --- system kernel is based on older BSD and uses plenty of GNU tools (although mostly older outdated versions)
-		\item \href{https://en.wikipedia.org/wiki/Berkeley_Software_Distribution}{BSD} --- one of the oldest operating systems, still developed in \href{https://distrowatch.com/search.php?ostype=BSD}{many independent variants}
-		\begin{itemize}
-			\item Still very popular especially on servers, for special purposes, etc.
-			\item License allows closing of the code --- used by Apple macOS kernel, PlayStation firmware,~\ldots
-			\item Installation and management is for beginners usually harder than Linux, everything must be done manually, not so common as Linux anymore
-			\item E.g. \href{https://www.freebsd.org/}{FreeBSD}, \href{https://www.dragonflybsd.org/}{DragonFly BSD}, \href{https://www.openbsd.org/}{OpenBSD}, \href{https://www.truenas.com/}{TrueNAS} (for storage servers),~\ldots
-		\end{itemize}
-		\item \href{https://en.wikipedia.org/wiki/Oracle_Solaris}{Solaris} --- commercial, not very common anymore
-		\begin{itemize}
-			\item Mainly special servers, paid
-			\item \href{https://distrowatch.com/search.php?ostype=Solaris}{Several community-based variants} freely available
-		\end{itemize}
-		\item Command line usage is nearly same across UN*X systems --- all follow same standards, use more or less same set of tools
-	\end{itemize}
-\end{frame}
-
 \subsection{Licenses and money}
-
-\begin{frame}{Cathedral vs. market place}{What is principal difference between free open-source and commercial software}
-	\begin{itemize}
-		\item Commercial software is like a~cathedral
-		\begin{itemize}
-			\item Pay big money and get it in the state which the architect like
-			\item User can not modify it (or it is terribly expensive)
-			\item Might be you don't need everything --- but still paying whole set
-		\end{itemize}
-		\item Free open-source software (FOSS) is like a~market place
-		\begin{itemize}
-			\item Find there many producers of same tools --- pick up those you like --- freedom of choice
-			\item Take exactly the tools you need --- any combination is possible
-			\item Much cheaper to shop there
-		\end{itemize}
-		\item Both have pros and cons --- depends what you wish\ldots
-		\item Consider e.g. difference between usage of full-featured and expensive Geneious (theoretically everything you need to process genetic data) vs. searching for hundreds of free tools and pipelines on the Internet (GitHub, R packages, fora,~\ldots)
-		\item According to \href{https://en.wikipedia.org/wiki/The_Cathedral_and_the_Bazaar}{book by Eric S.~Raymond}
-	\end{itemize}
-\end{frame}
 
 \begin{frame}[allowframebreaks]{Free and open-source software --- (F)OSS}
 	\begin{itemize}
@@ -311,20 +207,6 @@
 			\item Bugs (problems) in the code can fixed by nearly anyone
 			\item Often available for free (e.g. on services like \href{https://github.com/}{GitHub}, \href{https://gitlab.com/}{GitLab}, \href{https://bitbucket.org/}{Bitbucket} or \href{https://sourceforge.net/}{SourceForge})
 			\item Easier distribution of the software (can be copied into various repositories, like those of Linux distributions, \href{https://docs.conda.io/}{Conda} or \href{https://brew.sh/}{Homebrew})
-		\end{itemize}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{How to make money with free open-source software?}
-	\begin{itemize}
-		\item Traditional model --- user rents right (\enquote{buys a~license}) to use the software (and sometimes for support --- usually for extra money)
-		\item Common mistake --- software is not \enquote{bought} --- only license is rented (\enquote{permission to use it} with many limitations)
-		\item Software as service
-		\begin{itemize}
-			\item (F)OSS is available for free --- user can use it as it is or buy a~support --- help of any type
-			\item No vendor lock-in --- user has the code, so he can modify the software himself, change provider of the services,~\ldots
-			\item Cheap for user as well as company --- company specialized for one task, let's say server database, doesn't have to take care about the rest of the system --- someone else does; user pays only what he needs
-			\item E.g. anyone can download and install \href{https://en.wikipedia.org/wiki/Content_management_system}{Content management system} like \href{https://www.drupal.org/}{Drupal} or \href{https://wordpress.org/}{WordPress} on their server to create custom web page, or there are plenty of companies providing service of hosting such system on their server, including various user support, and in case of need it is easy to change such provider
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -369,39 +251,7 @@
 	\vfill
 \end{frame}
 
-\begin{frame}{Extremely simplified adaptive radiation of Linux distributions}
-	\begin{center}
-		\includegraphics[height=5.5cm]{linux_fylogen_2.png}
-	\end{center}
-	\vfil
-	\url{https://en.wikipedia.org/wiki/List_of_Linux_distributions} and \url{https://distrowatch.com/} ($\sim$900 distributions, $\sim$250 active)
-	\vfill
-\end{frame}
-
 \subsection{Choose one}
-
-\begin{frame}{Most common Linux distributions}
-	\begin{itemize}
-		\item \href{https://distrowatch.com/search.php?package=DEB}{Debian (DEB) based}
-		\begin{itemize}
-			\item \href{https://www.debian.org/}{Debian} --- one of oldest and most common, especially on servers
-			\item \href{https://ubuntu.com/}{Ubuntu} (nowadays probably the most popular on PCs and notebooks) and derivatives --- \href{https://kubuntu.org/}{Kubuntu}, \href{https://xubuntu.org/}{Xubuntu}, \href{https://lubuntu.me/}{Lubuntu},~\ldots~(according to GUI used --- most of the system is same)
-			\item \href{https://linuxmint.com/}{Mint} --- Based on Ubuntu as well as Debian, user-friendly, popular
-			\item \href{https://www.kali.org/}{Kali}, \href{https://knopper.net/knoppix/index-en.html}{KNOPPIX}, \href{https://elementary.io/}{elementaryOS}, \href{https://pop.system76.com/}{Pop!\_OS}, \href{https://mxlinux.org/}{MX Linux}, \href{https://zorin.com/os/}{Zorin OS},~\ldots
-		\end{itemize}
-		\item \href{https://distrowatch.com/search.php?package=RPM}{Red Hat (RPM) based}
-		\begin{itemize}
-			\item \href{https://www.redhat.com/}{Red Hat} --- probably the most common commercial
-			\item \href{https://fedoraproject.org/}{Fedora} --- \enquote{playground} for Red Hat --- very experimental
-			\item \href{https://www.centos.org/}{Centos} --- Clone of Red Hat
-			\item \href{https://www.opensuse.org/}{openSUSE} --- SUSE is second largest Linux company, openSUSE is community distribution (free) companion of SUSE Linux Enterprise
-			\item \href{https://www.mageia.org/}{Mageia}, \href{https://www.pclinuxos.com/}{PCLinuxOS},~\ldots
-		\end{itemize}
-		\item \href{https://manjaro.org/}{Manjaro}, \href{https://getsol.us/}{Solus},~\ldots
-		\item Android (practically Linux kernel, touch interface \& Java)
-		\item For experienced users: \href{https://archlinux.org/}{Arch}, \href{http://www.slackware.com/}{Slackware}, \href{https://www.gentoo.org/}{Gentoo},~\ldots
-	\end{itemize}
-\end{frame}
 
 \begin{frame}{Graphical User Interfaces (GUI)}{More like \enquote{Mac-style}, \enquote{Windows-style} or something else? Feature rich or minimalistic?}
 	\begin{itemize}
@@ -457,63 +307,7 @@
 	\end{center}
 \end{frame}
 
-% TODO More about GUI usage:
-% * Editing DE settings
-% * Managing global settings and applications
-% * What is stored where
-
-\begin{frame}[allowframebreaks]{How to try Linux?}
-	\begin{itemize}
-		\item If unsure what to do, ask someone for help. ;-)
-		\item Install it on some computer together with or instead of Windows
-		\begin{itemize}
-			\item If you can use whole disk, just boot from CD/USB and click \enquote{Next}\ldots
-			\item If you don't have whole disk, you need at least one (commonly more) disk partition(s) --- if you don't know how to manage them, ask someone skilled\ldots
-			\item Major updates of Windows 10/11 or Windows reinstall use to destroy bootloader and it is not possible to start Linux anymore (although it can be usually easily fixed)
-		\end{itemize}
-		\item Live CD/USB
-		\begin{itemize}
-			\item The most easy --- burn ISO image of CD from web of almost any Linux distribution or use for example \href{https://unetbootin.github.io/}{UNetbootin} to prepare bootable flash
-			\item You only have to know how to boot from CD/USB (usually press \texttt{ESC}, \texttt{DEL}, \texttt{F2}, \texttt{F10}, \texttt{F12},~\ldots{ }when starting computer --- varies according to manufacturer)
-			\item Commonly done to rescue data from broken Windows installations\ldots~;-)
-		\end{itemize}
-		\item Virtualization (slide~\ref{VBox})
-		\begin{itemize}
-			\item Requires powerful computer --- Intel i7 or AMD Ryzen, over 12~GB of RAM and hundreds of GB
-			\item Install virtual machine (probably the most easy is \href{https://www.virtualbox.org/}{VirtualBox}) --- allows install and run another operating system inside host as an ordinary application --- very easy and comfortable
-		\end{itemize}
-		\item Linux subsystem in MS Windows Store (Windows 10 and 11)
-		\begin{itemize}
-			\item To install follow \url{https://learn.microsoft.com/windows/wsl/about}
-			\item Version 1 only for command-line applications (it has some problems with paths, text files,~\ldots)
-			\item Version 2 works well for most of tasks and allows GUI (experimental)
-		\end{itemize}
-		\item Cygwin
-		\begin{itemize}
-			\item Download and install from \url{https://www.cygwin.com/}
-			\item It is not native Linux, it is collection of GNU and open-source utilities compiled to work on Windows as more or less standard Windows applications
-			\item Follows POSIX standards (i.e. it works like normal UNIX command line, with all features)
-			\item Every application must be specially compiled to be able to work under Cygwin (it is sometimes complicated)
-			\item Collection is large, include also GUI and DE, but not everything is easy working
-			\item Installation of custom software might be very hard\ldots
-		\end{itemize}
-	\end{itemize}
-\end{frame}
-
 \subsection{Differences}
-
-\begin{frame}{The Linux diversity\ldots}
-	\begin{itemize}
-		\item Try several distributions and just choose one you like\ldots
-		\item If selecting among the most common, it doesn't matter much which one you pick up
-		\item Which design do you like?
-		\item Which distribution is your friend or colleague using? To have someone to ask for help\ldots
-		\item You can change GUI (or its design) without change of distribution, it use to be highly configurable
-		\item Applications are still same --- no difference in Firefox across distributions --- keep your settings when changing distribution
-		\item Everyone using Android is using Linux --- install some terminal emulator there :-)
-		\item Special use --- \href{https://www.truenas.com/}{TrueNAS} for home as well as business file servers, \href{https://partedmagic.com/}{Parted Magic} and/or \href{https://www.system-rescue.org/}{SystemRescue} to repair broken system (disk failure) and save data,~\ldots
-	\end{itemize}
-\end{frame}
 
 \begin{frame}{Differences among (common) Linux distributions}
 	\begin{itemize}
@@ -534,173 +328,6 @@
 
 \begin{frame}{UN*X}{Theory and principles of UNIX-based operating systems}
 	\tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
-\end{frame}
-
-\subsection{Disks and file systems}
-
-\begin{frame}{Short overview of hard disk layout}
-	\begin{itemize}
-		\item Physical disk (piece of hardware) has at least 1~partition --- division seen in Windows as \enquote{disks} (\texttt{C}, \texttt{D},~\ldots) and mounted directory in UNIX
-		\item GPT is a \enquote{table} describing partitioning of physical disk
-		\begin{itemize}
-			\item Replaces older MBR
-			\item Requires UEFI --- basic computer firmware responsible of booting of the computer (replacement of old BIOS)
-		\end{itemize}
-		\item If unsure what to do, high probability to break it\ldots
-		\item Blank new partition has to be formatted to desired file system according to use and target operating system
-		\item Linux distributions have easy graphical tools to manage disk partitions (e.g. \href{https://gparted.org/}{GParted})
-		\item \alert{Always have backup before such management!}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Comparison of file systems (limits and compatibility)}
-	\label{fs}
-	\begin{center}
-		\begin{footnotesize}
-			\begin{tabular}{ccccccc}
-				\textbf{FS name} & \begin{tabular}[x]{@{}c@{}}\textbf{Name}\\\textbf{length}\end{tabular} & \textbf{Signs in name} & \textbf{Path length} & \textbf{File size} & \begin{tabular}[x]{@{}c@{}}\textbf{Partition}\\\textbf{size}\end{tabular} & \textbf{Supported systems}\\
-				FAT32 & 255 & Unicode & No limit defined & 4 GiB & 2 TiB & Any\\
-				exFAT & 255 & ? & No limit defined & 16 EiB & 64 ZiB & Any\\
-				NTFS & 255 & Variable & Variable & 16 TiB & 16 EiB & Windows (UN*X)\\
-				HFS+ & 255 & Unicode & Unlimited & 8 EiB & 8 EiB & macOS\\
-				ext4 & 255 & Any, not \texttt{/} & No limit defined & 16 TiB & 1 EiB & Linux (UN*X)\\
-				XFS & 255 & Any & No limit defined & 9 EiB & 9 EiB & Linux (UN*X)\\
-				Btrfs & 255 & Any & No limit defined & 16 EiB & 16 EiB & Linux (only?)\\
-				ZFS & 255 & Unicode & No limit defined & 16 EiB & 256 ZiB & UN*X
-			\end{tabular}
-		\end{footnotesize}
-	\end{center}
-	\begin{itemize}
-		\item FAT32 (including extensions) is old-fashioned and not reliable FS, but still common in various flash disks and memory cards
-		\item NTFS (basic Windows FS) and FAT do not support UNIX permissions, so they can't be used as system partition in Linux; see also \href{https://en.wikipedia.org/wiki/Comparison_of_file_systems}{full comparison}
-		\item Btrfs, ext4, XFS and ZFS are not accessible from Windows at all (Linux mainly uses ext4)
-		\item Btrfs and ZFS are the most advanced FS in common use
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Mounting and unmounting disks and removable media}
-	\begin{itemize}
-		\item Mounting and unmounting of devices require root privileges
-		\item In modern desktop Linux distributions, mounting is done automatically and media are visible mostly in \texttt{/media} or \texttt{/run/media} (and show some icon, widget or so in desktop environment)
-		\item In Linux, physical disks are named from \texttt{sda} to \texttt{sdz}, each disk has partitions (at least one) numbered from \texttt{1}, (\texttt{sda1}, \texttt{sda2}, \texttt{sdb1},~\ldots), all are in \texttt{/dev} (\texttt{/dev/sdc3})
-	\end{itemize}
-	\begin{bashcode}
-    eject # Open CD/DVD drive
-    mount # Which FS (disk partitions) are mounted
-    findmnt # See mounted devices in tree-like structure
-    mkdir /mnt/point # Empty directory must exist prior mounting into it
-    # mount usually recognize FS of mounted device, if not, add '-t FS_type'
-    mount /dev/sdXY /mount/directory # Mount disk sdXY to /mount/directory
-    mount -t iso9660 -o loop file.iso /mnt/iso # Mount CD/DVD ISO file
-    umount /dev/sdXY # Unmount disk sdXY, alternatively use below command
-    umount /mount/directory # Unmount disk from /mount/directory
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[allowframebreaks]{Creation and control of FS}
-	\begin{center}
-		\includegraphics[width=\textwidth]{disks.png}
-	\end{center}
-	\begin{itemize}
-		\item Work in command line or use graphical tool like \href{https://gparted.org/}{GParted}\ldots
-		\item All commands require root privileges (slide~\ref{root})
-		\item \texttt{fdisk -l} lists disks and partitions
-		\item To manage disk partitioning use \texttt{fdisk /dev/sdX} or \texttt{gdisk /dev/sdX}
-		\item When hard drive is partitioned, partitions must be formatted in next step
-		\item Commands \texttt{mkfs.*} create various FS, common syntax is \texttt{mkfs.XXX -parameters /dev/sdXY}, where sdXY is particular disk partition
-		\item Parameters can set label and various settings of behavior of the disk partition, check \texttt{man mkfs.XXX}
-		\item To check FS for errors use \texttt{fsck.XXX /dev/sdXY} (according to respective FS)
-		\begin{itemize}
-			\item The filesystem must be unmounted when checking it
-			\item XFS uses \texttt{xfs\_repair /dev/sdXY}
-			\item Btrfs uses \texttt{btrfs check /dev/sdXY}, if it is unmountable, \texttt{btrfs-zero-log /dev/XY} use to help, last instance is \texttt{btrfs check -{-}repair /dev/sdXY} (dangerous operation)
-			\item If Btrfs is mountable, but there are various FS errors and/or performance issues, \texttt{btrfs scrub start -Bdf /mount/point}, \texttt{btrfs filesystem defragment -r -v /mount/point} and \texttt{btrfs balance start -v /mount/point} --- manual running can take long time and strongly slow down the computer
-		\end{itemize}
-		\item \texttt{tune2fs -parameters /dev/sdXY} can set various parameters to influence behavior of disk (labels and more) partition
-		\item \texttt{hdparm -parameters /dev/sdX} can set advanced hardware parameters of hard drive
-		\item The most convenient is using graphical tools available in all distributions\ldots
-		\begin{itemize}
-			\item In \href{https://en.opensuse.org/Portal:YaST}{openSUSE there is YaST} administrative module --- from command line launch \texttt{yast -{-}qt partitioner} for graphical or \texttt{yast disk} for text-based version
-			\item All distributions have graphical tools like \href{https://gparted.org/}{GParted} where it is possible to comfortable manage disks
-		\end{itemize}
-		\item \texttt{df -h} shows available/occupied space on disks/partitions, but because of special features of Btrfs it doesn't show every time correct values for this FS --- it is better to use \texttt{btrfs filesystem df /mount/point} (\texttt{/mount/point} use to be the most commonly \texttt{/})
-		\item On UNIX FS, defragmentation and another maintenance tasks use to be done in background when computer is idling --- unless there is at least $\sim$20\% of free space on the device, this is not any problem and there are no performance issues
-		\item \alert{Users must be sure what they are doing, otherwise system can be damaged}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Another manipulations and information}
-	\begin{itemize}
-		\item \texttt{dd} is powerful, but potentially dangerous tool used to backup or write disks or partitions (commonly to create bootable USB media)
-		\item If writing disk image to the disk (\texttt{sdX}), disk's partition table is discarded and the disk is covered by whatever is in the ISO image
-	\end{itemize}
-	\begin{bashcode}
-    dmesg # Recent entries in main system log - filter with grep, tail, ...
-    dmesg | grep sd | tail # Get information about recently plugged media
-    # dd produces physical copy of whole device - including empty space
-    dd if=/dev/sdX of=image.iso # Backups disk sdXY to imago.iso
-    dd if=image.iso of=/dev/sdX # Used to write e.g. image of Linux live
-                                # media to USB flash disk (Check sdX!)
-    lnav # Comfortably browse recent logs, quit by "q"
-	\end{bashcode}
-	\begin{itemize}
-		\item If there are encrypted partitions, they are in \texttt{/dev/mapper/\ldots}
-		\item If LVM (slide~\ref{LVMRAID}) is used, see \texttt{lvscan} and \texttt{pvscan} to find correct location in \texttt{/dev/}
-		\item Disks are also accessible through \texttt{/dev/disk/by-<TAB><TAB>}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Put together more disks}{Extend space and get higher data security}
-	\label{LVMRAID}
-	\begin{itemize}
-		\item \href{https://en.wikipedia.org/wiki/RAID}{RAID} --- Redundant Array of Inexpensive/Independent Disks
-		\item RAID~0~--- stripping, no redundancy, no security, speed up (two or more disks joined into one, files divided among disks)
-		\item RAID~1~--- mirroring --- even number of disks of same size --- resulting capacity is half, very fast, secure
-		\item RAID~5~--- at least three disks, one is used for parity control (in RAID~6 two disks are used for parity control), little bit slower, popular in cheaper storage servers (NAS)
-		\item Combinations (RAID~10,~\ldots)
-		\item \href{https://en.wikipedia.org/wiki/Logical_volume_management}{LVM} --- Logical Volume Management --- built over several partitions/disks --- seen by OS as one continuous space, can be dynamically managed
-		\item Functionality of RAID and LVM (and more) is more or less covered by Btrfs and ZFS
-	\end{itemize}
-\end{frame}
-
-\subsection{Types of users}
-
-\begin{frame}{Root vs. \enquote{normal} user}
-	\label{root}
-	\begin{itemize}
-		\item Root is administrator --- more than God (of the server) --- can do anything
-		\item Other users have limited permissions
-		\begin{itemize}
-			\item System users providing particular service (web server, database, networking service) are as restricted as possible to do the task --- security
-			\item \enquote{Human} users don't have access to system files (at least not for modification), homes of users are separated
-		\end{itemize}
-	\end{itemize}
-	\begin{center}
-		\includegraphics[height=3.5cm]{sandwich.png}
-	\end{center}
-	\begin{flushright}
-		\url{https://xkcd.com/149/}
-	\end{flushright}
-\end{frame}
-
-\begin{frame}[fragile]{Becoming root}
-	\begin{itemize}
-		\item Root privileges are required for any administrative task (install of software package, change of system settings,~\ldots)
-		\item Word \enquote{root} is used as name for system administrator user, and also for top of filesystem directory hierarchy (\texttt{/})
-	\end{itemize}
-	\begin{bashcode}
-    # Gain root privileges
-    su # Requires root password (stay in current directory)
-    su - # Requires root password (go to /root)
-    su -c "some command" # Launch one command with root permissions
-    su USER # Became USER (USER's password is required)
-    sudo -i # For trusted users, became root (asks for user's password)
-            # User (or group) has to be listed in /etc/sudoers
-    sudo somecommand # Launch somecommand with root's privileges - can be
-                     # restricted for particular commands; /etc/sudoers can
-                     # contain special settings for particular users/groups
-    cat /etc/passwd # See all users (including system users)
-	\end{bashcode}
 \end{frame}
 
 \subsection{Directory structure}
@@ -756,27 +383,6 @@
 		\item \texttt{skel} --- basic directories and configuration for new users
 		\item Much more according to software installed\ldots
 	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Example of configuration in \texttt{/etc/ssh/sshd\_config}}
-	\begin{bashcode}
-    # This is the ssh client system-wide configuration file.  See
-    # ssh_config(5) for more information.  This file provides defaults for
-    # users, and the values can be changed in per-user configuration files
-    # or on the command line.
-    # ...
-    Host *
-    # If you do not trust your remote host (or its administrator), you
-    # should not forward X11 connections to your local X11-display for
-    # security reasons: Someone stealing the authentification data on the
-    # remote side (the "spoofed" X-server by the remote sshd) can read your
-    # keystrokes as you type, just like any other X11 client could do.
-    # Set this to "no" here for global effect or in your own ~/.ssh/config
-    # file if you want to have the remote X11 authentication data to
-    # expire after twenty minutes after remote login.
-    ForwardX11Trusted yes
-    # ...
-	\end{bashcode}
 \end{frame}
 
 \subsection{Files and directories}
@@ -988,46 +594,6 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{Extending permissions --- ACL (Access control list)}
-	\label{acl}
-	\begin{itemize}
-		\item By default, it is not possible to give specific permission to the user who is not owner, nor member of group owning the file
-		\item In ext4 FS it has to be turned on manually (usually it is by default), it is part of Btrfs, XFS and ZFS --- it is not available on every computer/server
-		\item Command \texttt{getfacl} lists those extra permissions, \texttt{setfacl} sets
-		\item \alert{When in use, \enquote{basic} tools listing permissions (e.g. \texttt{ls -l}, ACL in use is marked by \texttt{+} after permissions --- next slide) sometimes do not show correct result and permissions may work unexpectedly}
-		\item Important especially in network environment with many users
-		\item If intensively used, \texttt{ls -l} sometimes doesn't show correct permissions (see next slide), it can be confusing and lead into various issues
-		\item If not in use on a~server, relatively high number of groups is required to be able to correctly setup sharing permissions
-		\item MetaCentrum has storages and clusters connected via NFSv4 protocol (see also slide~\ref{netfs}) --- commands \texttt{getfacl} and \texttt{setfacl} do not work there, use \texttt{nfs4\_getfacl}, \texttt{nfs4\_setfacl} and \texttt{nfs4\_editfacl} instead (usage is very similar), see also \href{https://docs.metacentrum.cz/en/docs/data/data-sharing\#nfsv4-wrapper}{MetaCentrum documentation} and its wrapper script
-		\item Permissions (\enquote{classical} as well as ACL) require some time to practice and master it\ldots
-	\end{itemize}
-	\begin{block}{Importance of permissions}
-		\alert{Too permissive (wrong) permissions can lead to data loss, or to data inaccessibility!}
-	\end{block}
-\end{frame}
-
-\begin{frame}[fragile]{ACL examples}
-	\begin{bashcode}
-    getfacl FILE # get ACL for FILE:
-    # file: dokumenty
-    # owner: zeisek # Correct
-    # group: zeisek # Correct
-    user::rwx       # Correct
-    user:nasik:r-x  # This is not seen from 'ls -l' output below!
-    group::r-x      # This group has only one member, this is fine
-    mask::r-x
-    other::---      # Correct
-    ls -l FILE # Compare this and previous output (This might be wrong!):
-    drwxr-x---+  2 zeisek zeisek     6 17. zář 20.40 dokumenty/
-    setfacl -m u/g:USER/GROUP:r/w/x FILE # Add for USER/GROUP r/w/x right
-    # E.g. recursively add read and enter permission to user 'arabidopsis_data'
-    # to folder 'dokumenty/arabidopsis' (no extra group is required)
-    setfacl -Rm u:arabidopsis_data:rx dokumenty/arabidopsis
-    setfacl -R ... # Recursive (including subdirectories)
-    setfacl -b FILE # Remove all ACL from FILE (combine with -R ...)
-	\end{bashcode}
-\end{frame}
-
 \begin{frame}{Set default permissions for new files}
 	\begin{itemize}
 		\item \texttt{umask} sets implicit permissions for newly created files for user
@@ -1044,39 +610,6 @@
 		\item Set with care --- new permissions will have plenty of consequences --- different are typically needed for web pages, private files, shared files,~\ldots
 		\item \texttt{umask} work recursively for all new files in user home directory --- it is not possible to set new implicit rules for particular directory
 	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Other permissions}
-	\begin{itemize}
-		\item \texttt{sticky bit} --- new directory/file in shared directory (where everyone can write) will be deletable only by owner (typically in \texttt{/tmp})
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    chmod +t somedirectory
-    ls -la /
-    drwxrwxrwt 22 root root 800 21. jan 18.20 tmp # "t" marks it
-	\end{bashcode}
-	\vfill
-	\begin{itemize}
-		\item \texttt{setgid} --- application can have root permission even it was launched by normal user
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    chmod u+s someapplication
-    ls -al /bin/passwd
-    -rwsr-xr-x 1 root shadow 51200 25. zář 08.38 /usr/bin/passwd # Note "s"
-	\end{bashcode}
-	\vfill
-	\begin{itemize}
-		\item \texttt{chattr} --- change of advanced attributes on Linux FS
-		\item Mostly, there is no need to modify them
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    chattr -RVf -+=aAcCdDeijsStTu files
-    man chattr # See explanation of attributes
-    lsattr # List extended attributes
-	\end{bashcode}
 \end{frame}
 
 \subsection{Text}
@@ -1140,28 +673,6 @@
 		\item Tools installed via Homebrew are installed into \texttt{/usr/local} not to interact with system packages
 		\item Derived project is \href{https://docs.brew.sh/Homebrew-on-Linux}{Linuxbrew} (works also on Windows subsystem for Linux) useful especially for installation of some special (scientific) software unavailable in main Linux repositories (software resources)
 	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Working with Homebrew}
-	\begin{bashcode}
-    xcode-select --install # Install compilation tools
-    # Install Homebrew
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/
-      install/HEAD/install.sh)"
-    brew help # Basic help
-    # Install updated basic UNIX tools
-    brew install coreutils gnu-sed gawk grep bash gcc make wget dos2unix
-    brew list # List of installed packages (brew formulae)
-    brew info FORMULA # Information about particular formula (package)
-    brew search KEYWORD # Search for applications
-    brew update # Update Homebrew
-    brew upgrade # Update all packages installed by Homebrew
-    brew uninstall FORMULA # Remove Homebrew package (formula)
-    brew cleanup # Cleaning after uninstallation
-    # Completely remove Homebrew
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/
-      install/master/uninstall.sh)"
-	\end{bashcode}
 \end{frame}
 
 \subsection[SH]{BASH and other shells (\enquote{command lines})}
@@ -1632,34 +1143,7 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{Looking for applications and files}
-	\begin{bashcode}
-    updatedb # Must be regularly launched to get "locate" to work
-             # It is usually regularly launched by cron task (see further)
-    locate somename # Searches for files/directories in "locate" database
-    apropos keyword # Searches for command descriptions containing keyword
-    which app # Full path to application (shell command)
-    whereis app # Path to source code, executable and man pages for the command
-    # Test if executable command exists (good for scripts)
-    # If "Application" is missing, script ends with error
-    command -v Application >/dev/null 2>&1 || { echo >&2 "Application is
-      required but not installed. Aborting."; exit 1; }
-    type Application >/dev/null 2>&1 || { echo >&2 "Application is
-      required but not installed. Aborting."; exit 1; }
-    # More reliable than 'which Application || { echo XXX; exit 1; }'
-    exit 1 # "exit" use to be added (with various numbers) after any error
-           # to send term signal 1 - for better handling of various errors.
-           # Every termination has exit status number - 0 is normal exit.
-           # Exit status 1 and higher number is various error.
-	\end{bashcode}
-\end{frame}
-
 \begin{frame}{Searching tasks}
-	\begin{enumerate}
-		\item Use \texttt{locate} to find file \texttt{long\_text.txt} on the server. Is the output absolutely correct? If not, why?
-		\item Where is executable of \texttt{mc}? Why can be such information useful?
-		\item Which software is related to keywords \texttt{permission} and \texttt{compress} (use e.g. \texttt{apropos})? Use \texttt{man} to explore some of them.
-	\end{enumerate}
 	\begin{block}{Tasks with \texttt{find}}
 		\begin{enumerate}
 			\item Find all \texttt{*.vcf.gz} files in whole \texttt{/home}. Why do you get errors for some directories?
@@ -1684,27 +1168,6 @@
 		\item \texttt{\textbackslash} --- Escapes following character and it doesn't have its special meaning (e.g. \texttt{\textbackslash *} means literally asterisk \texttt{*} and not \enquote{any number of any characters} as usually)
 		\item For details see \texttt{man 7~glob} and \texttt{man 7~regex}
 		\item Useful e.g. to list only subset of files or to provide file selection as input for some command
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Brace expansion and quotes}
-	\begin{bashcode}
-    echo a{p,c,d,b}e # ape ace ade abe - all combinations
-    echo {a,b,c}{d,e,f} # ad ae af bd be bf cd ce cf - all combinations
-    ls *.{jpg,jpeg,png} # Expansion to *.jpg *.jpeg *.png, same as:
-    ls *.jpg *.jpeg *.png
-    ls scripts_data/*_R[12].fastq.bz2 # Same as *_R1.fastq.bz2 *_R2.fastq.bz2
-	\end{bashcode}
-	\vfill
-	\begin{itemize}
-		\item Text in single quotes (\texttt{'\ldots'}) preserves the literal value of each character within the quotes
-		\item Text in double quotes (\texttt{"\ldots"}) preserves the literal value of all characters within the quotes except of dollar (\texttt{\textdollar}), back tick (\texttt{\textasciigrave}) and back slash (\texttt{\textbackslash}) --- handling variables
-		\item A~double quote may be quoted within double quotes by preceding it with a~backslash (\texttt{\textbackslash"} means literally \enquote{double quote})
-		\item Text between back ticks (\texttt{\textasciigrave\ldots\textasciigrave}) or within \texttt{\$(\ldots)} will be evaluated and then used as command or argument (see further for examples)
-	\begin{itemize}
-		\item Syntax with back ticks is deprecated, keep using \texttt{\$(\ldots)} instead
-	\end{itemize}
-	\item This is important when handling file names with non-Latin characters, when working with variables (from slide~\ref{variables}), printing various information within scripts (e.g. slide~\ref{varquotes}), etc.
 	\end{itemize}
 \end{frame}
 
@@ -1772,28 +1235,6 @@
 	\end{bashcode}
 \end{frame}
 
-\begin{frame}[fragile]{How quotes influence reading of variable content II}
-	\begin{bashcode}
-    B=abcd$e # The content will be "abcde + $e" or "abcd" (if $e is missing)
-    echo $B # abcd
-    C=abcd\$e # \ escapes next character - it is loosing its special meaning
-    echo $C # abcd$e
-    C='abcd$e' # '...' keep literal value of the content; as above
-    # Next command breaks shell - incomplete quotes " - pres then Ctrl+C
-    D=ab"cde # The variable should contain incomplete quotes ", it fails
-    echo $D # Nothing - empty
-    E=ab\"cde # \ escapes next character - it is loosing its special meaning
-    echo $E # ab"cde
-    E='ab"cde' # '...' keep literal value of the content; as above
-    F=abc${USER}de # $USER wouldn't work - {} are needed
-    echo $F # abcvojtade # To add output of command into the variable
-    G="abc$(echo ${USER} | tr [:lower:] [:upper:])de" # Modification of var.
-    echo $G # See what happened with content of $USER
-    H=abc def # Error: command "def" not found... Why? Fixing:
-    H='abc def' # "echo $H" outputs "abc def" - typical problem with paths
-	\end{bashcode}
-\end{frame}
-
 \begin{frame}{How quotes influence reading of variable content III}
 	\begin{itemize}
 		\item As soon as variable contains only Latin alphanumerical characters, assignment like \texttt{MYVAR=whatever} works, but it is not recommended
@@ -1844,48 +1285,6 @@
     export PATH="${PATH}":/some/new/directory # Ensure to add original $PATH
     # Do not overwrite $PATH - there would be only the new directory 
     export PATH=/some/new/directory # Wrong! Old $PATH is missing!
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Reading variables from command line and as output of other commands}{This is especially useful in scripting to read input from users or from another commands}
-	\begin{bashcode}
-    # Reading variable from user's input from command line
-    # (some interactive script interacting with the user)
-    read X # We will read new variable from input (do not use "$" here)
-    10 # Type any value and press Enter
-    echo $X # Get value of the variable
-    10 # It works
-    echo "$((1 + $X))" # Sum of 1 and variable $X
-    # Output some command into variable
-    Y=$(command) # Set as variable output of command
-    echo $Y # Y will contain output of command
-    # "command" from previous lines can be e.g.
-    cat somefile.txt # Read content of somefile.txt; or
-    find . -name "*.txt" # Save list of matching files
-    WORKDIR="$(pwd)" # Save current directory into variable
-    ls -1 | head -n 1 # First file/directory in the current directory
-    unset X # Destroy this variable
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{BASH expressions}{Basic arithmetic operations and more with BASH}
-	\begin{bashcode}
-    echo $((5 < 7)) # Is 5 smaller than 7? TRUE (1)
-    echo $((3 > 4)) # Is 3 greater than 4? FALSE (0)
-    echo $((16 / 3)) # Division (without decimal part)
-    echo $((16 % 3)) # What remains after aritmetic division
-    x=$((1 + 6)) # Result will be in 'x' - save output into variable $x
-    echo $x # See content of $x
-    x=1 # Set x to 1
-    y=$x+1 # Will this add 1? Why?
-    echo $y # See result
-    y=$(($x + 1)) # Will this work? Why?
-    echo $y # Result
-    echo $(expr length "MetaCentrum and Linux") # Get length of chain
-    # String of 5 characters starting at position 10 of the text
-    echo $(expr substr "MetaCentrum and Linux" 10 5)
-    # Does 1st chain contain 2nd chain (how long)? Get position of first hit
-    echo $(expr index "GNU Linux" "Linux") # If no overlap, return value is 0
 	\end{bashcode}
 \end{frame}
 
@@ -2091,110 +1490,6 @@
 	\end{bashcode}
 \end{frame}
 
-\subsection[HW, sys and ps]{Information and processes}
-
-\begin{frame}[fragile]{Which system are we using?}
-	\begin{bashcode}
-    uname -a # Information about Linux kernel (version, ...)
-    lsb_release -a # Information about Linux distribution release
-    cat /etc/os-release # Similar to above command
-    lscpu # Information about CPU; better than 'cat /proc/cpuinfo'
-    lsusb # List of devices on USB
-    lspci # List of PCI devices (graphic card, network card, ...)
-    lspci | grep -i vga # Get information about graphical card
-    lshw # Complete list of hardware; e.g. 'lshw -C memory' for RAM
-    hwinfo # Complete list of hardware; "hwinfo --network" for network devices
-    neofetch # System information tool
-    free -h # Available memory (RAM) and swap, -h for nice units
-    df -h # Free space on disk partitions, -h for nice units
-    lsmod # List loaded kernel modules
-    uptime # How long is the system running, number of users, average load
-    date # Date and time - plenty of options for formatting
-    mount # Information about mounted file systems
-    findmnt # Display mounted devices in tree structure
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Processes --- every running program has its own process ID}
-	\begin{bashcode}
-    top # Listing of processes, quit using "q"
-    htop # Nice listing of processes (better version of top), quit using "q"
-         # Allows also termination of processes etc.
-    pstree # See running processes with child processes, recursively
-    ps # processes related to actual terminal
-    ps ux # All user's processes
-    ps aux # All processes
-    pgrep application # Return PID (process ID) of application
-    # kill (terminate) process by name or process ID (PID)
-    # Find which PID has application to terminate
-    pgrep geany
-    14639 # Process ID (PID) of respective process
-    # Kill (stop by SIGTERM) selected application according to above PID
-    kill -SIGTERM 14639 # SIGTERM is "nice" termination, SIGKILL "brutal"
-    kill -SIGTERM $(pgrep geany) # Two above commands in one step; note $()
-    killall -SIGTERM geany # Select by name (more processes with same name)
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Processes and users}
-	\begin{bashcode}
-    # nice - how much resources will task use: from -20 (high priority - not
-    # "nice" process) to +19 (low priority - very "nice" process), default 0
-    nice -n 7 hard_task.sh # set priority 7 for newly launched task
-    renice 15 16302 # Change priority of PID 16302 to 15
-    sudo renice 15 16302 -u USER # Change priority of USER's process
-    whoami # What is my user name
-    id # Information about current user (user ID and group IDs)
-    who # Who is logged in
-    w # Who is logged in, more information
-    users # Plain list of currently logged users
-    finger # Information about users on current terminals
-    last # Last logged-in users
-    passwd # Change password
-    passwd USER # Change USER's password
-    groups # List your groups
-    # If user is added into new group, changes will be effective since
-    # next login
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Users and groups}
-	\begin{itemize}
-		\item These commands to manage users and groups do not have to work on all systems --- depends on authentication methods used
-		\item Commands modifying users and groups require root authentication
-	\end{itemize}
-	\begin{bashcode}
-    # Add new user
-    useradd new_user_name
-    # Modify user, see possible modifications
-    usermod --help
-    # Delete user
-    userdel user_name
-    # Add new group
-    groupadd new_group_name
-    # Modify group, see possible modifications
-    groupmod --help
-    # Delete group
-    groupdel group_name
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}{Tasks regarding hardware, information and processes}
-	\begin{enumerate}
-		\item Change your password on the remote server and/or virtual machine.
-		\item Who is and was recently logged in to the remote server?
-		\item Which information about hardware can you get from your local computer (if you are running Linux) and from course server? Why could such information be useful?
-	\begin{enumerate}
-		\item Which disks are mounted?
-		\item How many memory (RAM) slots are occupied and what is memory size?
-	\end{enumerate}
-	\item Find your user ID on local computer and remote server. Do you think this has any implications when copying files from your local computer to server and back?
-	\item Terminate from command line some running graphical application. What is difference between \texttt{kill} and \texttt{killall}?
-	\item Change priority of some running (graphical) application.
-	\item Which applications are consuming the most resources (CPU, RAM)?
-	\end{enumerate}
-\end{frame}
-
 \subsection{Network}
 
 \begin{frame}[allowframebreaks]{Network protocols}
@@ -2235,28 +1530,6 @@
 		\item Port number can be changed in configuration of respective server service
 		\item All firewalls on the way must allow communication on given port --- some ports are commonly filtered in restrictive Wi-Fi networks or totalitarian countries
 	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Basic network information and testing}
-	\begin{bashcode}
-    hostname # Get name of the computer
-    ping web.natur.cuni.cz # Ping host. Is it alive? Cancel by Ctrl+C
-    traceroute www.metacentrum.cz # Get route (path) to the host
-    mtr seznam.cz # Combines ping and traceroute, quit with "q"
-    ip a s # Information about all network devices (MAC, IP address, ...)
-    ip r s # Show routes
-    # Does SSH work on the host? Verbose (-v), scan (-z), host, port number
-    # (22 for SSH, can be any)
-    nc -vz web.natur.cuni.cz 22
-    man nc # See for more information; "nc" is alias for "netcat"
-    ss -atn # Information about all network connections
-    ss -ntplu # Show open TCP/UDP ports
-    ss -anp # Show active connections
-    ss --help # More options...
-    # If using nmap at faculty, firewall disconnects you for 10 minutes!
-    nmap -r someserver.cz # Scan someserver.cz for opened ports
-    nmap botany.natur.cuni.cz --script ssh-hostkey # See SSH key
-	\end{bashcode}
 \end{frame}
 
 \begin{frame}[fragile]{Transferring files from/to remote server}
@@ -2301,32 +1574,6 @@
     rsync -arv somedirectory otherplace # All attributes, recursive, verbose
     rsync -arv localdirectory user@remote.server.cz:/remote/directory/
     rsync -arv user@remote.server.cz:/remote/data local/directory/
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Connecting file systems on remote servers}
-	\label{netfs}
-	\begin{itemize}
-		\item Target mount point must exist before mounting
-		\item Servers can be accessed by IP address or hostname
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    # Mounting remote server over SSH (sshfs package must be installed)
-    sshfs USER@vyuka.natur.cuni.cz:/some/dir /local/mount/point
-    fusermount -u /local/mount/point # Disconnect SSHFS
-    # Mount Windows server (requires packages samba and cifs)
-    mount.cifs //windows.server.cz/Some/Directory /mnt/win -o \
-      credentials=/path/to/password.file,uid=USER,gid=GROUP
-    # "password.file" contains login credentials to Windows server:
-    username=user.name
-    password=TopSecretPassword1
-    domain=DOMAINNAME
-    # Mount NFS share (NFS is common protocol in UNIX world)
-    mount -t nfs some.server.cz:/shared/directory /local/directory
-    # Mount webDAV folder (requires package davfs2 to be installed)
-    mount -t davfs https://owncloud.cesnet.cz/remote.php/webdav/ /local/dir
-    umount /mount/point # Disconnect CIFS/SAMBA, NFS, webDAV, ...
 	\end{bashcode}
 \end{frame}
 
@@ -2406,20 +1653,6 @@
 		\item Connect to \texttt{vyuka.natur.cuni.cz} (or any other server) using \texttt{mc} and copy there and back some files. What are advantages and disadvantages of \texttt{mc} when compared with usage of \texttt{scp} or \texttt{rsync}?
 		\item Find in graphical interface of your computer how to connect via SSH/SFTP/SCP to transfer files. Connect to \texttt{vyuka.natur.cuni.cz} or some other server and transfer there and back some files.
 	\end{enumerate}
-\end{frame}
-
-\begin{frame}{Faculty web server(s)}
-	\begin{itemize}
-		\item Login requires same credentials as to \href{https://ldapuser.cuni.cz/}{CAS} (login name, no ISIC number)
-		\item Faculty information are \href{https://natur.cuni.cz/fakulta/organizacni-struktura/pracoviste-dekanatu/odbor-informacnich-technologii/sluzby-it/sprava-webu-a-webovych-aplikaci/centralni-webovy-server-prf-uk-web-natur-cuni-cz}{only in Czech}
-		\item It is Linux server running Debian
-		\item Connect with SSH/SFTP/SCP to \texttt{web.natur.cuni.cz}
-		\item Mainly used for webhosting, user's address will have form \texttt{https://web.natur.cuni.cz/$\sim$loginname/}, user can \href{https://helpdesk.natur.cuni.cz/servlet/HelpdeskDynamic?eid=Rozcestnik}{apply} for another URL, for space for some projects,~\ldots
-		\item Every department also has dedicated space there, it can be used for various web projects, address can be discussed with \href{https://natur.cuni.cz/en/faculty/organizational-structure/dean-s-office-departments/information-technology-division/contacts}{IT department}
-		\item Personal web can be placed in \texttt{public\_html} within home folder
-		\item Users can \href{https://helpdesk.natur.cuni.cz/servlet/HelpdeskDynamic?eid=Rozcestnik}{apply} for MySQL database or special settings
-		\item \href{https://natur.cuni.cz/en/biology/departments-and-work-places/department-of-botany/working-information/servers-webs-and-computers/departmental-server}{Department of Botany} (and some other departments) have their own web and file servers
-	\end{itemize}
 \end{frame}
 
 \subsection{Parallelization}
@@ -2503,78 +1736,6 @@
 			\item Think about some example solving your practical task where GNU Parallel would be helpful.
 		\end{enumerate}
 	\end{block}
-\end{frame}
-
-\begin{frame}[fragile]{Recording output of commands}
-	\begin{itemize}
-		\item Alternative (commonly more convenient) to redirects of outputs to log file (slide~\ref{pipe}) is command \texttt{tee}
-		\begin{itemize}
-			\item Very useful if redirects would be harder to code
-		\end{itemize}
-		\item \texttt{tee} can record
-		\begin{itemize}
-			\item All output of the software (standard as well as error output)
-			\item Commands (keys) typed by user --- it can be later reused to rerun the application --- unique feature useful for certain software
-		\end{itemize}
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    # tee (-a for append to existing file) records output of any application
-    command | tee record.txt # tee will record whole output of command
-    tee record.txt | command # tee will record user input (NO command output)
-    # If software reads commands from user, we can reuse record next time:
-    command < record.txt # Empty lines are interpreted as Enter key
-                         # Each line is used whenever command waits for new
-                         # input (instead of typing, 'record.txt' is used)
-	\end{bashcode}
-\end{frame}
-
-\subsection{Timing}
-
-\begin{frame}[fragile]{Launching of tasks at certain time}
-	\begin{itemize}
-		\item \texttt{at} can run command at certain time (\texttt{atd} daemon must be running)
-		\item Tasks are running in background, outputs are mailed (e.g. to \texttt{/var/spool/mail/\$USER})
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    # Check status of atd daemon (it must run), start/stop/enable/disable it
-    systemctl status/start/stop/enable/disable atd.service
-    man at # Check for various possibilities of time settings
-    at HH:MM # Run commands at certain time (hour:minutes)
-    at> command1 # Add as many commands as you wish (separate by Enter)
-    at> # When done, press Ctrl+D to cancel giving commands to at
-    # Instead of manual typing of tasks, run script at certain time
-    at HH:MM -f somescript.sh # Run somescript.sh at certain time
-    at -l # List of scheduled tasks (alias is atq)
-    at -r <number> # Cancel scheduled task (according to number from at -l)
-    atrm # Alias for previous command
-    batch # Commands will be executed when system loads drops below 0.8 or
-          # other value specified in configuration or startup of atd
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Automated launching of tasks}
-	\begin{itemize}
-		\item \texttt{cron} runs tasks repeatedly (\texttt{cron} daemon must be running)
-		\item Scripts for tasks running hourly/daily/weekly/monthly can be copied into respective \texttt{/etc/cron.*/} directories
-		\item Can be replaced by \href{https://www.freedesktop.org/software/systemd/man/latest/systemd.timer.html}{SystemD timers} files (more complex, but more versatile)
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    # Check status of cron daemon (it must run), start/stop/enable/disable
-    systemctl status/start/stop/enable/disable cron.service
-    crontab -l # List user's cron tasks
-    crontab -e # Edit user's cron tasks (separate columns by spaces):
-    # Minute, Hour, Day in month, Month, Day in week, Command (absolute path)
-    # 0-59    0-23  1-31          1-12   0-6 starting with Sunday (WTF?)
-      *       *     *             *      *            /usr/bin/command
-      10      22    1             *      *    # 1st day in month, 23:11
-      0       */3   *             *      *    # Every 3 hours
-      0       11    *             *      0    # Every Sunday, 12:00
-      30      3     */2           *      *    # Every second day, 4:31
-      */15    *     *             *      0,4  # At Sun and Fri every 15 min
-	\end{bashcode}
 \end{frame}
 
 \section{Text}
@@ -2797,81 +1958,6 @@
 	\end{block}
 \end{frame}
 
-\subsection{AWK}
-
-\begin{frame}[fragile]{Get a~column with awk}
-	\begin{itemize}
-		\item AWK is scripting language mainly for text manipulations
-		\item Can do things other BASH tools can not (easily) do --- better manipulation with columns, calculations, work with multi-line patterns,~\ldots
-		\item Has complicated syntax, it is hard to read, it is not similar to other tools --- Perl can do more and is more common\ldots
-		\item Supports regular expressions, slide \ref{regexp}
-		\item Can not select column according to its name (Perl can do that)
-		\item For more information see manuals \url{https://www.gnu.org/software/gawk/manual/}, \url{https://en.wikibooks.org/wiki/An_Awk_Primer} and \url{https://www.grymoire.com/Unix/Awk.html}
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    awk 'regexp { commands parameters }' file # General syntax
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{AWK examples I}
-	\begin{bashcode}
-    # Print last column (separated by tab, built-in variable $NF)
-    awk '{print $NF}' cut_awk_test_file.tsv
-    # Select 2nd column ($2; separated by tab)
-    awk '{print $2}' cut_awk_test_file.tsv
-    # Print columns 3 and 2 (in this order)
-    awk '{print $3, $2}' cut_awk_test_file.tsv
-    # Get column 5 and 1 (in this order, separated by ":") from /etc/passwd
-    # (only lines containing "home") print ", username:" between the columns.
-    # Note usage of commas and consequences to output.
-    grep home /etc/passwd | awk -F ':' '{print $5 ", username:", $1}'
-    # Separate columns by TAB, /^d/ for lines starting with "d" (only dirs)
-    ls -l | awk '/^d/ { print $8 "\t" $3 }'
-    # Print on even lines ">", former column 1, new line, former column 2:
-    # 2 columns into 2 lines (create FASTA from tabular record)
-    awk '{print ">"$1"\n"$2}' awk_test_file.tab | less -S
-    # Print field 1, TAB (\t), length of field 2, TAB and field 2
-    awk '{print $1"\t"length($2)"\t"$2}' awk_test_file.tab
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{AWK examples II}
-	\begin{bashcode}
-    # If field (column) 2 contains exactly 100.0%, print whole line ($0)
-    awk '{if($2=="100.0%"){print $0}}' cut_awk_test_file.tsv
-    # Field 1 is numeric (less then 5 digits) - add leading zeroes
-    awk '{printf "%05d\n", $1;}' awk_test_file.tab
-    # As previous, but add leading zeroes to field 1 and print whole line
-    awk '{$1=sprintf("%05d", $1); print $0}' awk_test_file.tab
-    # Field 6 is numeric, select lines where field 6 is higher than 200
-    awk -F '\t' '$6>200' cut_awk_test_file.tsv # Separated by TABs (\t)
-    # Print fields 4 and 5 (fields are separated by "_" or TAB)
-    awk -F '[_\t]' '{print $4, $5}' cut_awk_test_file.tsv
-    # Precede each line by its line number for all files together, with TAB
-    # (i.e. print line number (NR) and then whole original line ($0))
-    awk '{print NR "\t" $0}' diff_test_file_*
-    # Substitute "a" with "XXX" ONLY for lines which contain "the"
-    awk '/the/{gsub(/a/, "XXX")}; 1' diff_test_file_1.txt
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{AWK examples III} % TODO Add more awk examples
-	\begin{bashcode}
-    # For every 4th line starting from line 2 of FASTQ file (from line 2
-    # every 4th line contains the DNA sequence) print its length (bzcat
-    # prints content of file compressed by bzip2)
-    bzcat Oxalis_hirta_R1.fastq.bz2 | awk 'NR%4==2{ print length($0) }'
-    # If sequence is longer that 500 bp (length of field 2), print its name
-    # (field 1) like this "Seq. name: TAB the sequence name (ID)"
-    awk '{if(length($2)>500){print "Seq. name:\t" $1}}' awk_test_file.tab
-    # Extract from awk_test_file.tab sequences over 500 bp, sort theme by name
-    # and save them as FASTA file
-    awk '{if(length($2)>500){print $0}}' scripts_data/awk_test_file.tab | \
-      sort -n | sed 's/^/>/' | sed 's/[[:blank:]]\+/\n/g' > 500bp.fasta
-	\end{bashcode}
-\end{frame}
-
 \subsection{Manipulations}
 
 \begin{frame}[fragile]{Sorting I}
@@ -3038,30 +2124,6 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Joining}
-	\begin{itemize}
-		\item Generally, most of tools work per-line, \texttt{paste} appends columns (see also slide~\ref{cutpaste})
-		\item \texttt{join} compares every matching lines (by default 1$^{st}$ field) and creates all combinations --- ensure to have sorted input files with unique text
-		\begin{itemize}
-			\item E.g. if 1$^{st}$ file contains \texttt{A~B} and \texttt{A~C} and 2$^{nd}$ file \texttt{A~D} and \texttt{A~E}, the result will be \texttt{A~B D}, \texttt{A~B E}, \texttt{A~C D} and \texttt{A~C E}
-		\end{itemize}
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    # Add file to the end of another text file
-    cat file1 >> file2 # file2 will contain both files, file1 is unchanged
-    # Compare two sorted text files and write shared lines
-    # (duplicitous lines are shown just once)
-    join textfile1 textfile2 > outputfile
-    # If used on wrong files, it can create huge file
-    seq -f "1 %g" 100 > aaa && less aaa
-    seq -f "1 %g" 100 > bbb && less bbb
-    join aaa bbb | wc -l
-    join --help # See more options...
-	\end{bashcode}
-	\vfill
-\end{frame}
-
 \subsection{Compressed text}
 
 \begin{frame}{Variants of basic commands for processing of compressed text files I}
@@ -3208,74 +2270,6 @@
 		\item \textbf{Emacs} and \textbf{Vim} have huge number of possibilities and support for plugins and scripts, but completely different usage style --- one person can really learn only one\ldots
 		\item If regularly working in command line, master any command line editor
 	\end{itemize}
-\end{frame}
-
-\begin{frame}{Emacs basics}
-	\begin{itemize}
-		\item Feature-rich ecosystem --- not only text editor, also file manager, debugger, integrated development environment, extra plugins are available,~\ldots
-		\item Keyboard commands are noted as e.g. \texttt{C-x}, where \enquote{\texttt{C}} stands for (mostly) \texttt{Ctrl} key, \texttt{M-x}, where \enquote{\texttt{M}} stands mostly for \texttt{Alt} key (\texttt{Meta}), sometimes for \texttt{Win} key
-	\end{itemize}
-	\begin{multicols}{2}
-		\begin{itemize}
-			\item \texttt{C-h C-h} help (twice \texttt{Ctrl~+~H})
-			\item \texttt{C-x C-c} quit (\texttt{X-g} for particular buffer, etc.)
-			\item \texttt{C-x C-f} open file
-			\item \texttt{C-x C-s} save file
-			\item \texttt{C-x C-w} save file as
-			\item \texttt{C-\_} undo
-			\item \texttt{C-s} search forwards
-			\item \texttt{C-r} search backwards
-			\item \texttt{C-left} move one word left
-			\item \texttt{C-right} move one word right
-			\item \texttt{C-up} move one paragraph up
-			\item \texttt{C-down} move one paragraph down
-			\item \texttt{M-\%} search and replace pattern
-		\end{itemize}
-	\end{multicols}
-\end{frame}
-
-\begin{frame}{Vim}{Vim has three different working modes}
-	\label{vim}
-	\begin{enumerate}
-		\item \textbf{\enquote{Normal}} --- nothing is displayed in bottom left corner, every key has some meaning (next slide) --- very powerful manipulations with text
-		\begin{itemize}
-			\item \texttt{i} or \texttt{Insert} key to enter \textit{insert mode}, \texttt{:} to enter \textit{command mode}
-		\end{itemize}
-		\item \textbf{Insert} --- in bottom left corner \enquote{\texttt{{-}- INSERT -{-}}} is displayed, the most familiar mode, normal typing etc., exit to normal mode by \texttt{ESC} key
-		\item \textbf{Command} --- in bottom left corner \texttt{:} is displayed, awaits commands, exit to normal mode by \texttt{Backspace} key (delete \enquote{\texttt{:}})
-	\end{enumerate}
-	\begin{itemize}
-		\item See documentation \url{https://vim.fandom.com/wiki/Vim_Tips_Wiki}, \url{https://www.vim.org/docs.php}; česky \url{https://www.nti.tul.cz/~satrapa/docs/vim/}
-		\item For interactive learning try \url{https://vim-adventures.com/} (\alert{Task:} Play it for a while.:-) or command \texttt{vimtutor}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Normal and command Vim modes}
-	\begin{multicols}{2}
-		\begin{itemize}
-			\item \textbf{Normal mode} (press \texttt{ESC})
-			\begin{itemize}
-				\item \texttt{dd} cut current line
-				\item \texttt{r} replace single character below cursor (type then character to be placed instead of the original one)
-				\item \texttt{v} for selection of text (and then e.g. delete by \texttt{d} or copy by \texttt{y})
-				\item \texttt{y} copy selection
-				\item \texttt{x} cut selection (always to clipboard, it can be pasted by \texttt{p})
-				\item \texttt{p} paste
-				\item \textit{number} to get to line of particular line number
-				\item \texttt{u} to undo last change(s)
-				\item \texttt{/ToSearch} search \enquote{ToSearch} (once press \texttt{Enter}, \texttt{n} for next occurrence, quit with \texttt{Esc})
-			\end{itemize}
-			\item \textbf{Command mode} (press \texttt{ESC :})
-			\begin{itemize}
-				\item \texttt{w} write file
-				\item \texttt{q} quit
-				\item \texttt{q!} quit and discard changes
-				\item \texttt{\%s/\ldots} to search and replace as in \texttt{sed}
-				\item \texttt{syntax on/off} turn syntax highlight on/off
-				\item \texttt{set nu} show line numbers
-			\end{itemize}
-		\end{itemize}
-	\end{multicols}
 \end{frame}
 
 \subsection{Regular expressions}
@@ -3457,386 +2451,7 @@
 	\end{itemize}
 \end{frame}
 
-\subsection{Functions}
-
-\begin{frame}[fragile]{Functions in BASH}{Pieces of code, which can be used repeatedly}
-	\begin{bashcode}
-    # Declare new function within script
-    function MyNewFunction1 {
-      echo "Hello, ${USER} from $(groups) on ${HOSTNAME}!"
-      }
-    # Use it in a script as any other command
-    ...
-    MyNewFunction1
-    ...
-    # Use with variables - provide parameters for the function
-    # See following script examples for another input - same as in scripts
-    function MyNewFunction2 {
-      echo "The sum is $(("$1" + "$2"))."
-      }
-    # Use it in the script as any other command
-    MyNewFunction2 5 8 # For example
-    ...
-	\end{bashcode}
-\end{frame}
-
 \subsection{Reading variables}
-
-\begin{frame}{It is important to check user input\ldots}
-	\begin{center}
-		\includegraphics[width=8cm]{exploits_of_a_mom.png}
-	\end{center}
-	\begin{flushright}
-		\url{https://xkcd.com/327/}
-	\end{flushright}
-	\begin{itemize}
-		\item By accident or purpose (attack), user can enter unexpected value
-		\begin{itemize}
-			\item In the \enquote{best} case, the script \enquote{just} crashes
-			\item Script can behave unexpectedly, returning very weird results, damage data
-			\item Internal functions/commands can return error messages, which are hard to understand
-			\item Attacker can e.g. modify web content (\href{https://en.wikipedia.org/wiki/Cross-site_scripting}{XSS},~\ldots), obtain private data, root privileges,~\ldots
-			\item Applies also to scientific data --- wrong input use to have unexpected outcomes\ldots
-		\end{itemize}
-		\item Programmer should always check if user input is correct, filter it
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Script reading two variables}
-	\begin{bashcode}
-    #!/bin/bash
-    # Arguments are read from command line as parameters of the script
-    # Order has to be kept (well, not in this case, but generally yes)
-    echo "Sum of two numbers $1 and $2 is $(("$1" + "$2"))." # $((calc...))
-    # "$#" is available every time and contains number of parameters
-    # (variables) given to the script
-    echo "Number of parameters is: $#"
-    # "$*" is available every time and contains all supplied parameters
-    echo "Those parameters were supplied: $*"
-    #  "$0" is available every time and contains script path
-    echo "Path to the scrip is: \"$0\""
-    exit
-	\end{bashcode}
-	\vfill
-	When done, do:
-	\vfill
-	\begin{bashcode}
-    chmod +x interactive1.sh
-    ./interactive1.sh 8 9 # Or select any other two numbers
-	\end{bashcode}
-	\vfill
-	\begin{itemize}
-		\item There is no checking of input values, nothing advanced,~\ldots
-	\end{itemize}
-	\vfill
-\end{frame}
-
-\begin{frame}[fragile]{Variables will be interactively provided by the user}
-	\begin{bashcode}
-    #!/bin/bash
-    # Arguments are read from user input (script asks for them)
-    echo "Please, input first value to sum and press 'Enter'"
-    read -r V1
-    echo "Please, input second value to sum and press 'Enter'"
-    read -r V2
-    echo "Sum of two numbers ${V1} and ${V2} is $(("V1" + "V2"))."
-    # Note above that "$" is unnecessary on arithmetic variables
-    echo
-    exit
-	\end{bashcode}
-	\vfill
-	When done, do:
-	\vfill
-	\begin{bashcode}
-    chmod +x interactive2.sh
-    ./interactive2.sh # Values will be provided when script asks
-	\end{bashcode}
-	\begin{itemize}
-		\item There is no checking of input values, nothing advanced,~\ldots
-		\item See next slide to read the variable in \texttt{while} cycles to ensure it is correctly entered
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Ensuring user interactively provides correct input (while)}
-	\begin{itemize}
-		\item Detailed explanations of all features used here are in various following slides\ldots{ }See scripts \texttt{interactive2\{whiles,functions\}.sh}
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    ... # Following code replace lines 3 and 4 from previous script
-    NUMBER='^[0-9]+$'
-    echo "Please, provide a number as input value:"
-    while : # Start of while cycles - run until correct input is provided
-      do # Star of the body of the cycles
-      read -r INPUT # Here the input from keyboard is received
-      if [[ ${INPUT} =~ ${NUMBER} ]]; then # Test if INPUT is a number
-        echo "OK, input value is $INPUT."
-        break # We have correct value, we can break the cycles and continue
-        else # What to do if the user did not provided correct value
-          echo "Error! You provided wrong value!" # Tell the user
-          echo "Try again (the number):" # Ask user for new input value
-        fi # End of the conditional evaluation
-      done # End of the while cycles
-    ... # The code continues... Such check is needed for every variable...
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Ensuring user interactively provides correct input (function) I}
-	\begin{bashcode}
-    # Regular expression to check if the provided input is a~number
-    NUMBER='^[0-9]+$' # From beginning (^) to end ($) only numbers
-    # Function to read and check user input (this goes to beginning)
-    function checkinput {
-      while :
-        do # Star of the body of the cycles
-          read -r INPUT # Here the input from keyboard is received
-          if [[ ${INPUT} =~ ${NUMBER} ]]; then # Test if $INPUT is a number
-            echo "OK, input value is ${INPUT}."
-            break # We have correct value, we can break and continue
-            else # What to do if the user did not provide correct value
-              echo "Error! You provided wrong value!" # Tell the user
-              echo "Try again (the number):" # Ask user for new input value
-             fi # End of the conditional evaluation
-        done # End of the while cycles
-      } # Read variable is in INPUT
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Ensuring user interactively provides correct input (function) II}
-	\begin{bashcode}
-    # Replace line 4 of interactive2.sh by (similarly for line 6)
-    ...
-    checkinput # Use function declared on previous slide
-    V1="${INPUT}"
-    ...
-    checkinput # Recycle the function to read next variable
-    V2="${INPUT}"
-    ...
-	\end{bashcode}
-	\vfill
-	\hrule
-	\vfill
-	\begin{itemize}
-		\item User can provide as arguments\ldots
-		\begin{itemize}
-			\item Input/output data file names
-			\item Parameters for running whatever analysis --- can be passed to some scientific software within script or so
-			\item Which branch of the code to run
-			\item \ldots
-		\end{itemize}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Provide named parameters} %FIXME Fix wrong syntax highlight
-	\begin{bashcode}
-    #!/bin/bash
-    # Script has only one parameter ($1) provided
-    # "case" is evaluating provided parameter and behaving accordingly
-    case "$1" in
-      d|disk) # "|" means alternatives - more possible inputs
-        echo "Your disk usage is:"
-        df -h;;
-      u|uptime)
-        echo "Your computer is running:"
-        uptime;;
-      # This should be every time last possibility - any other input
-      # User is then notified he entered nonsense and gets some help
-      *) # Any other input
-        echo "Wrong option! "
-        echo "Usage: 'd' or 'disk' for available disk space or 'u' or"
-        echo "  'uptime' for computer uptime"
-    # Ends on next slide...
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Notes to previous script}
-	\begin{bashcode}
-    # ...end from previous slide
-        exit 1;; # In this case, exit with error code 1
-      esac
-    exit
-	\end{bashcode}
-	\begin{itemize}
-		\item First make \texttt{interactive3.sh} executable and launch it via e.g. \texttt{./interactive3.sh d} or \texttt{./interactive3.sh uptime} or so
-		\item Function \texttt{case} has basic checking of input available --- as last parameter use \texttt{*)} --- any other input except those defined above will produce some warning message, error or so
-		\item In same way can be added more parameters (by multiple use of \texttt{case} or by wrapping \texttt{case} by \texttt{while} loop), in the latter variant order of parameters does not have to be kept and all parameters are compulsory
-		\item \texttt{case} can evaluate simple regular expressions, e.g. \texttt{[Uu]ptime}, \texttt{d*},~\ldots
-		\item This is the most simple usage, more complex possibilities are ahead
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Provide parameters, verify them and behave accordingly I}
-	\begin{bashcode}
-    #!/bin/bash
-    # From the beginning (^) to the end ($) at least one (+) number ([0-9])
-    NUMBER='^[0-9]+$'
-    function usagehelp { # Function to print help - we will use it four times
-      echo "Usage: number1 plus/minus/product/quotient number2"
-      echo "Use plus for sum, minus for difference, product"
-      echo "  for multiplication or quotient for quotient."
-      exit 1 # End up with an error
-      }
-    if [[ "$#" -ne "3" ]]; then # Do we have 3 parameters provided?
-      echo "Error! Requiring 3 parameters! Received $# ($*)."
-      usagehelp # The function to print help
-      fi # "=~" means testing if $1 fits to regular expression in $NUMBER
-    if [[ ! $1 =~ ${NUMBER} ]]; then # Is parameter 1 number?
-      echo "Parameter 1 is not an integer!"
-    # Continues on next slide...
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Provide parameters, verify them and behave accordingly II}
-	\begin{bashcode}
-    # Remaining part from previous slide...
-      usagehelp # The function to print help
-      fi
-    if [[ ! $3 =~ ${NUMBER} ]]; then # Is parameter 3 number?
-      echo "Parameter 3 is not an integer!"
-      usagehelp # The function to print help
-      fi
-    case "$2" in
-      plus) echo "$(($1 + $3))";;
-      minus) echo "$(($1 - $3))";;
-      product) echo "$(($1 * $3))";;
-      quotient) echo "$(($1 / $3))";;
-      *) echo "Wrong option!"
-        usagehelp # The function to print help
-        ;;
-      esac
-    exit
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Provide parameters, verify them and behave accordingly III}
-	\begin{bashcode}
-    # Make in executable and run it...
-    chmod +x interactive4.sh
-    ./interactive4.sh 7 plus 5 # For example...
-	\end{bashcode}
-	\vfill
-	\begin{itemize}
-		\item Note that we can evaluate input parameters in any order
-		\item Compare syntax styling of \texttt{case} on previous slide and in script file \texttt{interactive4.sh}
-		\begin{itemize}
-			\item Each option can be on single line, or on multiple lines
-			\item For each \texttt{case} option there can be any number of commands
-			\item There can be any number of \texttt{case} options --- convenient way how to evaluate multiple options in single step
-			\item Se following slides for most common usage of \texttt{case}
-		\end{itemize}
-		\item \texttt{case} can be used anywhere in the code, not only to evaluate input parameters (as possible alternative to \texttt{if-else} branching)
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) I} %FIXME Fix wrong syntax highlight
-	\begin{itemize}
-		\item Following code use to be near beginning of the script to evaluate input
-		\item See \texttt{interactive5.sh} for complete example
-		\item \texttt{getopts} reads short (one-letter) parameters, they can have input value (marked by \texttt{:})
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    #!/bin/bash
-    # All provided values are evaluated in while cycles...
-    while getopts "hvi:o:a:" INITARGS; do # Switches are -h -v -i -o -a
-      case "${INITARGS}" in # $INITARGS contains the parameters to evaluate
-        h|v) # Accept parameters "-h" or "-v" for help
-          echo "Usage options..."
-          exit # Terminate after providing help
-          ;; # End of this option
-        i) # Parameter "-i" accepts some value (e.g. "-i inputfile.txt")
-          ... # Do some checking etc...
-          INPUTFILE="${OPTARG}" # $OPTARG always contains value of parameter
-          ;; # End of this option
-    # ...continues on following slide...
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) II} %FIXME Fix wrong syntax highlight
-	\begin{bashcode}
-    # ...starts on previous slide...
-        o) # Parameter "-o" accepts some value (e.g. "-o outputfile.txt")
-          ... # Do some checking etc...
-          OUTPUTFILE="${OPTARG}" # $OPTARG always contains value of parameter
-          ;; # End of this option
-        a) # Parameter "-a" accepts some value (e.g. "-a X" for number)
-          # Check if provided value makes sense (integer between 10 and 300)
-          if [[ "${OPTARG}" =~ ^[0-9]+$ ]] && [[ "${OPTARG}" -ge 10 ]] &&
-            [[ "${OPTARG}" -le 300 ]]; then # The condition is long...
-            VALUE=${OPTARG} # $OPTARG always contains value of parameter
-            echo "Value is OK: ${VALUE}"
-            else
-             echo "Error! For parameter \"-a\" you did not provide an"
-             echo "  integer ranging from 10 to 300!"
-             exit 1
-            fi
-    # ...continues on following slide...
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) III} %FIXME Fix wrong syntax highlight
-	\begin{bashcode}
-    # ...continuing from previous slide...
-          ;; # End of this option (see previous slide)
-        ?)
-          echo "Invalid option(s)!"
-          echo "See \"$0 -h\" for usage options."
-          exit 1
-          ;; # End of this option
-        esac
-      done # ...the end.
-    # Check if all required values are provided
-    if [[ -z "${INPUTFILE}" ]] || [[ -z "${OUTPUTFILE}" ]]; then
-      echo "Error! Name of input and/or output file was not provided!"
-      echo "See \"$0 -h\" for help usage..."
-      exit 1
-      fi
-    # ...ends on following slide...
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) IV}
-	\begin{bashcode}
-    # ...continuing from previous slide...
-    if [[ -z "${VALUE}" ]]; then
-      echo "Warning! Value for \"-a\" was not provided! Using default (10)."
-      VALUE=10
-      fi
-    # Do the job...
-    for (( I=1; I<="${VALUE}"; I++ )); do # Repeat task number of times
-      echo -ne "Cycle ${I}...\r" # Write number of cycle and return cursor to
-           # the beginning of the line to overwrite the number in next step
-      sleep 1s # Wait 1 second - just for fun ;-)
-      # Do the task - append input to the output - note usage of variables
-      cat "${INPUTFILE}" >> "${OUTPUTFILE}" #Do the job: append input to output
-      done
-    echo -ne "\n" # Reset cursor to new line
-    echo "Done!"
-    exit
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Multiple switches in classical UNIX form (no positional) V}
-	\begin{itemize}
-		\item Script \texttt{interactive5.sh} contains complete example --- take inspiration there
-		\item This is the classical way how to use UNIX switches used in most of commands
-		\item \texttt{while} loop encapsulating \texttt{case} ensures we evaluate all provided parameters regardless their number or order
-		\begin{itemize}
-			\item Be prepared that user can use the arguments in any combination and order (e.g. calling \texttt{-h} together with any other switch) --- avoid in code doing several things at once
-		\end{itemize}
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    # Make it executable
-    chmod +x interactive5.sh
-    # Start with displaying help
-    ./interactive5.sh -h # Or ./interactive5.sh -v
-    # Try it as common command line tool
-    ./interactive5.sh -i input.txt -o output.txt -a 50
-    # Order of parameters doesn't matter
-    ./interactive5.sh -o out.txt -a 50 -i input.txt
-	\end{bashcode}
-\end{frame}
 
 \begin{frame}[fragile]{Simple providing of input file I}{Probably the most common script type you need --- just specify data to process}
 	\begin{bashcode}
@@ -3885,128 +2500,6 @@
 	\begin{itemize}
 		\item Similar (even simpler) example is typical MetaCentrum script (slide~\ref{metacentrumscript})
 \end{itemize}
-\end{frame}
-
-\subsection{Branching the code}
-
-\begin{frame}[fragile]{If branching (examples are elsewhere)}
-	\begin{bashcode}
-    # Basic variant - commands are done only if condition is met
-    if condition; then
-        commands
-      fi
-    if condition; then # Two branches - when condition is met and when not
-        commands1 # condition is TRUE
-      else
-        commands2 # condition is FALSE - all other cases
-      fi
-    # Join together two (or more) if branches
-    if condition1; then
-        commands1
-      elif condition2; then
-          commands2
-        else
-          commands3
-        fi # Branching can be long, hard to read and susceptible to errors
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[allowframebreaks]{Evaluation of conditions}
-	\begin{itemize}
-		\item Basic method to branch code --- do something according to certain condition
-		\item Very versatile, usually there are more options how to write desired conditioning
-		\item Avoid long chaining of conditions using \texttt{elif} statement (previous slide) --- susceptible to mistakes, hard to debug
-		\item \enquote{\texttt{[~\ldots~]}} (always keep space inside around it) is function to evaluate expressions
-		\begin{itemize}
-			\item \texttt{if [ "\$\textbraceleft VAR\textbraceright" -eq 25 ]} or alternatively \texttt{test "\$\textbraceleft VAR\textbraceright" -eq 25} instead
-			\item \texttt{if [ "\$\textbraceleft VAR\textbraceright" == "value" ]; \ldots}
-			\begin{itemize}
-				\item Escaping variables and values by double quotes (\texttt{"\ldots"}) is recommended (to be sure), but not strictly required all the time
-			\end{itemize}
-			\item \texttt{if [ ! -f regularfile ];} \ldots{ }--- \texttt{!} reverts condition
-			\item Single-bracket conditions --- file, string, or arithmetic conditions
-			\item Double-bracket syntax --- enhanced (now preferred)
-			\begin{itemize}
-				\item Allow usage of regular expressions and globing patterns
-				\item Word splitting is prevented --- \texttt{\$\textbraceleft STRINGVAR\textbraceright} can contain spaces etc.
-				\item Expanding file names --- \texttt{if [[ -a *.sh ]]} (variant with only one bracket doesn't work when there are multiple sh files)
-				\item More detailed test, e.g. \texttt{if [[ \$num -eq 3 \&\& "\$\textbraceleft STRINGVAR\textbraceright " == XXX ]] \ldots}
-			\end{itemize}
-		\end{itemize}
-		\item Common tests
-		\begin{itemize}
-			\item \texttt{-eq} --- Equal to (like \texttt{==})
-			\item \texttt{-lt} --- Less than
-			\item \texttt{-gt} --- Greater than
-			\item \texttt{-ge} --- Greater than or equal to
-			\item \texttt{-le} --- Less than or equal to
-			\item \texttt{-f "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is a~regular file (not link or so)
-			\item \texttt{-r "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is readable
-			\item \texttt{-w "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is writable
-			\item \texttt{-x "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is executable
-			\item \texttt{-d "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and is a~directory
-			\item \texttt{-s "\$\textbraceleft FILE\textbraceright "} --- True if \texttt{\$FILE} exists and has a~size greater than zero
-			\item \texttt{-n "\$\textbraceleft STR\textbraceright "} --- True if string \texttt{\$STR} is not a~null (empty) string
-			\item \texttt{-z "\$\textbraceleft STR\textbraceright "} --- True if string \texttt{\$STR} is a~null string
-			\item \texttt{"\$\textbraceleft STR1\textbraceright " == "\$\textbraceleft STR2\textbraceright "} --- True if both strings are equal
-			\item \texttt{"\$\textbraceleft STR\textbraceright "} --- True if string \texttt{\$STR} is assigned a~value and is not null
-			\item \texttt{"\$\textbraceleft STR1\textbraceright " != "\$\textbraceleft STR2\textbraceright "} --- True if both strings are unequal
-			\item \texttt{-a} --- Performs the \texttt{AND} function (\texttt{[~\ldots~-a~\ldots~]} or \texttt{[~\ldots~] \&\& [~\ldots~]})
-			\item \texttt{-o} --- Performs the \texttt{OR} function (\texttt{[~\ldots~-o~\ldots~]} or \texttt{[~\ldots~] || [~\ldots~]})
-		\end{itemize}
-		\item \texttt{if} statement can test whatever returning \texttt{TRUE}/\texttt{FALSE}, commonly something like \texttt{if grep -q XXX; then \ldots} (see also further)
-		\item Do not confuse globing patterns and regular expressions when using \texttt{[[~\ldots~]]}
-		\begin{itemize}
-			\item \textbf{Shell globing:} \texttt{if [[ "\$\textbraceleft STRINGVAR\textbraceright " \alert{==} ?[sS]tring* ]]; then} --- \texttt{?} represents single character \texttt{[]} any character inside and \texttt{*} zero or more characters
-			\item \textbf{Regular expressions:} \texttt{if [[ "\$\textbraceleft STRINGVAR\textbraceright " \alert{=$\sim$} .[sS]tring.* ]] \ldots} --- \texttt{.} represents any single character (\texttt{?} would be zero or one occurrence of preceding expression), \texttt{[]} any character inside and \texttt{.*} zero or more occurrences of any single characters
-			\item Same expression is interpreted in different ways
-		\end{itemize}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Selecting version of RAxML according the CPU type I}
-	\begin{itemize}
-		\item \href{https://github.com/stamatak/standard-RAxML}{RAxML} can take advantage of modern CPUs to highly speed up calculations, with or without parallelization --- every version has separated binary, user must select, see \href{https://github.com/stamatak/standard-RAxML/blob/master/README.md}{README}
-		\item After compilation, the script can select e.g. on remote server appropriate version
-		\item RAxML binaries must be in \texttt{\$PATH}
-		\item See \texttt{raxml\_if.sh} for whole script
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    if grep -iq avx2 /proc/cpuinfo; then # Does the CPU support AVX2?
-      RAXML='raxmlHPC-AVX2' # Select appropriate binary
-      elif grep -iq avx /proc/cpuinfo; then # Does the CPU support AVX?
-        RAXML='raxmlHPC-AVX' # Select appropriate binary
-        elif grep -iq sse3 /proc/cpuinfo; then # Does the CPU support SSE3?
-          RAXML='raxmlHPC-SSE3' # Select appropriate binary
-          else # The very last option
-            RAXML='raxmlHPC' # Slowest oldest CPU...
-      fi # End of branching
-    "${RAXML}" -s "${INPUT}" # All the parameters as usually...
-	\end{bashcode}
-\end{frame}
-
-\begin{frame}[fragile]{Selecting version of RAxML according the CPU type II}{Multiple branching in one step}
-	\begin{itemize}
-		\item Same task as on previous slide, but instead of if-then branching it is using \texttt{case}
-		\item See \texttt{raxml\_case.sh} for whole script
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    # Determine which CPU is available and which binary use then
-    CPUFLAGS=$(grep -i flags /proc/cpuinfo | uniq)
-    case "${CPUFLAGS}" in
-      *avx2*|*AVX2*) # Does the CPU support AVX2?
-        RAXML='raxmlHPC-AVX2';; # Select appropriate binary
-      *avx*|*AVX*) # Does the CPU support AVX?
-        RAXML='raxmlHPC-AVX';; # Select appropriate binary
-      *sse3*|*SSE3*) # Does the CPU support SSE3?
-        RAXML='raxmlHPC-SSE3';; # Select appropriate binary
-      *) # The very last option
-        RAXML='raxmlHPC';; # Slowest oldest CPU...
-      esac # End of branching
-    "${RAXML}" -s "${INPUT}" # All the parameters as usually...
-	\end{bashcode}
 \end{frame}
 
 \subsection{Loops}
@@ -4148,145 +2641,6 @@
 	\tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
 \end{frame}
 
-\subsection{Packages}
-
-\begin{frame}[allowframebreaks]{Package management}{Installation of software in Linux}
-	\begin{itemize}
-		\item \textbf{Package} --- an application or its part (documentation, plug-ins, translations,~\ldots)
-		\item Packages are available in \textbf{repositories} (directories) on the internet
-		\begin{itemize}
-			\item System has list of applications available
-			\item Updates and bug fixes are installed for all applications using one interface (GUI or command line) --- very reliable
-			\item Packages are digitally signed --- security
-			\item User can set custom repositories to get more package resources
-			\item Repositories can be added whenever needed --- check documentation for your distribution (at least basic \enquote{how-to})
-		\end{itemize}
-		\item The most different task among Linux distributions
-		\item Packages have dependencies --- required shared libraries and so on --- use package manager and try to avoid downloading packages from the internet outside repositories
-		\item \alert{Read manual for your distribution!}
-		\item Package is basically an archive and system has configured directories where to unpack it --- binaries are commonly in \texttt{/usr/bin/}, shared libraries in \texttt{/usr/lib} and \texttt{/usr/lib64}, data in \texttt{/var},~\ldots
-		\item User should not care where parts of packages go to --- system is taking the care --- user can only damage it
-		\item Shared libraries are installed automatically whenever required
-		\item As all files are placed in standard defined directories, it is very simple to use them also for another applications
-		\item Applications not available in repositories, neither as distributional package should be installed into \texttt{$\sim$/bin} for current user or \texttt{/usr/local} for all users (binaries then go into \texttt{/usr/local/bin} and so on)
-		\item Common distributions use to provide convenient graphical tool to manage software
-		\begin{itemize}
-			\item Ubuntu Software Center
-			\item Synaptic --- feature rich, graphical, advances, for any DEB distribution (Debian, Ubuntu, Mint,~\ldots)
-			\item Aptitude --- feature rich, command-line, advanced, for any DEB distribution (more advanced version of Apt)
-			\item DPKG --- low-level, any DEB-based distribution
-			\item YaST Software for openSUSE (feature rich, graphical as well as command-line)
-			\item Zypper --- feature rich, command-line, advanced, for openSUSE
-			\item DNF --- feature rich, command-line, advanced, for Fedora and another RPM based distributions (replacing older Yum)
-			\item RPM --- low level, any RPM-based distribution
-			\item GNOME software --- in most of distributions using GNOME
-			\item And many more\ldots
-			\item All do same task --- as soon as user master one, others are equally simple
-		\end{itemize}
-		\item Distributions use to provide convenient update applet notifying about awaiting updates
-		\item There use to be web services to look for packages, also from other sources --- \href{https://software.opensuse.org/explore}{openSUSE}, \href{https://www.debian.org/distrib/packages\#search_packages}{Debian}, \href{https://packages.ubuntu.com/}{Ubuntu} (+ \href{https://launchpad.net/ubuntu/+search}{Launchpad} and \href{https://launchpad.net/ubuntu/+ppas}{PPAs}), \href{https://packages.fedoraproject.org/}{Fedora},~\ldots
-		\item The task is always same, the exact work-flow and commands more or less differ among distributions\ldots
-		\item Tools like Android Google Play, Apple Store or Windows Store are inspired from Linux (but terribly simplified)\ldots
-	\end{itemize}
-	\vfill
-	\begin{block}{Task}
-		Install some new software into your Linux. Use graphical as well as command-line tools. See following slides for instructions.
-	\end{block}
-\end{frame}
-
-\begin{frame}[allowframebreaks]{Package management in command line in openSUSE and SLE (basic commands)}
-	\begin{itemize}
-		\item Root password is required: use \texttt{sudo \ldots} or \texttt{su~-}
-		\item Package name \texttt{*.rpm}
-		\item \texttt{zypper in \textit{package}} --- install \textit{package}
-		\item \texttt{zypper rm \textit{package}} --- remove \textit{package}
-		\item \texttt{zypper ref} --- refresh repositories
-		\item \texttt{zypper up} --- update
-		\item \texttt{zypper se \textit{term}} --- search \textit{term}
-		\item \texttt{zypper dup} or \texttt{opensuse-migration-tool} -- upgrade to newer release of whole distribution (see \href{https://en.opensuse.org/SDB:System_upgrade}{documentation})
-		\item \texttt{zypper ps -s} -- check which running applications (including SystemD services) should be restarted after update of packages
-		\item \texttt{zypper pa -{-}orphaned -{-}unneeded} --- list packages, which can be safely removed
-		\item \texttt{yast sw\_single} --- interactive manager
-		\item \texttt{zypper lr} --- list repositories
-		\item \texttt{zypper ar \textit{repository}} --- add \textit{repository} (URL of remote \texttt{*.repo} file etc.)
-		\item \texttt{zypper rr \textit{repository}} --- remove \textit{repository} (name according to \texttt{zypper lr})
-		\item \texttt{zypper mr \ldots{ }\textit{repository}} --- modify \textit{repository} (see \texttt{man zypper} first, or use \texttt{yast sw\_single})
-		\item \texttt{zypper pa \textit{package}} --- get information about particular \textit{package} or another query (e.g. list of dependencies, see \texttt{man zypper})
-		\item \texttt{opi \textit{package}} --- search (and possibly install) \textit{package} in \href{https://build.opensuse.org/}{OBS} in all repositories contributed by users (take care, there are no quality checks)
-		\item \texttt{rpmconfigcheck} --- check which configuration files in \texttt{/etc} have new version after update of some software --- compare respective configuration files with new \texttt{*.rpmnew} files
-		\item \texttt{rpm*} commands for other tasks
-		\item \texttt{man zypper}, \texttt{man rpm} --- usage help
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[allowframebreaks]{Package management in command line in Debian/Ubuntu and derivatives (basic commands)}
-	\begin{itemize}
-		\item Root password is required: use \texttt{sudo \ldots} or \texttt{su~-}
-		\item Package name \texttt{*.deb}
-		\item \texttt{apt install \textit{package}} --- install \textit{package}
-		\item \texttt{apt remove \textit{package}} --- remove \textit{package}
-		\item \texttt{apt update} --- refresh repositories
-		\item \texttt{apt upgrade} -- upgrade packages
-		\item \texttt{apt dist-upgrade} -- upgrade to newer release of whole distribution
-		\item \texttt{apt search \textit{term}} --- search \textit{term}
-		\item \texttt{apt autoremove} --- clear unneeded packages
-		\item \texttt{apt autoclean} --- cleanup of files after uninstalled packages
-		\item \texttt{aptitude} --- interactive manager
-		\item \texttt{cat /etc/apt/sources.list} --- list repositories
-		\item \texttt{nano /etc/apt/sources.list} --- add/remove/edit repositories
-		\item \texttt{dpkg-*}, \texttt{apt-*} commands for other tasks
-		\item \texttt{aptitude} is used in similar way as \texttt{apt} (e.g. \texttt{aptitude install \textit{package}},~\ldots) or as interactive tool (just run \texttt{aptitude})
-		\item Similar tasks can be done with \texttt{apt}, \texttt{apt-get}, or \texttt{aptitude}
-		\item \texttt{man aptitude}, \texttt{man apt-XXX}, \texttt{man dpkg-XXX}, \texttt{man apt} --- usage help
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[allowframebreaks]{Package management in command line in RedHat, Fedora, CENTOS and derivatives (basic commands)}
-	\begin{itemize}
-		\item Root password is required: use \texttt{sudo \ldots} or \texttt{su~-}
-		\item Package name \texttt{*.rpm}
-		\item \texttt{dnf install \textit{package}} --- install \textit{package}
-		\item \texttt{dnf remove \textit{package}} --- remove \textit{package}
-		\item \texttt{dnf check-update} --- refresh repositories, check for updates
-		\item \texttt{dnf upgrade} --- upgrade packages
-		\item \texttt{dnf search \textit{term}} --- search \textit{term}
-		\item \texttt{dnf autoremove} --- clear packages
-		\item \texttt{dnf info \textit{package}} --- get information about \textit{package}
-		\item \texttt{dnf repolist} --- list repositories
-		\item \texttt{dnf config-manager} --- manage repositories and another settings
-		\item \texttt{rpm -Uvh \textit{package}.rpm} --- install locally downloaded \texttt{\textit{package}.rpm}
-		\item \texttt{rpm -e \textit{package}} --- remove \textit{package}
-		\item \texttt{rpm*} commands for other tasks
-		\item In older releases of Fedora, RedHat and CENTOS, \texttt{yum} is used instead of \texttt{dnf} in nearly identical way
-		\item \texttt{man dnf} (or \texttt{man yum} --- older tool to do the same tasks), \texttt{man rpm} --- usage help
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Graphical package managers I}{Ubuntu Software, and Synaptic and text-based Aptitude for all DEB-based distributions}
-	\begin{center}
-		\includegraphics[height=6cm]{software_managers_ubuntu_deb.png}
-	\end{center}
-\end{frame}
-
-\begin{frame}{Graphical package managers II}{GNOME Software in Fedora and YaST in openSUSE}
-	\begin{center}
-		\includegraphics[height=5.5cm]{software_managers_fedora_suse.png}
-	\end{center}
-	\begin{itemize}
-		\item Practically every common general distribution has some graphical tool\ldots{ }Explore it\ldots
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Manuals for package management}
-	\begin{itemize}
-		\item openSUSE and SUSE Linux Enterprise: \url{https://doc.opensuse.org/documentation/leap/startup/html/book-startup/part-reference-software.html} and \url{https://en.opensuse.org/Portal:Zypper}
-		\item Red Hat, Fedora, CENTOS, and others: \url{https://docs.fedoraproject.org/en-US/quick-docs/dnf/} and older \url{http://yum.baseurl.org/}
-		\item Debian (and derivatives): \url{https://www.debian.org/doc/manuals/debian-reference/ch02.en.html} and \url{https://wiki.debian.org/PackageManagement}
-		\item Ubuntu (and derivatives): \url{https://help.ubuntu.com/stable/ubuntu-help/addremove.html} and \url{https://help.ubuntu.com/community/AptGet/Howto}
-		\item And another distributions\ldots
-	\end{itemize}
-\end{frame}
-
 \subsection{Compilation}
 
 \begin{frame}[fragile]{Basics of compilation}
@@ -4371,73 +2725,6 @@
 	\end{bashcode}
 \end{frame}
 
-\subsection{Java}
-
-\begin{frame}[fragile]{Launching Java applications}
-	\begin{itemize}
-		\item \href{https://www.java.com/}{Java} is probably the most portable language working on any operating system --- the only condition is to install \href{https://en.wikipedia.org/wiki/Java_virtual_machine}{Java virtual machine (JVM)}
-		\item Linux usually use \href{https://openjdk.org/}{OpenJDK} --- search for packages named \texttt{*openjdk*}
-		\item Let's download e.g. \href{https://tree.bio.ed.ac.uk/software/figtree/}{FigTree} from \url{https://github.com/rambaut/figtree/releases}
-	\end{itemize}
-	\vfill
-	\begin{bashcode}
-    # Go to directory where you downloaded the latest version
-    cd directory/with/downloaded/figtree
-    # Decompress downloaded archive
-    tar zxvf FigTree_v1.4.5_pre.tgz
-    # Go to created directory
-    cd FigTree_v1.4.5_pre/
-    ls * # List files, also in subdirectories
-    # Launch it (command java launches *.jar files)
-    java -jar lib/figtree.jar
-    # Limit its memory usage to 128 MB
-    java -Xmx128m -jar lib/figtree.jar
-	\end{bashcode}
-\end{frame}
-
-\subsection{Windows applications}
-
-\begin{frame}[allowframebreaks]{Windows applications on Linux}
-	\begin{itemize}
-		\item Applications written for one operating system do not work on the other systems\ldots
-		\begin{itemize}
-			\item They must be written in portable language like Java or script like Perl, Python or BASH
-			\item Otherwise we need an emulator --- not everything works
-		\end{itemize}
-		\item Windows has since v. 10 \href{https://learn.microsoft.com/windows/wsl/install}{possibility to run Linux applications}, other option is \href{https://www.cygwin.com/}{Cygwin} (application must be specially compiled to work on Cygwin)
-		\item To run Windows applications on Linux use \href{https://www.winehq.org/}{Wine}
-		\begin{itemize}
-			\item Search for packages named \texttt{wine} and install it
-			\item Sometimes, extra functionality is in extra packages --- check \texttt{wine-*}
-		\end{itemize}
-		\item To run DOS application on Linux use \href{https://www.dosbox.com/}{dosbox} (package \texttt{dosbox})
-		\item As soon as Wine is installed, just click to Windows \texttt{*.exe} file\ldots
-		\item Windows applications are installed into \texttt{$\sim$/.wine/} where Windows directory structure is created, launchers use to be placed to standard application menu into \textbf{Wine} section
-		\item Use \texttt{winecfg} to change settings (e.g. version of Windows --- can be different for each application, custom DLL library,~\ldots)
-		\item \texttt{winefile} starts Windows file browser, \texttt{notepad} Notepad, \texttt{winemine} Mines
-		\item To install some extra parts required by some applications use \texttt{winetricks}
-		\begin{itemize}
-			\item Usage use to differ according to distribution and GUI
-			\item Browsing and selecting items to install can be bit messy\ldots
-			\item It can be hard to check application requirements --- if it fails, check if it is listed at \url{https://appdb.winehq.org/} and/or run it from command line like \texttt{wine application.exe} and inspect errors in output
-		\end{itemize}
-		\item Before installing Windows application under Wine, check if there is some native Linux application to fit your needs\ldots
-		\begin{itemize}
-			\item Plenty of applications are available for more operating systems
-			\item Linux distributions use to have external contributor's sites to provide more packages
-			\item For many Windows-only applications there are fully comparable alternatives
-		\end{itemize}
-		\item Some applications do not work under Wine (from various reasons), some complex packages are \href{https://www.codeweavers.com/}{supported commercially} (I~have no experience with it)
-		\item Wine is well compatible with rest of the Linux hosting system, but it is also considerable to install Windows in e.g. VirtualBox (or another virtualization platform), if needed
-	\end{itemize}
-	\begin{center}
-		\includegraphics[height=3.25cm]{wine.png}
-	\end{center}
-	\begin{flushright}
-		\texttt{winefile}, \texttt{winetricks} and \texttt{winecfg}
-	\end{flushright}
-\end{frame}
-
 \subsection{Scientific applications}
 
 \begin{frame}[allowframebreaks]{Where to get scientific applications for Linux}
@@ -4466,20 +2753,6 @@
 			\item Distributions sometimes provide packages at least for part of the packages of such languages --- typically at least for Python, Perl or R --- this is especially convenient for packages having plenty of complex dependencies
 		\end{itemize}
 		\item Packages in various repositories are sometimes not up-to-date with newest version released --- if so, contact maintainer of distributional package and kindly ask for update (distributional webs use to have easy ways how to do it)
-	\end{itemize}
-\end{frame}
-
-\subsection{Games}
-
-\begin{frame}{How to game on Linux}
-	\begin{itemize}
-		\item Plenty of games are in repositories of all major Linux distributions --- just search
-		\item Many open-source games are multiplatform
-		\item Some distributions have extra repositories for games, e.g. \href{https://software.opensuse.org/packages/Games}{openSUSE}
-		\item See \url{https://www.gamingonlinux.com/} for news etc.
-		\item A lot of Windows-only games can be used with \href{https://appdb.winehq.org/}{Wine}
-		\item Install \href{https://store.steampowered.com/}{Steam} (package is often available in standard repositories) and there activate Proton (version of Wine to run plenty of Windows games on Linux via Steam)
-		\item Although not all games available for Windows are available for Linux, there are more games than you have time to play\ldots~;-)
 	\end{itemize}
 \end{frame}
 
