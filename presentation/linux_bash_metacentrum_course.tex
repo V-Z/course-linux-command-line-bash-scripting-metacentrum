@@ -1,23 +1,22 @@
-\documentclass[compress, xelatex, 11pt, xcolor=svgnames, aspectratio=169,
-	hyperref={
-		bookmarks=true,
-		unicode=true,
-		colorlinks=true,
-		pdftitle={Linux, command line and MetaCentrum},
-		plainpages=false,
-		pdfauthor={Vojtech Zeisek},
-		pdfsubject={Course about use of Linux command line, writing shell scripts and using MetaCentrum of CESNET},
-		pdfcreator={XeLaTeX},
-		pdfkeywords={Linux, GNU, BASH, shell, command line, MetaCentrum},
-		linkcolor=DarkRed, % Navigation menu links on pages and in navigation menus
-		anchorcolor=DarkBlue, % Not in use?
-		citecolor=Indigo, % Not in use?
-		filecolor=NavyBlue, % Not in use?
-		menucolor=DarkMagenta, % Not in use?
-		urlcolor=DarkBlue, % Links with \href and \url
-		},
-	url={hyphens, lowtilde} % Allow line breaks within URLs
-	]{beamer}
+\documentclass[compress, xelatex, 11pt, xcolor=svgnames, aspectratio=169, url={hyphens, lowtilde}]{beamer}
+
+\usepackage{hyperref}
+\hypersetup{
+	unicode=true,
+	colorlinks=true,
+	pdftitle={Linux, command line and MetaCentrum},
+	plainpages=false,
+	pdfauthor={Vojtěch Zeisek},
+	pdfsubject={Course about use of Linux command line, writing shell scripts and using MetaCentrum of CESNET},
+	pdfcreator={XeLaTeX},
+	pdfkeywords={Linux, GNU, BASH, shell, command line, MetaCentrum},
+	linkcolor=DarkRed, % Navigation menu links on pages and in navigation menus
+	anchorcolor=DarkBlue, % Not in use?
+	citecolor=Indigo, % Not in use?
+	filecolor=NavyBlue, % Not in use?
+	menucolor=DarkMagenta, % Not in use?
+	urlcolor=DarkBlue, % Links with \href and \url
+	}
 
 % Theme settings
 \usetheme[secheader]{Boadilla}
@@ -79,7 +78,9 @@
 \AfterEndEnvironment{itemize}{\vspace{-0.25em}}
 
 % Default language
-\usepackage[main=american]{babel}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setmainlanguage{english}
 
 % Quotes
 \usepackage[autostyle=true, english=american]{csquotes}
@@ -123,12 +124,13 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Requirements to exam (\enquote{zápočet})}
+\begin{frame}[allowframebreaks]{Requirements to exam (\enquote{zápočet})}
 	\begin{enumerate}
 		\item Be present whole course.
-		\item Be active --- ask and answer questions.
-		\item Write short script solving any task the student is (going to be) solving. E.g. prepare script to process student's data on MetaCentrum. Or short script to do anything the student needs to do. This will be very individual. According to topics and interests of every student. Students can of course discuss with anyone, use Internet, manuals, etc. The aim is to learn how to solve real problem the student has/is going to have.
-		\item Write at least one page (can be split into multiple articles) on Wikipedia about any topic discussed during the course. Again, this is very open, students can write about any topic they like. I~prefer native language of the student (typically to make larger non-English Wikipedia).
+		\item Active participation.
+		\item Asking and answering questions during class regarding the topics covered.
+		\item Write a short BASH script that solves a practical problem, such as analyzing your own data on MetaCenter. It should address a problem that the student is actually dealing with in practice. When writing the script, students may consult documentation, search the Internet, and use syntax checkers such as ShellCheck, etc. The script does not have to be completely error-free, but it must be functional. If a student uses AI (LLM), they must clearly describe how they used it, what their input was, and what the AI did. Furthermore, in such a case, the script must work with the student’s real data, and must be absolutely error-free.
+		\item Write at least one standard page on Wikipedia on any topic related to the course material. This may include a translation, edits to existing articles, contributions to several shorter articles, etc. The page should be in the language version of Wikipedia corresponding to the student’s native language (typically non-English version). The page must comply with Wikipedia standards (style, sources, links and backlinks, categorization, etc.). Note that exact requirements vary among various language versions. AI (LLM) may be used to review the written article or,to translate from a foreign language. Afterward, manual review and the addition of all necessary elements, such as links, are always required.
 	\end{enumerate}
 \end{frame}
 
@@ -4783,6 +4785,15 @@
 	\end{bashcode}
 \end{frame}
 
+% \begin{frame}[fragile]{} % TODO Singularity
+% 	\begin{itemize}
+% 		\item
+% 	\end{itemize}
+% 	\begin{bashcode}
+%
+% 	\end{bashcode}
+% \end{frame}
+
 \begin{frame}{Running R tasks on MetaCentrum}
 	\begin{itemize}
 		\item There are only some R packages installed, to use more create own package library and use it in scripts (see e.g. \texttt{.libPaths()} within \texttt{R})
@@ -5214,6 +5225,30 @@
 	\end{bashcode}
 \end{frame}
 
+\section{AI}
+
+\begin{frame}{ChatGPT and others}
+	\begin{itemize}
+		\item Usage of generative AI, large language models (LLM) like ChatGPT can help a lot
+		\item Very good to improve code and fixing non-working code
+		\item Can well explain existing code --- good starting point
+		\item Good for adaptation of existing code for user's needs
+		\item Limited usage to generate new code --- can misunderstand request, code can be technically correct, but not well working, can be incomplete or limited in corner-cases
+		\item Without at least basic understanding of subject it is hard to realize if ChatGPT solution is correct --- user should be at least basically able to work without AI, otherwise there is high risk of failures
+		\item \alert{One should never rely on tool with unclear functionality and problematic usage of of users' data and copyrighted content}
+		\item \alert{Never ever paste private data or data under copyright}
+	\end{itemize}
+\end{frame}
+
+% \begin{frame}[fragile]{} % TODO Local AI
+% 	\begin{itemize}
+% 		\item
+% 	\end{itemize}
+% 	\begin{bashcode}
+%
+% 	\end{bashcode}
+% \end{frame}
+
 \section{The End}
 
 \begin{frame}{The End}
@@ -5270,19 +5305,6 @@
 		\item Try to find the best place to ask your question --- specific forum for particular distribution or software use to be the best option
 		\item Learning command line is like learning foreign language --- it takes time\ldots
 		\item \alert{Reading documentation is not wasting of time!}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{ChatGPT and others}
-	\begin{itemize}
-		\item Usage of generative AI, large language models (LLM) like ChatGPT can help a lot
-		\item Very good to improve code and fixing non-working code
-		\item Can well explain existing code --- good starting point
-		\item Good for adaptation of existing code for user's needs
-		\item Limited usage to generate new code --- can misunderstand request, code can be technically correct, but not well working, can be incomplete or limited in corner-cases
-		\item Without at least basic understanding of subject it is hard to realize if ChatGPT solution is correct --- user should be at least basically able to work without AI, otherwise there is high risk of failures
-		\item \alert{One should never rely on tool with unclear functionality and problematic usage of of users' data and copyrighted content}
-		\item \alert{Never ever paste private data or data under copyright}
 	\end{itemize}
 \end{frame}
 

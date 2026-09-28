@@ -32,6 +32,8 @@ presentation/*minted*
 presentation/*.pyg
 # nomencl
 presentation/*.nlo
+## LuaLaTeX
+presentation/*.synctex.gz
 ## Other
 *~
 *.bak
